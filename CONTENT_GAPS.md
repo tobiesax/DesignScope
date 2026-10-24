@@ -21,8 +21,15 @@ Source: `HANDOFF.md` section 10, plus anything found while building.
 
 ## Assets
 
-- [ ] Logo source file (original vector SVG/AI/EPS) — have a 1920w PNG from Hibu
-- [ ] Brand colours and fonts, if any already in use
+- [ ] Logo source file (original vector SVG/AI/EPS) — despite the filename, the Hibu asset
+      actually serves at 200×80px (`src/assets/logo.png`), too low-res for a crisp header;
+      need the original vector or a high-res export from Stephen
+- [x] Brand colours — sampled from the logo and cross-checked against live site CSS: one
+      accent orange (`#ff5f00`) plus standard dark/light neutrals, no separate "primary"
+      hue exists. Tokens live in `src/styles/global.css` as `brand`/`brand-dark`/`ink`/`paper`
+      (CLAUDE.md names them `brand-primary`/`brand-accent`, but there's only one real brand
+      colour to work with — flagged for Stephen to confirm, not a second colour)
+- [ ] Fonts, if any already in use (logo/site don't expose a typeface; picking free, self-hosted serif + sans per CLAUDE.md "Brand" unless Stephen has a preference)
 - [ ] 15–30 project photos, before-and-after pairs, tagged with town and project type
 - [ ] 5–10 showroom photos (exterior with signage, displays, brands)
 - [ ] Team photo for About

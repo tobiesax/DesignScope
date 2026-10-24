@@ -1,1 +1,36 @@
 @import 'tailwindcss';
+
+@import '@fontsource-variable/lora';
+@import '@fontsource-variable/inter';
+
+/*
+ * Brand tokens, sourced from the real logo and the live designscopellc.com
+ * CSS (not invented) — see CLAUDE.md "Brand". Tailwind v4 uses this CSS-first
+ * @theme block instead of tailwind.config.mjs.
+ *
+ * - brand / brand-dark: the orange (#ff5f00) sampled directly from the logo
+ *   pixels; brand-dark is a darkened shade for hover/active states.
+ * - ink / paper / paper-muted: match the near-black text (#000/#333) and
+ *   off-white backgrounds (#fff/#faf9f9) already used on the live site.
+ */
+@theme {
+  --color-brand: #ff5f00;
+  --color-brand-dark: #cc4c00;
+  --color-ink: #1a1a1a;
+  --color-paper: #ffffff;
+  --color-paper-muted: #faf9f9;
+
+  --font-heading: 'Lora Variable', ui-serif, Georgia, serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply bg-paper text-ink font-sans;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply font-heading;
+}
