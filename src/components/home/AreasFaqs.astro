@@ -1,6 +1,7 @@
 ---
 import { faqs } from '../../data/home';
 import { business } from '../../data/business';
+import FaqAccordion from '../shared/FaqAccordion.astro';
 ---
 
 <section class="bg-paper-muted grid items-start gap-10 px-4 py-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
@@ -21,36 +22,5 @@ import { business } from '../../data/business';
     <span class="text-muted text-xs">Each town gets its own page with local projects.</span>
   </div>
 
-  <div id="faq-list" class="flex flex-col">
-    <span class="pb-2.5 text-[13px] font-extrabold">Common questions</span>
-    {faqs.map((item, i) => (
-      <div class="border-border-soft border-t">
-        <button
-          type="button"
-          data-faq-toggle
-          aria-expanded={i === 0 ? 'true' : 'false'}
-          class="flex w-full cursor-pointer items-center justify-between gap-3 py-3.5 text-left"
-        >
-          <span class="text-[13.5px] font-bold">{item.q}</span>
-          <span class="text-brand-dark faq-icon text-lg font-medium">{i === 0 ? '–' : '+'}</span>
-        </button>
-        <p class="faq-answer text-ink-soft m-0 text-[13px] leading-relaxed" hidden={i !== 0}>
-          {item.a}
-        </p>
-      </div>
-    ))}
-  </div>
+  <FaqAccordion faqs={faqs} />
 </section>
-
-<script>
-  document.querySelectorAll<HTMLButtonElement>('[data-faq-toggle]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const isOpen = button.getAttribute('aria-expanded') === 'true';
-      button.setAttribute('aria-expanded', String(!isOpen));
-      const icon = button.querySelector('.faq-icon');
-      if (icon) icon.textContent = isOpen ? '+' : '–';
-      const answer = button.nextElementSibling as HTMLElement | null;
-      answer?.toggleAttribute('hidden', isOpen);
-    });
-  });
-</script>

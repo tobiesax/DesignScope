@@ -1,0 +1,43 @@
+---
+interface Props {
+  faqs: { q: string; a: string }[];
+  title?: string;
+}
+
+const { faqs, title = 'Common questions' } = Astro.props;
+---
+
+<div class="faq-accordion flex flex-col">
+  <span class="pb-2.5 text-[13px] font-extrabold">{title}</span>
+  {faqs.map((item, i) => (
+    <div class="border-border-soft border-t">
+      <button
+        type="button"
+        data-faq-toggle
+        aria-expanded={i === 0 ? 'true' : 'false'}
+        class="flex w-full cursor-pointer items-center justify-between gap-3 py-3.5 text-left"
+      >
+        <span class="text-[13.5px] font-bold">{item.q}</span>
+        <span class="text-brand-dark faq-icon text-lg font-medium">{i === 0 ? '–' : '+'}</span>
+      </button>
+      <p class="faq-answer text-ink-soft m-0 text-[13px] leading-relaxed" hidden={i !== 0}>
+        {item.a}
+      </p>
+    </div>
+  ))}
+</div>
+
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>('.faq-accordion [data-faq-toggle]')
+    .forEach((button) => {
+      button.addEventListener('click', () => {
+        const isOpen = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!isOpen));
+        const icon = button.querySelector('.faq-icon');
+        if (icon) icon.textContent = isOpen ? '+' : '–';
+        const answer = button.nextElementSibling as HTMLElement | null;
+        answer?.toggleAttribute('hidden', isOpen);
+      });
+    });
+</script>

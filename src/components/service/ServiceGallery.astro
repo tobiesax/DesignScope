@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import { mockProjects } from '../../data/home';
+import { mockupImages } from '../../data/mockup-images';
+
+interface Props {
+  category: string;
+  heading?: string;
+}
+
+const { category, heading = 'Recent projects' } = Astro.props;
+const projects = mockProjects.filter((project) => project.cat === category);
+---
+
+{projects.length > 0 && (
+  <section class="bg-paper-muted flex flex-col gap-5 px-4 py-12 sm:px-7">
+    <div class="flex flex-col gap-2.5">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        {heading}
+      </span>
+      <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">Real work, real towns</h2>
+    </div>
+    <div class="grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]">
+      {projects.map((project) => (
+        <div class="bg-paper flex flex-col">
+          <Image
+            src={mockupImages[project.img as keyof typeof mockupImages]}
+            alt={project.title}
+            class="h-[190px] w-full object-cover"
+          />
+          <div class="flex items-baseline justify-between gap-2.5 px-4 py-3.5">
+            <span class="text-[13.5px] font-extrabold">{project.title}</span>
+            <span class="text-muted text-[11px] font-semibold whitespace-nowrap">
+              {project.town}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+    <a
+      href="/projects/"
+      class="border-dark self-center border-[1.5px] px-5 py-3 text-xs font-extrabold"
+    >
+      View all projects
+    </a>
+  </section>
+)}

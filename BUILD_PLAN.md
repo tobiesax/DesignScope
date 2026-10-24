@@ -32,11 +32,19 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
 
 ## Week 2: Design
 
-- [ ] **[repo]** Design tokens from the existing brand (logo, colours, type) in `tailwind.config.mjs`
-- [ ] **[repo]** Base layout: header with tap-to-call and Book buttons, mobile menu, footer (NAP, HIC number, hours, socials)
-- [ ] **[repo]** Home page (proof first, four paths, reviews, offers, CTA)
-- [ ] **[repo]** One service-page template, applied to Kitchens
+- [x] **[repo]** Design tokens from the existing brand (logo, colours, type) in `tailwind.config.mjs`
+      — done in `src/styles/global.css` (Tailwind v4 CSS-first `@theme`, not a JS config file), matched
+      to the approved GrowthOS proposal's hi-fi mockup rather than CLAUDE.md's original generic
+      guidance, now that an approved design exists
+- [x] **[repo]** Base layout: header with tap-to-call and Book buttons, mobile menu, footer (NAP, HIC number, hours, socials)
+- [x] **[repo]** Home page (proof first, four paths, reviews, offers, CTA) — reviews section
+      intentionally omitted; no real reviews exist yet (CONTENT_GAPS.md)
+- [x] **[repo]** One service-page template, applied to Kitchens — `src/components/service/` +
+      `src/data/services.ts`; Week 3 adds the remaining entries
 - [ ] **[ops]** Send Stephen a Vercel preview link: **one review round** (about 1 hour of his time)
+      — a preview is live at https://design-scope-chi.vercel.app/ (temporary personal Vercel
+      account, pending Stephen's own) so the client can see work has started; the actual review
+      round with Stephen hasn't happened yet
 
 ✅ Gate: designs approved
 

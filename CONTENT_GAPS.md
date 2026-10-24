@@ -52,6 +52,11 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
 - [ ] Verify or drop the "A+ BBB rating" and "Best of Houzz 2024" trust badges shown in the
       mockup's hero trust strip — not in HANDOFF.md, not confirmed anywhere; don't ship
       without Stephen confirming they're real
+- [ ] Stephen hasn't reviewed any service-page copy yet. `/remodeling/kitchens/` headline,
+      subcopy and intro paragraph (`src/data/services.ts`) are written from confirmed
+      business.ts facts, not invented, but are unreviewed marketing copy, not his words —
+      flag for approval alongside the gallery (only 2 real-category photos exist in the
+      temp mockup set for Kitchens; thin until real project photos arrive)
 
 ## Access
 
@@ -72,7 +77,10 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
 
 - [x] GitHub repo created: https://github.com/tobiesax/DesignScope — `keystatic.config.ts`
       now points its production storage there
-- [ ] Vercel project created in Design Scope's account, connected to the GitHub repo
+- [ ] Vercel project created in Design Scope's account, connected to the GitHub repo — a
+      temporary preview is live at https://design-scope-chi.vercel.app/ under Tobi's personal
+      Vercel account (kinslerperry-8328) so the client can see progress; move to Design
+      Scope's own account once Stephen creates it (HANDOFF.md section 2's ownership promise)
 - [ ] Keystatic GitHub OAuth App (for the admin UI login in production) — create at
       https://github.com/settings/developers under Design Scope's GitHub account, then set
       `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET` and `KEYSTATIC_SECRET`
