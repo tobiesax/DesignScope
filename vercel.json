@@ -1,0 +1,57 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/kitchen-remodeling", "destination": "/remodeling/kitchens/", "permanent": true },
+    { "source": "/bathroom-remodeling", "destination": "/remodeling/bathrooms/", "permanent": true },
+    { "source": "/home-renovations", "destination": "/remodeling/home-renovations/", "permanent": true },
+    { "source": "/residential-services", "destination": "/remodeling/", "permanent": true },
+    { "source": "/design-build-sales-services", "destination": "/remodeling/", "permanent": true },
+    {
+      "source": "/fire-and-smoke-damage-restoration",
+      "destination": "/restoration/fire-and-smoke-damage/",
+      "permanent": true
+    },
+    {
+      "source": "/water-damage-restoration",
+      "destination": "/restoration/water-damage/",
+      "permanent": true
+    },
+    { "source": "/commercial-services", "destination": "/commercial/", "permanent": true },
+    { "source": "/commercial-renovations", "destination": "/commercial/", "permanent": true },
+    { "source": "/commercial-restorations", "destination": "/commercial/", "permanent": true },
+    { "source": "/showroom-store", "destination": "/showroom/", "permanent": true },
+    {
+      "source": "/construction-and-building-products",
+      "destination": "/showroom/",
+      "permanent": true
+    },
+    {
+      "source": "/interior-construction-products",
+      "destination": "/showroom/",
+      "permanent": true
+    },
+    { "source": "/exterior-building-products", "destination": "/showroom/", "permanent": true },
+    { "source": "/gallery", "destination": "/projects/", "permanent": true },
+    { "source": "/reviews", "destination": "/reviews/", "permanent": true },
+    { "source": "/about", "destination": "/about/", "permanent": true },
+    { "source": "/stephen_author", "destination": "/about/", "permanent": true },
+    { "source": "/faqs", "destination": "/faqs/", "permanent": true },
+    { "source": "/serving-area", "destination": "/areas/", "permanent": true },
+    { "source": "/contact", "destination": "/contact/", "permanent": true },
+    { "source": "/request-quote", "destination": "/book/", "permanent": true },
+    { "source": "/call-or-text-pop", "destination": "/contact/", "permanent": true },
+    { "source": "/blog", "destination": "/blog/", "permanent": true },
+    {
+      "source": "/how-to-plan-and-budget-for-professional-bathroom-remodeling-services",
+      "destination": "/blog/how-to-plan-and-budget-for-professional-bathroom-remodeling-services/",
+      "permanent": true
+    },
+    {
+      "source": "/avoid-renovation-disasters-a-licensed-kitchen-remodeling-company-ensures-quality",
+      "destination": "/blog/avoid-renovation-disasters-a-licensed-kitchen-remodeling-company-ensures-quality/",
+      "permanent": true
+    },
+    { "source": "/hibu-video-splash", "destination": "/", "permanent": true },
+    { "source": "/hibu-eng-menu", "destination": "/", "permanent": true }
+  ]
+}

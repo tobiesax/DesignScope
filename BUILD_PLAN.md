@@ -9,6 +9,7 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
 ## Week 1: Discovery and foundations
 
 **Kickoff call (60 min) — get from Stephen:**
+
 - [ ] HIC registration number, opening hours, confirmed town list (3 town pages)
 - [ ] Access: domain registrar, Hibu account, Google Business Profile, GA4/Search Console, social accounts
 - [ ] Hibu agreement (plan the cut-over around its notice period)
@@ -19,6 +20,7 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
 - [ ] Baseline numbers: enquiries per month, missed calls, consultations booked, estimates won
 
 **Build:**
+
 - [ ] **[ops]** Create the Vercel and GitHub accounts in Design Scope's name; add QuietWorks as a member
 - [ ] **[ops]** Stephen creates the GoHighLevel Starter account (his card) and invites QuietWorks as admin; decide whether to port or forward the main line to LC Phone
 - [ ] **[ops]** Start A2P 10DLC brand and campaign registration **now**. Approval can take 1–3 weeks and blocks all texting.

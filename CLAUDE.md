@@ -22,24 +22,24 @@ Keep dependencies minimal. No React islands unless a component needs interactivi
 
 ## Business facts (single source of truth: `src/data/business.ts`)
 
-| Field | Value |
-| --- | --- |
-| Legal name | Design Scope LLC |
-| Showroom | 480 Cottage Grove Road, Bloomfield, CT 06002 |
-| Main phone (call or text) | (860) 264-5275 |
-| Alternate phone | (860) 794-8739 |
-| Text-offers line | (860) 773-0801 (text START) |
-| Email | contact@designscopellc.com |
-| Founded | 2016, family-owned |
-| Co-founder | Stephen, Member, Interior Design Specialist & Master Craftsman |
-| HIC registration no. | **TODO: get from Stephen.** Must show in the footer and on the contact page. |
-| Opening hours | Mon–Fri 9 am–5 pm; weekends by appointment (confirm) |
-| Warranty | 6-month workmanship warranty |
-| Promises | Free design consultations, 24-hour quotes, price matching |
-| Offers | 10% off for new customers, 5% military discount (state the terms clearly; no conflicting headlines) |
-| Supplier brands | TOTO, Hansgrohe, Wellborn (confirm the full list) |
-| Memberships | HBRA, Bloomfield Chamber of Commerce, KBIS (confirm) |
-| Social | Facebook, Instagram, YouTube, Yelp (get URLs from the current site) |
+| Field                     | Value                                                                                               |
+| ------------------------- | --------------------------------------------------------------------------------------------------- |
+| Legal name                | Design Scope LLC                                                                                    |
+| Showroom                  | 480 Cottage Grove Road, Bloomfield, CT 06002                                                        |
+| Main phone (call or text) | (860) 264-5275                                                                                      |
+| Alternate phone           | (860) 794-8739                                                                                      |
+| Text-offers line          | (860) 773-0801 (text START)                                                                         |
+| Email                     | contact@designscopellc.com                                                                          |
+| Founded                   | 2016, family-owned                                                                                  |
+| Co-founder                | Stephen, Member, Interior Design Specialist & Master Craftsman                                      |
+| HIC registration no.      | **TODO: get from Stephen.** Must show in the footer and on the contact page.                        |
+| Opening hours             | Mon–Fri 9 am–5 pm; weekends by appointment (confirm)                                                |
+| Warranty                  | 6-month workmanship warranty                                                                        |
+| Promises                  | Free design consultations, 24-hour quotes, price matching                                           |
+| Offers                    | 10% off for new customers, 5% military discount (state the terms clearly; no conflicting headlines) |
+| Supplier brands           | TOTO, Hansgrohe, Wellborn (confirm the full list)                                                   |
+| Memberships               | HBRA, Bloomfield Chamber of Commerce, KBIS (confirm)                                                |
+| Social                    | Facebook, Instagram, YouTube, Yelp (get URLs from the current site)                                 |
 
 Never hard-code these anywhere else. Components import from `business.ts`.
 
@@ -92,13 +92,13 @@ Before going live, confirm the town list with Stephen. Candidates are Bloomfield
 
 ## Tracking (GA4 via GTM)
 
-| Event | When |
-| --- | --- |
-| `generate_lead` | Enquiry form submitted |
-| `click_to_call` | `tel:` link tapped (send the page path) |
-| `click_to_text` | `sms:` link tapped |
+| Event               | When                                                                  |
+| ------------------- | --------------------------------------------------------------------- |
+| `generate_lead`     | Enquiry form submitted                                                |
+| `click_to_call`     | `tel:` link tapped (send the page path)                               |
+| `click_to_text`     | `sms:` link tapped                                                    |
 | `book_consultation` | Booking completed (from the GoHighLevel calendar embed, if available) |
-| `get_directions` | Showroom map link clicked |
+| `get_directions`    | Showroom map link clicked                                             |
 
 Add UTM-friendly lead source capture: store the first-touch `utm_*` values and the referrer in hidden form fields.
 
