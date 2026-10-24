@@ -107,3 +107,11 @@ export const mockProjects: {
 ];
 
 export const projectFilters = ['All', 'Kitchens', 'Bathrooms', 'Home renovations', 'Commercial'];
+
+// Only categories with a built page get a link — Home renovations and
+// Commercial don't have one yet (BUILD_PLAN.md Week 3), so a project card or
+// footer link in those categories stays plain text rather than 404ing.
+export const categoryHref: Record<string, string> = {
+  Kitchens: '/remodeling/kitchens/',
+  Bathrooms: '/remodeling/bathrooms/',
+};

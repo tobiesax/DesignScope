@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import { business } from '../data/business';
+import { categoryHref } from '../data/home';
 
 const year = new Date().getFullYear();
 
@@ -13,13 +14,14 @@ const socialLinks = [
 
 // Condensed for the footer link list (matches the approved mockup) — the
 // full, specific service names live in business.services for the nav and
-// service pages.
+// service pages. Only linked once a page exists (categoryHref); the rest
+// stay plain text rather than 404ing.
 const footerServices = [
-  'Kitchen remodeling',
-  'Bathroom remodeling',
-  'Home renovations',
-  'Fire & water restoration',
-  'Commercial',
+  { label: 'Kitchen remodeling', href: categoryHref.Kitchens },
+  { label: 'Bathroom remodeling', href: categoryHref.Bathrooms },
+  { label: 'Home renovations', href: undefined },
+  { label: 'Fire & water restoration', href: undefined },
+  { label: 'Commercial', href: undefined },
 ];
 ---
 
@@ -36,9 +38,14 @@ const footerServices = [
       <span class="text-brand mb-1 text-[9.5px] font-semibold tracking-[0.25em] uppercase">
         Services
       </span>
-      {footerServices.map((service) => (
-        <span class="block">{service}</span>
-      ))}
+      {footerServices.map((service) => {
+        const Tag = service.href ? 'a' : 'span';
+        return (
+          <Tag class="block hover:text-brand" href={service.href}>
+            {service.label}
+          </Tag>
+        );
+      })}
     </div>
 
     <div class="flex flex-col gap-2 text-xs">

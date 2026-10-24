@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import { kitchens, bathrooms } from '../../data/services';
+
+// Home renovations isn't built yet (BUILD_PLAN.md Week 3) — omitted rather
+// than linking a page that doesn't exist, per CLAUDE.md's no-placeholders rule.
+const services = [kitchens, bathrooms];
+---
+
+<Layout
+  title="Remodeling in Bloomfield, CT"
+  description="Kitchen and bathroom remodeling across Hartford County, Connecticut. Free design consultation, a written quote within 24 hours."
+>
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Remodeling
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
+      Kitchens, bathrooms and home renovations
+    </h1>
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
+      Free design consultation, a written quote within 24 hours, and one team handling design
+      through construction. Pick a room to see our process and recent work.
+    </p>
+  </section>
+
+  <div class="grid gap-3.5 px-4 pb-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+    {services.map((service) => (
+      <a href={`/remodeling/${service.slug}/`} class="bg-paper-muted flex flex-col">
+        <Image src={service.heroImage} alt="" class="h-[200px] w-full object-cover" />
+        <div class="flex flex-col gap-1.5 p-5">
+          <span class="text-lg font-extrabold capitalize">{service.slug}</span>
+          <span class="text-brand-dark text-xs font-extrabold">See our {service.slug} work →</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</Layout>
