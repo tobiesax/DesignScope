@@ -7,6 +7,11 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
+Design is now following the approved GrowthOS proposal's hi-fi website mockup (layout,
+copy tone, colour system) — but its photos (hero/kitchen/before-after/showroom) and the
+"A+ BBB rating" / "Best of Houzz 2024" badges are Claude-generated pitch-deck placeholders,
+not real Design Scope assets. They're tracked below and won't ship until real.
+
 ## Business facts
 
 - [ ] HIC registration number
@@ -24,17 +29,22 @@ Source: `HANDOFF.md` section 10, plus anything found while building.
 - [ ] Logo source file (original vector SVG/AI/EPS) — despite the filename, the Hibu asset
       actually serves at 200×80px (`src/assets/logo.png`), too low-res for a crisp header;
       need the original vector or a high-res export from Stephen
-- [x] Brand colours — sampled from the logo and cross-checked against live site CSS: one
-      accent orange (`#ff5f00`) plus standard dark/light neutrals, no separate "primary"
-      hue exists. Tokens live in `src/styles/global.css` as `brand`/`brand-dark`/`ink`/`paper`
-      (CLAUDE.md names them `brand-primary`/`brand-accent`, but there's only one real brand
-      colour to work with — flagged for Stephen to confirm, not a second colour)
+- [x] Brand colours — confirmed against the approved proposal's hi-fi mockup: orange
+      `#ff5f00`/`#c24400` plus dark/light neutrals, and red `#e8192c` reserved only for
+      restoration/emergency accents (never general chrome). Tokens live in
+      `src/styles/global.css` (`brand`/`brand-dark`/`urgent`/`ink`/`paper`/etc. — CLAUDE.md
+      names two brand hues `brand-primary`/`brand-accent`, but only one exists; named to match
+      their actual roles instead)
 - [ ] Fonts, if any already in use (logo/site don't expose a typeface; picking free, self-hosted serif + sans per CLAUDE.md "Brand" unless Stephen has a preference)
 - [ ] 15–30 project photos, before-and-after pairs, tagged with town and project type
 - [ ] 5–10 showroom photos (exterior with signage, displays, brands)
 - [ ] Team photo for About
 - [ ] Supplier/membership logos
-- [ ] Real reviews to feature (current reviews page has none — only brand logos)
+- [ ] Real reviews to feature (current reviews page has none — only brand logos; the mockup's
+      review cards are sample/placeholder text, not real quotes)
+- [ ] Verify or drop the "A+ BBB rating" and "Best of Houzz 2024" trust badges shown in the
+      mockup's hero trust strip — not in HANDOFF.md, not confirmed anywhere; don't ship
+      without Stephen confirming they're real
 
 ## Access
 

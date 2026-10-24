@@ -4,28 +4,48 @@
 @import '@fontsource-variable/inter';
 
 /*
- * Brand tokens, sourced from the real logo and the live designscopellc.com
- * CSS (not invented) — see CLAUDE.md "Brand". Tailwind v4 uses this CSS-first
- * @theme block instead of tailwind.config.mjs.
+ * Brand tokens, matched to the approved GrowthOS proposal's hi-fi website
+ * mockup (not invented) — see CLAUDE.md "Brand". Tailwind v4 uses this
+ * CSS-first @theme block instead of tailwind.config.mjs.
  *
- * - brand / brand-dark: the orange (#ff5f00) sampled directly from the logo
- *   pixels; brand-dark is a darkened shade for hover/active states.
- * - ink / paper / paper-muted: match the near-black text (#000/#333) and
- *   off-white backgrounds (#fff/#faf9f9) already used on the live site.
+ * - brand / brand-dark: the orange (#ff5f00, #c24400) from the mockup,
+ *   matching the orange sampled directly from the real logo pixels.
+ * - urgent: red, used ONLY for restoration/emergency accents (the
+ *   Restoration path card, "Call now, 24/7" emphasis) — confirmed from the
+ *   mockup's own paths[] data, not general chrome. Never use it as a
+ *   second brand colour.
+ * - dark / dark-deep: near-black section backgrounds (nav, hero, footer).
+ * - ink / ink-soft / muted: text colours, darkest to lightest.
+ * - paper / paper-muted / border / border-soft: light backgrounds and
+ *   dividers.
+ * - on-dark / on-dark-muted: text colours for use on dark backgrounds.
  */
 @theme {
   --color-brand: #ff5f00;
-  --color-brand-dark: #cc4c00;
-  --color-ink: #1a1a1a;
+  --color-brand-dark: #c24400;
+  --color-urgent: #e8192c;
+
+  --color-dark: #161616;
+  --color-dark-deep: #0e0e0e;
+
+  --color-ink: #111111;
+  --color-ink-soft: #2a2a2a;
+  --color-muted: #555555;
+
   --color-paper: #ffffff;
-  --color-paper-muted: #faf9f9;
+  --color-paper-muted: #f5f5f5;
+  --color-border: #e8e8e8;
+  --color-border-soft: #d8d8d8;
+
+  --color-on-dark: #ededed;
+  --color-on-dark-muted: #bdbdbd;
 
   --font-heading: 'Lora Variable', ui-serif, Georgia, serif;
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  @apply bg-paper text-ink font-sans;
+  @apply bg-paper text-ink-soft font-sans;
 }
 
 h1,

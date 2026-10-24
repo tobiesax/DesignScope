@@ -1,0 +1,109 @@
+---
+import Logo from './Logo.astro';
+import { business } from '../data/business';
+
+const navLinks = [
+  { label: 'Remodeling', href: '/remodeling/' },
+  { label: 'Restoration', href: '/restoration/' },
+  { label: 'Commercial', href: '/commercial/' },
+  { label: 'Showroom', href: '/showroom/' },
+  { label: 'Projects', href: '/projects/' },
+];
+---
+
+<header class="sticky top-0 z-50">
+  <!-- Urgency bar: matches the approved mockup — always-visible emergency CTA -->
+  <div class="bg-brand text-ink flex flex-wrap items-center justify-between gap-2 px-4 py-2 text-xs font-semibold sm:px-7">
+    <span>Fire or water damage? We answer 24/7</span>
+    <a
+      href={`tel:${business.phone.mainTel}`}
+      class="font-extrabold underline-offset-2 hover:underline"
+    >
+      Call or text {business.phone.main}
+    </a>
+  </div>
+
+  <!-- Main nav -->
+  <div class="bg-dark text-paper flex items-center justify-between gap-5 px-4 py-3 sm:px-7">
+    <Logo heightPx={36} />
+
+    <nav aria-label="Primary" class="hidden md:block">
+      <ul class="flex gap-6 text-sm font-semibold">
+        {navLinks.map((link) => (
+          <li>
+            <a href={link.href} class="hover:text-brand">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a
+        href="/book/"
+        class="bg-brand text-ink hidden px-4 py-2.5 text-xs font-extrabold sm:inline-block"
+      >
+        Book a free consultation
+      </a>
+
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="text-paper inline-flex h-10 w-10 items-center justify-center md:hidden"
+      >
+        <span class="sr-only">Open menu</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-6 w-6">
+          <path
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            d="M4 7h16M4 12h16M4 17h16"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu panel -->
+  <nav
+    id="mobile-menu"
+    aria-label="Primary"
+    hidden
+    class="bg-dark text-paper flex flex-col gap-4 px-4 py-5 md:hidden"
+  >
+    <ul class="flex flex-col gap-4 text-sm font-semibold">
+      {navLinks.map((link) => (
+        <li>
+          <a href={link.href} class="hover:text-brand">
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a href="/book/" class="bg-brand text-ink px-4 py-3 text-center text-xs font-extrabold">
+      Book a free consultation
+    </a>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    menu?.toggleAttribute('hidden', isOpen);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      toggle.setAttribute('aria-expanded', 'false');
+      menu?.setAttribute('hidden', '');
+      toggle.focus();
+    }
+  });
+</script>

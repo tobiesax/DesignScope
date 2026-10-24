@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+
+// Real Hibu-sourced asset (src/assets/logo.png, 200x80). Its "DESIGN" wordmark
+// is white, so it only reads on a dark background — same placement the
+// approved GrowthOS proposal mockup uses (dark nav, dark footer). Swap for
+// the original vector once Stephen sends it; see CONTENT_GAPS.md.
+interface Props {
+  class?: string;
+  heightPx?: number;
+}
+
+const { class: className = '', heightPx = 40 } = Astro.props;
+---
+
+<a href="/" aria-label="Design Scope home" class={className}>
+  <Image
+    src={logo}
+    alt="Design Scope"
+    height={heightPx}
+    width={Math.round((heightPx * 200) / 80)}
+  />
+</a>

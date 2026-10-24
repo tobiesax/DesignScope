@@ -1,0 +1,93 @@
+---
+import Logo from './Logo.astro';
+import { business } from '../data/business';
+
+const year = new Date().getFullYear();
+
+const socialLinks = [
+  { label: 'Facebook', href: business.social.facebook },
+  { label: 'Instagram', href: business.social.instagram },
+  { label: 'YouTube', href: business.social.youtube },
+  { label: 'Yelp', href: business.social.yelp },
+];
+---
+
+<footer class="bg-dark-deep text-paper px-4 py-11 sm:px-7">
+  <div class="mx-auto grid max-w-6xl gap-7 [grid-template-columns:repeat(auto-fit,minmax(170px,1fr))]">
+    <div class="flex flex-col gap-3">
+      <Logo heightPx={32} />
+      <p class="text-on-dark-muted text-xs leading-relaxed">
+        Family-owned design and construction since {business.foundedYear}. Licensed and insured.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-2 text-xs">
+      <span class="text-brand mb-1 text-[9.5px] font-semibold tracking-[0.25em] uppercase">
+        Services
+      </span>
+      {business.services.residential.map((service) => (
+        <span class="block">{service}</span>
+      ))}
+      {business.services.commercial.map((service) => (
+        <span class="block">{service}</span>
+      ))}
+    </div>
+
+    <div class="flex flex-col gap-2 text-xs">
+      <span class="text-brand mb-1 text-[9.5px] font-semibold tracking-[0.25em] uppercase">
+        Company
+      </span>
+      <a href="/about/" class="block hover:text-brand">
+        About
+      </a>
+      <a href="/projects/" class="block hover:text-brand">
+        Projects
+      </a>
+      <a href="/reviews/" class="block hover:text-brand">
+        Reviews
+      </a>
+      <a href="/blog/" class="block hover:text-brand">
+        Blog
+      </a>
+      <a href="/faqs/" class="block hover:text-brand">
+        FAQs
+      </a>
+    </div>
+
+    <address class="flex flex-col gap-2 text-xs leading-relaxed not-italic">
+      <span class="text-brand mb-1 text-[9.5px] font-semibold tracking-[0.25em] uppercase">
+        Visit &amp; contact
+      </span>
+      <span>
+        {business.showroom.streetAddress}, {business.showroom.city}, {business.showroom.state}{' '}
+        {business.showroom.postalCode}
+      </span>
+      <a href={`tel:${business.phone.mainTel}`} class="font-bold hover:text-brand">
+        {business.phone.main}
+      </a>
+      <a href={`mailto:${business.email}`} class="hover:text-brand">
+        {business.email}
+      </a>
+      <span class="text-on-dark-muted">
+        {business.hours.weekday} · {business.hours.weekend}
+      </span>
+    </address>
+  </div>
+
+  <div class="text-on-dark-muted mx-auto mt-5 flex max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-[#2A2A2A] pt-4 text-[11px]">
+    <span>
+      © {year} {business.legalName}
+      {business.hicRegistrationNumber ? ` · CT HIC reg. #${business.hicRegistrationNumber}` : ''}
+    </span>
+    <div class="flex gap-4">
+      {socialLinks.map((social) => (
+        <a href={social.href} class="hover:text-brand" target="_blank" rel="noopener noreferrer">
+          {social.label}
+        </a>
+      ))}
+    </div>
+    <a href="/privacy/" class="hover:text-brand">
+      Privacy
+    </a>
+  </div>
+</footer>
