@@ -8,9 +8,13 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
 Design is now following the approved GrowthOS proposal's hi-fi website mockup (layout,
-copy tone, colour system) — but its photos (hero/kitchen/before-after/showroom) and the
-"A+ BBB rating" / "Best of Houzz 2024" badges are Claude-generated pitch-deck placeholders,
-not real Design Scope assets. They're tracked below and won't ship until real.
+copy tone, colour system). Its photos (hero, 4 path cards, before/after pair, showroom, 6
+project cards) are wired into the live prototype temporarily, at Tobi's request, so the
+build is visible while real assets are pending — see `src/data/mockup-images.ts` and
+`src/assets/mockup-temp/`. They are Claude-generated pitch-deck placeholders, not real
+Design Scope photos, and the "A+ BBB rating" / "Best of Houzz 2024" badges were dropped
+entirely (unverified). None of this ships at launch — swap `mockup-images.ts`'s imports for
+Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
 
 ## Business facts
 

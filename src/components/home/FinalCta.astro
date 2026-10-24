@@ -1,0 +1,50 @@
+---
+import { business } from '../../data/business';
+
+// The form below is decorative, matching the approved mockup (which also used
+// static styled boxes, not real inputs) — the working form lands in
+// BUILD_PLAN.md Week 4 as /api/lead.
+---
+
+<section class="bg-brand grid items-center gap-9 px-4 py-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+  <div class="text-ink flex flex-col gap-3.5">
+    <h2 class="text-[28px] font-black leading-[1.05] tracking-tight sm:text-4xl">
+      Ready to start? Your quote in 24 hours.
+    </h2>
+    <p class="text-sm leading-relaxed font-medium">
+      Free design consultation at the showroom or your home. Walk-ins welcome.
+    </p>
+    <div class="bg-dark text-paper flex w-fit flex-col gap-1 px-4.5 py-4">
+      <span class="text-brand text-[9.5px] font-semibold tracking-[0.25em] uppercase">
+        Emergency? Fire or water damage
+      </span>
+      <a href={`tel:${business.phone.mainTel}`} class="text-[17px] font-extrabold">
+        {business.phone.main} · answered 24/7
+      </a>
+    </div>
+  </div>
+
+  <div class="bg-paper flex flex-col gap-2.5 p-6">
+    <div class="grid grid-cols-2 gap-2.5" aria-hidden="true">
+      <span class="border-border-soft text-muted border px-3 py-2.5 text-xs">Name</span>
+      <span class="border-border-soft text-muted border px-3 py-2.5 text-xs">Phone</span>
+    </div>
+    <div class="grid grid-cols-2 gap-2.5" aria-hidden="true">
+      <span class="border-border-soft text-muted border px-3 py-2.5 text-xs">Project type ▾</span>
+      <span class="border-border-soft text-muted border px-3 py-2.5 text-xs">Town ▾</span>
+    </div>
+    <span
+      class="border-border-soft text-muted h-[54px] border px-3 py-2.5 text-xs"
+      aria-hidden="true"
+    >
+      Tell us about your project
+    </span>
+    <a
+      href="/book/"
+      class="bg-dark text-paper px-3.5 py-3.5 text-center text-[13px] font-extrabold"
+    >
+      Book my free consultation
+    </a>
+    <span class="text-muted text-center text-[10.5px]">We reply within minutes, day or night.</span>
+  </div>
+</section>

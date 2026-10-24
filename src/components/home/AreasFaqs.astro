@@ -1,0 +1,56 @@
+---
+import { faqs } from '../../data/home';
+import { business } from '../../data/business';
+---
+
+<section class="bg-paper-muted grid items-start gap-10 px-4 py-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+  <div class="flex flex-col gap-4">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Where we work
+    </span>
+    <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">
+      Hartford County and the Farmington Valley
+    </h2>
+    <div class="flex flex-wrap gap-1.5">
+      {business.serviceAreas.map((town) => (
+        <span class="border-border-soft bg-paper border px-3 py-2 text-xs font-semibold">
+          {town}
+        </span>
+      ))}
+    </div>
+    <span class="text-muted text-xs">Each town gets its own page with local projects.</span>
+  </div>
+
+  <div id="faq-list" class="flex flex-col">
+    <span class="pb-2.5 text-[13px] font-extrabold">Common questions</span>
+    {faqs.map((item, i) => (
+      <div class="border-border-soft border-t">
+        <button
+          type="button"
+          data-faq-toggle
+          aria-expanded={i === 0 ? 'true' : 'false'}
+          class="flex w-full cursor-pointer items-center justify-between gap-3 py-3.5 text-left"
+        >
+          <span class="text-[13.5px] font-bold">{item.q}</span>
+          <span class="text-brand-dark faq-icon text-lg font-medium">{i === 0 ? '–' : '+'}</span>
+        </button>
+        <p class="faq-answer text-ink-soft m-0 text-[13px] leading-relaxed" hidden={i !== 0}>
+          {item.a}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-faq-toggle]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const isOpen = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!isOpen));
+      const icon = button.querySelector('.faq-icon');
+      if (icon) icon.textContent = isOpen ? '+' : '–';
+      const answer = button.nextElementSibling as HTMLElement | null;
+      answer?.toggleAttribute('hidden', isOpen);
+    });
+  });
+</script>

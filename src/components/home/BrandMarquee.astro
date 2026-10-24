@@ -1,0 +1,45 @@
+---
+import { business } from '../../data/business';
+
+// Only the confirmed supplier list from business.ts — the mockup padded this
+// row with ~20 plausible-sounding brand names for visual density, but
+// none of those extras are in HANDOFF.md or confirmed with Stephen. See
+// CONTENT_GAPS.md "Full supplier brand list".
+const brands = [...business.supplierBrands, ...business.supplierBrands];
+---
+
+<section class="border-border flex flex-col gap-4.5 overflow-hidden border-b py-7">
+  <div class="flex flex-wrap items-baseline justify-between gap-3 px-4 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Our supplier partners
+    </span>
+    <span class="text-muted text-[11.5px] font-semibold">On display in the showroom</span>
+  </div>
+  <div
+    class="relative overflow-hidden"
+    style="mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)"
+  >
+    <ul class="animate-marquee flex w-max gap-11 pl-11">
+      {brands.map((brand) => (
+        <li class="text-ink-soft flex shrink-0 items-center gap-11 text-[19px] font-extrabold whitespace-nowrap">
+          {brand}
+          <span class="bg-brand h-1.5 w-1.5 shrink-0 rotate-45"></span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+</style>

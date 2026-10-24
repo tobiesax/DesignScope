@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+import { mockupImages } from '../../data/mockup-images';
+import { business } from '../../data/business';
+
+// TEMPORARY showroom photo — see src/data/mockup-images.ts
+const brandList = business.supplierBrands.join(', ');
+---
+
+<section class="grid [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+  <div class="relative min-h-[360px]">
+    <Image
+      src={mockupImages.showroom}
+      alt="Design Scope showroom"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+  </div>
+  <div class="bg-dark text-paper flex flex-col justify-center gap-4 px-6 py-12 sm:px-8">
+    <span class="text-brand text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Kitchen &amp; bath showroom
+    </span>
+    <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">See it, touch it, then decide</h2>
+    <p class="text-on-dark text-sm leading-relaxed">
+      Cabinetry, counters, tile and fixtures from {brandList} and more. Price matching on comparable
+      written estimates.
+    </p>
+    <div class="grid grid-cols-2 gap-3.5 border-y border-[#333333] py-4">
+      <div class="flex flex-col gap-1">
+        <span class="text-on-dark-muted text-[9.5px] font-semibold tracking-[0.25em] uppercase">
+          Address
+        </span>
+        <span class="text-[13px] leading-relaxed font-semibold">
+          {business.showroom.streetAddress}
+          <br />
+          {business.showroom.city}, {business.showroom.state} {business.showroom.postalCode}
+        </span>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-on-dark-muted text-[9.5px] font-semibold tracking-[0.25em] uppercase">
+          Hours
+        </span>
+        <span class="text-[13px] leading-relaxed font-semibold">
+          {business.hours.weekday}
+          <br />
+          {business.hours.weekend}
+        </span>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-2.5">
+      <a href="/book/" class="bg-brand text-ink px-4 py-3.5 text-xs font-extrabold">
+        Book a showroom visit
+      </a>
+      <a
+        href={`https://maps.google.com/?q=${encodeURIComponent(`${business.showroom.streetAddress}, ${business.showroom.city}, ${business.showroom.state} ${business.showroom.postalCode}`)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="border-paper border-[1.5px] px-4 py-3.5 text-xs font-bold"
+      >
+        Get directions
+      </a>
+    </div>
+  </div>
+</section>

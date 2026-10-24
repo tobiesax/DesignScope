@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import { mockupImages } from '../../data/mockup-images';
+import { business } from '../../data/business';
+
+// TEMPORARY hero photo — see src/data/mockup-images.ts
+const trustStrip = [
+  `Family-owned since ${business.foundedYear}`,
+  business.warranty,
+  '24-hour quotes',
+  'Walk-ins welcome',
+];
+---
+
+<section class="relative min-h-[520px]">
+  <Image
+    src={mockupImages['hero-kitchen']}
+    alt=""
+    class="absolute inset-0 h-full w-full object-cover"
+    widths={[640, 1024, 1600]}
+    sizes="100vw"
+  />
+  <div
+    class="absolute inset-0"
+    style="background:linear-gradient(90deg,rgba(15,15,15,0.88) 0%,rgba(15,15,15,0.6) 45%,rgba(15,15,15,0.1) 100%)"
+  ></div>
+
+  <div class="relative flex flex-col gap-5 px-4 py-16 sm:px-7 sm:py-20 max-w-xl text-paper">
+    <span class="text-brand text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Family-owned since {business.foundedYear} · {business.showroom.city},{' '}
+      {business.showroom.state}
+    </span>
+    <h1 class="text-4xl font-black leading-[1.05] tracking-tight sm:text-5xl">
+      Kitchens, baths and whole-home remodels across Hartford County
+    </h1>
+    <p class="text-on-dark text-base leading-relaxed">
+      Visit our showroom, meet the family, and get your quote within 24 hours.
+    </p>
+    <div class="flex flex-wrap gap-2.5">
+      <a href="/book/" class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
+        Book a free consultation
+      </a>
+      <a href="/projects/" class="border-paper border px-5 py-3.5 text-sm font-bold">
+        See our projects
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="border-border flex flex-wrap justify-between gap-x-6 gap-y-2 border-b px-4 py-4 text-xs font-bold sm:px-7">
+  {trustStrip.map((item) => (
+    <span>{item}</span>
+  ))}
+</div>

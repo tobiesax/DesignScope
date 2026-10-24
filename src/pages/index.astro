@@ -1,10 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/home/Hero.astro';
+import PathsGrid from '../components/home/PathsGrid.astro';
+import WhyUs from '../components/home/WhyUs.astro';
+import BeforeAfter from '../components/home/BeforeAfter.astro';
+import ProjectsGrid from '../components/home/ProjectsGrid.astro';
+import ShowroomBlock from '../components/home/ShowroomBlock.astro';
+import BrandMarquee from '../components/home/BrandMarquee.astro';
+import ProcessSteps from '../components/home/ProcessSteps.astro';
+import Offers from '../components/home/Offers.astro';
+import AreasFaqs from '../components/home/AreasFaqs.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+
+// Real Google reviews are not shippable yet (CONTENT_GAPS.md — current site
+// has none, and we never invent them per CLAUDE.md), so the mockup's reviews
+// section is intentionally omitted until real ones exist.
 ---
 
 <Layout
   title="Kitchen & Bath Remodeling, Bloomfield CT"
-  description="Family-owned kitchen, bath and home remodeling and restoration contractor in Bloomfield, Connecticut."
+  description="Family-owned kitchen, bath and home remodeling and restoration contractor in Bloomfield, Connecticut. Free design consultations, 24-hour quotes."
 >
-  <p class="px-4 py-16 text-center sm:px-7">Home page content — BUILD_PLAN.md Week 2, next task.</p>
+  <Hero />
+  <PathsGrid />
+  <WhyUs />
+  <BeforeAfter />
+  <ProjectsGrid />
+  <ShowroomBlock />
+  <BrandMarquee />
+  <ProcessSteps />
+  <Offers />
+  <AreasFaqs />
+  <FinalCta />
 </Layout>

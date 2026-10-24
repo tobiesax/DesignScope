@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import { mockProjects, projectFilters } from '../../data/home';
+import { mockupImages } from '../../data/mockup-images';
+
+// TEMPORARY project photos — see src/data/mockup-images.ts
+---
+
+<section class="bg-paper-muted flex flex-col gap-5 px-4 py-12 sm:px-7">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div class="flex flex-col gap-2.5">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        Recent projects
+      </span>
+      <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">Real work, real towns</h2>
+    </div>
+    <div id="project-filters" class="flex flex-wrap gap-1.5">
+      {projectFilters.map((filter, i) => (
+        <button
+          type="button"
+          data-filter={filter}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          class:list={[
+            'border-dark px-3 py-2 text-[11.5px] font-bold border cursor-pointer',
+            i === 0 ? 'bg-dark text-paper' : 'bg-paper text-ink',
+          ]}
+        >
+          {filter}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div
+    id="project-grid"
+    class="grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]"
+  >
+    {mockProjects.map((project) => (
+      <div class="bg-paper flex flex-col" data-cat={project.cat}>
+        <Image
+          src={mockupImages[project.img as keyof typeof mockupImages]}
+          alt={project.title}
+          class="h-[190px] w-full object-cover"
+        />
+        <div class="flex items-baseline justify-between gap-2.5 px-4 py-3.5">
+          <span class="text-[13.5px] font-extrabold">{project.title}</span>
+          <span class="text-muted text-[11px] font-semibold whitespace-nowrap">{project.town}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <a
+    href="/projects/"
+    class="border-dark self-center border-[1.5px] px-5 py-3 text-xs font-extrabold"
+  >
+    View all projects
+  </a>
+</section>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('#project-filters button');
+  const cards = document.querySelectorAll<HTMLElement>('#project-grid > [data-cat]');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter ?? 'All';
+
+      buttons.forEach((b) => {
+        const active = b === button;
+        b.setAttribute('aria-pressed', String(active));
+        b.classList.toggle('bg-dark', active);
+        b.classList.toggle('text-paper', active);
+        b.classList.toggle('bg-paper', !active);
+        b.classList.toggle('text-ink', !active);
+      });
+
+      cards.forEach((card) => {
+        card.hidden = filter !== 'All' && card.dataset.cat !== filter;
+      });
+    });
+  });
+</script>

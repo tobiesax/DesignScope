@@ -1,0 +1,36 @@
+---
+import { process } from '../../data/home';
+---
+
+<section class="flex flex-col gap-6.5 px-4 py-12 sm:px-7">
+  <div class="flex flex-col gap-2.5">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      How it works
+    </span>
+    <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">Four steps, no surprises</h2>
+  </div>
+  <div class="grid gap-[3px] [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
+    {process.map((step, i) => {
+      const isLast = i === process.length - 1;
+      return (
+        <div
+          class:list={[
+            'flex flex-col gap-2.5 px-5 py-5.5',
+            isLast ? 'bg-brand text-ink' : 'bg-dark text-paper',
+          ]}
+        >
+          <span
+            class:list={[
+              'text-[30px] font-black tracking-tight',
+              isLast ? 'text-ink' : 'text-brand',
+            ]}
+          >
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <span class="text-[15px] font-extrabold">{step.t}</span>
+          <span class="text-[12.5px] leading-relaxed opacity-85">{step.b}</span>
+        </div>
+      );
+    })}
+  </div>
+</section>
