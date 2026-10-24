@@ -46,7 +46,11 @@ Source: `HANDOFF.md` section 10, plus anything found while building.
 
 ## Infrastructure
 
-- [ ] GitHub repo created for this project — once pushed, switch `keystatic.config.ts`
-      storage from `{ kind: 'local' }` to `{ kind: 'github', repo: 'owner/repo-name' }`
-      and set up the Keystatic GitHub App / OAuth credentials
+- [x] GitHub repo created: https://github.com/tobiesax/DesignScope — `keystatic.config.ts`
+      now points its production storage there
+- [ ] Vercel project created in Design Scope's account, connected to the GitHub repo
+- [ ] Keystatic GitHub OAuth App (for the admin UI login in production) — create at
+      https://github.com/settings/developers under Design Scope's GitHub account, then set
+      `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET` and `KEYSTATIC_SECRET`
+      (a random string) in Vercel. Callback URL: `https://<production-domain>/api/keystatic/github/oauth/callback`
 - [ ] `GHL_INBOUND_WEBHOOK_URL`, `PUBLIC_GTM_ID`, `PUBLIC_GHL_BOOKING_URL` env vars (HANDOFF.md section 7)

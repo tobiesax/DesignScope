@@ -2,8 +2,16 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     { "source": "/kitchen-remodeling", "destination": "/remodeling/kitchens/", "permanent": true },
-    { "source": "/bathroom-remodeling", "destination": "/remodeling/bathrooms/", "permanent": true },
-    { "source": "/home-renovations", "destination": "/remodeling/home-renovations/", "permanent": true },
+    {
+      "source": "/bathroom-remodeling",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/home-renovations",
+      "destination": "/remodeling/home-renovations/",
+      "permanent": true
+    },
     { "source": "/residential-services", "destination": "/remodeling/", "permanent": true },
     { "source": "/design-build-sales-services", "destination": "/remodeling/", "permanent": true },
     {
