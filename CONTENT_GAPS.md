@@ -39,7 +39,10 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
       `src/styles/global.css` (`brand`/`brand-dark`/`urgent`/`ink`/`paper`/etc. — CLAUDE.md
       names two brand hues `brand-primary`/`brand-accent`, but only one exists; named to match
       their actual roles instead)
-- [ ] Fonts, if any already in use (logo/site don't expose a typeface; picking free, self-hosted serif + sans per CLAUDE.md "Brand" unless Stephen has a preference)
+- [x] Fonts — matched to the approved mockup: Montserrat, one family for headings and body
+      (weights 300–900), self-hosted via `@fontsource-variable/montserrat`. Supersedes
+      CLAUDE.md "Brand"'s generic "one serif + one sans" guidance, now that an approved
+      design exists to follow instead
 - [ ] 15–30 project photos, before-and-after pairs, tagged with town and project type
 - [ ] 5–10 showroom photos (exterior with signage, displays, brands)
 - [ ] Team photo for About

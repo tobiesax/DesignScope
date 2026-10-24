@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 
-@import '@fontsource-variable/lora';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/montserrat';
 
 /*
  * Brand tokens, matched to the approved GrowthOS proposal's hi-fi website
@@ -40,17 +39,9 @@
   --color-on-dark: #ededed;
   --color-on-dark-muted: #bdbdbd;
 
-  --font-heading: 'Lora Variable', ui-serif, Georgia, serif;
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   @apply bg-paper text-ink-soft font-sans;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  @apply font-heading;
 }
