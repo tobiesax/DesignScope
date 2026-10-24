@@ -3,7 +3,10 @@ import { Image } from 'astro:assets';
 import { mockProjects, projectFilters } from '../../data/home';
 import { mockupImages } from '../../data/mockup-images';
 
-// TEMPORARY project photos — see src/data/mockup-images.ts
+// Kitchens/Bathrooms are real photos (src/data/project-images.ts); Home
+// renovations/Commercial are still temporary (src/data/mockup-images.ts).
+const resolveImage = (img: string | ImageMetadata) =>
+  typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
 ---
 
 <section class="bg-paper-muted flex flex-col gap-5 px-4 py-12 sm:px-7">
@@ -38,13 +41,17 @@ import { mockupImages } from '../../data/mockup-images';
     {mockProjects.map((project) => (
       <div class="bg-paper flex flex-col" data-cat={project.cat}>
         <Image
-          src={mockupImages[project.img as keyof typeof mockupImages]}
+          src={resolveImage(project.img)}
           alt={project.title}
           class="h-[190px] w-full object-cover"
         />
         <div class="flex items-baseline justify-between gap-2.5 px-4 py-3.5">
           <span class="text-[13.5px] font-extrabold">{project.title}</span>
-          <span class="text-muted text-[11px] font-semibold whitespace-nowrap">{project.town}</span>
+          {project.town && (
+            <span class="text-muted text-[11px] font-semibold whitespace-nowrap">
+              {project.town}
+            </span>
+          )}
         </div>
       </div>
     ))}

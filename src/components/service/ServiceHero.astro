@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import { mockupImages } from '../../data/mockup-images';
 import type { ServicePage } from '../../data/services';
 
 interface Props {
@@ -13,7 +12,7 @@ const { service, breadcrumb } = Astro.props;
 
 <section class="relative min-h-[340px]">
   <Image
-    src={mockupImages[service.heroImage]}
+    src={service.heroImage}
     alt=""
     class="absolute inset-0 h-full w-full object-cover"
     widths={[640, 1024, 1600]}

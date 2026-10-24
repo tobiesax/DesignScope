@@ -2,6 +2,8 @@
 // mockup (not invented). Images are handled separately — see
 // src/assets/mockup-temp/ and CONTENT_GAPS.md.
 
+import { kitchenProjects, bathroomProjects, projectImages } from './project-images';
+
 export const paths = [
   {
     title: 'Remodeling',
@@ -72,20 +74,22 @@ export const faqs = [
   },
 ];
 
-// Temporary: photos and towns from the proposal mockup, used only until
-// Stephen's real project photos arrive (CONTENT_GAPS.md). The Simsbury
+// Kitchens and Bathrooms are real photos scraped from the live site
+// (src/data/project-images.ts) — no town is known per photo, so `town` is
+// omitted rather than invented. Home renovations and Commercial are still
+// temporary mockup photos (CONTENT_GAPS.md) pending real ones; the Simsbury
 // project is recategorised from the mockup's "Restoration" to "Home
 // renovations" — a whole-home renovation isn't fire/water damage work, and
 // no real restoration project photos exist to populate that filter.
-export const mockProjects = [
-  {
-    id: 'proj-1',
-    title: 'Open-plan kitchen',
-    town: 'West Hartford',
-    cat: 'Kitchens',
-    img: 'ds-kitchen',
-  },
-  { id: 'proj-2', title: 'Primary bath', town: 'Avon', cat: 'Bathrooms', img: 'proj-bath-avon' },
+export const mockProjects: {
+  id: string;
+  title: string;
+  town?: string;
+  cat: string;
+  img: string | ImageMetadata;
+}[] = [
+  ...kitchenProjects.map((p) => ({ ...p, cat: 'Kitchens', img: projectImages[p.img] })),
+  ...bathroomProjects.map((p) => ({ ...p, cat: 'Bathrooms', img: projectImages[p.img] })),
   {
     id: 'proj-3',
     title: 'Whole-home renovation',
@@ -99,20 +103,6 @@ export const mockProjects = [
     town: 'Hartford',
     cat: 'Commercial',
     img: 'proj-office-hartford',
-  },
-  {
-    id: 'proj-5',
-    title: 'Galley kitchen',
-    town: 'Bloomfield',
-    cat: 'Kitchens',
-    img: 'proj-galley-bloomfield',
-  },
-  {
-    id: 'proj-6',
-    title: 'Walk-in shower',
-    town: 'Windsor',
-    cat: 'Bathrooms',
-    img: 'proj-shower-windsor',
   },
 ];
 

@@ -43,10 +43,24 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
       (weights 300–900), self-hosted via `@fontsource-variable/montserrat`. Supersedes
       CLAUDE.md "Brand"'s generic "one serif + one sans" guidance, now that an approved
       design exists to follow instead
-- [ ] 15–30 project photos, before-and-after pairs, tagged with town and project type
+- [x] Kitchens (4) and Bathrooms (6) project photos — REAL, scraped from the live site's own
+      `/kitchen-remodeling` and `/bathroom-remodeling` pages at Tobi's request (genuine
+      completed Design Scope jobs, not placeholders). See `src/data/project-images.ts` and
+      `src/assets/projects/`. No town is known per photo (the live site doesn't tag them) —
+      don't invent one; `town` is omitted rather than guessed. Two kitchen-gallery images (a
+      laundry nook, a home bar area) were excluded as miscategorised on the live site.
+- [ ] Home renovations and Commercial still use the Claude-generated mockup photos
+      (`mockup-temp/`) — same live-site scrape approach should work for these once there's
+      time; the live site's gallery/commercial-services pages have real photos too
+- [ ] Before-and-after pairs specifically (have singles only so far) — check if the live site
+      has any, otherwise need these directly from Stephen
 - [ ] 5–10 showroom photos (exterior with signage, displays, brands)
 - [ ] Team photo for About
-- [ ] Supplier/membership logos
+- [x] Supplier/membership logos — found on the live site while scraping project photos
+      (~29 brand logos incl. TOTO, Hansgrohe, Wellborn Forest, Brizo, Delta, Franke, Robern,
+      Schluter Systems, MSI, Fabuwood + more; membership logos for HBRA, Bloomfield Chamber,
+      KBIS). Not yet pulled into the project — the confirmed-5 list in `business.ts` and the
+      supplier marquee are unchanged for now; worth a follow-up pass
 - [ ] Real reviews to feature (current reviews page has none — only brand logos; the mockup's
       review cards are sample/placeholder text, not real quotes)
 - [ ] Verify or drop the "A+ BBB rating" and "Best of Houzz 2024" trust badges shown in the
@@ -55,9 +69,8 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
 - [ ] Stephen hasn't reviewed any service-page copy yet. `/remodeling/kitchens/` and
       `/remodeling/bathrooms/` headline, subcopy and intro paragraphs (`src/data/services.ts`)
       are written from confirmed business.ts facts, not invented, but are unreviewed marketing
-      copy, not his words — flag for approval alongside the galleries (only 2 real-category
-      photos exist in the temp mockup set for each of Kitchens and Bathrooms; thin until real
-      project photos arrive)
+      copy, not his words — flag for approval alongside the (now real) galleries, and ask him
+      to confirm which town each photo is actually from
 
 ## Access
 

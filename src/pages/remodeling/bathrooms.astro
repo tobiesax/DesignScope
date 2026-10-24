@@ -8,6 +8,12 @@ import FaqAccordion from '../../components/shared/FaqAccordion.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
 import { bathrooms } from '../../data/services';
 import { faqs } from '../../data/home';
+import { bathroomProjects, projectImages } from '../../data/project-images';
+
+const galleryProjects = bathroomProjects.map((project) => ({
+  ...project,
+  img: projectImages[project.img],
+}));
 
 const breadcrumb = [
   { label: 'Home', href: '/' },
@@ -24,7 +30,7 @@ const breadcrumb = [
   </section>
 
   <ProcessSteps />
-  <ServiceGallery category={bathrooms.category} />
+  <ServiceGallery subheading="Real Design Scope bathrooms" projects={galleryProjects} />
   <WhyUs />
 
   <section class="px-4 py-12 sm:px-7">

@@ -1,4 +1,4 @@
-import type { mockupImages } from './mockup-images';
+import { projectImages } from './project-images';
 
 export interface ServicePage {
   slug: string;
@@ -6,7 +6,7 @@ export interface ServicePage {
   category: string;
   title: string;
   metaDescription: string;
-  heroImage: keyof typeof mockupImages;
+  heroImage: ImageMetadata;
   heroEyebrow: string;
   heroHeadline: string;
   heroSubcopy: string;
@@ -22,7 +22,7 @@ export const kitchens: ServicePage = {
   title: 'Kitchen Remodeling in Bloomfield, CT',
   metaDescription:
     'Custom kitchen remodeling across Hartford County: free design consultation, a written quote within 24 hours, and one team handling design through construction.',
-  heroImage: 'path-remodeling',
+  heroImage: projectImages['kitchen-hero'],
   heroEyebrow: 'Remodeling · Kitchens',
   heroHeadline: 'Kitchen remodeling, from first sketch to final walkthrough',
   heroSubcopy:
@@ -37,7 +37,7 @@ export const bathrooms: ServicePage = {
   title: 'Bathroom Remodeling in Bloomfield, CT',
   metaDescription:
     'Bathroom remodeling across Hartford County: walk-in showers, tubs, vanities and tile. Free design consultation, a written quote within 24 hours, one team from design to construction.',
-  heroImage: 'proj-bath-avon',
+  heroImage: projectImages['bathroom-hero'],
   heroEyebrow: 'Remodeling · Bathrooms',
   heroHeadline: 'Bathroom remodeling, built to last and easy to live with',
   heroSubcopy:

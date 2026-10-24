@@ -3,13 +3,35 @@ import { Image } from 'astro:assets';
 import { mockProjects } from '../../data/home';
 import { mockupImages } from '../../data/mockup-images';
 
-interface Props {
-  category: string;
-  heading?: string;
+interface GalleryProject {
+  id: string;
+  title: string;
+  town?: string;
+  img: ImageMetadata;
 }
 
-const { category, heading = 'Recent projects' } = Astro.props;
-const projects = mockProjects.filter((project) => project.cat === category);
+interface Props {
+  category?: string;
+  heading?: string;
+  subheading?: string;
+  projects?: GalleryProject[];
+}
+
+const {
+  category,
+  heading = 'Recent projects',
+  subheading = 'Real work, real towns',
+  projects: projectsProp,
+} = Astro.props;
+
+const resolveImage = (img: string | ImageMetadata) =>
+  typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
+
+const projects: GalleryProject[] =
+  projectsProp ??
+  mockProjects
+    .filter((project) => project.cat === category)
+    .map((project) => ({ ...project, img: resolveImage(project.img) }));
 ---
 
 {projects.length > 0 && (
@@ -18,21 +40,19 @@ const projects = mockProjects.filter((project) => project.cat === category);
       <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
         {heading}
       </span>
-      <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">Real work, real towns</h2>
+      <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">{subheading}</h2>
     </div>
     <div class="grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]">
       {projects.map((project) => (
         <div class="bg-paper flex flex-col">
-          <Image
-            src={mockupImages[project.img as keyof typeof mockupImages]}
-            alt={project.title}
-            class="h-[190px] w-full object-cover"
-          />
+          <Image src={project.img} alt={project.title} class="h-[190px] w-full object-cover" />
           <div class="flex items-baseline justify-between gap-2.5 px-4 py-3.5">
             <span class="text-[13.5px] font-extrabold">{project.title}</span>
-            <span class="text-muted text-[11px] font-semibold whitespace-nowrap">
-              {project.town}
-            </span>
+            {project.town && (
+              <span class="text-muted text-[11px] font-semibold whitespace-nowrap">
+                {project.town}
+              </span>
+            )}
           </div>
         </div>
       ))}
