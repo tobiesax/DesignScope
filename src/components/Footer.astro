@@ -10,10 +10,21 @@ const socialLinks = [
   { label: 'YouTube', href: business.social.youtube },
   { label: 'Yelp', href: business.social.yelp },
 ];
+
+// Condensed for the footer link list (matches the approved mockup) — the
+// full, specific service names live in business.services for the nav and
+// service pages.
+const footerServices = [
+  'Kitchen remodeling',
+  'Bathroom remodeling',
+  'Home renovations',
+  'Fire & water restoration',
+  'Commercial',
+];
 ---
 
 <footer class="bg-dark-deep text-paper px-4 py-11 sm:px-7">
-  <div class="mx-auto grid max-w-6xl gap-7 [grid-template-columns:repeat(auto-fit,minmax(170px,1fr))]">
+  <div class="mx-auto grid max-w-6xl grid-cols-1 gap-7 sm:[grid-template-columns:repeat(auto-fit,minmax(170px,1fr))]">
     <div class="flex flex-col gap-3">
       <Logo heightPx={32} />
       <p class="text-on-dark-muted text-xs leading-relaxed">
@@ -25,10 +36,7 @@ const socialLinks = [
       <span class="text-brand mb-1 text-[9.5px] font-semibold tracking-[0.25em] uppercase">
         Services
       </span>
-      {business.services.residential.map((service) => (
-        <span class="block">{service}</span>
-      ))}
-      {business.services.commercial.map((service) => (
+      {footerServices.map((service) => (
         <span class="block">{service}</span>
       ))}
     </div>

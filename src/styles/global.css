@@ -45,3 +45,12 @@
 body {
   @apply bg-paper text-ink-soft font-sans;
 }
+
+/* Deliberate, on-brand focus states (CLAUDE.md rule 7), not just the
+   incidental browser default. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
