@@ -50,7 +50,7 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
 
 ## Week 3: Pages and content
 
-- [ ] **[repo]** Remaining service pages: Bathrooms, Home renovations, Restoration (emergency layout), Commercial, Showroom
+- [ ] **[repo]** Remaining service pages: ~~Bathrooms~~ (done, `/remodeling/bathrooms/`), Home renovations, Restoration (emergency layout), Commercial, Showroom
 - [ ] **[repo]** About, Offers, Contact, Privacy (with texting consent and call-recording notice)
 - [ ] **[repo]** Keystatic collections: projects, blog posts, reviews; the owner can add a project from his phone
 - [ ] **[repo]** Projects gallery and single project page with a before/after slider

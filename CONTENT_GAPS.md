@@ -52,11 +52,12 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
 - [ ] Verify or drop the "A+ BBB rating" and "Best of Houzz 2024" trust badges shown in the
       mockup's hero trust strip — not in HANDOFF.md, not confirmed anywhere; don't ship
       without Stephen confirming they're real
-- [ ] Stephen hasn't reviewed any service-page copy yet. `/remodeling/kitchens/` headline,
-      subcopy and intro paragraph (`src/data/services.ts`) are written from confirmed
-      business.ts facts, not invented, but are unreviewed marketing copy, not his words —
-      flag for approval alongside the gallery (only 2 real-category photos exist in the
-      temp mockup set for Kitchens; thin until real project photos arrive)
+- [ ] Stephen hasn't reviewed any service-page copy yet. `/remodeling/kitchens/` and
+      `/remodeling/bathrooms/` headline, subcopy and intro paragraphs (`src/data/services.ts`)
+      are written from confirmed business.ts facts, not invented, but are unreviewed marketing
+      copy, not his words — flag for approval alongside the galleries (only 2 real-category
+      photos exist in the temp mockup set for each of Kitchens and Bathrooms; thin until real
+      project photos arrive)
 
 ## Access
 

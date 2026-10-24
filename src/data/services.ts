@@ -30,3 +30,18 @@ export const kitchens: ServicePage = {
   intro:
     "Whether you're opening up a galley kitchen or starting from scratch, Design Scope handles design, permits and construction under one roof. Visit our Bloomfield showroom to see cabinetry, countertops and fixtures from TOTO, Hansgrohe, Wellborn, Brizo and Delta in person, or we'll bring design options to you.",
 };
+
+export const bathrooms: ServicePage = {
+  slug: 'bathrooms',
+  category: 'Bathrooms',
+  title: 'Bathroom Remodeling in Bloomfield, CT',
+  metaDescription:
+    'Bathroom remodeling across Hartford County: walk-in showers, tubs, vanities and tile. Free design consultation, a written quote within 24 hours, one team from design to construction.',
+  heroImage: 'proj-bath-avon',
+  heroEyebrow: 'Remodeling · Bathrooms',
+  heroHeadline: 'Bathroom remodeling, built to last and easy to live with',
+  heroSubcopy:
+    'Walk-in showers, soaking tubs, vanities and tile for Hartford County homes. Free design consultation, a written quote within 24 hours, and one team handling design through construction.',
+  intro:
+    "From a full primary-bath renovation to a walk-in shower conversion, Design Scope handles design, permits and construction under one roof. Visit our Bloomfield showroom to see tile, fixtures and vanities from TOTO, Hansgrohe, Wellborn, Brizo and Delta in person, or we'll bring design options to you.",
+};
