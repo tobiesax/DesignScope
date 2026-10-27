@@ -17,7 +17,9 @@ import { mockupImages } from '../../data/mockup-images';
 // exactly, at Tobi's request.
 const hubHero = {
   heroImage: mockupImages.restoration,
-  heroEyebrow: 'Restoration · Fire, smoke & water damage',
+  // No separate eyebrow text — the handoff's own hero only has the live
+  // chip pill above the H1, not an additional label line.
+  heroEyebrow: '',
   heroHeadline: "Water or fire damage? We're on our way.",
   heroSubcopy:
     'A real person answers day or night. We stop the damage, document everything for your insurer, and our own team rebuilds it.',

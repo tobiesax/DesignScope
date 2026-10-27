@@ -50,14 +50,16 @@ const {
         {liveChipLabel}
       </span>
     )}
-    <span
-      class:list={[
-        'text-[10px] font-semibold tracking-[0.35em] uppercase',
-        urgent ? 'text-red-on-dark' : 'text-brand-dark',
-      ]}
-    >
-      {service.heroEyebrow}
-    </span>
+    {service.heroEyebrow && (
+      <span
+        class:list={[
+          'text-[10px] font-semibold tracking-[0.35em] uppercase',
+          urgent ? 'text-red-on-dark' : 'text-brand-dark',
+        ]}
+      >
+        {service.heroEyebrow}
+      </span>
+    )}
     <h1 class="max-w-[480px] text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
       {service.heroHeadline}
     </h1>
@@ -85,7 +87,7 @@ const {
           href={`#${callbackTargetId}`}
           class="self-start border-b-[1.5px] border-paper text-[13px] font-bold"
         >
-          Can't talk? Request a callback
+          Can't talk? Request a callback in 10 minutes
         </a>
       </>
     ) : (

@@ -106,6 +106,12 @@ verified against its own worked example) but drops its "$X/mo" figure next to th
       handoff's own placeholder figure, not a real operational number — confirm Hartford
       County's actual typical arrival time with Stephen before launch; this is a concrete
       claim homeowners could rely on, not just cosmetic copy
+- [ ] Restoration's "within 10 minutes" callback commitment (the hero's "Can't talk?" link,
+      `CallbackForm.astro`'s subcopy and confirmation) is also the handoff's own figure, same
+      caveat as the arrival stat above — confirm the real SLA with Stephen before launch.
+      The confirmation screen's claim that "a text confirmation is on its way" was dropped
+      (no SMS integration exists to send one), but the 10-minute figure itself was kept to
+      match the handoff exactly
 - [ ] Before-and-after pairs specifically (have singles only so far) — check if the live site
       has any, otherwise need these directly from Stephen
 - [ ] 5–10 showroom photos (exterior with signage, displays, brands)
