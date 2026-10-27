@@ -1,4 +1,3 @@
-import { projectImages } from './project-images';
 import { mockupImages } from './mockup-images';
 
 export interface ServicePage {
@@ -59,7 +58,7 @@ export const kitchens: ServicePage = {
   title: 'Kitchen Remodeling in Bloomfield, CT',
   metaDescription:
     'Custom kitchen remodeling across Hartford County: free design consultation, a written quote within 24 hours, and one team handling design through construction.',
-  heroImage: projectImages['kitchen-hero'],
+  heroImage: mockupImages['subway-tile-kitchen'],
   // Hero copy matches the design handoff verbatim — it's static on the
   // handoff's remodel page (doesn't change between the Kitchen/Bath tab),
   // so Bathrooms below uses the exact same text.
@@ -89,7 +88,7 @@ export const bathrooms: ServicePage = {
   title: 'Bathroom Remodeling in Bloomfield, CT',
   metaDescription:
     'Bathroom remodeling across Hartford County: walk-in showers, tubs, vanities and tile. Free design consultation, a written quote within 24 hours, one team from design to construction.',
-  heroImage: projectImages['bathroom-hero'],
+  heroImage: mockupImages['spa-bathroom'],
   heroEyebrow: 'Kitchen & bath remodeling',
   heroHeadline: 'One team, from first sketch to final walkthrough',
   heroSubcopy:

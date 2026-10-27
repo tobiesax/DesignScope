@@ -29,6 +29,14 @@ import resMold from '../assets/mockup-temp/res-mold.png';
 import resStorm from '../assets/mockup-temp/res-storm.png';
 import restoration from '../assets/mockup-temp/restoration.jpg';
 import showroom from '../assets/mockup-temp/showroom.jpg';
+// Supplied directly by Tobi (not from the design handoff) to replace the
+// Kitchens/Bathrooms hero photos. Generic, non-project-specific filenames
+// ("Bright Blue-Gray Subway Tile Kitchen", "Luxury Gray Tile Spa Bathroom")
+// read as stock/reference photography, not a confirmed Design Scope job —
+// treated the same as the rest of this file: temporary, swap for
+// Stephen's real photos before launch. See CONTENT_GAPS.md.
+import subwayTileKitchen from '../assets/mockup-temp/subway-tile-kitchen.png';
+import spaBathroom from '../assets/mockup-temp/spa-bathroom.png';
 
 export const mockupImages = {
   'ba-after': baAfter,
@@ -55,4 +63,6 @@ export const mockupImages = {
   'res-storm': resStorm,
   restoration,
   showroom,
+  'subway-tile-kitchen': subwayTileKitchen,
+  'spa-bathroom': spaBathroom,
 } satisfies Record<string, ImageMetadata>;

@@ -79,6 +79,16 @@ verified against its own worked example) but drops its "$X/mo" figure next to th
       `src/assets/projects/`. No town is known per photo (the live site doesn't tag them) —
       don't invent one; `town` is omitted rather than guessed. Two kitchen-gallery images (a
       laundry nook, a home bar area) were excluded as miscategorised on the live site.
+- [ ] `/remodeling/kitchens/` and `/remodeling/bathrooms/` hero photos were swapped (at
+      Tobi's request) for two images he supplied directly (`src/assets/mockup-temp/subway-
+    tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the real
+      scraped `kitchen-hero`/`bathroom-hero` photos above (still defined in
+      `project-images.ts`, just no longer referenced). Both supplied images appear to be
+      AI-enhanced/upscaled versions of the _same two rooms_ as the real photos they replaced
+      (same subway tile kitchen, same glass-shower bathroom) — generic filenames
+      ("Bright Blue-Gray Subway Tile Kitchen.png"), not a camera original, so treat as
+      unconfirmed/enhanced rather than a straight real photo until Stephen confirms. Swap for
+      his real (unenhanced) photos before launch, same as everything else in this file.
 - [x] Commercial (5) project photos — REAL, scraped from the live site's own `/gallery` page
       (the "commercial-services-gallery-\*" image set) at Tobi's request. Checked for
       authenticity before use: internally consistent (the same few real spaces — two break
