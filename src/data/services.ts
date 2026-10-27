@@ -60,10 +60,13 @@ export const kitchens: ServicePage = {
   metaDescription:
     'Custom kitchen remodeling across Hartford County: free design consultation, a written quote within 24 hours, and one team handling design through construction.',
   heroImage: projectImages['kitchen-hero'],
-  heroEyebrow: 'Remodeling · Kitchens',
-  heroHeadline: 'Kitchen remodeling, from first sketch to final walkthrough',
+  // Hero copy matches the design handoff verbatim — it's static on the
+  // handoff's remodel page (doesn't change between the Kitchen/Bath tab),
+  // so Bathrooms below uses the exact same text.
+  heroEyebrow: 'Kitchen & bath remodeling',
+  heroHeadline: 'One team, from first sketch to final walkthrough',
   heroSubcopy:
-    'Custom cabinetry, countertops and layouts for Hartford County homes. Free design consultation, a written quote within 24 hours, and one team handling design through construction.',
+    'Design in our Bloomfield showroom, choose real materials, and get a written quote within 24 hours. Our own crews build it, and we stand behind it for six months.',
   intro:
     "Whether you're opening up a galley kitchen or starting from scratch, Design Scope handles design, permits and construction under one roof. Visit our Bloomfield showroom to see cabinetry, countertops and fixtures from TOTO, Hansgrohe, Wellborn, Brizo and Delta in person, or we'll bring design options to you.",
   included: [
@@ -87,10 +90,10 @@ export const bathrooms: ServicePage = {
   metaDescription:
     'Bathroom remodeling across Hartford County: walk-in showers, tubs, vanities and tile. Free design consultation, a written quote within 24 hours, one team from design to construction.',
   heroImage: projectImages['bathroom-hero'],
-  heroEyebrow: 'Remodeling · Bathrooms',
-  heroHeadline: 'Bathroom remodeling, built to last and easy to live with',
+  heroEyebrow: 'Kitchen & bath remodeling',
+  heroHeadline: 'One team, from first sketch to final walkthrough',
   heroSubcopy:
-    'Walk-in showers, soaking tubs, vanities and tile for Hartford County homes. Free design consultation, a written quote within 24 hours, and one team handling design through construction.',
+    'Design in our Bloomfield showroom, choose real materials, and get a written quote within 24 hours. Our own crews build it, and we stand behind it for six months.',
   intro:
     "From a full primary-bath renovation to a walk-in shower conversion, Design Scope handles design, permits and construction under one roof. Visit our Bloomfield showroom to see tile, fixtures and vanities from TOTO, Hansgrohe, Wellborn, Brizo and Delta in person, or we'll bring design options to you.",
   included: [

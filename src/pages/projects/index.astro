@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import { caseStudies, categoryAccent } from '../../data/case-studies';
+import FinalCta from '../../components/shared/FinalCta.astro';
 
 // Matches the GrowthOS design handoff's Projects gallery exactly: search,
 // sort, category and town filters, with a before/after preview on cards
@@ -148,6 +149,8 @@ const budgetValue = (budget: string) => {
       </button>
     </div>
   </section>
+
+  <FinalCta />
 </Layout>
 
 <script>

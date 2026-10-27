@@ -1,0 +1,175 @@
+---
+// Style quiz — a Phase 2 piece in the design handoff, built now at Tobi's
+// request. Matches the handoff's 3-question flow and result copy exactly.
+import { Image } from 'astro:assets';
+import { mockupImages } from '../../data/mockup-images';
+
+const questions = [
+  {
+    q: 'Which look do you love?',
+    opts: [
+      { label: 'Modern', img: 'hero-kitchen' as const },
+      { label: 'Farmhouse', img: 'proj-galley-bloomfield' as const },
+      { label: 'Transitional', img: 'ba-after' as const },
+      { label: 'Classic', img: 'ds-kitchen' as const },
+    ],
+  },
+  {
+    q: 'Which room are you planning?',
+    opts: [
+      { label: 'Kitchen', img: 'cat-cabinetry' as const },
+      { label: 'Bathroom', img: 'cat-fixtures' as const },
+      { label: 'Both', img: 'cat-tile' as const },
+    ],
+  },
+  {
+    q: 'Rough budget?',
+    opts: [
+      { label: 'Under $25k' },
+      { label: '$25k–$50k' },
+      { label: '$50k–$100k' },
+      { label: '$100k+' },
+    ],
+  },
+];
+---
+
+<section class="bg-orange-tint flex flex-col gap-5 px-4 py-13 sm:px-7">
+  <div class="flex flex-col gap-2">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      Style quiz
+    </span>
+    <h2 class="max-w-[640px] text-[26px] font-black tracking-tight sm:text-[34px]">
+      Not sure what you want yet?
+    </h2>
+    <p class="text-muted max-w-[640px] text-sm leading-relaxed">
+      Three quick questions. We'll bring matching samples and a price range to your consultation.
+    </p>
+  </div>
+
+  <div id="quiz-asking" class="flex max-w-[560px] flex-col gap-3.5 bg-white p-6">
+    <div class="flex flex-wrap items-center justify-between gap-2.5">
+      <span id="quiz-q" class="text-[17px] font-black">
+        {questions[0].q}
+      </span>
+      <span id="quiz-progress" class="text-muted text-[11.5px] font-bold">
+        Question 1 of 3
+      </span>
+    </div>
+    {questions.map((question, qi) => (
+      <div
+        data-quiz-step={qi}
+        hidden={qi !== 0}
+        class="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(130px,1fr))]"
+      >
+        {question.opts.map((opt) => (
+          <button
+            type="button"
+            data-quiz-value={opt.label}
+            class="border-line hover:border-brand flex flex-col border-[1.5px] bg-white"
+          >
+            {'img' in opt && opt.img && (
+              <Image src={mockupImages[opt.img]} alt="" class="h-[100px] w-full object-cover" />
+            )}
+            <span class="px-3 py-3 text-[13.5px] font-extrabold">{opt.label}</span>
+          </button>
+        ))}
+      </div>
+    ))}
+  </div>
+
+  <div
+    id="quiz-done"
+    hidden
+    class="flex max-w-[560px] flex-col gap-3.5 border-t-4 border-brand bg-white p-6 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <div class="flex flex-col gap-1.5">
+      <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+        Your style
+      </span>
+      <span id="quiz-result" class="text-[22px] font-black"></span>
+      <span id="quiz-summary" class="text-ink-soft text-[13px] leading-relaxed"></span>
+    </div>
+    <div class="flex flex-col gap-2">
+      <button
+        type="button"
+        id="quiz-book"
+        class="bg-brand text-ink self-start px-4.5 py-3.5 text-[13px] font-extrabold"
+      >
+        Book with these answers
+      </button>
+      <button
+        type="button"
+        id="quiz-retake"
+        class="self-start border-b-2 border-brand text-[13px] font-extrabold"
+      >
+        Retake the quiz
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const asking = document.getElementById('quiz-asking');
+  const done = document.getElementById('quiz-done');
+  const qLabel = document.getElementById('quiz-q');
+  const progress = document.getElementById('quiz-progress');
+  const steps = document.querySelectorAll<HTMLElement>('[data-quiz-step]');
+  const resultEl = document.getElementById('quiz-result');
+  const summaryEl = document.getElementById('quiz-summary');
+  const bookBtn = document.getElementById('quiz-book');
+  const retakeBtn = document.getElementById('quiz-retake');
+
+  if (asking && done && qLabel && progress && resultEl && summaryEl) {
+    const QUESTIONS = ['Which look do you love?', 'Which room are you planning?', 'Rough budget?'];
+    let step = 0;
+    const answers: string[] = [];
+
+    const showStep = () => {
+      qLabel.textContent = QUESTIONS[step];
+      progress.textContent = `Question ${step + 1} of 3`;
+      steps.forEach((s) => {
+        s.hidden = Number(s.dataset.quizStep) !== step;
+      });
+    };
+
+    const finish = () => {
+      asking.hidden = true;
+      done.hidden = false;
+      const [style, room, budget] = answers;
+      resultEl.textContent = style;
+      summaryEl.textContent = `${room} · ${budget}. We'll prepare ${style.toLowerCase()} samples, finishes and a realistic price range before you arrive.`;
+    };
+
+    steps.forEach((panel) => {
+      panel.querySelectorAll<HTMLButtonElement>('[data-quiz-value]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          answers[step] = btn.dataset.quizValue ?? '';
+          if (step < QUESTIONS.length - 1) {
+            step += 1;
+            showStep();
+          } else {
+            finish();
+          }
+        });
+      });
+    });
+
+    bookBtn?.addEventListener('click', () => {
+      const room = answers[1] === 'Bathroom' ? 'Bathroom' : 'Kitchen';
+      document.dispatchEvent(
+        new CustomEvent('open-booking-modal', { detail: { preset: { type: room } } }),
+      );
+    });
+
+    retakeBtn?.addEventListener('click', () => {
+      step = 0;
+      answers.length = 0;
+      done.hidden = true;
+      asking.hidden = false;
+      showStep();
+    });
+
+    showStep();
+  }
+</script>

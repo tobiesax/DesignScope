@@ -1,0 +1,141 @@
+---
+// Cost estimator — a Phase 2 piece in the design handoff (its own
+// SCOPE/README mark it "priced separately"), built now at Tobi's request.
+// Matches the handoff's slider + finish-level UX and its exact formula
+// (size × rate/sqft, ±15% for the range), but drops its $/mo financing
+// figure: financing isn't wired up (BUILD_PLAN.md), and showing a
+// monthly payment with no real lending product behind it would
+// misrepresent what's on offer (CLAUDE.md rule 1) — same reasoning as
+// the "Typical investment" ranges elsewhere on this page.
+interface Props {
+  room: 'kitchen' | 'bath';
+}
+
+const { room } = Astro.props;
+
+const config =
+  room === 'kitchen'
+    ? { label: 'Kitchen size', min: 80, max: 400, step: 10, default: 180, rates: [120, 200, 320] }
+    : { label: 'Bathroom size', min: 30, max: 160, step: 5, default: 60, rates: [300, 450, 650] };
+
+const levels = [
+  { label: 'Essential', sub: 'Stock finishes' },
+  { label: 'Premium', sub: 'Semi-custom' },
+  { label: 'Luxury', sub: 'Custom & stone' },
+];
+---
+
+<section class="flex flex-col gap-5 px-4 py-13 sm:px-7">
+  <div class="flex flex-col gap-2">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      Cost estimator
+    </span>
+    <h2 class="max-w-[640px] text-[26px] font-black tracking-tight sm:text-[34px]">
+      A rough range in 30 seconds
+    </h2>
+    <p class="text-muted max-w-[640px] text-sm leading-relaxed">
+      Based on recent Hartford County projects. Your written quote replaces this within 24 hours of
+      a consultation.
+    </p>
+  </div>
+
+  <div
+    id={`est-${room}`}
+    class="bg-paper-muted flex max-w-[460px] flex-col gap-4 p-6"
+    data-rates={config.rates.join(',')}
+  >
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center justify-between gap-2.5">
+        <span class="text-[12.5px] font-bold">{config.label}</span>
+        <span id="est-size-val" class="text-[13px] font-black">
+          {config.default} sq ft
+        </span>
+      </div>
+      <input
+        id="est-size"
+        type="range"
+        min={config.min}
+        max={config.max}
+        step={config.step}
+        value={config.default}
+        aria-label={config.label}
+        class="w-full accent-[#ff5f00]"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <span class="text-[12.5px] font-bold">Finish level</span>
+      <div class="grid grid-cols-3 gap-1.5">
+        {levels.map((l, i) => (
+          <button
+            type="button"
+            data-est-level={i}
+            aria-pressed={i === 1 ? 'true' : 'false'}
+            class:list={[
+              'flex flex-col gap-0.5 px-2 py-2.5 text-center border-[1.5px]',
+              i === 1 ? 'border-ink bg-orange-tint' : 'border-line bg-white',
+            ]}
+          >
+            <span class="text-[13px] font-extrabold">{l.label}</span>
+            <span class="text-muted text-[10.5px]">{l.sub}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="bg-dark text-paper flex items-center justify-between gap-3 px-4.5 py-4">
+      <div class="flex flex-col gap-0.5">
+        <span class="text-on-dark-muted text-[9.5px] font-bold tracking-[0.2em] uppercase">
+          Estimated range
+        </span>
+        <span id="est-range" class="text-[24px] font-black"></span>
+      </div>
+    </div>
+    <a
+      href="/book/"
+      data-open-booking
+      data-booking-preset={JSON.stringify({ type: room === 'kitchen' ? 'Kitchen' : 'Bathroom' })}
+      class="bg-brand text-ink self-start px-4.5 py-3.5 text-[13px] font-extrabold"
+    >
+      Book a consultation for an exact quote
+    </a>
+  </div>
+</section>
+
+<script define:vars={{ room }}>
+  const root = document.getElementById(`est-${room}`);
+  if (root) {
+    const rates = root.dataset.rates.split(',').map(Number);
+    const sizeInput = document.getElementById('est-size');
+    const sizeVal = document.getElementById('est-size-val');
+    const rangeOut = document.getElementById('est-range');
+    const levelButtons = root.querySelectorAll('[data-est-level]');
+    let level = 1;
+
+    const k = (n) => '$' + Math.round(n / 1000) + 'k';
+
+    const render = () => {
+      const size = Number(sizeInput.value);
+      sizeVal.textContent = `${size} sq ft`;
+      const rate = rates[level];
+      const base = size * rate;
+      rangeOut.textContent = `${k(base * 0.85)}–${k(base * 1.15)}`;
+    };
+
+    sizeInput.addEventListener('input', render);
+    levelButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        level = Number(btn.dataset.estLevel);
+        levelButtons.forEach((b, i) => {
+          const active = i === level;
+          b.classList.toggle('border-ink', active);
+          b.classList.toggle('bg-orange-tint', active);
+          b.classList.toggle('border-line', !active);
+          b.classList.toggle('bg-white', !active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+        render();
+      });
+    });
+
+    render();
+  }
+</script>

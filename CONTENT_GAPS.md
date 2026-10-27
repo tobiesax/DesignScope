@@ -40,6 +40,12 @@ a $/mo financing figure next to each range; that's deliberately dropped here, si
 financing is Phase 2 and not wired up (BUILD_PLAN.md) — a monthly number with no real
 financing product behind it would misrepresent what's on offer.
 
+The cost estimator and style quiz on `/remodeling/kitchens/` and `/remodeling/bathrooms/`
+(`CostEstimator.astro`, `StyleQuiz.astro`) are Phase 2 pieces per the design handoff's own
+README/SCOPE, built now at Tobi's explicit request rather than left out. Same financing
+omission as above: the estimator computes a size × rate range (the handoff's own formula,
+verified against its own worked example) but drops its "$X/mo" figure next to the result.
+
 ## Business facts
 
 - [ ] HIC registration number

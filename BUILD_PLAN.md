@@ -64,7 +64,12 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
       included / Typical investment, how it works, 3D design block, aging-in-place on
       Bathrooms, recent-work teaser, review carousel, FAQ) — the ServiceHero component
       changed shape to match (no breadcrumb, split-grid layout) across all 6 pages that use
-      it. Restoration (hub + both sub-pages) got the same pass: stats row, tabbed
+      it. Hero copy on both pages matches the handoff verbatim (it's static there regardless
+      of tab). Also added the handoff's two Phase 2 pieces (cost estimator, style quiz) at
+      Tobi's explicit request, and simplified FinalCta/showBand to the handoff's bare
+      heading+CTA band (an earlier pass had added a decorative form/emergency box that was
+      never in the handoff) — now used on `/projects/` too, which was missing it.
+      Restoration (hub + both sub-pages) got the same pass: stats row, tabbed
       "while you wait", the "what we handle" service-detail tabs (reused on the sub-pages
       without tabs), insurance explainer, an honestly-labelled before/after section (no fake
       photo), and a working (simulated) callback form at `#callback`, plus the handoff's own

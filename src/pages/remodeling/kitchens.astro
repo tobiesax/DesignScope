@@ -2,7 +2,9 @@
 import Layout from '../../layouts/Layout.astro';
 import ServiceHero from '../../components/service/ServiceHero.astro';
 import IncludedInvestment from '../../components/service/IncludedInvestment.astro';
+import CostEstimator from '../../components/service/CostEstimator.astro';
 import ProcessSteps from '../../components/shared/ProcessSteps.astro';
+import StyleQuiz from '../../components/service/StyleQuiz.astro';
 import ThreeDDesignBlock from '../../components/service/ThreeDDesignBlock.astro';
 import ServiceGallery from '../../components/service/ServiceGallery.astro';
 import ReviewCarousel from '../../components/home/ReviewCarousel.astro';
@@ -12,7 +14,9 @@ import { kitchens, remodelProcess, remodelFaqs } from '../../data/services';
 import { kitchenProjects, projectImages } from '../../data/project-images';
 
 // Page order matches the GrowthOS design handoff's "Kitchen & bath" remodel
-// page exactly (the Kitchens tab's content), at Tobi's request.
+// page exactly (the Kitchens tab's content), at Tobi's request — including
+// the Phase 2 cost estimator and style quiz, built in now rather than left
+// out, per Tobi's explicit follow-up request.
 const galleryProjects = kitchenProjects.map((project) => ({
   ...project,
   img: projectImages[project.img],
@@ -24,12 +28,16 @@ const galleryProjects = kitchenProjects.map((project) => ({
 
   <IncludedInvestment included={kitchens.included ?? []} ranges={kitchens.ranges ?? []} />
 
+  <CostEstimator room="kitchen" />
+
   <ProcessSteps
     steps={remodelProcess}
     eyebrow={false}
     heading="How it works"
     background="paper-muted"
   />
+
+  <StyleQuiz />
 
   <ThreeDDesignBlock />
 
