@@ -1,0 +1,35 @@
+---
+// Service area band — matches the handoff's home page section exactly
+// (town links + a plain-text list of other towns we serve but don't have
+// a page for yet). The handoff puts no FAQ accordion on the home page;
+// FAQs live on /faqs/ and on the relevant service pages instead.
+import { business } from '../../data/business';
+
+const builtTowns = business.townPages;
+const otherTowns = business.serviceAreas.filter((t) => !builtTowns.includes(t));
+---
+
+<section class="flex flex-col gap-3.5 px-4 py-14 sm:px-7">
+  <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+    Service area
+  </span>
+  <h2 class="max-w-[640px] text-[26px] font-black tracking-tight sm:text-[34px]">
+    Hartford County and the Farmington Valley
+  </h2>
+  <p class="text-muted max-w-[640px] text-sm leading-relaxed">
+    Remodeling across the towns below. Restoration crews cover all of Hartford County, 24/7.
+  </p>
+  <div class="flex flex-wrap gap-1.5">
+    {builtTowns.map((name) => (
+      <a
+        href={`/areas/${name.toLowerCase().replace(/\s+/g, '-')}/`}
+        class="border-ink hover:bg-brand border-[1.5px] px-3 py-2.5 text-[12.5px] font-extrabold"
+      >
+        {name} →
+      </a>
+    ))}
+    {otherTowns.map((name) => (
+      <span class="border-line border px-3 py-2.5 text-[12.5px] font-semibold">{name}</span>
+    ))}
+  </div>
+</section>

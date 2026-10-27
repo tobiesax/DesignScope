@@ -1,0 +1,36 @@
+---
+// Home page emergency panel — matches the handoff exactly: a full-width,
+// dark, clickable band that routes straight to /restoration/.
+import { Image } from 'astro:assets';
+import { mockupImages } from '../../data/mockup-images';
+---
+
+<section>
+  <a
+    href="/restoration/"
+    class="border-urgent relative flex min-h-[260px] items-end overflow-hidden border-t-4 sm:min-h-[280px]"
+  >
+    <Image
+      src={mockupImages.restoration}
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <div
+      class="absolute inset-0"
+      style="background:linear-gradient(0deg,rgba(14,14,14,0.92),rgba(14,14,14,0.6) 60%,rgba(14,14,14,0.45))"
+    ></div>
+    <div class="relative flex max-w-[520px] flex-col gap-3 px-4 py-8 text-paper sm:px-7">
+      <span class="bg-urgent text-paper self-start px-2.5 py-1.5 text-[10px] font-extrabold tracking-[0.25em] uppercase">
+        Emergency · 24/7
+      </span>
+      <h2 class="text-[26px] font-black tracking-tight">Water or fire damage?</h2>
+      <p class="text-on-dark text-sm leading-relaxed">
+        A person answers day or night. On site fast across Hartford County, and we handle the
+        insurance paperwork.
+      </p>
+      <span class="bg-urgent text-paper self-start px-4.5 py-3 text-[13px] font-extrabold">
+        Get emergency help →
+      </span>
+    </div>
+  </a>
+</section>

@@ -1,54 +1,120 @@
 ---
+// Home hero — matches the handoff's slideshow background (5 slides,
+// crossfade + Ken Burns, pause/play control) and gradient/content layout.
+// TEMPORARY photos — see src/data/mockup-images.ts.
 import { Image } from 'astro:assets';
 import { mockupImages } from '../../data/mockup-images';
-import { business } from '../../data/business';
 
-// TEMPORARY hero photo — see src/data/mockup-images.ts
-const trustStrip = [
-  `Family-owned since ${business.foundedYear}`,
-  business.warranty,
-  '24-hour quotes',
-  'Walk-ins welcome',
-];
+const slides = [
+  { key: 'ba-before', tag: 'Before', dark: true },
+  { key: 'ba-after', tag: 'After · same kitchen', dark: false },
+  { key: 'hero-kitchen', tag: '', dark: false },
+  { key: 'proj-bath-avon', tag: 'Primary bath · Avon', dark: false },
+  { key: 'ds-kitchen', tag: '', dark: false },
+] as const;
 ---
 
-<section class="relative min-h-[520px]">
-  <Image
-    src={mockupImages['hero-kitchen']}
-    alt=""
-    class="absolute inset-0 h-full w-full object-cover"
-    widths={[640, 1024, 1600]}
-    sizes="100vw"
-  />
+<section
+  id="hero-slideshow"
+  class="relative flex min-h-[520px] items-end overflow-hidden bg-dark sm:min-h-[calc(100vh-110px)]"
+>
+  {slides.map((slide, i) => (
+    <div
+      class:list={[
+        'hero-slide absolute inset-0',
+        i % 2 === 0 ? 'ken-0' : 'ken-1',
+        i === 0 && 'is-active',
+      ]}
+      data-index={i}
+    >
+      <Image src={mockupImages[slide.key]} alt="" widths={[640, 1024, 1600]} sizes="100vw" />
+      {slide.tag && (
+        <span
+          class:list={[
+            'absolute top-6 left-6 px-2.5 py-1.5 text-[10px] font-extrabold tracking-[0.2em] uppercase',
+            slide.dark ? 'bg-ink text-paper' : 'bg-brand text-ink',
+          ]}
+        >
+          {slide.tag}
+        </span>
+      )}
+    </div>
+  ))}
+
   <div
-    class="absolute inset-0"
-    style="background:linear-gradient(90deg,rgba(15,15,15,0.88) 0%,rgba(15,15,15,0.6) 45%,rgba(15,15,15,0.1) 100%)"
+    class="pointer-events-none absolute inset-0"
+    style="background:linear-gradient(0deg,rgba(14,14,14,0.88),rgba(14,14,14,0.45) 50%,rgba(14,14,14,0.1) 80%)"
   ></div>
 
-  <div class="relative flex flex-col gap-5 px-4 py-16 sm:px-7 sm:py-20 max-w-xl text-paper">
-    <span class="text-brand text-[10px] font-semibold tracking-[0.35em] uppercase">
-      Family-owned since {business.foundedYear} · {business.showroom.city},{' '}
-      {business.showroom.state}
+  <button
+    type="button"
+    id="hero-pause-toggle"
+    aria-label="Pause background"
+    class="absolute right-4 bottom-8 z-10 flex h-11 w-11 items-center justify-center border-[1.5px] border-paper bg-[rgba(14,14,14,0.5)] text-xs font-black text-paper sm:right-7"
+  >
+    II
+  </button>
+
+  <div class="relative z-[2] flex max-w-[520px] flex-col gap-3 px-4 py-8 text-paper sm:px-7">
+    <span class="bg-brand text-ink self-start px-2.5 py-1.5 text-[10px] font-extrabold tracking-[0.25em] uppercase">
+      Planning a project
     </span>
-    <h1 class="text-4xl font-black leading-[1.05] tracking-tight sm:text-5xl">
-      Kitchens, baths and whole-home remodels across Hartford County
+    <h1 class="text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
+      Kitchens and baths, designed and built by one team
     </h1>
-    <p class="text-on-dark text-base leading-relaxed">
-      Visit our showroom, meet the family, and get your quote within 24 hours.
-    </p>
-    <div class="flex flex-wrap gap-2.5">
-      <a href="/book/" class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
-        Book a free consultation
+    <span class="text-[15px] leading-relaxed font-medium text-[#ededed]">
+      Family-owned in Connecticut. See it in our showroom, get your written quote in 24 hours.
+    </span>
+    <div class="flex flex-wrap gap-2">
+      <a href="/book/" class="bg-brand text-ink px-5 py-3.5 text-[13px] font-extrabold">
+        Book free consultation
       </a>
-      <a href="/projects/" class="border-paper border px-5 py-3.5 text-sm font-bold">
-        See our projects
+      <a
+        href="/remodeling/"
+        class="border-[1.5px] border-paper px-5 py-3.5 text-[13px] font-extrabold text-paper"
+      >
+        Explore remodeling →
       </a>
     </div>
   </div>
 </section>
 
-<div class="border-border flex flex-wrap justify-between gap-x-6 gap-y-2 border-b px-4 py-4 text-xs font-bold sm:px-7">
-  {trustStrip.map((item) => (
-    <span>{item}</span>
-  ))}
-</div>
+<script>
+  const root = document.getElementById('hero-slideshow');
+  const toggle = document.getElementById('hero-pause-toggle');
+  if (root && toggle) {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.hero-slide'));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let paused = reduceMotion;
+    let i = 0;
+
+    const render = () => {
+      slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+      root.classList.toggle('is-paused', paused);
+      toggle.textContent = paused ? '▶' : 'II';
+      toggle.setAttribute('aria-label', paused ? 'Play background' : 'Pause background');
+    };
+    render();
+
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const start = () => {
+      if (timer) return;
+      timer = setInterval(() => {
+        i = (i + 1) % slides.length;
+        render();
+      }, 5200);
+    };
+    const stop = () => {
+      if (timer) clearInterval(timer);
+      timer = null;
+    };
+    if (!paused) start();
+
+    toggle.addEventListener('click', () => {
+      paused = !paused;
+      if (paused) stop();
+      else start();
+      render();
+    });
+  }
+</script>

@@ -99,12 +99,42 @@ export const business = {
   // confirming them, and swap in the official BBB/Houzz/Wellborn member
   // badge artwork (these are plain icon placeholders).
   credentials: [
-    { mark: 'A+', title: 'BBB accredited', sub: 'A+ rating' },
-    { mark: '2024', title: 'Best of Houzz', sub: '2024 · Service' },
-    { mark: '', title: 'CT licensed', sub: 'HIC # (to add)' },
-    { mark: '', title: 'Fully insured', sub: 'Liability & workers’ comp' },
-    { mark: '', title: 'Wellborn Forest', sub: 'Authorised dealer' },
-    { mark: '6M', title: 'Warranty', sub: '6 months, in writing' },
+    {
+      mark: 'A+',
+      title: 'BBB accredited',
+      sub: 'A+ rating',
+      icon: 'M12 2.5a6.5 6.5 0 1 0 0 13a6.5 6.5 0 1 0 0-13z M8.3 14.2 7 21.5l5-2.8 5 2.8-1.3-7.3 M9.5 9l1.8 1.8L14.6 7.5',
+    },
+    {
+      mark: '2024',
+      title: 'Best of Houzz',
+      sub: '2024 · Service',
+      icon: 'M3 11 12 3.5l9 7.5 M5.5 9.5V20.5h13V9.5 M12 10.2l1.25 2.55 2.8.4-2.03 1.98.48 2.79L12 16.6l-2.5 1.32.48-2.79-2.03-1.98 2.8-.4z',
+    },
+    {
+      mark: '',
+      title: 'CT licensed',
+      sub: 'HIC # (to add)',
+      icon: 'M3 5.5h18v13H3z M6.5 9.5h5 M6.5 12.5h7 M6.5 15.5h4 M15.5 10.5a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0-3.5 0 M14.8 15.5c.4-1.2 1.4-1.9 2.45-1.9s2.05.7 2.45 1.9',
+    },
+    {
+      mark: '',
+      title: 'Fully insured',
+      sub: 'Liability & workers’ comp',
+      icon: 'M12 2.5l8 3v6.2c0 4.6-3.4 8.4-8 9.8-4.6-1.4-8-5.2-8-9.8V5.5z M8.5 12l2.5 2.5 4.5-5',
+    },
+    {
+      mark: '',
+      title: 'Wellborn Forest',
+      sub: 'Authorised dealer',
+      icon: 'M3.5 3.5h17v17h-17z M12 3.5v17 M3.5 13h17 M9.5 7.5v2.5 M14.5 7.5v2.5 M9.5 15.5v2 M14.5 15.5v2',
+    },
+    {
+      mark: '6M',
+      title: 'Warranty',
+      sub: '6 months, in writing',
+      icon: 'M5 2.5h10l4 4v15H5z M15 2.5v4h4 M8.5 11.5h7 M8.5 14.5h4.5 M8.5 17.5l1.5 1.5 3-3',
+    },
   ],
 
   social: {

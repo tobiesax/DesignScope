@@ -135,6 +135,49 @@ a[class*='border-paper']:hover {
   background-color: rgb(255 255 255 / 0.12);
 }
 
+/* Home hero slideshow — slow Ken Burns on whichever slide is active
+   (Hero.astro), alternating direction per the handoff. */
+@keyframes hero-ken-0 {
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.1) translate(-2%, -1%);
+  }
+}
+@keyframes hero-ken-1 {
+  from {
+    transform: scale(1.1) translate(2%, 0);
+  }
+  to {
+    transform: scale(1) translate(0, 0);
+  }
+}
+.hero-slide {
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+.hero-slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+.hero-slide picture,
+.hero-slide img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.hero-slide.ken-0.is-active img {
+  animation: hero-ken-0 7.5s ease-out forwards;
+}
+.hero-slide.ken-1.is-active img {
+  animation: hero-ken-1 7.5s ease-out forwards;
+}
+#hero-slideshow.is-paused .hero-slide img {
+  animation-play-state: paused;
+}
+
 /* Restoration pages' "Call now" CTA (ServiceHero.astro, urgent variant) —
    an ambient pulse to draw the eye on an emergency page. */
 @keyframes call-now-pulse {

@@ -33,14 +33,18 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
 ## Week 2: Design
 
 - [x] **[repo]** Design tokens from the existing brand (logo, colours, type) in `tailwind.config.mjs`
-      — done in `src/styles/global.css` (Tailwind v4 CSS-first `@theme`, not a JS config file), matched
-      to the approved GrowthOS proposal's hi-fi mockup rather than CLAUDE.md's original generic
-      guidance, now that an approved design exists
+      — done in `src/styles/global.css` (Tailwind v4 CSS-first `@theme`, not a JS config file), now
+      matched exactly to the approved GrowthOS design handoff
+      (`GrowthOS Proposal Design/design_handoff_design_scope_website/`, superseding the earlier,
+      looser hi-fi mockup pass), at Tobi's explicit request to build pixel-close to it
 - [x] **[repo]** Base layout: header with tap-to-call and Book buttons, mobile menu, footer (NAP, HIC number, hours, socials)
-- [x] **[repo]** Home page (proof first, four paths, reviews, offers, CTA) — the reviews
-      section (`Reviews.astro`) uses temporary sample quotes matching the proposal mockup's
-      layout, at Tobi's request for the demo; not real reviews, must be replaced before
-      launch (CONTENT_GAPS.md)
+      — rebuilt to match the handoff's utility bar / nav / footer exactly, including a
+      per-page nav CTA (Book / Call 24/7 / Request a quote) and the mobile sticky action bar
+- [x] **[repo]** Home page — rebuilt page-for-page to the handoff's spec (hero slideshow,
+      trust badges, emergency panel, "how it works", featured projects, review carousel,
+      showroom teaser, offers, service area, 3-up closing band). The review carousel
+      (`ReviewCarousel.astro` / `src/data/reviews.ts`) uses the handoff's own 6 sample
+      reviews; not real reviews, must be replaced before launch (CONTENT_GAPS.md)
 - [x] **[repo]** One service-page template, applied to Kitchens — `src/components/service/` +
       `src/data/services.ts`; Week 3 adds the remaining entries
 - [ ] **[ops]** Send Stephen a Vercel preview link: **one review round** (about 1 hour of his time)

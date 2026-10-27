@@ -1,0 +1,54 @@
+---
+// "Recent work" — 3 featured projects spanning categories, matching the
+// handoff's home page section. The full filterable gallery lives on
+// /projects/; this is just a teaser.
+import { Image } from 'astro:assets';
+import { mockProjects, categoryHref } from '../../data/home';
+import { mockupImages } from '../../data/mockup-images';
+
+const resolveImage = (img: string | ImageMetadata) =>
+  typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
+
+const byCat = (cat: string) => mockProjects.find((p) => p.cat === cat);
+const featured = [byCat('Kitchens'), byCat('Bathrooms'), byCat('Home renovations')].filter(
+  (p): p is NonNullable<typeof p> => !!p,
+);
+---
+
+<section class="flex flex-col gap-5.5 px-4 py-14 sm:px-7">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div class="flex flex-col gap-2">
+      <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+        Recent work
+      </span>
+      <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">
+        Real projects, real towns
+      </h2>
+    </div>
+    <a href="/projects/" class="border-brand border-b-2 pb-0.5 text-[13px] font-extrabold">
+      All projects →
+    </a>
+  </div>
+
+  <div class="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))]">
+    {featured.map((project) => (
+      <a
+        href={categoryHref[project.cat] ?? '/projects/'}
+        class="card-hover bg-paper-muted flex flex-col overflow-hidden"
+      >
+        <Image
+          src={resolveImage(project.img)}
+          alt={project.title}
+          class="h-[220px] w-full object-cover"
+        />
+        <div class="flex flex-col gap-1 px-4 py-3.5">
+          <span class="text-[14.5px] font-extrabold">{project.title}</span>
+          <span class="text-muted text-[11.5px] font-semibold">
+            {project.town ? `${project.town} · ` : ''}
+            {project.cat}
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

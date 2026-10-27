@@ -1,0 +1,157 @@
+---
+// Review carousel — matches the handoff's "Global components → Review
+// carousel" (3 cards desktop / 1 mobile, auto-advance, pause on hover,
+// dots + prev/next). Built with CSS scroll-snap + a small vanilla script
+// instead of the handoff's React track, so it still works with Astro's
+// zero-JS-by-default model and needs no new dependency.
+import { sampleReviews, sampleAggregateRating } from '../../data/reviews';
+---
+
+<section class="bg-dark text-paper flex flex-col gap-5 px-4 py-14 sm:px-7">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div class="flex flex-col gap-2">
+      <span class="text-brand text-[10px] font-bold tracking-[0.3em] uppercase">Reviews</span>
+      <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">What homeowners say</h2>
+    </div>
+    <div class="flex items-center gap-3.5">
+      <span class="text-[44px] leading-none font-black tracking-tight">
+        {sampleAggregateRating.value}
+      </span>
+      <div class="flex flex-col gap-0.5">
+        <span class="text-brand tracking-[0.1em]">★★★★★</span>
+        <span class="text-on-dark-muted text-xs">{sampleAggregateRating.count} Google reviews</span>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="review-carousel"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Customer reviews"
+    class="flex flex-col gap-4"
+  >
+    <div
+      id="review-track"
+      class="flex gap-2.5 overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      style="scroll-snap-type: x mandatory;"
+    >
+      {sampleReviews.map((review, i) => (
+        <div
+          data-review-card
+          data-index={i}
+          class="bg-card-dark box-border flex min-w-0 flex-shrink-0 basis-full flex-col gap-3 p-5.5 sm:basis-[calc((100%-20px)/3)]"
+          style="scroll-snap-align: start;"
+        >
+          <span class="text-brand text-[13px] tracking-[0.1em]">★★★★★</span>
+          <p class="text-[14px] leading-relaxed">&ldquo;{review.quote}&rdquo;</p>
+          <span class="text-on-dark-muted mt-auto text-[11.5px] font-bold">
+            {review.who} · {review.job}
+          </span>
+        </div>
+      ))}
+    </div>
+
+    <div class="flex items-center justify-between gap-3">
+      <div id="review-dots" class="flex gap-1.5">
+        {sampleReviews.map((_, i) => (
+          <button
+            type="button"
+            data-dot={i}
+            aria-label={`Show review ${i + 1}`}
+            class:list={[
+              'h-1 cursor-pointer transition-[width,background-color]',
+              i === 0 ? 'bg-brand w-7' : 'w-3 bg-[#444444]',
+            ]}
+          ></button>
+        ))}
+      </div>
+      <div class="flex gap-1.5">
+        <button
+          type="button"
+          id="review-prev"
+          aria-label="Previous reviews"
+          class="hover:border-brand hover:text-brand flex h-11 w-11 items-center justify-center border-[1.5px] border-[#444444] text-base font-extrabold"
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          id="review-next"
+          aria-label="Next reviews"
+          class="bg-brand text-ink flex h-11 w-11 items-center justify-center text-base font-extrabold"
+        >
+          →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <span class="text-on-dark-muted text-[11px]">
+    Sample reviews. Replace with real Google reviews before launch.
+  </span>
+</section>
+
+<script>
+  const track = document.getElementById('review-track');
+  const dotsWrap = document.getElementById('review-dots');
+  const prevBtn = document.getElementById('review-prev');
+  const nextBtn = document.getElementById('review-next');
+  if (track && dotsWrap && prevBtn && nextBtn) {
+    const cards = Array.from(track.querySelectorAll<HTMLElement>('[data-review-card]'));
+    const dots = Array.from(dotsWrap.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+    let paused = false;
+
+    const setActive = (index: number) => {
+      dots.forEach((dot, i) => {
+        const active = i === index;
+        dot.classList.toggle('bg-brand', active);
+        dot.classList.toggle('w-7', active);
+        dot.classList.toggle('bg-[#444444]', !active);
+        dot.classList.toggle('w-3', !active);
+      });
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+            const index = cards.indexOf(entry.target as HTMLElement);
+            if (index !== -1) setActive(index);
+          }
+        });
+      },
+      { root: track, threshold: 0.6 },
+    );
+    cards.forEach((card) => io.observe(card));
+
+    const scrollToCard = (index: number) => {
+      const clamped = Math.max(0, Math.min(cards.length - 1, index));
+      cards[clamped]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    };
+
+    const currentIndex = () => {
+      const active = dots.findIndex((d) => d.classList.contains('bg-brand'));
+      return active === -1 ? 0 : active;
+    };
+
+    prevBtn.addEventListener('click', () => scrollToCard(currentIndex() - 1));
+    nextBtn.addEventListener('click', () =>
+      scrollToCard(currentIndex() + 1 >= cards.length ? 0 : currentIndex() + 1),
+    );
+    dots.forEach((dot, i) => dot.addEventListener('click', () => scrollToCard(i)));
+
+    track.addEventListener('mouseenter', () => (paused = true));
+    track.addEventListener('mouseleave', () => (paused = false));
+    track.addEventListener('touchstart', () => (paused = true), { passive: true });
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      setInterval(() => {
+        if (paused || document.hidden) return;
+        const next = currentIndex() + 1 >= cards.length ? 0 : currentIndex() + 1;
+        scrollToCard(next);
+      }, 6000);
+    }
+  }
+</script>

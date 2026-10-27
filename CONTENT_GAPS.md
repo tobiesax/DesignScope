@@ -7,21 +7,31 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
-Design is now following the approved GrowthOS proposal's hi-fi website mockup (layout,
-copy tone, colour system). Its photos (hero, 4 path cards, before/after pair, showroom, 6
-project cards) are wired into the live prototype temporarily, at Tobi's request, so the
-build is visible while real assets are pending — see `src/data/mockup-images.ts` and
-`src/assets/mockup-temp/`. They are Claude-generated pitch-deck placeholders, not real
-Design Scope photos, and the "A+ BBB rating" / "Best of Houzz 2024" badges were dropped
-entirely (unverified). None of this ships at launch — swap `mockup-images.ts`'s imports for
+Design now follows the approved GrowthOS design handoff
+(`GrowthOS Proposal Design/design_handoff_design_scope_website/`) pixel-close — layout,
+colour tokens, copy and components — at Tobi's explicit request ("build it exactly as it is
+in the design brief, we will replace with clients real photos later"). This supersedes the
+earlier, looser hi-fi mockup pass. Its own image files (hero slideshow, path cards,
+before/after pair, showroom, category tiles, restoration scenarios, project photos) are
+wired in temporarily — see `src/data/mockup-images.ts` and `src/assets/mockup-temp/`. The
+handoff's own README flags several of these as "AI-generated stand-ins"; none are real
+Design Scope photos. None of this ships at launch — swap `mockup-images.ts`'s imports for
 Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
 
-The home page's "What customers say" section (`src/components/home/Reviews.astro`) is the
-same kind of temporary content, added back at Tobi's request to match the proposal mockup's
-layout for the demo. The 4 reviews shown are sample/placeholder quotes, not real customers —
-CLAUDE.md rule 2 says never invent reviews, so this must not ship. Delete or replace
-`Reviews.astro`'s `sampleReviews` with real Google/Yelp reviews (collected with Stephen's OK)
-before Week 5 QA, same deadline as the mockup photos.
+The "A+ BBB rating" and "Best of Houzz 2024" trust badges are back (`TrustBadges.astro`,
+`business.credentials`) — the handoff's own trust-badge row includes them, so they're shown
+now to match it exactly. They remain **unconfirmed** (not in HANDOFF.md). Don't ship without
+Stephen confirming both are real, and swap the plain icon placeholders for the official
+BBB/Houzz/Wellborn Forest member badge artwork once confirmed.
+
+The home page's review carousel (`src/components/home/ReviewCarousel.astro`,
+`src/data/reviews.ts`) is the same kind of temporary content — 6 sample reviews with specific
+towns and job types, taken directly from the design handoff's own placeholder data (its
+README lists these as "samples" needing client confirmation), not real customers. CLAUDE.md
+rule 2 says never invent reviews, so this must not ship. Replace `reviews.ts`'s
+`sampleReviews` and `sampleAggregateRating` with real Google reviews (collected with
+Stephen's OK) before Week 5 QA, same deadline as the mockup photos. `/reviews/` has the same
+gap — see below.
 
 ## Business facts
 
@@ -85,11 +95,11 @@ before Week 5 QA, same deadline as the mockup photos.
       KBIS). Not yet pulled into the project — the confirmed-5 list in `business.ts` and the
       supplier marquee are unchanged for now; worth a follow-up pass
 - [ ] Real reviews to feature (current reviews page has none — only brand logos). The home
-      page's "What customers say" section (`Reviews.astro`) and `/reviews/` both need real
-      quotes before launch — see the note near the top of this file
-- [ ] Verify or drop the "A+ BBB rating" and "Best of Houzz 2024" trust badges shown in the
-      mockup's hero trust strip — not in HANDOFF.md, not confirmed anywhere; don't ship
-      without Stephen confirming they're real
+      page's review carousel (`ReviewCarousel.astro` / `src/data/reviews.ts`) and `/reviews/`
+      both need real quotes before launch — see the note near the top of this file
+- [ ] Verify or drop the "A+ BBB rating" and "Best of Houzz 2024" trust badges (re-added per
+      the design handoff, see the note near the top of this file) — not in HANDOFF.md, not
+      confirmed anywhere; don't ship without Stephen confirming they're real
 - [ ] Stephen hasn't reviewed any service-page copy yet. `/remodeling/kitchens/` and
       `/remodeling/bathrooms/` headline, subcopy and intro paragraphs (`src/data/services.ts`)
       are written from confirmed business.ts facts, not invented, but are unreviewed marketing
@@ -105,9 +115,14 @@ before Week 5 QA, same deadline as the mockup photos.
       and the one real photo — no scope, no narrative, no before/after pair, because that
       data doesn't exist yet. No before/after slider has been built for individual projects;
       the home page's slider still uses mockup photos (see "Before-and-after pairs" below)
-- [ ] None of the 3 town pages (`/areas/bloomfield/`, `/areas/west-hartford/`,
+- [ ] None of the 3 built town pages (`/areas/bloomfield/`, `/areas/west-hartford/`,
       `/areas/windsor/`) have a real, town-tagged project to show — the local-proof gallery
       section is empty on all three until photos are tagged with a town
+- [ ] `/areas/simsbury/` and `/areas/avon/` don't exist yet. The design handoff builds all 5
+      of CLAUDE.md's candidate towns (business.ts `townPages` was expanded from 3 to 5 to
+      match it), and the footer/home service-area band already link to all 5 — but only the
+      original 3 have a page built. Confirm the 3-vs-5 town scope with Stephen (it changes
+      the BUILD_PLAN.md Week 4 scope) and build the remaining 2 pages either way
 - [ ] The 2 blog posts were migrated with the same title, slug, date and author as the live
       site, but the body text is rewritten in our own words, not copied — the extraction tool
       used to pull the live pages declined to reproduce their text verbatim (copyright), so
