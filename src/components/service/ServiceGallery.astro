@@ -44,7 +44,7 @@ const projects: GalleryProject[] =
     </div>
     <div class="grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]">
       {projects.map((project) => (
-        <div class="bg-paper flex flex-col">
+        <div class="card-hover bg-paper flex flex-col overflow-hidden">
           <Image src={project.img} alt={project.title} class="h-[190px] w-full object-cover" />
           <div class="flex items-baseline justify-between gap-2.5 px-4 py-3.5">
             <span class="text-[13.5px] font-extrabold">{project.title}</span>

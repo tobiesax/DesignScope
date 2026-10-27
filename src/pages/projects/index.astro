@@ -23,7 +23,10 @@ const resolveImage = (img: string | ImageMetadata) =>
     {mockProjects.map((project) => {
       const img = resolveImage(project.img);
       return (
-        <a href={`/projects/${project.id}/`} class="bg-paper-muted flex flex-col">
+        <a
+          href={`/projects/${project.id}/`}
+          class="card-hover bg-paper-muted flex flex-col overflow-hidden"
+        >
           <Image src={img} alt={project.title} class="h-[190px] w-full object-cover" />
           <div class="flex items-baseline justify-between gap-2.5 px-4 py-3.5">
             <span class="text-[13.5px] font-extrabold">{project.title}</span>

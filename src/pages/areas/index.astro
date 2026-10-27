@@ -22,7 +22,7 @@ import FinalCta from '../../components/shared/FinalCta.astro';
     {towns.map((town) => (
       <a
         href={`/areas/${town.slug}/`}
-        class="bg-paper-muted border-brand flex flex-col gap-2 border-t-[3px] p-6"
+        class="card-hover bg-paper-muted border-brand flex flex-col gap-2 border-t-[3px] p-6"
       >
         <span class="text-lg font-extrabold">{town.name}</span>
         <span class="text-muted text-xs">{town.highlight}</span>

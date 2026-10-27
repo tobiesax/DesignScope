@@ -41,7 +41,11 @@ const resolveImage = (img: string | ImageMetadata) =>
     {mockProjects.map((project) => {
       const Tag = categoryHref[project.cat] ? 'a' : 'div';
       return (
-        <Tag class="bg-paper flex flex-col" data-cat={project.cat} href={categoryHref[project.cat]}>
+        <Tag
+          class="card-hover bg-paper flex flex-col overflow-hidden"
+          data-cat={project.cat}
+          href={categoryHref[project.cat]}
+        >
           <Image
             src={resolveImage(project.img)}
             alt={project.title}

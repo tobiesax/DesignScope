@@ -19,7 +19,7 @@ const ctaClass = { brand: 'text-brand-dark', urgent: 'text-urgent' } as const;
   <span class="text-[10px] font-semibold tracking-[0.35em] uppercase">How can we help?</span>
   <div class="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
     {paths.map((path) => (
-      <a href={path.href} class="bg-paper flex flex-col">
+      <a href={path.href} class="card-hover bg-paper flex flex-col overflow-hidden">
         <Image
           src={mockupImages[images[path.title]]}
           alt=""

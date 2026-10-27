@@ -42,7 +42,7 @@ const rightNowSteps = [
       {[fireSmoke, waterDamage].map((page) => (
         <a
           href={`/restoration/${page.slug}/`}
-          class="bg-paper-muted border-urgent flex flex-col gap-2 border-t-[3px] p-6"
+          class="card-hover bg-paper-muted border-urgent flex flex-col gap-2 border-t-[3px] p-6"
         >
           <span class="text-lg font-extrabold">{page.heroEyebrow.split('·')[1]?.trim()}</span>
           <span class="text-ink-soft text-sm leading-relaxed">{page.heroSubcopy}</span>

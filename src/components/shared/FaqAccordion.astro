@@ -20,9 +20,9 @@ const { faqs, title = 'Common questions' } = Astro.props;
         <span class="text-[13.5px] font-bold">{item.q}</span>
         <span class="text-brand-dark faq-icon text-lg font-medium">{i === 0 ? '–' : '+'}</span>
       </button>
-      <p class="faq-answer text-ink-soft m-0 text-[13px] leading-relaxed" hidden={i !== 0}>
-        {item.a}
-      </p>
+      <div class="faq-panel" data-open={i === 0 ? 'true' : 'false'}>
+        <p class="faq-answer text-ink-soft m-0 text-[13px] leading-relaxed">{item.a}</p>
+      </div>
     </div>
   ))}
 </div>
@@ -36,8 +36,8 @@ const { faqs, title = 'Common questions' } = Astro.props;
         button.setAttribute('aria-expanded', String(!isOpen));
         const icon = button.querySelector('.faq-icon');
         if (icon) icon.textContent = isOpen ? '+' : '–';
-        const answer = button.nextElementSibling as HTMLElement | null;
-        answer?.toggleAttribute('hidden', isOpen);
+        const panel = button.nextElementSibling as HTMLElement | null;
+        panel?.setAttribute('data-open', String(!isOpen));
       });
     });
 </script>

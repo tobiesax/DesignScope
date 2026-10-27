@@ -95,6 +95,11 @@ const navLinks = [
     const isOpen = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!isOpen));
     menu?.toggleAttribute('hidden', isOpen);
+    if (!isOpen && menu) {
+      // Re-trigger the CSS entry animation every time the menu opens.
+      menu.classList.remove('is-entering');
+      requestAnimationFrame(() => menu.classList.add('is-entering'));
+    }
   });
 
   document.addEventListener('keydown', (event) => {
@@ -104,4 +109,9 @@ const navLinks = [
       toggle.focus();
     }
   });
+
+  const header = document.querySelector('header');
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
 </script>
