@@ -1,19 +1,24 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { mockupImages } from '../../data/mockup-images';
 import { commercial } from '../../data/commercial';
+import { commercialProjects, projectImages } from '../../data/project-images';
 import ProcessSteps from '../../components/shared/ProcessSteps.astro';
+import ServiceGallery from '../../components/service/ServiceGallery.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
-// No real commercial-project photos exist yet (CONTENT_GAPS.md) — reuses
-// the same temporary mockup photo already shown for this path on the home page.
+// REAL commercial photos, scraped from the live site's own /gallery page —
+// see the provenance note in src/data/project-images.ts.
+const galleryProjects = commercialProjects.map((project) => ({
+  ...project,
+  img: projectImages[project.img],
+}));
 ---
 
 <Layout title={commercial.title} description={commercial.metaDescription}>
   <section class="relative min-h-[300px]">
     <Image
-      src={mockupImages['path-commercial']}
+      src={projectImages['commercial-hero']}
       alt=""
       class="absolute inset-0 h-full w-full object-cover"
       widths={[640, 1024, 1600]}
@@ -53,5 +58,6 @@ import FinalCta from '../../components/shared/FinalCta.astro';
   </section>
 
   <ProcessSteps />
+  <ServiceGallery subheading="Real Design Scope commercial work" projects={galleryProjects} />
   <FinalCta />
 </Layout>

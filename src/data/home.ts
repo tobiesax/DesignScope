@@ -2,7 +2,12 @@
 // mockup (not invented). Images are handled separately — see
 // src/assets/mockup-temp/ and CONTENT_GAPS.md.
 
-import { kitchenProjects, bathroomProjects, projectImages } from './project-images';
+import {
+  kitchenProjects,
+  bathroomProjects,
+  commercialProjects,
+  projectImages,
+} from './project-images';
 
 export const paths = [
   {
@@ -74,13 +79,16 @@ export const faqs = [
   },
 ];
 
-// Kitchens and Bathrooms are real photos scraped from the live site
-// (src/data/project-images.ts) — no town is known per photo, so `town` is
-// omitted rather than invented. Home renovations and Commercial are still
-// temporary mockup photos (CONTENT_GAPS.md) pending real ones; the Simsbury
-// project is recategorised from the mockup's "Restoration" to "Home
-// renovations" — a whole-home renovation isn't fire/water damage work, and
-// no real restoration project photos exist to populate that filter.
+// Kitchens, Bathrooms and Commercial are real photos scraped from the live
+// site (src/data/project-images.ts) — no town is known per photo, so `town`
+// is omitted rather than invented (the mockup's "Hartford" for the old
+// Commercial placeholder was invented too; dropped along with the photo).
+// Home renovations is still a temporary mockup photo (CONTENT_GAPS.md) —
+// the live site's own "residential-services" gallery turned out to be
+// generic stock photography, not real Design Scope work, so it wasn't used.
+// The Simsbury project is recategorised from the mockup's "Restoration" to
+// "Home renovations" — a whole-home renovation isn't fire/water damage
+// work, and no real restoration project photos exist to populate that filter.
 export const mockProjects: {
   id: string;
   title: string;
@@ -90,19 +98,13 @@ export const mockProjects: {
 }[] = [
   ...kitchenProjects.map((p) => ({ ...p, cat: 'Kitchens', img: projectImages[p.img] })),
   ...bathroomProjects.map((p) => ({ ...p, cat: 'Bathrooms', img: projectImages[p.img] })),
+  ...commercialProjects.map((p) => ({ ...p, cat: 'Commercial', img: projectImages[p.img] })),
   {
     id: 'proj-3',
     title: 'Whole-home renovation',
     town: 'Simsbury',
     cat: 'Home renovations',
     img: 'proj-renovation-simsbury',
-  },
-  {
-    id: 'proj-4',
-    title: 'Office fit-out',
-    town: 'Hartford',
-    cat: 'Commercial',
-    img: 'proj-office-hartford',
   },
 ];
 

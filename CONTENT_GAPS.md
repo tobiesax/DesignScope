@@ -49,9 +49,20 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
       `src/assets/projects/`. No town is known per photo (the live site doesn't tag them) —
       don't invent one; `town` is omitted rather than guessed. Two kitchen-gallery images (a
       laundry nook, a home bar area) were excluded as miscategorised on the live site.
-- [ ] Home renovations and Commercial still use the Claude-generated mockup photos
-      (`mockup-temp/`) — same live-site scrape approach should work for these once there's
-      time; the live site's gallery/commercial-services pages have real photos too
+- [x] Commercial (5) project photos — REAL, scraped from the live site's own `/gallery` page
+      (the "commercial-services-gallery-\*" image set) at Tobi's request. Checked for
+      authenticity before use: internally consistent (the same few real spaces — two break
+      rooms, a conference room — shot from multiple angles, with specific non-stock details
+      like branded vending machines and a handwritten "dishwasher out of order" sign). See
+      `src/data/project-images.ts` and `src/assets/projects/commercial/`. No town known (the
+      live site doesn't tag it), so `town` is omitted — the mockup's "Hartford" was invented
+      and is now dropped along with the mockup photo
+- [ ] Home renovations still uses the Claude-generated mockup photo (`mockup-temp/`) — the
+      live site's own "residential-services-gallery" image set was checked the same way and
+      **failed**: it's generic stock photography (a European-style tile roof, a new-build
+      tract house, a glossy staged apartment interior — none of it reads as genuine Design
+      Scope work, unlike the commercial and kitchen/bathroom sets), so none of it was used.
+      Real whole-home-renovation photos still need to come directly from Stephen
 - [ ] Restoration (hub, fire & smoke, water damage) has no real photos at all — not even a
       scraped single, since the live site's fire-and-smoke-damage-restoration and
       water-damage-restoration pages have no gallery images to scrape (confirmed by

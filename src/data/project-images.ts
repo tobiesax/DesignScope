@@ -19,6 +19,22 @@ import bathroom4 from '../assets/projects/bathroom/gallery-04.jpg';
 import bathroom5 from '../assets/projects/bathroom/gallery-05.jpg';
 import bathroom6 from '../assets/projects/bathroom/gallery-06.jpg';
 
+// REAL commercial photos, scraped from the live site's own /gallery page
+// (the "commercial-services-gallery-*" set) — same approach as kitchens and
+// bathrooms. Checked for authenticity first: these are internally consistent
+// (the same handful of real spaces — two break rooms, a conference room —
+// shot from multiple angles, with specific non-stock details like branded
+// vending machines and a handwritten "dishwasher out of order" sign), unlike
+// the live site's "residential-services-gallery" set, which turned out to be
+// generic stock photography (a European-style roof, a glossy stock apartment
+// interior) and was NOT used for that reason — see CONTENT_GAPS.md.
+import commercialHero from '../assets/projects/commercial/hero.jpg';
+import commercial1 from '../assets/projects/commercial/gallery-01.jpg';
+import commercial2 from '../assets/projects/commercial/gallery-02.jpg';
+import commercial3 from '../assets/projects/commercial/gallery-03.jpg';
+import commercial4 from '../assets/projects/commercial/gallery-04.jpg';
+import commercial5 from '../assets/projects/commercial/gallery-05.jpg';
+
 export const projectImages = {
   'kitchen-hero': kitchenHero,
   kitchen1,
@@ -32,6 +48,12 @@ export const projectImages = {
   bathroom4,
   bathroom5,
   bathroom6,
+  'commercial-hero': commercialHero,
+  commercial1,
+  commercial2,
+  commercial3,
+  commercial4,
+  commercial5,
 } satisfies Record<string, ImageMetadata>;
 
 // Short, honest titles distilled from the live site's own alt text —
@@ -50,4 +72,13 @@ export const bathroomProjects = [
   { id: 'bathroom-4', title: 'Glass shower with built-in bench', img: 'bathroom4' as const },
   { id: 'bathroom-5', title: 'Glass shower with dark tile walls', img: 'bathroom5' as const },
   { id: 'bathroom-6', title: 'Freestanding tub and double vanity', img: 'bathroom6' as const },
+];
+
+// No town is known for these either (same reasoning as kitchens/bathrooms above).
+export const commercialProjects = [
+  { id: 'commercial-1', title: 'Employee break room and seating', img: 'commercial1' as const },
+  { id: 'commercial-2', title: 'Break room with vending and fridge', img: 'commercial2' as const },
+  { id: 'commercial-3', title: 'Office kitchenette, red cabinetry', img: 'commercial3' as const },
+  { id: 'commercial-4', title: 'Office kitchenette, tile backsplash', img: 'commercial4' as const },
+  { id: 'commercial-5', title: 'Office kitchenette, wide view', img: 'commercial5' as const },
 ];
