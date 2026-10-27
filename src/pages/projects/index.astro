@@ -1,44 +1,243 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { mockProjects } from '../../data/home';
-import { mockupImages } from '../../data/mockup-images';
+import { caseStudies, categoryAccent } from '../../data/case-studies';
 
-const resolveImage = (img: string | ImageMetadata) =>
-  typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
+// Matches the GrowthOS design handoff's Projects gallery exactly: search,
+// sort, category and town filters, with a before/after preview on cards
+// that have one. All 15 case studies are the handoff's own placeholder
+// content — see src/data/case-studies.ts and CONTENT_GAPS.md.
+const categories = ['All', 'Kitchens', 'Bathrooms', 'Whole home', 'Restoration', 'Commercial'];
+const towns = ['All', ...Array.from(new Set(caseStudies.map((p) => p.town))).sort()];
+
+const budgetValue = (budget: string) => {
+  const m = budget.match(/\d+/);
+  return m ? Number(m[0]) : null;
+};
 ---
 
 <Layout
   title="Our Projects"
-  description="Real Design Scope kitchen and bathroom remodeling projects across Hartford County, Connecticut."
+  description="Real-world kitchen, bath, whole-home, restoration and commercial projects across Hartford County, Connecticut."
   active="projects"
 >
-  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
-    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+  <section class="flex flex-col gap-3.5 px-4 py-11 pb-7 sm:px-7">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
       Projects
     </span>
-    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">Real work, real homes</h1>
+    <h1 class="text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
+      Work we're proud of
+    </h1>
+    <p class="text-ink-soft max-w-[560px] text-[15px] leading-relaxed">
+      Finished projects from across Hartford County. Select one to see the brief, the process and
+      what it cost.
+    </p>
   </section>
 
-  <div class="grid gap-3.5 px-4 pb-12 sm:px-7 [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]">
-    {mockProjects.map((project) => {
-      const img = resolveImage(project.img);
-      return (
-        <a
-          href={`/projects/${project.id}/`}
-          class="card-hover bg-paper-muted flex flex-col overflow-hidden"
+  <section class="flex flex-col gap-2.5 px-4 pb-4.5 sm:px-7">
+    <div class="flex flex-wrap items-center gap-2">
+      <input
+        id="pj-search"
+        type="search"
+        placeholder="Search projects, towns or materials"
+        aria-label="Search projects"
+        class="border-ink min-w-[220px] flex-1 border-[1.5px] px-3 py-2.5 text-[13px]"
+      />
+      <select
+        id="pj-sort"
+        aria-label="Sort projects"
+        class="border-ink border-[1.5px] bg-white px-3 py-2.5 text-[13px]"
+      >
+        <option value="new">Newest first</option>
+        <option value="low">Budget: low to high</option>
+        <option value="high">Budget: high to low</option>
+      </select>
+      <span id="pj-count" class="text-muted text-xs font-bold"></span>
+    </div>
+    <div id="pj-cats" class="flex flex-wrap gap-1.5">
+      {categories.map((c, i) => (
+        <button
+          type="button"
+          data-pj-cat={c}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          class:list={[
+            'border-ink border-[1.5px] px-3.5 py-2.5 text-xs font-extrabold',
+            i === 0 ? 'bg-ink text-paper' : 'bg-white text-ink',
+          ]}
         >
-          <Image src={img} alt={project.title} class="h-[190px] w-full object-cover" />
-          <div class="flex items-baseline justify-between gap-2.5 px-4 py-3.5">
-            <span class="text-[13.5px] font-extrabold">{project.title}</span>
-            {project.town && (
-              <span class="text-muted text-[11px] font-semibold whitespace-nowrap">
-                {project.town}
-              </span>
+          {c}
+        </button>
+      ))}
+    </div>
+    <div id="pj-towns" class="flex flex-wrap items-center gap-1.5">
+      <span class="text-muted mr-1 text-[11px] font-bold">Town</span>
+      {towns.map((t, i) => (
+        <button
+          type="button"
+          data-pj-town={t}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          class:list={[
+            'px-2.5 py-1.5 text-[11.5px] font-bold',
+            i === 0 ? 'bg-brand text-ink' : 'bg-[#f0f0f0] text-ink',
+          ]}
+        >
+          {t}
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <section class="px-4 pb-14 sm:px-7">
+    <div
+      id="pj-grid"
+      class="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]"
+    >
+      {caseStudies.map((p) => (
+        <a
+          href={`/projects/${p.id}/`}
+          data-pj-card
+          data-cat={p.cat}
+          data-town={p.town}
+          data-search={`${p.title} ${p.town} ${p.cat} ${p.scope} ${p.products.join(' ')}`.toLowerCase()}
+          data-budget={budgetValue(p.budget) ?? ''}
+          class="card-hover flex flex-col gap-3 overflow-hidden"
+        >
+          <div class="relative h-[220px]">
+            <Image src={p.img} alt={p.title} class="h-full w-full object-cover" />
+            {p.before && (
+              <>
+                <div class="absolute inset-y-0 left-0 w-1/2 overflow-hidden border-r-[3px] border-brand">
+                  <Image src={p.before} alt="" class="h-full w-[200%] object-cover" />
+                </div>
+                <span class="bg-dark text-paper absolute right-2.5 bottom-2.5 px-2 py-1 text-[10px] font-extrabold">
+                  BEFORE / AFTER
+                </span>
+              </>
             )}
+            <span
+              class:list={[
+                'absolute top-2.5 left-2.5 px-2 py-1 text-[10px] font-extrabold',
+                categoryAccent[p.cat] === 'urgent'
+                  ? 'bg-urgent text-paper'
+                  : categoryAccent[p.cat] === 'dark'
+                    ? 'bg-dark text-paper'
+                    : 'bg-brand text-ink',
+              ]}
+            >
+              {p.cat}
+            </span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-[15px] font-extrabold">{p.title}</span>
+            <span class="text-muted text-xs font-semibold">
+              {p.town} · {p.time} · {p.budget}
+            </span>
           </div>
         </a>
-      );
-    })}
-  </div>
+      ))}
+    </div>
+    <div id="pj-empty" class="flex-col items-start gap-3 py-10" hidden>
+      <span class="text-[18px] font-black">No projects match</span>
+      <span class="text-muted text-[13.5px]">Try another town, or clear your search.</span>
+      <button
+        type="button"
+        id="pj-clear"
+        class="border-ink border-[1.5px] px-5 py-3.5 text-[13px] font-bold"
+      >
+        Clear filters
+      </button>
+    </div>
+  </section>
 </Layout>
+
+<script>
+  const search = document.getElementById('pj-search') as HTMLInputElement | null;
+  const sort = document.getElementById('pj-sort') as HTMLSelectElement | null;
+  const count = document.getElementById('pj-count');
+  const grid = document.getElementById('pj-grid');
+  const empty = document.getElementById('pj-empty');
+  const clearBtn = document.getElementById('pj-clear');
+  const catButtons = document.querySelectorAll<HTMLButtonElement>('#pj-cats [data-pj-cat]');
+  const townButtons = document.querySelectorAll<HTMLButtonElement>('#pj-towns [data-pj-town]');
+
+  if (search && sort && count && grid && empty) {
+    const cards = Array.from(grid.querySelectorAll<HTMLAnchorElement>('[data-pj-card]'));
+    let cat = 'All';
+    let town = 'All';
+
+    const apply = () => {
+      const q = search.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const matches =
+          (cat === 'All' || card.dataset.cat === cat) &&
+          (town === 'All' || card.dataset.town === town) &&
+          (!q || card.dataset.search?.includes(q));
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      });
+
+      if (sort.value !== 'new') {
+        const visibleCards = cards.filter((c) => !c.hidden);
+        visibleCards.sort((a, b) => {
+          const av = a.dataset.budget ? Number(a.dataset.budget) : -1;
+          const bv = b.dataset.budget ? Number(b.dataset.budget) : -1;
+          return sort.value === 'low' ? av - bv : bv - av;
+        });
+        visibleCards.forEach((c) => grid.appendChild(c));
+      }
+
+      count.textContent = `${visible} ${visible === 1 ? 'project' : 'projects'}`;
+      empty.hidden = visible !== 0;
+    };
+
+    search.addEventListener('input', apply);
+    sort.addEventListener('change', apply);
+    catButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        cat = btn.dataset.pjCat ?? 'All';
+        catButtons.forEach((b) => {
+          const active = b === btn;
+          b.setAttribute('aria-pressed', String(active));
+          b.classList.toggle('bg-ink', active);
+          b.classList.toggle('text-paper', active);
+          b.classList.toggle('bg-white', !active);
+          b.classList.toggle('text-ink', !active);
+        });
+        apply();
+      });
+    });
+    townButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        town = btn.dataset.pjTown ?? 'All';
+        townButtons.forEach((b) => {
+          const active = b === btn;
+          b.setAttribute('aria-pressed', String(active));
+          b.classList.toggle('bg-brand', active);
+          b.classList.toggle('bg-[#f0f0f0]', !active);
+        });
+        apply();
+      });
+    });
+    clearBtn?.addEventListener('click', () => {
+      search.value = '';
+      sort.value = 'new';
+      cat = 'All';
+      town = 'All';
+      catButtons.forEach((b, i) => {
+        b.setAttribute('aria-pressed', String(i === 0));
+        b.classList.toggle('bg-ink', i === 0);
+        b.classList.toggle('text-paper', i === 0);
+        b.classList.toggle('bg-white', i !== 0);
+      });
+      townButtons.forEach((b, i) => {
+        b.setAttribute('aria-pressed', String(i === 0));
+        b.classList.toggle('bg-brand', i === 0);
+        b.classList.toggle('bg-[#f0f0f0]', i !== 0);
+      });
+      apply();
+    });
+
+    apply();
+  }
+</script>

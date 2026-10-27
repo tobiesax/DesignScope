@@ -81,9 +81,14 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
       — all shipped; About has no team photo yet (Stephen's surname and a photo are still
       unconfirmed, CONTENT_GAPS.md)
 - [ ] **[repo]** Keystatic collections: projects, blog posts, reviews; the owner can add a project from his phone
-- [x] **[repo]** Projects gallery and single project page, without a before/after slider — no
-      before/after pairs exist for any real project yet, so single project pages show the one
-      known photo, title, category and town (if known) only (CONTENT_GAPS.md)
+- [x] **[repo]** Projects gallery and case study template — rebuilt to the design handoff's
+      spec exactly: search/sort/category/town filters on the gallery, and a full case study
+      per project (facts, brief/did/result, timeline, before/after where a pair exists,
+      products used, a sample review, a category-aware CTA, next project). Uses the
+      handoff's own 15-project PROJECTS data (`src/data/case-studies.ts`), not the real
+      scraped kitchen/bathroom/commercial photos (`src/data/home.ts` `mockProjects`, still
+      used for shallower teasers elsewhere) — real projects don't have the brief/did/result/
+      products/quote fields a case study needs yet either way. All placeholder (CONTENT_GAPS.md)
 - [x] **[repo]** Migrate the blog posts with the same slugs and dates — body text is rewritten
       in our own words rather than copied (the extraction tool declined to reproduce the live
       pages verbatim); not yet wired into Keystatic

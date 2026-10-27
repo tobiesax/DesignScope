@@ -1,52 +1,300 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { mockProjects, categoryHref } from '../../data/home';
-import { mockupImages } from '../../data/mockup-images';
+import { caseStudies, categoryAccent } from '../../data/case-studies';
 
+// Matches the GrowthOS design handoff's Case study template exactly, at
+// Tobi's request. All content is the handoff's own placeholder data — see
+// src/data/case-studies.ts and CONTENT_GAPS.md.
 export function getStaticPaths() {
-  return mockProjects.map((project) => ({ params: { id: project.id }, props: { project } }));
+  return caseStudies.map((project) => ({ params: { id: project.id }, props: { project } }));
 }
 
-const { project } = Astro.props;
-const resolveImage = (img: string | ImageMetadata) =>
-  typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
-const img = resolveImage(project.img);
-const categoryLink = categoryHref[project.cat];
+const { project: cp } = Astro.props;
+const index = caseStudies.findIndex((p) => p.id === cp.id);
+const next = caseStudies[(index + 1) % caseStudies.length];
+
+const accent = categoryAccent[cp.cat];
+const accentTextOnly =
+  accent === 'urgent' ? 'text-urgent' : accent === 'dark' ? 'text-ink' : 'text-brand-dark';
+
+const thumbs = [
+  cp.img,
+  cp.before,
+  ...caseStudies.filter((p) => p.cat === cp.cat && p.id !== cp.id).map((p) => p.img),
+]
+  .filter((img): img is ImageMetadata => !!img)
+  .slice(0, 5);
+
+const isRestoration = cp.cat === 'Restoration';
+const isCommercial = cp.cat === 'Commercial';
+
+const timeline = isRestoration
+  ? [
+      { w: 'Hour 1', t: 'Answer and arrive' },
+      { w: 'Day 1', t: 'Make safe and document' },
+      { w: 'Days 2–5', t: 'Dry, clean, treat' },
+      { w: 'Week 2', t: 'Insurance scope approved' },
+      { w: 'Then', t: 'Rebuild by our remodel team' },
+    ]
+  : isCommercial
+    ? [
+        { w: 'Week 1', t: 'Site walk and scope' },
+        { w: 'Week 2', t: 'Pricing and schedule agreed' },
+        { w: 'Weeks 3–4', t: 'Permits and long-lead orders' },
+        { w: 'Build', t: `${cp.time} on site` },
+        { w: 'Handover', t: 'Punch list closed' },
+      ]
+    : [
+        { w: 'Week 1', t: 'Consultation and measure' },
+        { w: 'Week 2', t: '3D design approved, quote signed' },
+        { w: 'Weeks 3–4', t: 'Permits and materials ordered' },
+        { w: 'Build', t: `${cp.time} on site` },
+        { w: 'Handover', t: 'Walkthrough and warranty' },
+      ];
+
+const cta = isRestoration
+  ? {
+      bg: 'bg-urgent',
+      fg: 'text-paper',
+      title: 'Dealing with damage right now?',
+      sub: 'We answer 24/7 and work with your insurer.',
+      label: 'Get emergency help',
+      href: '/restoration/',
+    }
+  : isCommercial
+    ? {
+        bg: 'bg-brand',
+        fg: 'text-ink',
+        title: 'Planning a commercial project?',
+        sub: 'A project manager replies within one business day.',
+        label: 'Request a quote',
+        href: '/commercial/#quote',
+      }
+    : {
+        bg: 'bg-brand',
+        fg: 'text-ink',
+        title: 'Start a project like this',
+        sub: 'Free consultation and a written quote within 24 hours.',
+        label: 'Book free consultation',
+        href: '/book/',
+      };
 ---
 
 <Layout
-  title={project.title}
-  description={`${project.title}${project.town ? ` in ${project.town}, CT` : ''} — a Design Scope project.`}
+  title={`${cp.title}, ${cp.town} CT`}
+  description={`${cp.title} in ${cp.town}, CT — ${cp.scope}, ${cp.time}.`}
   active="projects"
 >
-  <section class="flex flex-col gap-4 px-4 py-10 sm:px-7">
-    <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 text-xs">
-      <a href="/projects/" class="hover:text-brand-dark">
-        Projects
+  <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 px-4 py-4 text-xs sm:px-7">
+    <a href="/projects/" class="hover:text-brand-dark font-bold">
+      Projects
+    </a>
+    <span aria-hidden="true">/</span>
+    <span>{cp.cat}</span>
+    <span aria-hidden="true">/</span>
+    <span>{cp.title}</span>
+  </nav>
+
+  <div class="px-4 sm:px-7">
+    <div id="cs-main" class="h-[300px] sm:h-[480px]">
+      <Image src={cp.img} alt={cp.title} class="h-full w-full object-cover" />
+    </div>
+  </div>
+
+  {thumbs.length > 1 && (
+    <div class="flex gap-1.5 overflow-x-auto px-4 pt-2 sm:px-7">
+      {thumbs.map((thumb, i) => (
+        <button
+          type="button"
+          data-cs-thumb={i}
+          class:list={[
+            'h-16 w-24 flex-shrink-0',
+            i === 0 && 'outline-brand outline-[3px] -outline-offset-[3px]',
+          ]}
+        >
+          <Image src={thumb} alt="" class="h-full w-full object-cover" />
+        </button>
+      ))}
+    </div>
+  )}
+
+  <section class="flex flex-col gap-5 px-4 pt-9 sm:px-7">
+    <div class="flex flex-col gap-2.5">
+      <span class:list={['text-[10px] font-bold tracking-[0.3em] uppercase', accentTextOnly]}>
+        {cp.cat} · {cp.town}
+      </span>
+      <h1 class="text-[34px] leading-[1.05] font-black tracking-tight sm:text-[52px]">
+        {cp.title}
+      </h1>
+      <div class="flex flex-wrap gap-2">
+        <button
+          type="button"
+          id="cs-save"
+          class="border-ink bg-white border-[1.5px] px-3.5 py-2.5 text-xs font-extrabold"
+        >
+          ♡ Save project
+        </button>
+        <button
+          type="button"
+          id="cs-share"
+          class="border-ink border-[1.5px] px-3.5 py-2.5 text-xs font-extrabold"
+        >
+          Share
+        </button>
+      </div>
+    </div>
+    <div class="grid gap-[3px] [grid-template-columns:repeat(auto-fit,minmax(140px,1fr))]">
+      {[
+        { k: 'Town', v: cp.town },
+        { k: 'Scope', v: cp.scope },
+        { k: 'Timeline', v: cp.time },
+        { k: 'Investment', v: cp.budget },
+      ].map((f) => (
+        <div class="bg-paper-muted flex flex-col gap-1 px-4 py-4">
+          <span class="text-muted text-[9.5px] font-bold tracking-[0.2em] uppercase">{f.k}</span>
+          <span class="text-[15px] font-black">{f.v}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="grid gap-7 px-4 py-10 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))]">
+    {[
+      { t: 'The brief', b: cp.brief },
+      { t: 'What we did', b: cp.did },
+      { t: 'The result', b: cp.result },
+    ].map((s) => (
+      <div class="border-ink flex flex-col gap-2 border-t-2 pt-3.5">
+        <span class="text-[15px] font-black">{s.t}</span>
+        <span class="text-ink-soft text-sm leading-relaxed">{s.b}</span>
+      </div>
+    ))}
+  </section>
+
+  <section class="flex flex-col gap-3.5 px-4 pb-10 sm:px-7">
+    <h3 class="text-[22px] font-black">Project timeline</h3>
+    <div class="grid gap-[3px] [grid-template-columns:repeat(auto-fit,minmax(150px,1fr))]">
+      {timeline.map((t, i) => (
+        <div
+          class:list={[
+            'flex flex-col gap-1.5 px-4 py-4',
+            i === timeline.length - 1 ? 'bg-brand text-ink' : 'bg-paper-muted text-ink',
+          ]}
+        >
+          <span
+            class:list={[
+              'text-[10px] font-extrabold tracking-[0.15em] uppercase',
+              i === timeline.length - 1 ? 'text-ink' : accentTextOnly,
+            ]}
+          >
+            {t.w}
+          </span>
+          <span class="text-[13.5px] leading-snug font-extrabold">{t.t}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="grid gap-7 px-4 pb-10 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+    <div class="flex flex-col gap-3">
+      <span class="text-muted text-[10px] font-bold tracking-[0.25em] uppercase">
+        Products used
+      </span>
+      <div class="flex flex-wrap gap-1.5">
+        {cp.products.map((p) => (
+          <span class="border-line border px-3 py-2 text-xs font-bold">{p}</span>
+        ))}
+      </div>
+      <a
+        href="/showroom/"
+        class="border-brand text-ink self-start border-b-2 pb-0.5 text-[12.5px] font-extrabold"
+      >
+        See them in the showroom →
       </a>
-      <span aria-hidden="true">/</span>
-      <span>{project.title}</span>
-    </nav>
-    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
-      {project.cat}
-      {project.town ? ` · ${project.town}` : ''}
-    </span>
-    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">{project.title}</h1>
+    </div>
+    <div class="bg-dark text-paper flex flex-col gap-2.5 p-6">
+      <span class="text-brand tracking-[0.1em]">★★★★★</span>
+      <span class="text-[15px] leading-relaxed font-semibold">&ldquo;{cp.quote}&rdquo;</span>
+      <span class="text-on-dark-muted text-[11.5px] font-bold">{cp.who} · sample review</span>
+    </div>
   </section>
 
   <section class="px-4 pb-10 sm:px-7">
-    <Image src={img} alt={project.title} class="max-h-[560px] w-full object-cover" />
+    <div class="bg-paper-muted flex items-center gap-4.5 p-6">
+      <span class="bg-ink-soft text-muted-dark flex h-15 w-15 flex-shrink-0 items-center justify-center text-[11px] font-bold">
+        ▶
+      </span>
+      <div class="flex flex-col gap-1">
+        <span class="text-[15px] font-extrabold">Video testimonial · {cp.who}</span>
+        <span class="text-muted text-xs">60-second video · file needed</span>
+      </div>
+    </div>
   </section>
 
-  <section class="flex flex-wrap gap-2.5 px-4 pb-12 sm:px-7">
-    {categoryLink && (
-      <a href={categoryLink} class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
-        See more {project.cat.toLowerCase()} work
-      </a>
-    )}
-    <a href="/projects/" class="border-dark border px-5 py-3.5 text-sm font-bold">
-      All projects
+  <section
+    class={`flex flex-wrap items-center justify-between gap-4.5 px-4 py-9 sm:px-7 ${cta.bg} ${cta.fg}`}
+  >
+    <div class="flex flex-col gap-1">
+      <span class="text-[22px] font-black tracking-tight">{cta.title}</span>
+      <span class="text-[13px] font-medium">{cta.sub}</span>
+    </div>
+    <a
+      href={cta.href}
+      data-open-booking={cta.href === '/book/' ? true : undefined}
+      class="border-[1.5px] border-dark bg-dark px-5 py-3.5 text-[13px] font-extrabold text-paper"
+    >
+      {cta.label}
     </a>
   </section>
+
+  <a
+    href={`/projects/${next.id}/`}
+    class="border-border-soft flex items-center justify-between gap-3 border-b px-4 py-5.5 sm:px-7"
+  >
+    <span class="text-muted text-[11px] font-bold tracking-[0.2em] uppercase">Next project</span>
+    <span class="text-[15px] font-black">{next.title} →</span>
+  </a>
 </Layout>
+
+<script>
+  const mainWrap = document.getElementById('cs-main');
+  const thumbs = document.querySelectorAll<HTMLButtonElement>('[data-cs-thumb]');
+  const saveBtn = document.getElementById('cs-save');
+  const shareBtn = document.getElementById('cs-share');
+
+  if (mainWrap && thumbs.length) {
+    const sources = Array.from(thumbs).map(
+      (t) => t.querySelector('img')?.currentSrc || t.querySelector('img')?.src,
+    );
+    thumbs.forEach((thumb, i) => {
+      thumb.addEventListener('click', () => {
+        const img = mainWrap.querySelector('img');
+        if (img && sources[i]) img.src = sources[i] as string;
+        thumbs.forEach((t, j) => t.classList.toggle('outline-brand', j === i));
+        thumbs.forEach((t, j) => t.classList.toggle('outline-[3px]', j === i));
+        thumbs.forEach((t, j) => t.classList.toggle('-outline-offset-[3px]', j === i));
+      });
+    });
+  }
+
+  let saved = false;
+  saveBtn?.addEventListener('click', () => {
+    saved = !saved;
+    saveBtn.textContent = saved ? '♥ Saved' : '♡ Save project';
+    saveBtn.classList.toggle('bg-orange-tint', saved);
+  });
+
+  shareBtn?.addEventListener('click', () => {
+    try {
+      navigator.clipboard?.writeText(location.href);
+    } catch {
+      // Clipboard API unavailable — the button simply won't confirm a copy.
+    }
+    const original = shareBtn.textContent;
+    shareBtn.textContent = 'Link copied ✓';
+    setTimeout(() => {
+      shareBtn.textContent = original;
+    }, 2000);
+  });
+</script>

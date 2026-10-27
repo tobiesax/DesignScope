@@ -137,10 +137,14 @@ financing product behind it would misrepresent what's on offer.
       in confirmed business.ts facts and (for restoration/commercial/showroom/home renovations)
       facts fetched directly from the live site's own service pages — never invented, but
       never seen by Stephen either
-- [ ] Single project pages (`/projects/[id]/`) show only the title, category, town (if known)
-      and the one real photo — no scope, no narrative, no before/after pair, because that
-      data doesn't exist yet. No before/after slider has been built for individual projects;
-      the home page's slider still uses mockup photos (see "Before-and-after pairs" below)
+- [ ] `/projects/` and every `/projects/[id]/` case study now use the design handoff's own
+      15-project PROJECTS data (`src/data/case-studies.ts`) — full brief/what-we-did/result
+      narratives, products, a "sample review" quote, timelines and (for `kitchen-bloomfield`)
+      a real before/after pair. None of this is real: it's the handoff's own placeholder
+      content (its README lists "project details and photos" as something to confirm with
+      the client), not grounded in any actual Design Scope job. Replace with Stephen's real
+      15+ projects — photos, before/afters, scope, cost, products and real reviews — before
+      launch; this is one of the bigger remaining content gaps
 - [ ] None of the 3 built town pages (`/areas/bloomfield/`, `/areas/west-hartford/`,
       `/areas/windsor/`) have a real, town-tagged project to show — the local-proof gallery
       section is empty on all three until photos are tagged with a town
