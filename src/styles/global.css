@@ -173,7 +173,11 @@ a[class*='border-paper']:hover {
 }
 
 /* Home hero slideshow — slow Ken Burns on whichever slide is active
-   (Hero.astro), alternating direction per the handoff. */
+   (Hero.astro), alternating pan direction per the handoff. Both keyframes
+   must start at the image's resting transform (scale(1), no translate) —
+   a slide has no `transform` at all while inactive, so a keyframe whose
+   `from` state is anything else causes a visible instant jump to that
+   state the moment the slide fades in, before easing away from it. */
 @keyframes hero-ken-0 {
   from {
     transform: scale(1) translate(0, 0);
@@ -184,10 +188,10 @@ a[class*='border-paper']:hover {
 }
 @keyframes hero-ken-1 {
   from {
-    transform: scale(1.1) translate(2%, 0);
+    transform: scale(1) translate(0, 0);
   }
   to {
-    transform: scale(1) translate(0, 0);
+    transform: scale(1.1) translate(2%, 1%);
   }
 }
 .hero-slide {

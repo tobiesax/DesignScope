@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import BookingModal from '../components/shared/BookingModal.astro';
 import ChatWidget from '../components/shared/ChatWidget.astro';
 import CookieBanner from '../components/shared/CookieBanner.astro';
+import BackToTop from '../components/shared/BackToTop.astro';
 import { business } from '../data/business';
 
 interface Props {
@@ -98,5 +99,6 @@ const siteTitle = `${title} | ${business.legalName}`;
     <BookingModal />
     <ChatWidget />
     <CookieBanner />
+    <BackToTop />
   </body>
 </html>

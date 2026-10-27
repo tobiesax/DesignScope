@@ -1,0 +1,38 @@
+---
+// Back-to-top button — appears after scrolling past the first viewport,
+// stacked above the chat widget/mobile sticky bar rather than sharing
+// their corner, so it never overlaps either.
+---
+
+<button
+  type="button"
+  id="back-to-top"
+  aria-label="Back to top"
+  class="fixed right-4 bottom-[136px] z-[72] flex h-11 w-11 items-center justify-center border-[1.5px] border-ink bg-white text-ink sm:right-5 sm:bottom-[76px]"
+  hidden
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+    <path
+      d="M12 19V5M5 12l7-7 7 7"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</button>
+
+<script>
+  const btn = document.getElementById('back-to-top');
+  if (btn) {
+    const onScroll = () => {
+      btn.hidden = window.scrollY < window.innerHeight * 0.8;
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
