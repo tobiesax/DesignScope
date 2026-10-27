@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FaqAccordion from '../../components/shared/FaqAccordion.astro';
+import { siteFaqs } from '../../data/faqs';
+import FinalCta from '../../components/shared/FinalCta.astro';
+---
+
+<Layout
+  title="Frequently Asked Questions"
+  description="Answers to common questions about pricing, permits, insurance, crew and timelines at Design Scope."
+>
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">FAQs</span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">Common questions</h1>
+  </section>
+  <section class="px-4 pb-12 sm:px-7">
+    <div class="mx-auto max-w-2xl">
+      <FaqAccordion faqs={siteFaqs} title="Everything, in one place" />
+    </div>
+  </section>
+  <FinalCta />
+</Layout>
