@@ -16,6 +16,13 @@ Design Scope photos, and the "A+ BBB rating" / "Best of Houzz 2024" badges were 
 entirely (unverified). None of this ships at launch — swap `mockup-images.ts`'s imports for
 Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
 
+The home page's "What customers say" section (`src/components/home/Reviews.astro`) is the
+same kind of temporary content, added back at Tobi's request to match the proposal mockup's
+layout for the demo. The 4 reviews shown are sample/placeholder quotes, not real customers —
+CLAUDE.md rule 2 says never invent reviews, so this must not ship. Delete or replace
+`Reviews.astro`'s `sampleReviews` with real Google/Yelp reviews (collected with Stephen's OK)
+before Week 5 QA, same deadline as the mockup photos.
+
 ## Business facts
 
 - [ ] HIC registration number
@@ -77,8 +84,9 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
       Schluter Systems, MSI, Fabuwood + more; membership logos for HBRA, Bloomfield Chamber,
       KBIS). Not yet pulled into the project — the confirmed-5 list in `business.ts` and the
       supplier marquee are unchanged for now; worth a follow-up pass
-- [ ] Real reviews to feature (current reviews page has none — only brand logos; the mockup's
-      review cards are sample/placeholder text, not real quotes)
+- [ ] Real reviews to feature (current reviews page has none — only brand logos). The home
+      page's "What customers say" section (`Reviews.astro`) and `/reviews/` both need real
+      quotes before launch — see the note near the top of this file
 - [ ] Verify or drop the "A+ BBB rating" and "Best of Houzz 2024" trust badges shown in the
       mockup's hero trust strip — not in HANDOFF.md, not confirmed anywhere; don't ship
       without Stephen confirming they're real

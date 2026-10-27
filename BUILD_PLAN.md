@@ -37,8 +37,10 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
       to the approved GrowthOS proposal's hi-fi mockup rather than CLAUDE.md's original generic
       guidance, now that an approved design exists
 - [x] **[repo]** Base layout: header with tap-to-call and Book buttons, mobile menu, footer (NAP, HIC number, hours, socials)
-- [x] **[repo]** Home page (proof first, four paths, reviews, offers, CTA) — reviews section
-      intentionally omitted; no real reviews exist yet (CONTENT_GAPS.md)
+- [x] **[repo]** Home page (proof first, four paths, reviews, offers, CTA) — the reviews
+      section (`Reviews.astro`) uses temporary sample quotes matching the proposal mockup's
+      layout, at Tobi's request for the demo; not real reviews, must be replaced before
+      launch (CONTENT_GAPS.md)
 - [x] **[repo]** One service-page template, applied to Kitchens — `src/components/service/` +
       `src/data/services.ts`; Week 3 adds the remaining entries
 - [ ] **[ops]** Send Stephen a Vercel preview link: **one review round** (about 1 hour of his time)

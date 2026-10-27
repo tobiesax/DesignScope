@@ -1,0 +1,52 @@
+---
+// TEMPORARY sample reviews, shown at Tobi's explicit request so the home
+// page matches the approved GrowthOS proposal's layout for the demo — NOT
+// real customer quotes (CLAUDE.md rule 2: never invent reviews). Tracked in
+// CONTENT_GAPS.md alongside the mockup photos; swap for real Google/Yelp
+// reviews (with Stephen's OK) before Week 5 QA. Deliberately generic/vague
+// rather than inventing specific project details.
+const sampleReviews = [
+  {
+    name: 'Jane D.',
+    project: 'Kitchen remodel',
+    quote: 'Easy from the first call to the final walkthrough. Quality work and no surprises.',
+  },
+  {
+    name: 'Mike R.',
+    project: 'Bathroom remodel',
+    quote: 'The quote matched what we were told upfront. Would use them again.',
+  },
+  {
+    name: 'Sarah T.',
+    project: 'Water damage restoration',
+    quote: 'They handled the insurance paperwork too, which was a huge relief at the time.',
+  },
+  {
+    name: 'Carlos M.',
+    project: 'Home renovation',
+    quote: 'Showroom visit helped us pick everything out in one trip. Good selection, no pressure.',
+  },
+] satisfies { name: string; project: string; quote: string }[];
+---
+
+<section class="flex flex-col gap-5.5 px-4 py-12 sm:px-7">
+  <div class="flex flex-col gap-2.5">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Reviews
+    </span>
+    <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">What customers say</h2>
+  </div>
+  <div class="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+    {sampleReviews.map((review) => (
+      <div class="card-hover bg-paper-muted flex flex-col gap-3 p-6">
+        <div class="text-brand flex gap-0.5 text-sm" aria-hidden="true">
+          {'★★★★★'}
+        </div>
+        <p class="text-ink-soft text-sm leading-relaxed">“{review.quote}”</p>
+        <span class="text-[13px] font-extrabold">
+          {review.name} <span class="text-muted font-semibold">· {review.project}</span>
+        </span>
+      </div>
+    ))}
+  </div>
+</section>

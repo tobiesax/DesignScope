@@ -5,6 +5,7 @@ import PathsGrid from '../components/home/PathsGrid.astro';
 import WhyUs from '../components/shared/WhyUs.astro';
 import BeforeAfter from '../components/home/BeforeAfter.astro';
 import ProjectsGrid from '../components/home/ProjectsGrid.astro';
+import Reviews from '../components/home/Reviews.astro';
 import ShowroomBlock from '../components/home/ShowroomBlock.astro';
 import BrandMarquee from '../components/home/BrandMarquee.astro';
 import ProcessSteps from '../components/shared/ProcessSteps.astro';
@@ -12,9 +13,9 @@ import Offers from '../components/home/Offers.astro';
 import AreasFaqs from '../components/home/AreasFaqs.astro';
 import FinalCta from '../components/shared/FinalCta.astro';
 
-// Real Google reviews are not shippable yet (CONTENT_GAPS.md — current site
-// has none, and we never invent them per CLAUDE.md), so the mockup's reviews
-// section is intentionally omitted until real ones exist.
+// Reviews.astro is TEMPORARY sample content matching the proposal mockup's
+// layout, shown at Tobi's request for the demo — not real quotes. See its
+// own file header and CONTENT_GAPS.md.
 ---
 
 <Layout
@@ -26,6 +27,7 @@ import FinalCta from '../components/shared/FinalCta.astro';
   <WhyUs />
   <BeforeAfter />
   <ProjectsGrid />
+  <Reviews />
   <ShowroomBlock />
   <BrandMarquee />
   <ProcessSteps />
