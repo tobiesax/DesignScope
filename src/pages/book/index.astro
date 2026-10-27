@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { business } from '../../data/business';
+
+// The GoHighLevel calendar embed URL isn't set yet (CONTENT_GAPS.md,
+// PUBLIC_GHL_BOOKING_URL) — falls back to call/text rather than an empty or
+// broken embed.
+const bookingUrl = import.meta.env.PUBLIC_GHL_BOOKING_URL;
+---
+
+<Layout
+  title="Book a Consultation"
+  description="Book a free design consultation or a showroom visit with Design Scope."
+>
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">Book</span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
+      Book a free consultation or showroom visit
+    </h1>
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
+      Pick a time for a free design consultation at the showroom or in your home, or book a showroom
+      visit to see cabinetry, counters and fixtures in person.
+    </p>
+  </section>
+
+  {bookingUrl ? (
+    <section class="px-4 pb-12 sm:px-7">
+      <iframe
+        src={bookingUrl}
+        title="Book an appointment"
+        class="h-[720px] w-full border-0"
+        loading="lazy"
+      />
+    </section>
+  ) : (
+    <section class="bg-paper-muted flex flex-col gap-3 px-4 py-10 sm:px-7">
+      <p class="text-ink-soft text-sm leading-relaxed">
+        Online booking is being connected. In the meantime, call or text us and we'll find a time
+        that works.
+      </p>
+      <div class="flex flex-wrap gap-2.5">
+        <a
+          href={`tel:${business.phone.mainTel}`}
+          class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold"
+        >
+          Call {business.phone.main}
+        </a>
+        <a
+          href={`sms:${business.phone.mainTel}`}
+          class="border-dark border px-5 py-3.5 text-sm font-bold"
+        >
+          Text us
+        </a>
+      </div>
+    </section>
+  )}
+</Layout>
