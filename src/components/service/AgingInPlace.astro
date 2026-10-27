@@ -1,0 +1,44 @@
+---
+// "Aging in place" — matches the handoff's remodel page exactly (shown
+// under Bathrooms here, where it belongs content-wise).
+import { Image } from 'astro:assets';
+import { mockupImages } from '../../data/mockup-images';
+
+const points = [
+  'Curbless walk-in showers',
+  'Comfort-height toilets and vanities',
+  'Blocking for grab bars',
+  'Non-slip tile and better lighting',
+];
+---
+
+<section class="bg-dark text-paper grid [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+  <div class="min-h-[320px]">
+    <Image src={mockupImages['proj-shower-windsor']} alt="" class="h-full w-full object-cover" />
+  </div>
+  <div class="flex flex-col gap-3.5 px-4 py-11 sm:px-7">
+    <span class="text-brand text-[10px] font-bold tracking-[0.3em] uppercase">Aging in place</span>
+    <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">Stay in the home you love</h2>
+    <p class="text-on-dark text-sm leading-relaxed">
+      Curbless showers, grab bars that look like design, wider doorways and first-floor living.
+      Planned with you and built to code.
+    </p>
+    <div class="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))] text-[12.5px] font-bold">
+      {points.map((p) => (
+        <span>· {p}</span>
+      ))}
+    </div>
+    <div class="flex flex-wrap gap-2.5">
+      <a href="/projects/" class="border-[1.5px] border-paper px-4.5 py-3.5 text-[13px] font-bold">
+        See a walk-in shower project
+      </a>
+      <a
+        href="/book/"
+        data-open-booking
+        class="bg-brand text-ink px-4.5 py-3.5 text-[13px] font-extrabold"
+      >
+        Book a consultation
+      </a>
+    </div>
+  </div>
+</section>

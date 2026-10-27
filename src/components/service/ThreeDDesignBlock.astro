@@ -1,0 +1,45 @@
+---
+// "See it before we build it" — matches the handoff's remodel page 3D
+// design section. The handoff's "3D render" image is explicitly a
+// placeholder ("image needed") since no real 3D renders exist yet
+// (CONTENT_GAPS.md); the "finished" photo reuses the hero-kitchen stand-in.
+import { Image } from 'astro:assets';
+import { mockupImages } from '../../data/mockup-images';
+---
+
+<section class="flex flex-col gap-5 px-4 py-13 sm:px-7">
+  <div class="flex flex-col gap-2">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      3D design
+    </span>
+    <h2 class="max-w-[640px] text-[26px] font-black tracking-tight sm:text-[34px]">
+      See it before we build it
+    </h2>
+    <p class="text-muted max-w-[640px] text-sm leading-relaxed">
+      Every remodel starts with a 3D design you can walk through on screen, so you sign off on the
+      finished room, not a guess.
+    </p>
+  </div>
+  <div class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+    <div class="flex flex-col gap-2">
+      <div class="bg-ink-soft relative flex h-[280px] items-center justify-center">
+        <span class="text-muted-dark text-[11px] font-bold tracking-[0.2em] uppercase">
+          3D render · image needed
+        </span>
+        <span class="absolute top-3 left-3 bg-white px-2 py-1 text-[10px] font-extrabold">
+          DESIGN · WEEK 2
+        </span>
+      </div>
+      <span class="text-[12.5px] font-bold">The 3D design you approve</span>
+    </div>
+    <div class="flex flex-col gap-2">
+      <div class="relative h-[280px]">
+        <Image src={mockupImages['hero-kitchen']} alt="" class="h-full w-full object-cover" />
+        <span class="bg-brand text-ink absolute top-3 left-3 px-2 py-1 text-[10px] font-extrabold">
+          FINISHED · WEEK 9
+        </span>
+      </div>
+      <span class="text-[12.5px] font-bold">The finished kitchen</span>
+    </div>
+  </div>
+</section>

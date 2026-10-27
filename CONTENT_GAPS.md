@@ -33,6 +33,13 @@ rule 2 says never invent reviews, so this must not ship. Replace `reviews.ts`'s
 Stephen's OK) before Week 5 QA, same deadline as the mockup photos. `/reviews/` has the same
 gap — see below.
 
+Kitchens' and Bathrooms' "Typical investment" price ranges (`src/data/services.ts`
+`included`/`ranges`) are the design handoff's own figures — not invented, but not confirmed
+by Stephen either. Verify them (or get his own ranges) before launch. The handoff also shows
+a $/mo financing figure next to each range; that's deliberately dropped here, since
+financing is Phase 2 and not wired up (BUILD_PLAN.md) — a monthly number with no real
+financing product behind it would misrepresent what's on offer.
+
 ## Business facts
 
 - [ ] HIC registration number

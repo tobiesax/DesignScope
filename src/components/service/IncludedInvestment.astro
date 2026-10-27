@@ -1,0 +1,45 @@
+---
+// "What's included" + "Typical investment" — matches the design handoff's
+// remodel page exactly, minus its $/mo financing figure: financing is
+// Phase 2 (BUILD_PLAN.md), not wired up, so a monthly number with no real
+// financing product behind it would misrepresent what's on offer
+// (CLAUDE.md rule 1). Ranges themselves are the handoff's own figures,
+// unconfirmed — see CONTENT_GAPS.md.
+interface Props {
+  included: string[];
+  ranges: { t: string; b: string; p: string }[];
+}
+
+const { included, ranges } = Astro.props;
+---
+
+<section class="bg-paper-muted flex flex-col gap-5.5 px-4 py-13 sm:px-7">
+  <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">What's included</h2>
+  <div class="grid gap-7 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+    <div class="flex flex-col">
+      {included.map((item) => (
+        <div class="border-line flex items-start gap-3 border-t py-3.5 text-sm leading-relaxed">
+          <span class="bg-brand mt-1.5 h-2 w-2 flex-shrink-0 rotate-45"></span>
+          <span class="font-semibold">{item}</span>
+        </div>
+      ))}
+    </div>
+    <div class="flex flex-col gap-1">
+      <span class="text-muted pb-2 text-[10px] font-bold tracking-[0.25em] uppercase">
+        Typical investment
+      </span>
+      {ranges.map((range) => (
+        <div class="flex items-center justify-between gap-3.5 bg-white px-4.5 py-4">
+          <div class="flex flex-col gap-0.5">
+            <span class="text-sm font-extrabold">{range.t}</span>
+            <span class="text-muted text-xs leading-relaxed">{range.b}</span>
+          </div>
+          <span class="text-base font-black whitespace-nowrap">{range.p}</span>
+        </div>
+      ))}
+      <span class="text-muted pt-2 text-[11px]">
+        Ranges are a guide. Your written quote arrives within 24 hours of your consultation.
+      </span>
+    </div>
+  </div>
+</section>

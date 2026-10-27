@@ -15,6 +15,8 @@ interface Props {
   heading?: string;
   subheading?: string;
   projects?: GalleryProject[];
+  /** Caps how many cards show, matching the handoff's "Recent kitchens/bathrooms" teaser (3). */
+  limit?: number;
 }
 
 const {
@@ -22,16 +24,19 @@ const {
   heading = 'Recent projects',
   subheading = 'Real work, real towns',
   projects: projectsProp,
+  limit,
 } = Astro.props;
 
 const resolveImage = (img: string | ImageMetadata) =>
   typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
 
-const projects: GalleryProject[] =
+const allProjects: GalleryProject[] =
   projectsProp ??
   mockProjects
     .filter((project) => project.cat === category)
     .map((project) => ({ ...project, img: resolveImage(project.img) }));
+
+const projects = limit ? allProjects.slice(0, limit) : allProjects;
 ---
 
 {projects.length > 0 && (

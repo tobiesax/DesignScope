@@ -1,41 +1,54 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ServiceHero from '../../components/service/ServiceHero.astro';
-import ServiceGallery from '../../components/service/ServiceGallery.astro';
+import IncludedInvestment from '../../components/service/IncludedInvestment.astro';
 import ProcessSteps from '../../components/shared/ProcessSteps.astro';
-import WhyUs from '../../components/shared/WhyUs.astro';
+import AgingInPlace from '../../components/service/AgingInPlace.astro';
+import ThreeDDesignBlock from '../../components/service/ThreeDDesignBlock.astro';
+import ServiceGallery from '../../components/service/ServiceGallery.astro';
+import ReviewCarousel from '../../components/home/ReviewCarousel.astro';
 import FaqAccordion from '../../components/shared/FaqAccordion.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
-import { bathrooms } from '../../data/services';
-import { faqs } from '../../data/home';
+import { bathrooms, remodelProcess, remodelFaqs } from '../../data/services';
 import { bathroomProjects, projectImages } from '../../data/project-images';
 
+// Page order matches the GrowthOS design handoff's "Kitchen & bath" remodel
+// page exactly (the Bathrooms tab's content, plus the handoff's aging-in-
+// place block, which belongs here content-wise), at Tobi's request.
 const galleryProjects = bathroomProjects.map((project) => ({
   ...project,
   img: projectImages[project.img],
 }));
-
-const breadcrumb = [
-  { label: 'Home', href: '/' },
-  { label: 'Remodeling', href: '/remodeling/' },
-  { label: 'Bathrooms' },
-];
 ---
 
 <Layout title={bathrooms.title} description={bathrooms.metaDescription} active="remodeling">
-  <ServiceHero service={bathrooms} breadcrumb={breadcrumb} />
+  <ServiceHero service={bathrooms} />
 
-  <section class="px-4 py-10 sm:px-7">
-    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">{bathrooms.intro}</p>
-  </section>
+  <IncludedInvestment included={bathrooms.included ?? []} ranges={bathrooms.ranges ?? []} />
 
-  <ProcessSteps />
-  <ServiceGallery subheading="Real Design Scope bathrooms" projects={galleryProjects} />
-  <WhyUs />
+  <ProcessSteps
+    steps={remodelProcess}
+    eyebrow={false}
+    heading="How it works"
+    background="paper-muted"
+  />
+
+  <AgingInPlace />
+
+  <ThreeDDesignBlock />
+
+  <ServiceGallery
+    heading="Recent work"
+    subheading="Recent bathrooms"
+    projects={galleryProjects}
+    limit={3}
+  />
+
+  <ReviewCarousel />
 
   <section class="px-4 py-12 sm:px-7">
     <div class="mx-auto max-w-2xl">
-      <FaqAccordion faqs={faqs} />
+      <FaqAccordion faqs={remodelFaqs} title="Questions homeowners ask" />
     </div>
   </section>
 

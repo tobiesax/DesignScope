@@ -15,8 +15,6 @@ const hubHero = {
     'We handle fire, smoke and water damage restoration across the Farmington Valley, from the first call to the final walkthrough, including the insurance paperwork.',
 };
 
-const breadcrumb = [{ label: 'Home', href: '/' }, { label: 'Restoration' }];
-
 const rightNowSteps = [
   { t: 'Call us, day or night', b: 'Fire, smoke or water, we answer 24/7.' },
   {
@@ -34,7 +32,7 @@ const rightNowSteps = [
   navVariant="restoration"
   active="restoration"
 >
-  <ServiceHero service={hubHero} breadcrumb={breadcrumb} urgent />
+  <ServiceHero service={hubHero} urgent />
 
   <EmergencySteps steps={rightNowSteps} />
 

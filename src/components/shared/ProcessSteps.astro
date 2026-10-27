@@ -3,22 +3,31 @@ import { process as defaultProcess } from '../../data/home';
 
 interface Props {
   steps?: { t: string; b: string }[];
-  eyebrow?: string;
+  eyebrow?: string | false;
   heading?: string;
+  background?: 'paper' | 'paper-muted';
 }
 
 const {
   steps = defaultProcess,
   eyebrow = 'How it works',
   heading = 'Four steps, no surprises',
+  background = 'paper',
 } = Astro.props;
 ---
 
-<section class="flex flex-col gap-6.5 px-4 py-12 sm:px-7">
+<section
+  class:list={[
+    'flex flex-col gap-6.5 px-4 py-12 sm:px-7',
+    background === 'paper-muted' && 'bg-paper-muted',
+  ]}
+>
   <div class="flex flex-col gap-2.5">
-    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
-      {eyebrow}
-    </span>
+    {eyebrow && (
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        {eyebrow}
+      </span>
+    )}
     <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">{heading}</h2>
   </div>
   <div class="grid gap-[3px] [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">

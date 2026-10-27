@@ -5,14 +5,13 @@ import ProcessSteps from '../../components/shared/ProcessSteps.astro';
 import WhyUs from '../../components/shared/WhyUs.astro';
 import FaqAccordion from '../../components/shared/FaqAccordion.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
-import { homeRenovations } from '../../data/services';
+import { homeRenovations, remodelProcess } from '../../data/services';
 import { faqs } from '../../data/home';
 
-const breadcrumb = [
-  { label: 'Home', href: '/' },
-  { label: 'Remodeling', href: '/remodeling/' },
-  { label: 'Home renovations' },
-];
+// The design handoff has no dedicated "home renovations" page (it treats
+// whole-home work as part of Projects/Remodel), so this page keeps its
+// own content but matches the handoff's visual system — hero, process,
+// WhyUs, FAQ, final CTA — for consistency with the two pages it does spec.
 ---
 
 <Layout
@@ -20,13 +19,18 @@ const breadcrumb = [
   description={homeRenovations.metaDescription}
   active="remodeling"
 >
-  <ServiceHero service={homeRenovations} breadcrumb={breadcrumb} />
+  <ServiceHero service={homeRenovations} />
 
   <section class="px-4 py-10 sm:px-7">
     <p class="text-ink-soft max-w-2xl text-base leading-relaxed">{homeRenovations.intro}</p>
   </section>
 
-  <ProcessSteps />
+  <ProcessSteps
+    steps={remodelProcess}
+    eyebrow={false}
+    heading="How it works"
+    background="paper-muted"
+  />
   <WhyUs />
 
   <section class="px-4 py-12 sm:px-7">

@@ -5,12 +5,6 @@ import EmergencySteps from '../../components/service/EmergencySteps.astro';
 import ProcessSteps from '../../components/shared/ProcessSteps.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
 import { waterDamage } from '../../data/restoration';
-
-const breadcrumb = [
-  { label: 'Home', href: '/' },
-  { label: 'Restoration', href: '/restoration/' },
-  { label: 'Water damage' },
-];
 ---
 
 <Layout
@@ -19,7 +13,7 @@ const breadcrumb = [
   navVariant="restoration"
   active="restoration"
 >
-  <ServiceHero service={waterDamage} breadcrumb={breadcrumb} urgent />
+  <ServiceHero service={waterDamage} urgent />
   <EmergencySteps steps={waterDamage.rightNowSteps} />
 
   <section class="flex flex-col gap-5 px-4 py-12 sm:px-7">

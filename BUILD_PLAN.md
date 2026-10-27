@@ -59,9 +59,15 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
 - [x] **[repo]** Remaining service pages: ~~Bathrooms~~ (done, `/remodeling/bathrooms/`), Home
       renovations, Restoration (emergency layout), Commercial, Showroom — all shipped
       (`/remodeling/home-renovations/`, `/restoration/`, `/restoration/fire-and-smoke-damage/`,
-      `/restoration/water-damage/`, `/commercial/`, `/showroom/`); restoration/commercial/home
-      renovations copy is grounded in facts fetched directly from the live site's own service
-      pages, not invented, but unreviewed by Stephen and still on mockup/no-photo imagery
+      `/restoration/water-damage/`, `/commercial/`, `/showroom/`). Kitchens and Bathrooms were
+      rebuilt page-for-page to the design handoff's remodel page spec (split hero, What's
+      included / Typical investment, how it works, 3D design block, aging-in-place on
+      Bathrooms, recent-work teaser, review carousel, FAQ) — the ServiceHero component
+      changed shape to match (no breadcrumb, split-grid layout) across all 6 pages that use
+      it. Restoration/Commercial/Showroom/Home renovations still need the same handoff-fidelity
+      pass (tracked as follow-up); their copy is grounded in facts fetched directly from the
+      live site's own service pages, not invented, but unreviewed by Stephen and still on
+      mockup/no-photo imagery
       (CONTENT_GAPS.md)
 - [x] **[repo]** About, Offers, Contact, Privacy (with texting consent and call-recording notice)
       — all shipped; About has no team photo yet (Stephen's surname and a photo are still

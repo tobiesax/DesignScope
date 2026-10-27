@@ -1,4 +1,8 @@
 ---
+// Service page hero — matches the design handoff's split-grid pattern used
+// for Kitchen & bath and Restoration (content one side, plain image the
+// other, no gradient overlay or breadcrumb — the handoff doesn't put one
+// on these top-level pages; nav already covers wayfinding).
 import { Image } from 'astro:assets';
 import { business } from '../../data/business';
 
@@ -11,83 +15,111 @@ interface HeroContent {
 
 interface Props {
   service: HeroContent;
-  breadcrumb: { label: string; href?: string }[];
-  /** Restoration pages: leads with a tel/sms CTA and the urgent accent instead of booking. */
+  /** Restoration pages: dark ground, a live chip, and a tel: block instead of booking buttons. */
   urgent?: boolean;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  /** Non-urgent only — the handoff's trust row under the buttons. */
+  trustRow?: string[];
+  /** Urgent only — the "Can't talk?" link's target id on the page (a callback form section). */
+  callbackTargetId?: string;
+  liveChipLabel?: string;
 }
 
-const { service, breadcrumb, urgent = false } = Astro.props;
+const {
+  service,
+  urgent = false,
+  primaryCta = { label: 'Book free design consultation', href: '/book/' },
+  secondaryCta = { label: 'See our projects', href: '/projects/' },
+  trustRow = ['★ 4.9 Google rating', '24-hour quotes', 'Price matching'],
+  callbackTargetId = 'callback',
+  liveChipLabel = 'Crews on call 24/7',
+} = Astro.props;
 ---
 
-<section class="relative min-h-[340px]">
-  <Image
-    src={service.heroImage}
-    alt=""
-    class="absolute inset-0 h-full w-full object-cover"
-    widths={[640, 1024, 1600]}
-    sizes="100vw"
-  />
-  <div
-    class="absolute inset-0"
-    style="background:linear-gradient(90deg,rgba(15,15,15,0.88) 0%,rgba(15,15,15,0.6) 45%,rgba(15,15,15,0.1) 100%)"
-  ></div>
-
-  <div class="relative flex flex-col gap-4 px-4 py-12 sm:px-7 sm:py-16 max-w-xl text-paper">
-    <nav
-      aria-label="Breadcrumb"
-      class="text-on-dark-muted flex flex-wrap items-center gap-1.5 text-xs"
-    >
-      {breadcrumb.map((crumb, i) => (
-        <>
-          {i > 0 && <span aria-hidden="true">/</span>}
-          {crumb.href ? (
-            <a href={crumb.href} class="hover:text-brand">
-              {crumb.label}
-            </a>
-          ) : (
-            <span class="text-paper">{crumb.label}</span>
-          )}
-        </>
-      ))}
-    </nav>
+<section
+  class:list={[
+    'grid items-stretch [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]',
+    urgent && 'bg-dark-deep text-paper',
+  ]}
+>
+  <div class="flex flex-col justify-center gap-4 px-4 py-10 sm:px-10 sm:py-16">
+    {urgent && (
+      <span class="inline-flex items-center gap-2 self-start bg-[#2a1214] px-2.5 py-1.5 text-[10.5px] font-extrabold tracking-[0.15em] text-[#ff6b76] uppercase">
+        <span class="bg-urgent h-1.5 w-1.5 rounded-full"></span>
+        {liveChipLabel}
+      </span>
+    )}
     <span
       class:list={[
         'text-[10px] font-semibold tracking-[0.35em] uppercase',
-        urgent ? 'text-urgent' : 'text-brand',
+        urgent ? 'text-red-on-dark' : 'text-brand-dark',
       ]}
     >
       {service.heroEyebrow}
     </span>
-    <h1 class="text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl">
+    <h1 class="max-w-[480px] text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
       {service.heroHeadline}
     </h1>
-    <p class="text-on-dark text-base leading-relaxed">{service.heroSubcopy}</p>
-    <div class="flex flex-wrap gap-2.5">
-      {urgent ? (
-        <>
+    <p
+      class:list={[
+        'max-w-[480px] text-[15px] leading-relaxed',
+        urgent ? 'text-on-dark' : 'text-ink-soft',
+      ]}
+    >
+      {service.heroSubcopy}
+    </p>
+
+    {urgent ? (
+      <>
+        <a
+          href={`tel:${business.phone.mainTel}`}
+          class="call-now-pulse bg-urgent text-paper flex max-w-[420px] flex-col gap-0.5 px-5.5 py-4.5"
+        >
+          <span class="text-[11px] font-bold tracking-[0.15em] uppercase">
+            Call now · answered 24/7
+          </span>
+          <span class="text-[26px] font-black tracking-tight">{business.phone.main}</span>
+        </a>
+        <a
+          href={`#${callbackTargetId}`}
+          class="self-start border-b-[1.5px] border-paper text-[13px] font-bold"
+        >
+          Can't talk? Request a callback
+        </a>
+      </>
+    ) : (
+      <>
+        <div class="flex flex-wrap gap-2.5">
           <a
-            href={`tel:${business.phone.mainTel}`}
-            class="call-now-pulse bg-urgent text-paper px-5 py-3.5 text-sm font-extrabold"
+            href={primaryCta.href}
+            data-open-booking
+            class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold"
           >
-            Call now: {business.phone.main}
+            {primaryCta.label}
           </a>
           <a
-            href={`sms:${business.phone.mainTel}`}
-            class="border-paper border px-5 py-3.5 text-sm font-bold"
+            href={secondaryCta.href}
+            class="border-ink border-[1.5px] px-5 py-3.5 text-sm font-bold"
           >
-            Text us
+            {secondaryCta.label}
           </a>
-        </>
-      ) : (
-        <>
-          <a href="/book/" class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
-            Book a free consultation
-          </a>
-          <a href="/projects/" class="border-paper border px-5 py-3.5 text-sm font-bold">
-            See our projects
-          </a>
-        </>
-      )}
-    </div>
+        </div>
+        <div class="border-border-soft flex flex-wrap gap-4.5 border-t pt-3.5 text-xs font-bold">
+          {trustRow.map((item) => (
+            <span>{item}</span>
+          ))}
+        </div>
+      </>
+    )}
+  </div>
+  <div class="min-h-[280px] sm:min-h-full">
+    <Image
+      src={service.heroImage}
+      alt=""
+      class="h-full w-full object-cover"
+      widths={[640, 1024, 1600]}
+      sizes="(min-width: 640px) 50vw, 100vw"
+    />
   </div>
 </section>
