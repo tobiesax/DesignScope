@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { mockupImages } from '../../data/mockup-images';
+import { business } from '../../data/business';
+import BrandMarquee from '../../components/home/BrandMarquee.astro';
+import FinalCta from '../../components/shared/FinalCta.astro';
+---
+
+<Layout
+  title="Showroom in Bloomfield, CT"
+  description="Visit the Design Scope showroom at 480 Cottage Grove Road, Bloomfield, CT: kitchen and bath displays, materials and finishes from TOTO, Hansgrohe, Wellborn, Brizo and Delta."
+>
+  <section class="relative min-h-[340px]">
+    <Image
+      src={mockupImages.showroom}
+      alt="Design Scope showroom"
+      class="absolute inset-0 h-full w-full object-cover"
+      widths={[640, 1024, 1600]}
+      sizes="100vw"
+    />
+    <div
+      class="absolute inset-0"
+      style="background:linear-gradient(90deg,rgba(15,15,15,0.88) 0%,rgba(15,15,15,0.6) 45%,rgba(15,15,15,0.1) 100%)"
+    ></div>
+    <div class="relative flex flex-col gap-4 px-4 py-12 sm:px-7 sm:py-16 max-w-xl text-paper">
+      <span class="text-brand text-[10px] font-semibold tracking-[0.35em] uppercase">
+        Showroom &amp; products
+      </span>
+      <h1 class="text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl">
+        See it and touch it before you decide
+      </h1>
+      <p class="text-on-dark text-base leading-relaxed">
+        Kitchen and bath displays, materials and finishes from {business.supplierBrands.join(', ')}{' '}
+        and more. Walk in any time, or book a personal consultation.
+      </p>
+      <div class="flex flex-wrap gap-2.5">
+        <a href="/book/" class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
+          Book a showroom visit
+        </a>
+        <a
+          href={`tel:${business.phone.mainTel}`}
+          class="border-paper border px-5 py-3.5 text-sm font-bold"
+        >
+          {business.phone.main}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid items-start gap-9 px-4 py-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+    <div class="flex flex-col gap-2.5">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        Visit
+      </span>
+      <p class="text-[14px] leading-relaxed font-semibold">
+        {business.showroom.streetAddress}
+        <br />
+        {business.showroom.city}, {business.showroom.state} {business.showroom.postalCode}
+      </p>
+      <p class="text-muted text-xs leading-relaxed">
+        {business.hours.weekday}
+        <br />
+        {business.hours.weekend}
+      </p>
+      <a
+        href={`https://maps.google.com/?q=${encodeURIComponent(`${business.showroom.streetAddress}, ${business.showroom.city}, ${business.showroom.state} ${business.showroom.postalCode}`)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="border-dark w-fit border-[1.5px] px-4 py-2.5 text-xs font-bold"
+      >
+        Get directions
+      </a>
+    </div>
+    <div class="flex flex-col gap-2.5">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        What's in the showroom
+      </span>
+      <ul class="text-ink-soft flex flex-col gap-1.5 text-sm leading-relaxed">
+        {business.services.showroom.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <BrandMarquee />
+  <FinalCta />
+</Layout>
