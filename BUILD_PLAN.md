@@ -72,11 +72,13 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
       the same pass too: Commercial adds sectors, a "why us" band, client proof (placeholder
       logos/quotes, CONTENT_GAPS.md), a case study teaser and a working (simulated) quote
       form at `#quote`; Showroom adds a split hero, 4 product categories, the price-match
-      band and an "on display" section with a real Google Maps embed. Home renovations still
-      needs the same handoff-fidelity pass (tracked as follow-up, since the handoff has no
-      dedicated page for it); its copy is grounded in facts fetched directly from the live
-      site's own service pages, not invented, but unreviewed by Stephen and still on
-      mockup/no-photo imagery (CONTENT_GAPS.md)
+      band and an "on display" section with a real Google Maps embed. Home renovations got
+      the same section order as Kitchens/Bathrooms too (process, 3D design, recent work,
+      reviews, why-us, FAQ) — minus a "What's included / Typical investment" block, since
+      the handoff has no whole-home price ranges to draw from and inventing figures would
+      violate CLAUDE.md rule 2. All Week 3 pages' copy is grounded in facts fetched directly
+      from the live site's own service pages, not invented, but unreviewed by Stephen and
+      still on mockup/no-photo imagery (CONTENT_GAPS.md)
 - [x] **[repo]** About, Offers, Contact, Privacy (with texting consent and call-recording notice)
       — all shipped; About has no team photo yet (Stephen's surname and a photo are still
       unconfirmed, CONTENT_GAPS.md)

@@ -2,16 +2,22 @@
 import Layout from '../../layouts/Layout.astro';
 import ServiceHero from '../../components/service/ServiceHero.astro';
 import ProcessSteps from '../../components/shared/ProcessSteps.astro';
+import ThreeDDesignBlock from '../../components/service/ThreeDDesignBlock.astro';
+import ServiceGallery from '../../components/service/ServiceGallery.astro';
+import ReviewCarousel from '../../components/home/ReviewCarousel.astro';
 import WhyUs from '../../components/shared/WhyUs.astro';
 import FaqAccordion from '../../components/shared/FaqAccordion.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
-import { homeRenovations, remodelProcess } from '../../data/services';
-import { faqs } from '../../data/home';
+import { homeRenovations, remodelProcess, remodelFaqs } from '../../data/services';
 
-// The design handoff has no dedicated "home renovations" page (it treats
-// whole-home work as part of Projects/Remodel), so this page keeps its
-// own content but matches the handoff's visual system — hero, process,
-// WhyUs, FAQ, final CTA — for consistency with the two pages it does spec.
+// The design handoff has no dedicated "home renovations" page (whole-home
+// work only appears as a Projects case study and a 3-up band link), so
+// this page keeps its own content but is now brought up to the same
+// section order as Kitchens/Bathrooms for consistency: hero, process,
+// 3D design, recent work, reviews, why-us, FAQ, final CTA. No "What's
+// included / Typical investment" block — the handoff has no whole-home
+// price ranges to draw from, and inventing figures would violate
+// CLAUDE.md rule 2.
 ---
 
 <Layout
@@ -31,11 +37,23 @@ import { faqs } from '../../data/home';
     heading="How it works"
     background="paper-muted"
   />
+
+  <ThreeDDesignBlock />
+
+  <ServiceGallery
+    heading="Recent work"
+    subheading="Recent whole-home renovations"
+    category="Home renovations"
+    limit={3}
+  />
+
+  <ReviewCarousel />
+
   <WhyUs />
 
   <section class="px-4 py-12 sm:px-7">
     <div class="mx-auto max-w-2xl">
-      <FaqAccordion faqs={faqs} />
+      <FaqAccordion faqs={remodelFaqs} title="Questions homeowners ask" />
     </div>
   </section>
 
