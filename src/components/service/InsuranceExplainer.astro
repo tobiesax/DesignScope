@@ -1,0 +1,50 @@
+---
+// Insurance explainer — matches the handoff's Restoration hub page
+// exactly: usually-covered / often-not-covered, then "we work with all
+// major insurers" (not a claim of partnership with any of them).
+import { coveredUsually, coveredRarely, majorInsurers } from '../../data/restoration';
+---
+
+<section class="bg-paper-muted flex flex-col gap-5.5 px-4 py-13 sm:px-7">
+  <div class="flex flex-col gap-2">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      Insurance
+    </span>
+    <h2 class="max-w-[640px] text-[26px] font-black tracking-tight sm:text-[34px]">
+      What your policy usually covers
+    </h2>
+    <p class="text-muted max-w-[640px] text-sm leading-relaxed">
+      Every policy is different. We read yours with you and speak to your adjuster directly.
+    </p>
+  </div>
+  <div class="grid gap-[3px] [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+    <div class="border-bbb-green flex flex-col gap-2.5 border-t-[3px] bg-white p-5.5">
+      <span class="text-[15px] font-black">Usually covered</span>
+      {coveredUsually.map((item) => (
+        <span class="flex gap-2.5 text-[13px] leading-relaxed">
+          <span class="text-bbb-green font-black">✓</span>
+          {item}
+        </span>
+      ))}
+    </div>
+    <div class="border-urgent flex flex-col gap-2.5 border-t-[3px] bg-white p-5.5">
+      <span class="text-[15px] font-black">Often not covered</span>
+      {coveredRarely.map((item) => (
+        <span class="flex gap-2.5 text-[13px] leading-relaxed">
+          <span class="text-urgent font-black">✕</span>
+          {item}
+        </span>
+      ))}
+    </div>
+  </div>
+  <div class="flex flex-col gap-2.5">
+    <span class="text-muted text-[10px] font-bold tracking-[0.2em] uppercase">
+      We work with all major insurers
+    </span>
+    <div class="flex flex-wrap gap-2">
+      {majorInsurers.map((name) => (
+        <span class="border-line border bg-white px-4 py-3 text-[13px] font-extrabold">{name}</span>
+      ))}
+    </div>
+  </div>
+</section>

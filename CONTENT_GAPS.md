@@ -90,8 +90,16 @@ financing product behind it would misrepresent what's on offer.
 - [ ] Restoration (hub, fire & smoke, water damage) has no real photos at all — not even a
       scraped single, since the live site's fire-and-smoke-damage-restoration and
       water-damage-restoration pages have no gallery images to scrape (confirmed by
-      fetching them directly). All three restoration pages currently reuse the one
-      approved mockup restoration image at larger size (`src/data/restoration.ts`)
+      fetching them directly). Each page now uses its own design-handoff scenario image
+      (`res-fire.png`, `res-storm.png`, `res-mold.png`, `restoration.jpg`) instead of one
+      generic photo reused three times, but none are real (`src/data/restoration.ts`,
+      `hubServices`). The hub's "Dry-out to rebuild" section needs a real rebuilt-space
+      photo too — it currently shows an explicit "After photo needed" placeholder rather
+      than reusing the before photo as a fake after (CLAUDE.md rule 1)
+- [ ] Restoration's "~60 min" typical-arrival stat (`RestorationStats.astro`) is the design
+      handoff's own placeholder figure, not a real operational number — confirm Hartford
+      County's actual typical arrival time with Stephen before launch; this is a concrete
+      claim homeowners could rely on, not just cosmetic copy
 - [ ] Before-and-after pairs specifically (have singles only so far) — check if the live site
       has any, otherwise need these directly from Stephen
 - [ ] 5–10 showroom photos (exterior with signage, displays, brands)

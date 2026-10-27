@@ -1,0 +1,71 @@
+---
+// "While you wait" — matches the handoff's Restoration hub page: a tab
+// switch between Water damage and Fire & smoke checklists. Reuses the two
+// pages' own `rightNowSteps` rather than inventing a separate list.
+import { fireSmoke, waterDamage } from '../../data/restoration';
+
+const tabs = [
+  { id: 'water', label: 'Water damage', steps: waterDamage.rightNowSteps },
+  { id: 'fire', label: 'Fire & smoke', steps: fireSmoke.rightNowSteps },
+];
+---
+
+<section class="grid gap-9 px-4 py-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+  <div class="flex flex-col gap-4">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      While you wait
+    </span>
+    <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">Do this now</h2>
+    <div id="wyw-tabs" class="border-ink inline-flex self-start border-[1.5px]">
+      {tabs.map((tab, i) => (
+        <button
+          type="button"
+          data-wyw-tab={tab.id}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          class:list={[
+            'px-4.5 py-2.5 text-[12.5px] font-extrabold',
+            i === 0 ? 'bg-urgent text-paper' : 'bg-white text-ink',
+          ]}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  </div>
+  <div class="flex flex-col">
+    {tabs.map((tab, i) => (
+      <div data-wyw-panel={tab.id} hidden={i !== 0}>
+        {tab.steps.map((step, n) => (
+          <div class="border-line flex items-start gap-3.5 border-t py-3.5">
+            <span class="bg-ink text-paper flex h-7 w-7 flex-shrink-0 items-center justify-center text-xs font-black">
+              {n + 1}
+            </span>
+            <span class="pt-0.5 text-[14.5px] font-semibold leading-relaxed">{step.t}</span>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const tabButtons = document.querySelectorAll<HTMLButtonElement>('#wyw-tabs [data-wyw-tab]');
+  const panels = document.querySelectorAll<HTMLElement>('[data-wyw-panel]');
+
+  tabButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const id = button.dataset.wywTab;
+      tabButtons.forEach((b) => {
+        const active = b === button;
+        b.setAttribute('aria-pressed', String(active));
+        b.classList.toggle('bg-urgent', active);
+        b.classList.toggle('text-paper', active);
+        b.classList.toggle('bg-white', !active);
+        b.classList.toggle('text-ink', !active);
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.wywPanel !== id;
+      });
+    });
+  });
+</script>

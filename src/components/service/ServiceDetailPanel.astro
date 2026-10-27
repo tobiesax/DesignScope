@@ -1,0 +1,71 @@
+---
+// One service's detail block from the handoff's "What we handle" section —
+// shared by ServiceDetailTabs.astro (hub, all 4 services behind tabs) and
+// the Fire & smoke / Water damage pages (their own single service, no
+// tabs needed since the page is already scoped to it).
+import { Image } from 'astro:assets';
+import type { RestorationService } from '../../data/restoration';
+import { business } from '../../data/business';
+
+interface Props {
+  service: RestorationService;
+}
+
+const { service: s } = Astro.props;
+---
+
+<div class="grid [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))] bg-white">
+  <div class="bg-ink-soft relative min-h-[260px]">
+    <Image src={s.image} alt="" class="h-full w-full object-cover" />
+    <div
+      class="absolute inset-x-0 bottom-0 flex flex-wrap gap-1.5 p-5"
+      style="background:linear-gradient(0deg,rgba(14,14,14,0.9),rgba(14,14,14,0))"
+    >
+      {s.signs.map((sign) => (
+        <span class="bg-white px-2.5 py-1 text-[11px] font-bold">{sign}</span>
+      ))}
+    </div>
+  </div>
+  <div class="flex flex-col gap-4 px-4 py-6.5 sm:px-7">
+    <div class="flex flex-col gap-1.5">
+      <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+        {s.title}
+      </span>
+      <span class="text-[20px] leading-snug font-black">{s.headline}</span>
+    </div>
+    <div class="flex flex-col">
+      {s.detailSteps.map((step, n) => (
+        <div class="flex items-start gap-3 border-t border-[#eeeeee] py-2.5">
+          <span class="bg-dark text-paper flex h-6 w-6 flex-shrink-0 items-center justify-center text-[11px] font-black">
+            {n + 1}
+          </span>
+          <span class="pt-0.5 text-[13.5px] leading-relaxed font-semibold">{step}</span>
+        </div>
+      ))}
+    </div>
+    <div class="grid gap-[3px] [grid-template-columns:repeat(auto-fit,minmax(130px,1fr))]">
+      <div class="bg-paper-muted flex flex-col gap-0.5 px-3.5 py-3">
+        <span class="text-muted text-[9.5px] font-bold tracking-[0.2em] uppercase">
+          Typical timeline
+        </span>
+        <span class="text-sm font-black">{s.timeline}</span>
+      </div>
+      <div class="bg-paper-muted flex flex-col gap-0.5 px-3.5 py-3">
+        <span class="text-muted text-[9.5px] font-bold tracking-[0.2em] uppercase">Insurance</span>
+        <span class="text-sm font-black">{s.insurance}</span>
+      </div>
+    </div>
+    <span class="text-muted text-xs leading-relaxed">{s.note}</span>
+    <div class="flex flex-wrap gap-2">
+      <a
+        href={`tel:${business.phone.mainTel}`}
+        class="bg-urgent text-paper px-4.5 py-3.5 text-[13px] font-extrabold"
+      >
+        Call 24/7 {business.phone.main}
+      </a>
+      <a href="#callback" class="border-ink border-[1.5px] px-4.5 py-3.5 text-[13px] font-bold">
+        Request a callback
+      </a>
+    </div>
+  </div>
+</div>

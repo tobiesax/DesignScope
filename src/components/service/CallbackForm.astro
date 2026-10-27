@@ -1,0 +1,170 @@
+---
+// Callback form — matches the handoff's "Global components → Callback
+// form (Restoration)" exactly. No CRM webhook is wired up yet
+// (BUILD_PLAN.md Week 4, GHL_INBOUND_WEBHOOK_URL), so "Call me back"
+// simulates success like the handoff's own prototype — see the booking
+// modal for the same pattern and the same honesty note about not
+// claiming an SMS was sent.
+import { business } from '../../data/business';
+
+const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
+---
+
+<section
+  id="callback"
+  class="bg-dark text-paper grid items-center gap-8 px-4 py-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+>
+  <div class="flex flex-col gap-3">
+    <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">Request a callback</h2>
+    <p class="text-on-dark text-sm leading-relaxed">
+      We call back as soon as we can, any time. For active flooding or fire, please call.
+    </p>
+  </div>
+
+  <div id="cb-form" class="text-ink flex flex-col gap-2.5 bg-white p-5.5">
+    <div class="flex flex-wrap gap-1.5">
+      {types.map((t, i) => (
+        <button
+          type="button"
+          data-cb-type={t}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          class:list={[
+            'border-[1.5px] px-3 py-2.5 text-xs font-bold',
+            i === 0 ? 'bg-urgent border-urgent text-paper' : 'border-line bg-white text-ink',
+          ]}
+        >
+          {t}
+        </button>
+      ))}
+    </div>
+    <input
+      id="cb-name"
+      placeholder="Your name"
+      aria-label="Your name"
+      class="border-line border-[1.5px] px-3 py-3 text-[13px]"
+    />
+    <span
+      data-cb-error="name"
+      class="text-urgent -mt-1 hidden text-[11.5px] font-bold"
+      role="alert"
+    ></span>
+    <input
+      id="cb-phone"
+      type="tel"
+      placeholder="Mobile number"
+      aria-label="Mobile number"
+      class="border-line border-[1.5px] px-3 py-3 text-[13px]"
+    />
+    <span
+      data-cb-error="phone"
+      class="text-urgent -mt-1 hidden text-[11.5px] font-bold"
+      role="alert"
+    ></span>
+    <input
+      placeholder="Property address or town"
+      aria-label="Property address or town"
+      class="border-line border px-3 py-3 text-[13px]"
+    />
+    <div
+      id="cb-fail"
+      class="bg-red-tint hidden px-3.5 py-3 text-[12.5px] leading-relaxed font-semibold"
+    >
+      We couldn't send that. Please call {business.phone.main}, or try again.
+    </div>
+    <button
+      type="button"
+      id="cb-submit"
+      class="bg-urgent text-paper px-4 py-3.5 text-center text-[13px] font-extrabold"
+    >
+      Call me back
+    </button>
+  </div>
+
+  <div
+    id="cb-done"
+    class="border-bbb-green text-ink flex flex-col gap-2.5 border-t-4 bg-white p-6.5"
+    hidden
+  >
+    <span class="text-[18px] font-black">We've got your request</span>
+    <p class="text-ink-soft text-[13.5px] leading-relaxed">
+      Expect a call from us shortly. If water is spreading, shut off the main and call{' '}
+      {business.phone.main}.
+    </p>
+    <button
+      type="button"
+      id="cb-reset"
+      class="border-ink self-start border-b-[1.5px] text-xs font-bold"
+    >
+      Start again
+    </button>
+  </div>
+</section>
+
+<script>
+  const formBox = document.getElementById('cb-form');
+  const doneBox = document.getElementById('cb-done');
+  const failBox = document.getElementById('cb-fail');
+  const submitBtn = document.getElementById('cb-submit');
+  const resetBtn = document.getElementById('cb-reset');
+  const nameInput = document.getElementById('cb-name') as HTMLInputElement | null;
+  const phoneInput = document.getElementById('cb-phone') as HTMLInputElement | null;
+  const typeButtons = document.querySelectorAll<HTMLButtonElement>('[data-cb-type]');
+
+  if (formBox && doneBox && failBox && submitBtn && nameInput && phoneInput) {
+    typeButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        typeButtons.forEach((b) => {
+          const active = b === btn;
+          b.setAttribute('aria-pressed', String(active));
+          b.classList.toggle('bg-urgent', active);
+          b.classList.toggle('border-urgent', active);
+          b.classList.toggle('text-paper', active);
+          b.classList.toggle('border-line', !active);
+          b.classList.toggle('bg-white', !active);
+          b.classList.toggle('text-ink', !active);
+        });
+      });
+    });
+
+    submitBtn.addEventListener('click', () => {
+      const nameErr = document.querySelector('[data-cb-error="name"]');
+      const phoneErr = document.querySelector('[data-cb-error="phone"]');
+      let ok = true;
+      if (!nameInput.value.trim()) {
+        nameErr?.classList.remove('hidden');
+        if (nameErr) nameErr.textContent = 'Please enter your name';
+        nameInput.classList.add('border-urgent');
+        ok = false;
+      } else {
+        nameErr?.classList.add('hidden');
+        nameInput.classList.remove('border-urgent');
+      }
+      if (phoneInput.value.replace(/\D/g, '').length < 10) {
+        phoneErr?.classList.remove('hidden');
+        if (phoneErr) phoneErr.textContent = 'Enter a 10-digit mobile number';
+        phoneInput.classList.add('border-urgent');
+        ok = false;
+      } else {
+        phoneErr?.classList.add('hidden');
+        phoneInput.classList.remove('border-urgent');
+      }
+      if (!ok) return;
+      failBox.classList.add('hidden');
+      submitBtn.textContent = 'Sending…';
+      // No CRM webhook is wired up yet — simulates submission like the
+      // handoff's own prototype (BUILD_PLAN.md Week 4).
+      setTimeout(() => {
+        submitBtn.textContent = 'Call me back';
+        formBox.hidden = true;
+        doneBox.hidden = false;
+      }, 900);
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      nameInput.value = '';
+      phoneInput.value = '';
+      doneBox.hidden = true;
+      formBox.hidden = false;
+    });
+  }
+</script>

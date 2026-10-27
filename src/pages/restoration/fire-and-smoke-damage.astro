@@ -3,8 +3,13 @@ import Layout from '../../layouts/Layout.astro';
 import ServiceHero from '../../components/service/ServiceHero.astro';
 import EmergencySteps from '../../components/service/EmergencySteps.astro';
 import ProcessSteps from '../../components/shared/ProcessSteps.astro';
-import FinalCta from '../../components/shared/FinalCta.astro';
-import { fireSmoke } from '../../data/restoration';
+import ServiceDetailPanel from '../../components/service/ServiceDetailPanel.astro';
+import FaqAccordion from '../../components/shared/FaqAccordion.astro';
+import CallbackForm from '../../components/service/CallbackForm.astro';
+import RestorationMobileBar from '../../components/service/RestorationMobileBar.astro';
+import { fireSmoke, hubServices, restorationFaqs } from '../../data/restoration';
+
+const fireService = hubServices.find((s) => s.key === 'fire')!;
 ---
 
 <Layout
@@ -36,5 +41,17 @@ import { fireSmoke } from '../../data/restoration';
     heading="From assessment to final walkthrough"
   />
 
-  <FinalCta />
+  <section class="px-4 py-12 sm:px-7">
+    <ServiceDetailPanel service={fireService} />
+  </section>
+
+  <section class="bg-paper-muted px-4 py-12 sm:px-7">
+    <div class="mx-auto max-w-2xl">
+      <FaqAccordion faqs={restorationFaqs} title="Fire & smoke questions" />
+    </div>
+  </section>
+
+  <CallbackForm />
+
+  <RestorationMobileBar />
 </Layout>

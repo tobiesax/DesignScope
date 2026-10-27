@@ -1,0 +1,84 @@
+---
+// "What we handle" — matches the handoff's Restoration hub page: 4
+// clickable service cards with a detail panel below for whichever is
+// selected. Water and Fire & smoke link out to their own dedicated pages
+// (CLAUDE.md sitemap); Mold and Storm are detail-only for now (no page).
+import { hubServices } from '../../data/restoration';
+import ServiceDetailPanel from './ServiceDetailPanel.astro';
+---
+
+<section class="flex flex-col gap-5.5 px-4 py-13 sm:px-7">
+  <div class="flex flex-wrap items-end justify-between gap-3">
+    <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">What we handle</h2>
+    <span class="text-muted text-[12.5px] font-semibold">
+      Select a service to see how we handle it
+    </span>
+  </div>
+
+  <div id="svc-cards" class="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
+    {hubServices.map((s, i) => (
+      <button
+        type="button"
+        data-svc-card={s.key}
+        aria-pressed={i === 0 ? 'true' : 'false'}
+        class:list={[
+          'border-urgent flex flex-col gap-1.5 border-t-[3px] px-5 py-4.5 text-left',
+          i === 0 ? 'bg-dark text-paper' : 'bg-white text-ink',
+        ]}
+      >
+        <span class="flex items-center justify-between gap-2">
+          <span class="text-[16px] font-black">{s.title}</span>
+          <span data-svc-dot class="text-urgent text-sm font-black">
+            {i === 0 ? '●' : '→'}
+          </span>
+        </span>
+        <span
+          data-svc-blurb
+          class:list={[
+            'text-[12.5px] leading-relaxed',
+            i === 0 ? 'text-on-dark-muted' : 'text-muted',
+          ]}
+        >
+          {s.blurb}
+        </span>
+      </button>
+    ))}
+  </div>
+
+  <div id="svc-panels">
+    {hubServices.map((s, i) => (
+      <div data-svc-panel={s.key} hidden={i !== 0}>
+        <ServiceDetailPanel service={s} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const cards = document.querySelectorAll<HTMLButtonElement>('#svc-cards [data-svc-card]');
+  const panels = document.querySelectorAll<HTMLElement>('[data-svc-panel]');
+
+  cards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const key = card.dataset.svcCard;
+      cards.forEach((c) => {
+        const active = c === card;
+        c.setAttribute('aria-pressed', String(active));
+        c.classList.toggle('bg-dark', active);
+        c.classList.toggle('text-paper', active);
+        c.classList.toggle('bg-white', !active);
+        c.classList.toggle('text-ink', !active);
+        const dot = c.querySelector('[data-svc-dot]');
+        if (dot) dot.textContent = active ? '●' : '→';
+        const sub = c.querySelector('[data-svc-blurb]');
+        if (sub) {
+          sub.classList.toggle('text-on-dark-muted', active);
+          sub.classList.toggle('text-muted', !active);
+        }
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.svcPanel !== key;
+      });
+    });
+  });
+</script>

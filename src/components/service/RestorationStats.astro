@@ -1,0 +1,24 @@
+---
+// 3-column stat strip directly under the Restoration hero — matches the
+// design handoff exactly. "~60 min" is the handoff's own placeholder
+// figure for typical arrival, unconfirmed — see CONTENT_GAPS.md.
+const stats = [
+  { v: '24/7', b: 'Answered by a person, nights and weekends' },
+  { v: '~60 min', b: 'Typical arrival in Hartford County' },
+  { v: 'Insurance', b: 'We document and work with your adjuster' },
+];
+---
+
+<section class="bg-dark text-paper grid [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
+  {stats.map((s, i) => (
+    <div
+      class:list={[
+        'flex flex-col gap-1 px-4 py-5 sm:px-7',
+        i < stats.length - 1 && 'border-r border-[#2a2a2a]',
+      ]}
+    >
+      <span class="text-[22px] font-black">{s.v}</span>
+      <span class="text-on-dark-muted text-xs">{s.b}</span>
+    </div>
+  ))}
+</section>

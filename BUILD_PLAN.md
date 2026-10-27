@@ -64,11 +64,15 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
       included / Typical investment, how it works, 3D design block, aging-in-place on
       Bathrooms, recent-work teaser, review carousel, FAQ) — the ServiceHero component
       changed shape to match (no breadcrumb, split-grid layout) across all 6 pages that use
-      it. Restoration/Commercial/Showroom/Home renovations still need the same handoff-fidelity
-      pass (tracked as follow-up); their copy is grounded in facts fetched directly from the
-      live site's own service pages, not invented, but unreviewed by Stephen and still on
-      mockup/no-photo imagery
-      (CONTENT_GAPS.md)
+      it. Restoration (hub + both sub-pages) got the same pass: stats row, tabbed
+      "while you wait", the "what we handle" service-detail tabs (reused on the sub-pages
+      without tabs), insurance explainer, an honestly-labelled before/after section (no fake
+      photo), and a working (simulated) callback form at `#callback`, plus the handoff's own
+      2-button mobile sticky bar in place of Layout's generic one.
+      Commercial/Showroom/Home renovations still need the same handoff-fidelity pass (tracked
+      as follow-up); their copy is grounded in facts fetched directly from the live site's own
+      service pages, not invented, but unreviewed by Stephen and still on mockup/no-photo
+      imagery (CONTENT_GAPS.md)
 - [x] **[repo]** About, Offers, Contact, Privacy (with texting consent and call-recording notice)
       — all shipped; About has no team photo yet (Stephen's surname and a photo are still
       unconfirmed, CONTENT_GAPS.md)

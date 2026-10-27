@@ -1,29 +1,27 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ServiceHero from '../../components/service/ServiceHero.astro';
-import EmergencySteps from '../../components/service/EmergencySteps.astro';
+import RestorationStats from '../../components/service/RestorationStats.astro';
+import WhileYouWait from '../../components/service/WhileYouWait.astro';
+import ServiceDetailTabs from '../../components/service/ServiceDetailTabs.astro';
+import TimelineSteps from '../../components/service/TimelineSteps.astro';
+import InsuranceExplainer from '../../components/service/InsuranceExplainer.astro';
+import DryOutToRebuild from '../../components/service/DryOutToRebuild.astro';
 import FaqAccordion from '../../components/shared/FaqAccordion.astro';
-import FinalCta from '../../components/shared/FinalCta.astro';
-import { fireSmoke, waterDamage } from '../../data/restoration';
-import { faqs } from '../../data/home';
+import CallbackForm from '../../components/service/CallbackForm.astro';
+import RestorationMobileBar from '../../components/service/RestorationMobileBar.astro';
+import { emergencyTimeline, restorationFaqs } from '../../data/restoration';
+import { mockupImages } from '../../data/mockup-images';
 
+// Page order matches the GrowthOS design handoff's Restoration page
+// exactly, at Tobi's request.
 const hubHero = {
-  heroImage: fireSmoke.heroImage,
+  heroImage: mockupImages.restoration,
   heroEyebrow: 'Restoration · Fire, smoke & water damage',
-  heroHeadline: 'Fire, smoke or water damage? We answer 24/7.',
+  heroHeadline: "Water or fire damage? We're on our way.",
   heroSubcopy:
-    'We handle fire, smoke and water damage restoration across the Farmington Valley, from the first call to the final walkthrough, including the insurance paperwork.',
+    'A real person answers day or night. We stop the damage, document everything for your insurer, and our own team rebuilds it.',
 };
-
-const rightNowSteps = [
-  { t: 'Call us, day or night', b: 'Fire, smoke or water, we answer 24/7.' },
-  {
-    t: 'Get to safety first',
-    b: "Don't re-enter a fire-damaged property until it's cleared safe.",
-  },
-  { t: 'Call your insurer', b: "Open your claim; we'll handle the paperwork with them directly." },
-  { t: "We're on it", b: 'A full damage assessment, then a written restoration plan.' },
-];
 ---
 
 <Layout
@@ -34,32 +32,29 @@ const rightNowSteps = [
 >
   <ServiceHero service={hubHero} urgent />
 
-  <EmergencySteps steps={rightNowSteps} />
+  <RestorationStats />
 
-  <section class="flex flex-col gap-5 px-4 py-12 sm:px-7">
-    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
-      What happened?
-    </span>
-    <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">Pick what you're dealing with</h2>
-    <div class="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
-      {[fireSmoke, waterDamage].map((page) => (
-        <a
-          href={`/restoration/${page.slug}/`}
-          class="card-hover bg-paper-muted border-urgent flex flex-col gap-2 border-t-[3px] p-6"
-        >
-          <span class="text-lg font-extrabold">{page.heroEyebrow.split('·')[1]?.trim()}</span>
-          <span class="text-ink-soft text-sm leading-relaxed">{page.heroSubcopy}</span>
-          <span class="text-urgent text-xs font-extrabold">See the process →</span>
-        </a>
-      ))}
-    </div>
-  </section>
+  <WhileYouWait />
 
-  <section class="bg-paper-muted px-4 py-12 sm:px-7">
+  <ServiceDetailTabs />
+
+  <TimelineSteps
+    heading="From emergency to better than before"
+    subcopy="Most restoration companies leave once it's dry. Our remodeling team rebuilds it, so you deal with one company and one claim."
+    steps={emergencyTimeline}
+  />
+
+  <InsuranceExplainer />
+
+  <DryOutToRebuild />
+
+  <section class="px-4 py-12 sm:px-7">
     <div class="mx-auto max-w-2xl">
-      <FaqAccordion faqs={faqs.slice(2, 4)} title="Restoration questions" />
+      <FaqAccordion faqs={restorationFaqs} title="Restoration questions" />
     </div>
   </section>
 
-  <FinalCta />
+  <CallbackForm />
+
+  <RestorationMobileBar />
 </Layout>

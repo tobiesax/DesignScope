@@ -1,0 +1,18 @@
+---
+// Restoration's own 2-button mobile sticky bar — matches the handoff
+// exactly (Layout.astro's generic single-CTA bar is turned off for
+// navVariant="restoration", since this replaces it).
+import { business } from '../../data/business';
+---
+
+<div class="sticky bottom-0 z-30 grid grid-cols-2 md:hidden">
+  <a
+    href={`tel:${business.phone.mainTel}`}
+    class="bg-urgent text-paper px-4 py-4 text-center text-sm font-black"
+  >
+    Call 24/7
+  </a>
+  <a href="#callback" class="bg-dark text-paper px-4 py-4 text-center text-sm font-extrabold">
+    Callback
+  </a>
+</div>

@@ -93,3 +93,165 @@ export const waterDamage: RestorationPage = {
 };
 
 export const restorationPages = [fireSmoke, waterDamage];
+
+// "What we handle" detail panel (hub page only) — matches the design
+// handoff's RES array exactly (copy, images, timelines, insurance notes).
+// Granular action steps here are distinct from the `process` phase
+// overview above, which the sub-pages already use.
+export interface RestorationService {
+  key: 'water' | 'fire' | 'mold' | 'storm';
+  title: string;
+  blurb: string;
+  image: ImageMetadata;
+  headline: string;
+  signs: string[];
+  detailSteps: string[];
+  timeline: string;
+  insurance: string;
+  note: string;
+  /** Only water and fire have a dedicated page (CLAUDE.md sitemap). */
+  href?: string;
+}
+
+export const hubServices: RestorationService[] = [
+  {
+    key: 'water',
+    title: 'Water damage',
+    blurb: 'Burst pipes, leaks, flooded basements and appliance failures.',
+    image: mockupImages.restoration,
+    headline: 'Stop the water, dry it properly, then rebuild',
+    signs: [
+      'Burst pipe',
+      'Flooded basement',
+      'Water heater leak',
+      'Ceiling stains',
+      'Sump pump failure',
+    ],
+    detailSteps: [
+      'Find and stop the source, extract standing water',
+      'Moisture-map walls and floors with meters and thermal imaging',
+      'Commercial drying with daily readings logged for your insurer',
+      "Remove only what can't be saved, then rebuild with our remodel team",
+    ],
+    timeline: '3–5 days drying',
+    insurance: 'Usually covered',
+    note: 'Sudden and accidental water damage is covered by most homeowner policies. Gradual leaks and outside flooding often are not. We help you check before work starts.',
+    href: '/restoration/water-damage/',
+  },
+  {
+    key: 'fire',
+    title: 'Fire & smoke',
+    blurb: 'Kitchen fires, smoke and soot, plus board-up and rebuild.',
+    image: mockupImages['res-fire'],
+    headline: 'Secure the home, clean every surface, put it back',
+    signs: ['Kitchen fire', 'Smoke odour', 'Soot on walls', 'Water from firefighting'],
+    detailSteps: [
+      'Board up windows and roof openings the same day',
+      'Document damage room by room for your adjuster',
+      'Soot removal, odour treatment and contents cleaning',
+      'Rebuild kitchens, walls and finishes to match or better',
+    ],
+    timeline: '1–6 weeks',
+    insurance: 'Usually covered',
+    note: 'Fire is a named peril on standard policies. We provide the photo log, estimates and scope your adjuster needs.',
+    href: '/restoration/fire-and-smoke-damage/',
+  },
+  {
+    key: 'mold',
+    title: 'Mold remediation',
+    blurb: 'Testing, safe removal and fixing the moisture behind it.',
+    image: mockupImages['res-mold'],
+    headline: 'Remove it safely and stop it coming back',
+    signs: ['Musty smell', 'Black spots', 'After a leak', 'Damp basement'],
+    detailSteps: [
+      'Inspect and test to find the extent and the cause',
+      'Contain the area with negative air and HEPA filtration',
+      'Remove affected materials and treat surfaces',
+      'Fix the moisture source and rebuild',
+    ],
+    timeline: '2–5 days',
+    insurance: 'Sometimes covered',
+    note: "Mold is usually covered when it follows a covered water event. We'll tell you honestly if it isn't.",
+  },
+  {
+    key: 'storm',
+    title: 'Storm damage',
+    blurb: 'Roof, siding, fallen trees and water coming in.',
+    image: mockupImages['res-storm'],
+    headline: 'Make it safe tonight, repair it properly after',
+    signs: ['Roof leak', 'Fallen tree', 'Wind damage', 'Ice dams'],
+    detailSteps: [
+      'Emergency tarping and board-up to stop further damage',
+      'Dry out any interior water',
+      'Document everything for your claim',
+      'Repair roof, siding and interiors with one crew',
+    ],
+    timeline: 'Same-day make-safe',
+    insurance: 'Usually covered',
+    note: 'Wind, hail and fallen-tree damage is covered on most policies. Ice-dam leaks often are too.',
+  },
+];
+
+// "From emergency to better than before" — matches the handoff exactly.
+export const emergencyTimeline = [
+  { when: 'First hour', t: 'Answer & arrive', b: 'We answer, give you next steps, and head out.' },
+  {
+    when: 'Day 1',
+    t: 'Make safe & document',
+    b: 'Stop the damage, photos and readings for your insurer.',
+  },
+  { when: 'Days 2–5', t: 'Dry & clean', b: 'Commercial drying with daily moisture checks.' },
+  {
+    when: 'Then',
+    t: 'Rebuild',
+    b: 'Our remodeling team puts it back, often better than before.',
+  },
+];
+
+// Insurance explainer — matches the handoff exactly.
+export const coveredUsually = [
+  'Burst or frozen pipes',
+  'Sudden appliance leaks',
+  'Fire and smoke damage',
+  'Wind, hail and fallen trees',
+  'Water from firefighting',
+];
+export const coveredRarely = [
+  'Slow leaks over time',
+  'Outside flood water (needs a flood policy)',
+  'Sewer backup, unless added to your policy',
+  'Wear and poor maintenance',
+  'Mold without a covered cause',
+];
+// Named so we don't claim a partnership with any of them — "we work with
+// all major insurers" (the handoff's own framing), not "these insurers
+// work with us".
+export const majorInsurers = [
+  'The Hartford',
+  'Travelers',
+  'State Farm',
+  'Allstate',
+  'Liberty Mutual',
+  'Amica',
+  'USAA',
+  'Nationwide',
+];
+
+export const restorationFaqs = [
+  {
+    q: 'Who pays for the work?',
+    a: 'If the damage is covered, your insurer pays us directly, minus your deductible. We send the adjuster photos, moisture logs and an itemised estimate.',
+  },
+  {
+    q: 'Do I need to leave my home?',
+    a: "Usually not for water damage in one area. For fire, smoke or mold we'll tell you honestly if it's safer to stay elsewhere, and many policies cover that cost.",
+  },
+  {
+    q: 'How long does drying take?',
+    a: 'Most homes are dry in 3 to 5 days. We check moisture daily and only remove equipment when readings are back to normal.',
+  },
+  {
+    q: 'Can I choose my own contractor for the rebuild?',
+    a: "Yes, it's your choice. Most clients keep us because one team, one claim and one warranty is simpler.",
+  },
+];

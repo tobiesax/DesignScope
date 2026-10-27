@@ -1,0 +1,43 @@
+---
+// "From emergency to better than before" — matches the handoff's
+// Restoration hub page: 4 steps labeled by "when" rather than a number,
+// last one highlighted orange.
+interface Props {
+  heading: string;
+  subcopy?: string;
+  steps: { when: string; t: string; b: string }[];
+}
+
+const { heading, subcopy, steps } = Astro.props;
+---
+
+<section class="flex flex-col gap-6.5 px-4 py-13 sm:px-7">
+  <div class="flex flex-col gap-2">
+    <h2 class="max-w-[640px] text-[26px] font-black tracking-tight sm:text-[34px]">{heading}</h2>
+    {subcopy && <p class="text-muted max-w-[640px] text-sm leading-relaxed">{subcopy}</p>}
+  </div>
+  <div class="grid gap-[3px] [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
+    {steps.map((step, i) => {
+      const isLast = i === steps.length - 1;
+      return (
+        <div
+          class:list={[
+            'flex flex-col gap-2 px-5 py-5.5',
+            isLast ? 'bg-brand text-ink' : 'bg-dark text-paper',
+          ]}
+        >
+          <span
+            class:list={[
+              'text-[11px] font-extrabold tracking-[0.15em] uppercase',
+              isLast ? 'text-ink' : 'text-red-on-dark',
+            ]}
+          >
+            {step.when}
+          </span>
+          <span class="text-[15px] font-extrabold">{step.t}</span>
+          <span class="text-[12.5px] leading-relaxed opacity-85">{step.b}</span>
+        </div>
+      );
+    })}
+  </div>
+</section>
