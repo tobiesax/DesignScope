@@ -1,16 +1,27 @@
 ---
 // "What's included" + "Typical investment" — matches the design handoff's
-// remodel page exactly, minus its $/mo financing figure: financing is
-// Phase 2 (BUILD_PLAN.md), not wired up, so a monthly number with no real
-// financing product behind it would misrepresent what's on offer
-// (CLAUDE.md rule 1). Ranges themselves are the handoff's own figures,
-// unconfirmed — see CONTENT_GAPS.md.
+// remodel page exactly, including its $/mo financing figure
+// (src/data/finance.ts, "From $X/mo" off the low end of each range — the
+// handoff's own formula, verified against its own worked example). Shown
+// with a visible "financing example, not an offer" line: no lending
+// partner is wired up yet (BUILD_PLAN.md), so an unqualified monthly
+// figure would imply real financing that doesn't exist (CLAUDE.md rule
+// 1). Ranges themselves are the handoff's own figures, unconfirmed —
+// see CONTENT_GAPS.md.
+import { formatMonthly } from '../../data/finance';
+
 interface Props {
   included: string[];
   ranges: { t: string; b: string; p: string }[];
 }
 
 const { included, ranges } = Astro.props;
+
+const withMonthly = ranges.map((range) => {
+  const match = range.p.match(/\d+/);
+  const monthly = match ? `From ${formatMonthly(Number(match[0]) * 1000)}` : null;
+  return { ...range, monthly };
+});
 ---
 
 <section class="bg-paper-muted flex flex-col gap-5.5 px-4 py-13 sm:px-7">
@@ -28,17 +39,26 @@ const { included, ranges } = Astro.props;
       <span class="text-muted pb-2 text-[10px] font-bold tracking-[0.25em] uppercase">
         Typical investment
       </span>
-      {ranges.map((range) => (
+      {withMonthly.map((range) => (
         <div class="flex items-center justify-between gap-3.5 bg-white px-4.5 py-4">
           <div class="flex flex-col gap-0.5">
             <span class="text-sm font-extrabold">{range.t}</span>
             <span class="text-muted text-xs leading-relaxed">{range.b}</span>
           </div>
-          <span class="text-base font-black whitespace-nowrap">{range.p}</span>
+          <div class="flex flex-col items-end gap-0.5">
+            <span class="text-base font-black whitespace-nowrap">{range.p}</span>
+            {range.monthly && (
+              <span class="text-bbb-green text-[11px] font-bold whitespace-nowrap">
+                {range.monthly}
+              </span>
+            )}
+          </div>
         </div>
       ))}
       <span class="text-muted pt-2 text-[11px]">
-        Ranges are a guide. Your written quote arrives within 24 hours of your consultation.
+        Ranges are a guide. Your written quote arrives within 24 hours of your consultation. Monthly
+        figures are financing examples (10-year term, 9.99% APR), not an offer — financing isn't set
+        up yet.
       </span>
     </div>
   </div>

@@ -35,16 +35,17 @@ gap — see below.
 
 Kitchens' and Bathrooms' "Typical investment" price ranges (`src/data/services.ts`
 `included`/`ranges`) are the design handoff's own figures — not invented, but not confirmed
-by Stephen either. Verify them (or get his own ranges) before launch. The handoff also shows
-a $/mo financing figure next to each range; that's deliberately dropped here, since
-financing is Phase 2 and not wired up (BUILD_PLAN.md) — a monthly number with no real
-financing product behind it would misrepresent what's on offer.
+by Stephen either. Verify them (or get his own ranges) before launch. The handoff's $/mo
+financing figure next to each range is now shown too (`src/data/finance.ts`, at Tobi's
+request — an earlier pass had dropped it), paired with a visible "financing example, not an
+offer" line: no lending partner is wired up yet (BUILD_PLAN.md), so an unqualified monthly
+number would misrepresent what's on offer. Swap for Stephen's real ranges (and wire up
+actual financing, or drop the $/mo line) before launch.
 
 The cost estimator and style quiz on `/remodeling/kitchens/` and `/remodeling/bathrooms/`
 (`CostEstimator.astro`, `StyleQuiz.astro`) are Phase 2 pieces per the design handoff's own
-README/SCOPE, built now at Tobi's explicit request rather than left out. Same financing
-omission as above: the estimator computes a size × rate range (the handoff's own formula,
-verified against its own worked example) but drops its "$X/mo" figure next to the result.
+README/SCOPE, built now at Tobi's explicit request rather than left out. The estimator's
+"$X/mo" figure is shown too, same disclaimer treatment as the ranges above.
 
 ## Business facts
 
@@ -81,7 +82,7 @@ verified against its own worked example) but drops its "$X/mo" figure next to th
       laundry nook, a home bar area) were excluded as miscategorised on the live site.
 - [ ] `/remodeling/kitchens/` and `/remodeling/bathrooms/` hero photos were swapped (at
       Tobi's request) for two images he supplied directly (`src/assets/mockup-temp/subway-
-    tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the real
+  tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the real
       scraped `kitchen-hero`/`bathroom-hero` photos above (still defined in
       `project-images.ts`, just no longer referenced). Both supplied images appear to be
       AI-enhanced/upscaled versions of the _same two rooms_ as the real photos they replaced

@@ -2,11 +2,14 @@
 // Cost estimator — a Phase 2 piece in the design handoff (its own
 // SCOPE/README mark it "priced separately"), built now at Tobi's request.
 // Matches the handoff's slider + finish-level UX and its exact formula
-// (size × rate/sqft, ±15% for the range), but drops its $/mo financing
-// figure: financing isn't wired up (BUILD_PLAN.md), and showing a
-// monthly payment with no real lending product behind it would
-// misrepresent what's on offer (CLAUDE.md rule 1) — same reasoning as
-// the "Typical investment" ranges elsewhere on this page.
+// (size × rate/sqft, ±15% for the range, and the "or about $X/mo" figure
+// — src/data/finance.ts, verified against the handoff's own worked
+// example). The $/mo figure is paired with a visible "financing example,
+// not an offer" line rather than shown bare: no lending partner is wired
+// up yet (BUILD_PLAN.md), so an unqualified monthly payment would imply
+// real financing that doesn't exist (CLAUDE.md rule 1).
+import { formatMonthly } from '../../data/finance';
+
 interface Props {
   room: 'kitchen' | 'bath';
 }
@@ -23,6 +26,16 @@ const levels = [
   { label: 'Premium', sub: 'Semi-custom' },
   { label: 'Luxury', sub: 'Custom & stone' },
 ];
+
+// Server-rendered initial state (default size, Premium level — index 1,
+// matching the handoff's own default) so the estimate isn't blank until
+// the client script runs; the script then keeps it live on interaction.
+const k = (n: number) => `$${Math.round(n / 1000)}k`;
+const defaultBase = config.default * config.rates[1];
+const defaultLo = defaultBase * 0.85;
+const defaultHi = defaultBase * 1.15;
+const defaultRange = `${k(defaultLo)}–${k(defaultHi)}`;
+const defaultMonthly = formatMonthly(defaultLo);
 ---
 
 <section class="flex flex-col gap-5 px-4 py-13 sm:px-7">
@@ -81,12 +94,22 @@ const levels = [
         ))}
       </div>
     </div>
-    <div class="bg-dark text-paper flex items-center justify-between gap-3 px-4.5 py-4">
+    <div class="bg-dark text-paper flex flex-wrap items-center justify-between gap-3 px-4.5 py-4">
       <div class="flex flex-col gap-0.5">
         <span class="text-on-dark-muted text-[9.5px] font-bold tracking-[0.2em] uppercase">
           Estimated range
         </span>
-        <span id="est-range" class="text-[24px] font-black"></span>
+        <span id="est-range" class="text-[24px] font-black">
+          {defaultRange}
+        </span>
+      </div>
+      <div class="flex flex-col items-end gap-0.5">
+        <span class="text-on-dark-muted text-[9.5px] font-bold tracking-[0.2em] uppercase">
+          Or about
+        </span>
+        <span id="est-mo" class="text-brand text-[16px] font-black">
+          {defaultMonthly}
+        </span>
       </div>
     </div>
     <a
@@ -97,6 +120,10 @@ const levels = [
     >
       Book a consultation for an exact quote
     </a>
+    <span class="text-muted text-[11px]">
+      Monthly figures are financing examples (10-year term, 9.99% APR), not an offer — financing
+      isn't set up yet.
+    </span>
   </div>
 </section>
 
@@ -111,13 +138,23 @@ const levels = [
     let level = 1;
 
     const k = (n) => '$' + Math.round(n / 1000) + 'k';
+    // Same formula as src/data/finance.ts (10-year term, 9.99% APR) —
+    // duplicated here since this runs client-side, not through Astro.
+    const monthlyOut = document.getElementById('est-mo');
+    const monthly = (principal) => {
+      const r = 9.99 / 1200;
+      const n = 10 * 12;
+      return Math.round((principal * r) / (1 - Math.pow(1 + r, -n)));
+    };
 
     const render = () => {
       const size = Number(sizeInput.value);
       sizeVal.textContent = `${size} sq ft`;
       const rate = rates[level];
       const base = size * rate;
-      rangeOut.textContent = `${k(base * 0.85)}–${k(base * 1.15)}`;
+      const lo = base * 0.85;
+      rangeOut.textContent = `${k(lo)}–${k(base * 1.15)}`;
+      if (monthlyOut) monthlyOut.textContent = `$${monthly(lo).toLocaleString()}/mo`;
     };
 
     sizeInput.addEventListener('input', render);
