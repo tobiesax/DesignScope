@@ -127,7 +127,16 @@ import { sampleReviews, sampleAggregateRating } from '../../data/reviews';
 
     const scrollToCard = (index: number) => {
       const clamped = Math.max(0, Math.min(cards.length - 1, index));
-      cards[clamped]?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+      const card = cards[clamped];
+      // Scroll only the carousel's own horizontal track (its scrollLeft),
+      // never scrollIntoView — that scrolls whichever ancestor box the
+      // browser decides needs to change, including the whole page, if the
+      // card isn't already fully visible. With the carousel's own 6s
+      // auto-advance timer running from page load regardless of where the
+      // visitor has scrolled to, that was yanking the entire page down to
+      // the reviews section every few seconds — this is the home page
+      // "jumping from hero to what customers say."
+      if (card) track.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
     };
 
     const currentIndex = () => {
