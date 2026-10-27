@@ -13,18 +13,17 @@ export interface RestorationPage {
   process: { t: string; b: string }[];
 }
 
-// Restoration-specific real photos don't exist yet (CONTENT_GAPS.md) — all
-// three restoration pages reuse the one approved mockup restoration image
-// already shown on the home page's path card, rather than inventing
-// scene-specific photos.
-const heroImage = mockupImages['path-restoration'];
+// Restoration-specific real photos don't exist yet (CONTENT_GAPS.md) — the
+// design brief ships a scenario image per service (res-fire, res-storm,
+// res-mold, restoration.jpg for water), so each page gets its own stand-in
+// instead of all three sharing one generic photo.
 
 export const fireSmoke: RestorationPage = {
   slug: 'fire-and-smoke-damage',
   title: 'Fire & Smoke Damage Restoration in Bloomfield, CT',
   metaDescription:
     '24/7 fire and smoke damage restoration across the Farmington Valley: damage assessment, cleanup, odor removal and full rebuild, with insurance paperwork handled.',
-  heroImage,
+  heroImage: mockupImages['res-fire'],
   heroEyebrow: 'Restoration · Fire & smoke damage',
   heroHeadline: 'Fire and smoke damage, handled start to finish',
   heroSubcopy:
@@ -64,7 +63,7 @@ export const waterDamage: RestorationPage = {
   title: 'Water Damage Restoration in Bloomfield, CT',
   metaDescription:
     '24/7 water damage restoration across the Farmington Valley: extraction, drying, mold prevention and reconstruction, with insurance paperwork handled.',
-  heroImage,
+  heroImage: mockupImages.restoration,
   heroEyebrow: 'Restoration · Water damage',
   heroHeadline: 'Water damage, from a small leak to severe flooding',
   heroSubcopy:

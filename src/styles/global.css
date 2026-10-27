@@ -3,47 +3,73 @@
 @import '@fontsource-variable/montserrat';
 
 /*
- * Brand tokens, matched to the approved GrowthOS proposal's hi-fi website
- * mockup (not invented) — see CLAUDE.md "Brand". Tailwind v4 uses this
- * CSS-first @theme block instead of tailwind.config.mjs.
+ * Brand tokens, matched exactly to the approved GrowthOS design handoff
+ * ("design_handoff_design_scope_website/README.md" § Design tokens), at
+ * Tobi's explicit request to build the site to that brief, not the earlier,
+ * looser hi-fi mockup. Tailwind v4 uses this CSS-first @theme block instead
+ * of tailwind.config.mjs. See CLAUDE.md "Brand".
  *
- * - brand / brand-dark: the orange (#ff5f00, #c24400) from the mockup,
- *   matching the orange sampled directly from the real logo pixels.
- * - urgent: red, used ONLY for restoration/emergency accents (the
- *   Restoration path card, "Call now, 24/7" emphasis) — confirmed from the
- *   mockup's own paths[] data, not general chrome. Never use it as a
- *   second brand colour.
- * - dark / dark-deep: near-black section backgrounds (nav, hero, footer).
- * - ink / ink-soft / muted: text colours, darkest to lightest.
- * - paper / paper-muted / border / border-soft: light backgrounds and
- *   dividers.
- * - on-dark / on-dark-muted: text colours for use on dark backgrounds.
+ * - brand: the orange (#ff5f00), fills only on light grounds; orange text
+ *   only on dark grounds (the brief's contrast rule — never orange text on
+ *   white/light grey).
+ * - urgent: the brief's emergency red (#c8102e), reserved for restoration
+ *   "act now" actions and form errors — never general chrome.
+ * - red-on-dark / red-tint: red text on dark grounds, and the tint used for
+ *   emergency notice backgrounds.
+ * - orange-tint: selected-option fill (booking modal, quiz/estimator).
+ * - dark / dark-deep / card-dark: near-black section backgrounds (nav,
+ *   hero, footer) and the review-card background on dark sections.
+ * - ink / ink-soft / muted / muted-dark: text, darkest to lightest; muted
+ *   on light grounds, muted-dark on dark grounds.
+ * - paper / paper-muted / border / border-soft / line: light backgrounds
+ *   and the brief's three divider/border shades.
+ * - on-dark / on-dark-muted: aliases of ink/muted-dark text on dark
+ *   backgrounds, kept for existing call sites.
+ * - bbb-green: reserved for the official BBB badge only.
  */
 @theme {
   --color-brand: #ff5f00;
   --color-brand-dark: #c24400;
-  --color-urgent: #e8192c;
+  --color-urgent: #c8102e;
+  --color-red-on-dark: #ff6b76;
+  --color-red-tint: #fdecee;
+  --color-orange-tint: #fff1e8;
 
   --color-dark: #161616;
   --color-dark-deep: #0e0e0e;
+  --color-card-dark: #222222;
 
   --color-ink: #111111;
   --color-ink-soft: #2a2a2a;
   --color-muted: #555555;
+  --color-muted-dark: #bdbdbd;
 
   --color-paper: #ffffff;
   --color-paper-muted: #f5f5f5;
-  --color-border: #e8e8e8;
-  --color-border-soft: #d8d8d8;
+  --color-border: #e0e0e0;
+  --color-border-soft: #e8e8e8;
+  --color-line: #dddddd;
 
   --color-on-dark: #ededed;
   --color-on-dark-muted: #bdbdbd;
+
+  --color-bbb-green: #1b5e3c;
 
   --font-sans: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   @apply bg-paper text-ink-soft font-sans;
+}
+
+/* The brief's layout rule: square corners everywhere, no shadows — already
+   true by default since nothing here uses Tailwind's "rounded" or "shadow"
+   utilities, but stated explicitly so it isn't reintroduced by accident. */
+*,
+*::before,
+*::after {
+  border-radius: 0;
+  box-shadow: none;
 }
 
 /* Deliberate, on-brand focus states (CLAUDE.md rule 7), not just the
@@ -115,20 +141,23 @@ a[class*='border-paper']:hover {
   0%,
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgb(232 25 44 / 0.55);
+    box-shadow: 0 0 0 0 rgb(200 16 46 / 0.55);
   }
   50% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 12px rgb(232 25 44 / 0);
+    box-shadow: 0 0 0 12px rgb(200 16 46 / 0);
   }
 }
 .call-now-pulse {
   animation: call-now-pulse 1.6s ease-in-out infinite;
 }
 
-/* Header: a shadow once the page has scrolled past the top (Header.astro). */
+/* Header: the brief has no header shadow ("no shadows" is a deliberate
+   design rule) — a 1px border is enough separation once scrolled past the
+   top, since the nav is already a solid dark fill over whatever's behind
+   it (Header.astro). */
 header.is-scrolled {
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.15);
+  border-bottom: 1px solid #333333;
 }
 
 /* Mobile nav: a quick fade/slide on open. Closing stays instant via the

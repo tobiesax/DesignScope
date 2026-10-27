@@ -1,33 +1,58 @@
-// TEMPORARY stand-ins pulled from the approved GrowthOS proposal's hi-fi
-// mockup — not real Design Scope photos. Swap src/assets/mockup-temp/ for
-// Stephen's real project/showroom photos and delete this file's imports once
-// they arrive (CONTENT_GAPS.md "Assets").
-import heroKitchen from '../assets/mockup-temp/hero-kitchen.jpeg';
-import beforeKitchen from '../assets/mockup-temp/before-kitchen.jpeg';
-import afterKitchen from '../assets/mockup-temp/after-kitchen.jpeg';
-import showroom from '../assets/mockup-temp/showroom.jpeg';
-import pathRestoration from '../assets/mockup-temp/path-restoration.jpeg';
+// TEMPORARY stand-ins — the actual image files shipped in the approved
+// GrowthOS design brief ("design_handoff_design_scope_website/assets"), at
+// Tobi's explicit request to build the site exactly as specified there.
+// The brief's own README flags several of these as "AI-generated stand-ins";
+// none are real Design Scope photos. Swap for Stephen's real project and
+// showroom photos, and delete src/assets/mockup-temp/, before Week 5 QA —
+// see CONTENT_GAPS.md "Assets".
+import baAfter from '../assets/mockup-temp/ba-after.jpg';
+import baBefore from '../assets/mockup-temp/ba-before.jpg';
+import catCabinetry from '../assets/mockup-temp/cat-cabinetry.png';
+import catCountertops from '../assets/mockup-temp/cat-countertops.png';
+import catFixtures from '../assets/mockup-temp/cat-fixtures.png';
+import catTile from '../assets/mockup-temp/cat-tile.png';
+import dsCommercial from '../assets/mockup-temp/ds-commercial.jpeg';
+import dsHero from '../assets/mockup-temp/ds-hero.jpeg';
+import dsKitchen from '../assets/mockup-temp/ds-kitchen.jpeg';
+import dsResidential from '../assets/mockup-temp/ds-residential.jpeg';
+import dsShowroom from '../assets/mockup-temp/ds-showroom.jpeg';
+import heroKitchen from '../assets/mockup-temp/hero-kitchen.jpg';
 import pathCommercial from '../assets/mockup-temp/path-commercial.png';
 import pathRemodeling from '../assets/mockup-temp/path-remodeling.png';
-import projGalleyBloomfield from '../assets/mockup-temp/proj-galley-bloomfield.jpeg';
-import dsKitchen from '../assets/mockup-temp/ds-kitchen.jpeg';
-import projShowerWindsor from '../assets/mockup-temp/proj-shower-windsor.jpeg';
-import projBathAvon from '../assets/mockup-temp/proj-bath-avon.jpeg';
-import projRenovationSimsbury from '../assets/mockup-temp/proj-renovation-simsbury.png';
+import projBathAvon from '../assets/mockup-temp/proj-bath-avon.jpg';
+import projGalleyBloomfield from '../assets/mockup-temp/proj-galley-bloomfield.jpg';
 import projOfficeHartford from '../assets/mockup-temp/proj-office-hartford.png';
+import projRenovationSimsbury from '../assets/mockup-temp/proj-renovation-simsbury.png';
+import projShowerWindsor from '../assets/mockup-temp/proj-shower-windsor.jpg';
+import resFire from '../assets/mockup-temp/res-fire.png';
+import resMold from '../assets/mockup-temp/res-mold.png';
+import resStorm from '../assets/mockup-temp/res-storm.png';
+import restoration from '../assets/mockup-temp/restoration.jpg';
+import showroom from '../assets/mockup-temp/showroom.jpg';
 
 export const mockupImages = {
+  'ba-after': baAfter,
+  'ba-before': baBefore,
+  'cat-cabinetry': catCabinetry,
+  'cat-countertops': catCountertops,
+  'cat-fixtures': catFixtures,
+  'cat-tile': catTile,
+  'ds-commercial': dsCommercial,
+  'ds-hero': dsHero,
+  'ds-kitchen': dsKitchen,
+  'ds-residential': dsResidential,
+  'ds-showroom': dsShowroom,
   'hero-kitchen': heroKitchen,
-  'before-kitchen': beforeKitchen,
-  'after-kitchen': afterKitchen,
-  showroom,
-  'path-restoration': pathRestoration,
   'path-commercial': pathCommercial,
   'path-remodeling': pathRemodeling,
-  'proj-galley-bloomfield': projGalleyBloomfield,
-  'ds-kitchen': dsKitchen,
-  'proj-shower-windsor': projShowerWindsor,
   'proj-bath-avon': projBathAvon,
-  'proj-renovation-simsbury': projRenovationSimsbury,
+  'proj-galley-bloomfield': projGalleyBloomfield,
   'proj-office-hartford': projOfficeHartford,
+  'proj-renovation-simsbury': projRenovationSimsbury,
+  'proj-shower-windsor': projShowerWindsor,
+  'res-fire': resFire,
+  'res-mold': resMold,
+  'res-storm': resStorm,
+  restoration,
+  showroom,
 } satisfies Record<string, ImageMetadata>;
