@@ -15,6 +15,10 @@ export interface BlogPost {
   date: string; // ISO yyyy-mm-dd
   author: string;
   excerpt: string;
+  /** For the design handoff's category filters — inferred from each post's actual subject. */
+  category: 'Kitchens' | 'Bathrooms' | 'Restoration' | 'Showroom';
+  /** Key into src/data/mockup-images.ts, for the handoff's hero/card images. */
+  image: 'proj-bath-avon' | 'hero-kitchen';
   sections: BlogSection[];
   closing: string;
 }
@@ -27,6 +31,8 @@ export const blogPosts: BlogPost[] = [
     author: 'Stephen',
     excerpt:
       'A bathroom remodel pays off when it is planned well. Here is how we recommend approaching the budget, the cost factors and the contract.',
+    category: 'Bathrooms',
+    image: 'proj-bath-avon',
     sections: [
       {
         heading: 'Start with your needs and your budget',
@@ -66,6 +72,8 @@ export const blogPosts: BlogPost[] = [
     author: 'Stephen',
     excerpt:
       'A kitchen remodel touches almost every trade in your house at once. Hiring a licensed company is what keeps a big project from turning into a bigger problem.',
+    category: 'Kitchens',
+    image: 'hero-kitchen',
     sections: [
       {
         heading: 'Planning and design that fits how you actually live',
@@ -88,3 +96,15 @@ export const blogPosts: BlogPost[] = [
       "The common thread is simple: licensing and experience aren't paperwork, they're what stands between you and a renovation disaster.",
   },
 ];
+
+// A real, computed reading time (~200 wpm) rather than the design
+// handoff's own invented-looking "6 min read" style figures.
+export function readTime(post: BlogPost): string {
+  const words = post.sections
+    .flatMap((s) => [s.heading, s.body, ...(s.list ?? [])])
+    .concat([post.excerpt, post.closing])
+    .filter(Boolean)
+    .join(' ')
+    .split(/\s+/).length;
+  return `${Math.max(1, Math.round(words / 200))} min read`;
+}

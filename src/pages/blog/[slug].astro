@@ -1,36 +1,79 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { blogPosts } from '../../data/blog-posts';
+import { Image } from 'astro:assets';
+import { blogPosts, readTime } from '../../data/blog-posts';
+import { mockupImages } from '../../data/mockup-images';
 
+// Matches the GrowthOS design handoff's Article template: a contextual CTA
+// (restoration posts push a call, everything else pushes booking) and a
+// "keep reading" related-posts row.
 export function getStaticPaths() {
   return blogPosts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
 const { post } = Astro.props;
+const isRestoration = post.category === 'Restoration';
+const cta = isRestoration
+  ? {
+      bg: 'bg-urgent',
+      fg: 'text-paper',
+      title: 'Dealing with damage right now?',
+      sub: 'A person answers 24/7.',
+      label: 'Get emergency help',
+      href: '/restoration/',
+    }
+  : {
+      bg: 'bg-brand',
+      fg: 'text-ink',
+      title: 'Ready to talk about your project?',
+      sub: 'Free consultation and a written quote within 24 hours.',
+      label: 'Book free consultation',
+      href: '/book/',
+    };
+
+const related = blogPosts
+  .filter((p) => p.slug !== post.slug)
+  .sort((a, b) => (b.category === post.category ? 1 : 0) - (a.category === post.category ? 1 : 0))
+  .slice(0, 3);
+
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <Layout title={post.title} description={post.excerpt}>
-  <article class="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-12 sm:px-7">
-    <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 text-xs">
-      <a href="/blog/" class="hover:text-brand-dark">
-        Blog
-      </a>
-      <span aria-hidden="true">/</span>
-      <span>{post.title}</span>
-    </nav>
-    <span class="text-muted text-xs font-semibold">
-      {formatDate(post.date)} · {post.author}
-    </span>
-    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">{post.title}</h1>
+  <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 px-4 py-4 text-xs sm:px-7">
+    <a href="/blog/" class="hover:text-brand-dark font-bold">
+      Blog
+    </a>
+    <span aria-hidden="true">/</span>
+    <span>{post.category}</span>
+  </nav>
 
+  <div class="mx-auto flex max-w-[780px] flex-col gap-3.5 px-4 sm:px-7">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      {post.category} · {readTime(post)} · {formatDate(post.date)}
+    </span>
+    <h1 class="text-[34px] leading-[1.05] font-black tracking-tight sm:text-[52px]">
+      {post.title}
+    </h1>
+    <p class="text-ink-soft text-[17px] leading-relaxed font-medium">{post.excerpt}</p>
+  </div>
+
+  <div class="px-4 pt-7 sm:px-7">
+    <Image
+      src={mockupImages[post.image]}
+      alt=""
+      class="h-[260px] w-full object-cover sm:h-[480px]"
+    />
+  </div>
+
+  <article class="mx-auto flex max-w-[720px] flex-col gap-6 px-4 py-9 sm:px-7">
     {post.sections.map((section) => (
-      <div class="flex flex-col gap-2.5">
-        {section.heading && <h2 class="text-lg font-extrabold">{section.heading}</h2>}
-        {section.body && <p class="text-ink-soft text-sm leading-relaxed">{section.body}</p>}
+      <div class="flex flex-col gap-2">
+        {section.heading && <h2 class="text-[22px] font-black leading-snug">{section.heading}</h2>}
+        {section.body && <p class="text-ink-soft text-[15px] leading-relaxed">{section.body}</p>}
         {section.list && (
-          <ul class="text-ink-soft flex list-disc flex-col gap-1.5 pl-5 text-sm leading-relaxed">
+          <ul class="text-ink-soft flex list-disc flex-col gap-1.5 pl-5 text-[15px] leading-relaxed">
             {section.list.map((item) => (
               <li>{item}</li>
             ))}
@@ -39,9 +82,38 @@ const formatDate = (iso: string) =>
       </div>
     ))}
 
-    <p class="text-ink-soft text-sm font-semibold leading-relaxed">{post.closing}</p>
-    <a href="/book/" class="bg-brand text-ink w-fit px-5 py-3.5 text-sm font-extrabold">
-      Book a free design consultation
-    </a>
+    <p class="text-ink-soft text-[15px] font-semibold leading-relaxed">{post.closing}</p>
+
+    <div class={`flex flex-wrap items-center justify-between gap-3.5 p-5.5 ${cta.bg} ${cta.fg}`}>
+      <div class="flex flex-col gap-0.5">
+        <span class="text-[17px] font-black">{cta.title}</span>
+        <span class="text-[13px] font-medium">{cta.sub}</span>
+      </div>
+      <a
+        href={cta.href}
+        data-open-booking={cta.href === '/book/' ? true : undefined}
+        class="border-[1.5px] border-dark bg-dark px-4.5 py-3.5 text-[13px] font-extrabold text-paper"
+      >
+        {cta.label}
+      </a>
+    </div>
   </article>
+
+  {related.length > 0 && (
+    <section class="border-border-soft flex flex-col gap-4.5 border-t px-4 py-10 sm:px-7">
+      <h3 class="text-[22px] font-black">Keep reading</h3>
+      <div class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))]">
+        {related.map((p) => (
+          <a href={`/blog/${p.slug}/`} class="card-hover flex flex-col gap-2.5 overflow-hidden">
+            <Image src={mockupImages[p.image]} alt="" class="h-[180px] w-full object-cover" />
+            <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+              {p.category} · {readTime(p)}
+            </span>
+            <span class="text-[16px] leading-snug font-extrabold">{p.title}</span>
+            <span class="text-muted text-[13px] leading-relaxed">{p.excerpt}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 </Layout>

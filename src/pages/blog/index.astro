@@ -1,30 +1,136 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { blogPosts } from '../../data/blog-posts';
+import { Image } from 'astro:assets';
+import { blogPosts, readTime } from '../../data/blog-posts';
+import { mockupImages } from '../../data/mockup-images';
+
+// Matches the GrowthOS design handoff's Blog page: category filters, a
+// featured post, then the rest as cards. Only the 2 real migrated posts'
+// own categories are offered as filters — the handoff's own filter list
+// (All/Kitchens/Bathrooms/Restoration/Showroom) would otherwise show
+// chips that always return zero results (CLAUDE.md rule 1).
+const categories = ['All', ...Array.from(new Set(blogPosts.map((p) => p.category)))];
+const sorted = [...blogPosts].sort((a, b) => b.date.localeCompare(a.date));
+const [featured] = sorted;
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <Layout title="Blog" description="Design and construction tips from Design Scope, Bloomfield CT.">
-  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
-    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">Blog</span>
-    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">Design &amp; construction tips</h1>
+  <section class="flex flex-col gap-3.5 px-4 py-11 pb-6 sm:px-7">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      Advice &amp; ideas
+    </span>
+    <h1 class="text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
+      The Design Scope blog
+    </h1>
+    <p class="text-ink-soft max-w-[560px] text-[15px] leading-relaxed">
+      Costs, planning tips and what to do when things go wrong, from our designers and restoration
+      crews.
+    </p>
   </section>
 
-  <div class="flex flex-col gap-5 px-4 pb-12 sm:px-7">
-    {blogPosts.map((post) => (
+  <div id="blog-cats" class="flex flex-wrap gap-1.5 px-4 pb-5 sm:px-7">
+    {categories.map((c, i) => (
+      <button
+        type="button"
+        data-blog-cat={c}
+        aria-pressed={i === 0 ? 'true' : 'false'}
+        class:list={[
+          'border-ink border-[1.5px] px-3.5 py-2.5 text-xs font-extrabold',
+          i === 0 ? 'bg-ink text-paper' : 'bg-white text-ink',
+        ]}
+      >
+        {c}
+      </button>
+    ))}
+  </div>
+
+  {featured && (
+    <div id="blog-featured" class="px-4 pb-6 sm:px-7" data-cat={featured.category}>
+      <a
+        href={`/blog/${featured.slug}/`}
+        class="bg-dark text-paper grid [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
+      >
+        <div class="min-h-[280px]">
+          <Image src={mockupImages[featured.image]} alt="" class="h-full w-full object-cover" />
+        </div>
+        <div class="flex flex-col gap-3 justify-center p-8">
+          <span class="text-brand text-[10px] font-bold tracking-[0.3em] uppercase">
+            {featured.category} · {readTime(featured)}
+          </span>
+          <span class="text-[26px] leading-tight font-black tracking-tight">{featured.title}</span>
+          <span class="text-on-dark-muted text-sm leading-relaxed">{featured.excerpt}</span>
+          <span class="text-brand text-[13px] font-extrabold">Read the article →</span>
+        </div>
+      </a>
+    </div>
+  )}
+
+  <div
+    id="blog-grid"
+    class="grid gap-5 px-4 pb-14 sm:px-7 [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]"
+  >
+    {sorted.map((post) => (
       <a
         href={`/blog/${post.slug}/`}
-        class="card-hover border-border-soft flex flex-col gap-2 border-b pb-5"
+        data-cat={post.category}
+        data-slug={post.slug}
+        hidden={post.slug === featured?.slug}
+        class="card-hover flex flex-col gap-2.5 overflow-hidden"
       >
-        <span class="text-muted text-xs font-semibold">
+        <Image src={mockupImages[post.image]} alt="" class="h-[180px] w-full object-cover" />
+        <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+          {post.category} · {readTime(post)}
+        </span>
+        <span class="text-[16px] leading-snug font-extrabold">{post.title}</span>
+        <span class="text-muted text-[13px] leading-relaxed">{post.excerpt}</span>
+        <span class="text-muted text-[11px] font-semibold">
           {formatDate(post.date)} · {post.author}
         </span>
-        <span class="text-lg font-extrabold">{post.title}</span>
-        <p class="text-ink-soft text-sm leading-relaxed">{post.excerpt}</p>
-        <span class="text-brand-dark text-xs font-extrabold">Read more →</span>
       </a>
     ))}
   </div>
+
+  <div class="px-4 pb-12 sm:px-7">
+    <span class="text-on-dark-muted text-[11px]">
+      Existing posts from the current site are migrated here with redirects, so their Google
+      rankings carry over.
+    </span>
+  </div>
 </Layout>
+
+<script>
+  const catButtons = document.querySelectorAll<HTMLButtonElement>('#blog-cats [data-blog-cat]');
+  const featured = document.getElementById('blog-featured');
+  const featuredSlug = featured
+    ?.querySelector('a')
+    ?.getAttribute('href')
+    ?.split('/')
+    .filter(Boolean)
+    .pop();
+  const cards = document.querySelectorAll<HTMLElement>('#blog-grid [data-cat]');
+
+  catButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.blogCat ?? 'All';
+      catButtons.forEach((b) => {
+        const active = b === btn;
+        b.setAttribute('aria-pressed', String(active));
+        b.classList.toggle('bg-ink', active);
+        b.classList.toggle('text-paper', active);
+        b.classList.toggle('bg-white', !active);
+        b.classList.toggle('text-ink', !active);
+      });
+      if (featured) featured.hidden = cat !== 'All';
+      cards.forEach((card) => {
+        if (cat === 'All') {
+          card.hidden = card.dataset.slug === featuredSlug;
+        } else {
+          card.hidden = card.dataset.cat !== cat;
+        }
+      });
+    });
+  });
+</script>

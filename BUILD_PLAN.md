@@ -91,7 +91,13 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
       products/quote fields a case study needs yet either way. All placeholder (CONTENT_GAPS.md)
 - [x] **[repo]** Migrate the blog posts with the same slugs and dates — body text is rewritten
       in our own words rather than copied (the extraction tool declined to reproduce the live
-      pages verbatim); not yet wired into Keystatic
+      pages verbatim); not yet wired into Keystatic. Blog index and article template rebuilt
+      to the design handoff's spec (category filters, featured post, related posts,
+      category-aware CTA) — kept the 2 real migrated posts rather than swapping in the
+      handoff's own 6 placeholder posts, unlike Projects/case studies where no real
+      narrative content existed either way. Category filters only offer the 2 real posts'
+      own categories (Kitchens, Bathrooms), not the handoff's full list, so there's no chip
+      that always returns zero results
 - [ ] **[CRM]** Set up pipeline stages: New → Consultation booked → Site visit → Estimate sent → Won / Lost
 
 ## Week 4: SEO, forms and the lead system starts
