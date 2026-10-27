@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { business } from '../../data/business';
+import FinalCta from '../../components/shared/FinalCta.astro';
+
+// The current live site has no real customer reviews to migrate, and
+// CLAUDE.md rule 2 says never invent them. This page is honest about that
+// and points to our live review profiles until real quotes are collected
+// (CONTENT_GAPS.md).
+---
+
+<Layout title="Reviews" description="Design Scope customer reviews on Google and Yelp.">
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Reviews
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">What homeowners say</h1>
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
+      We're collecting reviews from recent projects to feature here. In the meantime, you can read
+      (or leave) one on Google or Yelp.
+    </p>
+    <div class="flex flex-wrap gap-2.5">
+      {business.googleReviewUrl && (
+        <a
+          href={business.googleReviewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold"
+        >
+          Read us on Google
+        </a>
+      )}
+      <a
+        href={business.social.yelp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="border-dark border px-5 py-3.5 text-sm font-bold"
+      >
+        Read us on Yelp
+      </a>
+    </div>
+  </section>
+  <FinalCta />
+</Layout>
