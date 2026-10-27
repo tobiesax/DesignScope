@@ -1,0 +1,480 @@
+---
+// Global booking modal — matches the design handoff's "Global components →
+// Booking modal (4 steps)" exactly: project type/when/budget → where →
+// day + time → details → confirmation. Rendered once in Layout.astro and
+// opened from any element with `data-open-booking` (progressive
+// enhancement: those stay real links to /book/, so booking still works
+// with JS off). No real calendar or CRM is wired up yet (BUILD_PLAN.md
+// Week 4, GHL_INBOUND_WEBHOOK_URL) — "Confirm booking" simulates success
+// like the handoff's own prototype does, and step 5's copy is worded so it
+// never claims a text message was actually sent (CLAUDE.md rule 1).
+import { business } from '../../data/business';
+
+const TYPES = ['Kitchen', 'Bathroom', 'Whole home', 'Commercial', 'Just browsing'];
+const START = ['As soon as possible', 'In 1–3 months', 'In 3–6 months', 'Just planning'];
+const BUDGET = ['Under $25k', '$25k–$50k', '$50k–$100k', '$100k+', 'Not sure yet'];
+const WHERE = [
+  {
+    label: 'At the showroom',
+    sub: `${business.showroom.streetAddress}, ${business.showroom.city} · see materials in person`,
+  },
+  { label: 'At my home', sub: 'We measure and talk through the space' },
+  { label: 'Video call', sub: '30 minutes, from anywhere' },
+];
+const TIMES = ['9:00', '10:30', '1:00', '2:30', '4:00'];
+---
+
+<div
+  id="booking-modal"
+  class="fixed inset-0 z-[90] flex items-center justify-center bg-[rgba(14,14,14,0.6)] p-4"
+  hidden
+>
+  <div
+    id="booking-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="booking-title"
+    class="flex max-h-[calc(100vh-32px)] w-full max-w-[560px] flex-col overflow-auto bg-white"
+  >
+    <div class="bg-dark text-paper flex items-center justify-between gap-3 px-5.5 py-4.5">
+      <div class="flex flex-col gap-0.5">
+        <span id="booking-title" class="text-[15px] font-black">
+          Book a free consultation
+        </span>
+        <span id="booking-step-label" class="text-on-dark-muted text-[11px]">
+          Step 1 of 4 · Project
+        </span>
+      </div>
+      <button
+        type="button"
+        id="booking-close"
+        class="border-[#444444] px-2 py-1.5 text-xs font-bold text-paper"
+      >
+        Close
+      </button>
+    </div>
+
+    <div id="booking-progress" class="flex gap-[3px]">
+      {[1, 2, 3, 4].map((i) => (
+        <div data-bar={i} class="h-1 flex-1 bg-[#e8e8e8]"></div>
+      ))}
+    </div>
+
+    <div class="flex flex-col gap-3.5 p-5.5">
+      <!-- Step 1: project -->
+      <div data-step="1" class="flex flex-col gap-3.5">
+        <span class="text-[19px] font-black">What are you planning?</span>
+        <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {TYPES.map((t) => (
+            <button
+              type="button"
+              data-field="type"
+              data-value={t}
+              class="border-line border-[1.5px] bg-white px-3.5 py-4 text-left text-[13.5px] font-extrabold"
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+        <span class="mt-1 text-[13px] font-extrabold">When would you like to start?</span>
+        <div class="flex flex-wrap gap-1.5">
+          {START.map((t) => (
+            <button
+              type="button"
+              data-field="start"
+              data-value={t}
+              class="border-line border-[1.5px] bg-white px-3 py-2.5 text-[12.5px] font-bold"
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+        <span class="mt-1 text-[13px] font-extrabold">Budget range</span>
+        <div class="flex flex-wrap gap-1.5">
+          {BUDGET.map((t) => (
+            <button
+              type="button"
+              data-field="budget"
+              data-value={t}
+              class="border-line border-[1.5px] bg-white px-3 py-2.5 text-[12.5px] font-bold"
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+        <a
+          href="/restoration/"
+          id="booking-restoration-link"
+          class="bg-red-tint block px-3.5 py-3 text-[12.5px] font-semibold"
+        >
+          Water or fire damage right now?{' '}
+          <strong class="text-urgent">Go to 24/7 restoration →</strong>
+        </a>
+      </div>
+
+      <!-- Step 2: where -->
+      <div data-step="2" class="flex flex-col gap-3.5" hidden>
+        <span class="text-[19px] font-black">Where would you like to meet?</span>
+        {WHERE.map((w) => (
+          <button
+            type="button"
+            data-field="where"
+            data-value={w.label}
+            class="border-line flex flex-col gap-0.5 border-[1.5px] bg-white px-4 py-4 text-left"
+          >
+            <span class="text-[14px] font-extrabold">{w.label}</span>
+            <span class="text-muted text-xs">{w.sub}</span>
+          </button>
+        ))}
+      </div>
+
+      <!-- Step 3: when -->
+      <div data-step="3" class="flex flex-col gap-3.5" hidden>
+        <span class="text-[19px] font-black">Pick a time</span>
+        <div id="booking-days" class="grid grid-cols-5 gap-1.5"></div>
+        <div class="grid grid-cols-3 gap-1.5 sm:grid-cols-5">
+          {TIMES.map((t) => (
+            <button
+              type="button"
+              data-field="time"
+              data-value={t}
+              class="border-line border-[1.5px] bg-white px-1 py-2.5 text-center text-[13px] font-extrabold"
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+        <span class="text-muted text-[11.5px]">
+          Times shown are placeholders until our online calendar is connected — we'll confirm by
+          text or call.
+        </span>
+      </div>
+
+      <!-- Step 4: details -->
+      <div data-step="4" class="flex flex-col gap-3.5" hidden>
+        <span class="text-[19px] font-black">Your details</span>
+        <div class="grid gap-2.5 sm:grid-cols-2">
+          <div class="flex flex-col gap-1">
+            <input
+              id="booking-name"
+              placeholder="First and last name"
+              aria-label="First and last name"
+              class="border-line border-[1.5px] px-3 py-3 text-[13px]"
+            />
+            <span
+              data-error="name"
+              class="text-urgent hidden text-[11.5px] font-bold"
+              role="alert"
+            ></span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <input
+              id="booking-phone"
+              type="tel"
+              placeholder="Mobile number"
+              aria-label="Mobile number"
+              class="border-line border-[1.5px] px-3 py-3 text-[13px]"
+            />
+            <span
+              data-error="phone"
+              class="text-urgent hidden text-[11.5px] font-bold"
+              role="alert"
+            ></span>
+          </div>
+        </div>
+        <div class="grid gap-2.5 sm:grid-cols-2">
+          <input
+            id="booking-email"
+            type="email"
+            placeholder="Email"
+            aria-label="Email"
+            class="border-line border px-3 py-3 text-[13px]"
+          />
+          <select
+            id="booking-town"
+            aria-label="Town"
+            class="border-line border bg-white px-3 py-3 text-[13px]"
+          >
+            <option value="">Town</option>
+            {business.serviceAreas.map((t) => (
+              <option value={t}>{t}</option>
+            ))}
+          </select>
+        </div>
+        <textarea
+          placeholder="Anything we should know? Photos can be texted after booking."
+          aria-label="Anything we should know? Photos can be texted after booking."
+          class="border-line min-h-16 resize-y border px-3 py-3 text-[13px]"
+        ></textarea>
+        <div
+          id="booking-summary"
+          class="bg-paper-muted px-3.5 py-3 text-[12px] leading-relaxed"
+        ></div>
+        <div
+          id="booking-fail"
+          class="bg-red-tint hidden px-3.5 py-3 text-[12.5px] leading-relaxed font-semibold"
+        >
+          We couldn't confirm that time. Please try again, or call {business.phone.main}.
+        </div>
+      </div>
+
+      <!-- Step 5: confirmation -->
+      <div data-step="5" class="flex flex-col gap-3.5" hidden>
+        <div class="flex flex-col gap-2.5 py-1.5">
+          <span class="bg-bbb-green text-paper flex h-11 w-11 items-center justify-center rounded-full text-xl font-black">
+            ✓
+          </span>
+          <span class="text-[21px] font-black">We've got your request</span>
+          <span id="booking-summary-done" class="text-[14px] font-bold"></span>
+          <p class="text-ink-soft text-[13px] leading-relaxed">
+            Expect a call or text from us within one business day to confirm the time.
+          </p>
+        </div>
+        <div class="border-border-soft flex flex-col gap-2 border-t pt-3">
+          <span class="text-muted text-[10px] font-bold tracking-[0.2em] uppercase">
+            What happens next
+          </span>
+          <span class="text-[13px]">1 · We confirm your time by call or text</span>
+          <span class="text-[13px]">2 · Meet your designer and talk ideas and budget</span>
+          <span class="text-[13px]">3 · Written quote within 24 hours</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between gap-2.5 pt-1.5">
+        <button
+          type="button"
+          id="booking-back"
+          class="border-ink border-[1.5px] px-4 py-3 text-[13px] font-bold"
+          hidden
+        >
+          Back
+        </button>
+        <span></span>
+        <button
+          type="button"
+          id="booking-next"
+          class="bg-[#e8e8e8] px-5 py-3 text-[13px] font-extrabold text-[#999999]"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ mainTel: business.phone.mainTel, mainPhone: business.phone.main }}>
+  const modal = document.getElementById('booking-modal');
+  const dialog = document.getElementById('booking-dialog');
+  if (modal && dialog) {
+    const steps = Array.from(dialog.querySelectorAll('[data-step]'));
+    const bars = Array.from(dialog.querySelectorAll('[data-bar]'));
+    const stepLabel = document.getElementById('booking-step-label');
+    const backBtn = document.getElementById('booking-back');
+    const nextBtn = document.getElementById('booking-next');
+    const daysWrap = document.getElementById('booking-days');
+    const STEP_NAMES = ['Project', 'Where', 'When', 'Your details'];
+
+    let step = 1;
+    let sending = false;
+    let triggerEl = null;
+    const data = { type: null, start: null, budget: null, where: null, day: null, time: null };
+
+    // Build the next 5 bookable days from today, skipping Sunday — avoids
+    // hardcoding specific dates (the handoff uses fixed example dates,
+    // which would misrepresent real availability — CLAUDE.md rule 1).
+    const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const days = [];
+    const cursor = new Date();
+    cursor.setDate(cursor.getDate() + 1);
+    while (days.length < 5) {
+      if (cursor.getDay() !== 0) {
+        days.push({
+          label: `${DOW[cursor.getDay()]} ${cursor.getDate()}`,
+          dow: DOW[cursor.getDay()],
+          num: cursor.getDate(),
+        });
+      }
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    if (daysWrap) {
+      daysWrap.innerHTML = '';
+      days.forEach((d) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.field = 'day';
+        btn.dataset.value = d.label;
+        btn.className =
+          'border-line border-[1.5px] bg-white px-1 py-2.5 flex flex-col items-center gap-0.5';
+        btn.innerHTML = `<span class="text-[10px] font-bold">${d.dow}</span><span class="text-[16px] font-black">${d.num}</span>`;
+        daysWrap.appendChild(btn);
+      });
+    }
+
+    const fieldButtons = () => Array.from(dialog.querySelectorAll('[data-field]'));
+
+    const selectField = (field, value, btn) => {
+      data[field] = value;
+      fieldButtons()
+        .filter((b) => b.dataset.field === field)
+        .forEach((b) => {
+          const active = b === btn;
+          b.classList.toggle('border-ink', active);
+          b.classList.toggle('bg-orange-tint', active);
+          b.classList.toggle('border-line', !active);
+          b.classList.toggle('bg-white', !active);
+        });
+      render();
+    };
+
+    dialog.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-field]');
+      if (target) selectField(target.dataset.field, target.dataset.value, target);
+    });
+
+    const valid10Digits = (v) => (v || '').replace(/\D/g, '').length >= 10;
+
+    const canAdvance = () => {
+      if (step === 1) return !!(data.type && data.start && data.budget);
+      if (step === 2) return !!data.where;
+      if (step === 3) return !!(data.day && data.time);
+      return true;
+    };
+
+    const summary = () =>
+      [
+        data.type,
+        data.start,
+        data.budget,
+        data.where,
+        data.day && data.time ? `${data.day} at ${data.time}` : null,
+      ]
+        .filter(Boolean)
+        .join(' · ');
+
+    const render = () => {
+      steps.forEach((el) => {
+        el.hidden = Number(el.dataset.step) !== step;
+      });
+      bars.forEach((b) => {
+        b.classList.toggle('bg-[#e8e8e8]', Number(b.dataset.bar) > step);
+        b.classList.toggle('bg-brand', Number(b.dataset.bar) <= step);
+      });
+      if (stepLabel)
+        stepLabel.textContent =
+          step <= 4 ? `Step ${step} of 4 · ${STEP_NAMES[step - 1]}` : 'Confirmed';
+      backBtn.hidden = step <= 1 || step >= 5;
+
+      const ok = canAdvance();
+      nextBtn.classList.toggle('bg-brand', ok && step < 5);
+      nextBtn.classList.toggle('text-ink', ok && step < 5);
+      nextBtn.classList.toggle('bg-[#e8e8e8]', !ok && step < 5);
+      nextBtn.classList.toggle('text-[#999999]', !ok && step < 5);
+      nextBtn.textContent =
+        step === 4 ? (sending ? 'Booking…' : 'Confirm booking') : step === 5 ? 'Done' : 'Continue';
+
+      const summaryBox = document.getElementById('booking-summary');
+      if (summaryBox) summaryBox.innerHTML = `<strong>${summary()}</strong>`;
+      const doneBox = document.getElementById('booking-summary-done');
+      if (doneBox) doneBox.textContent = summary();
+    };
+
+    const open = (preset = {}, trigger = null) => {
+      step = 1;
+      sending = false;
+      Object.assign(
+        data,
+        { type: null, start: null, budget: null, where: null, day: null, time: null },
+        preset,
+      );
+      fieldButtons().forEach((b) => {
+        const active = data[b.dataset.field] === b.dataset.value;
+        b.classList.toggle('border-ink', active);
+        b.classList.toggle('bg-orange-tint', active);
+        b.classList.toggle('border-line', !active);
+        b.classList.toggle('bg-white', !active);
+      });
+      document.getElementById('booking-fail')?.classList.add('hidden');
+      triggerEl = trigger;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      render();
+      dialog.querySelector('button, input')?.focus();
+    };
+
+    const close = () => {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      triggerEl?.focus();
+    };
+
+    document.getElementById('booking-close')?.addEventListener('click', close);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hidden) close();
+    });
+
+    backBtn?.addEventListener('click', () => {
+      step = Math.max(1, step - 1);
+      render();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      if (step === 5) return close();
+      if (!canAdvance()) return;
+      if (step === 4) {
+        if (sending) return;
+        const name = document.getElementById('booking-name');
+        const phone = document.getElementById('booking-phone');
+        const nameErr = dialog.querySelector('[data-error="name"]');
+        const phoneErr = dialog.querySelector('[data-error="phone"]');
+        let ok = true;
+        if (!name.value.trim()) {
+          nameErr.textContent = 'Please enter your name';
+          nameErr.classList.remove('hidden');
+          name.classList.add('border-urgent');
+          ok = false;
+        } else {
+          nameErr.classList.add('hidden');
+          name.classList.remove('border-urgent');
+        }
+        if (!valid10Digits(phone.value)) {
+          phoneErr.textContent = 'Enter a 10-digit mobile number';
+          phoneErr.classList.remove('hidden');
+          phone.classList.add('border-urgent');
+          ok = false;
+        } else {
+          phoneErr.classList.add('hidden');
+          phone.classList.remove('border-urgent');
+        }
+        if (!ok) return;
+        sending = true;
+        render();
+        // No CRM webhook is wired up yet (BUILD_PLAN.md Week 4) — this
+        // simulates submission exactly like the handoff's own prototype.
+        setTimeout(() => {
+          sending = false;
+          step = 5;
+          render();
+        }, 900);
+        return;
+      }
+      step += 1;
+      render();
+    });
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-open-booking]');
+      if (!trigger) return;
+      e.preventDefault();
+      let preset = {};
+      try {
+        preset = trigger.dataset.bookingPreset ? JSON.parse(trigger.dataset.bookingPreset) : {};
+      } catch {
+        preset = {};
+      }
+      open(preset, trigger);
+    });
+  }
+</script>

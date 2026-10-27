@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import BookingModal from '../components/shared/BookingModal.astro';
 import { business } from '../data/business';
 
 interface Props {
@@ -73,7 +74,11 @@ const siteTitle = `${title} | ${business.legalName}`;
     <Footer />
     {mobileBar && (
       <div class="sticky bottom-0 z-30 grid grid-cols-[2fr_1fr] md:hidden">
-        <a href={mobileBar.href} class="bg-brand text-ink px-4 py-4 text-center text-sm font-black">
+        <a
+          href={mobileBar.href}
+          data-open-booking={mobileBar.href === '/book/' ? true : undefined}
+          class="bg-brand text-ink px-4 py-4 text-center text-sm font-black"
+        >
           {mobileBar.label}
         </a>
         <a
@@ -84,5 +89,6 @@ const siteTitle = `${title} | ${business.legalName}`;
         </a>
       </div>
     )}
+    <BookingModal />
   </body>
 </html>

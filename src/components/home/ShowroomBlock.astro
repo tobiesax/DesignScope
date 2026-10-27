@@ -47,7 +47,12 @@ const brandList = business.supplierBrands.join(', ');
       </div>
     </div>
     <div class="flex flex-wrap gap-2.5">
-      <a href="/book/" class="bg-brand text-ink px-4 py-3.5 text-xs font-extrabold">
+      <a
+        href="/book/"
+        data-open-booking
+        data-booking-preset={JSON.stringify({ where: 'At the showroom' })}
+        class="bg-brand text-ink px-4 py-3.5 text-xs font-extrabold"
+      >
         Book a showroom visit
       </a>
       <a

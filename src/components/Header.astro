@@ -96,6 +96,7 @@ const navCta =
     <div class="flex items-center gap-2">
       <a
         href={navCta.href}
+        data-open-booking={navCta.href === '/book/' ? true : undefined}
         class={`${navCta.class} inline-block px-4 py-2.5 text-xs font-extrabold`}
       >
         <span class="sm:hidden">{navCta.shortLabel}</span>
