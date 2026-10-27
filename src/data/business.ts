@@ -59,11 +59,53 @@ export const business = {
     // TODO: confirm exact terms — the current site's headline and body text conflict. See CONTENT_GAPS.md.
   },
 
-  supplierBrands: ['TOTO', 'Hansgrohe', 'Wellborn', 'Brizo', 'Delta'],
+  supplierBrands: ['TOTO', 'Hansgrohe', 'Wellborn Forest', 'Brizo', 'Delta'],
   // TODO: confirm this is the full list and get logo files — see CONTENT_GAPS.md
+
+  // Full showroom brand marquee, per the GrowthOS design handoff's BRANDS
+  // list — a superset of supplierBrands above (still the confirmed-5 list
+  // CLAUDE.md points to). TODO: confirm this full list and get logo files,
+  // same gap as supplierBrands — see CONTENT_GAPS.md.
+  showroomBrands: [
+    'TOTO',
+    'Hansgrohe',
+    'Wellborn Forest',
+    'Brizo',
+    'Delta',
+    'Franke',
+    'Robern',
+    'MSI',
+    'Fabuwood',
+    'Top Knobs',
+    'Native Trails',
+    'Kalia',
+    'Citi Quartz',
+    'Schluter Systems',
+    'Jeffrey Alexander',
+    'Cali Bamboo',
+    'Trex',
+    'Panasonic',
+    'Warmup',
+    'Icera',
+  ],
 
   memberships: ['HBRA', 'Bloomfield Chamber of Commerce', 'KBIS'],
   // TODO: confirm KBIS membership — see CONTENT_GAPS.md
+
+  // Trust-badge row (home hero strip + footer), per the design handoff's
+  // "Global components → Trust badges". The BBB and Houzz badges are
+  // UNCONFIRMED — see CONTENT_GAPS.md "Assets". Rendered now to match the
+  // handoff exactly, at Tobi's request; don't ship without Stephen
+  // confirming them, and swap in the official BBB/Houzz/Wellborn member
+  // badge artwork (these are plain icon placeholders).
+  credentials: [
+    { mark: 'A+', title: 'BBB accredited', sub: 'A+ rating' },
+    { mark: '2024', title: 'Best of Houzz', sub: '2024 · Service' },
+    { mark: '', title: 'CT licensed', sub: 'HIC # (to add)' },
+    { mark: '', title: 'Fully insured', sub: 'Liability & workers’ comp' },
+    { mark: '', title: 'Wellborn Forest', sub: 'Authorised dealer' },
+    { mark: '6M', title: 'Warranty', sub: '6 months, in writing' },
+  ],
 
   social: {
     facebook: 'https://facebook.com/designscopellc',
@@ -107,8 +149,12 @@ export const business = {
     'Farmington Valley',
   ],
 
-  // TODO: confirm the final 3 town pages with Stephen — see CONTENT_GAPS.md
-  townPages: ['Bloomfield', 'West Hartford', 'Windsor'],
+  // The design handoff builds all 5 of CLAUDE.md's candidate towns (not
+  // just Option B's 3) with unique copy for each — built that way at
+  // Tobi's request, to match the handoff exactly. TODO: confirm the final
+  // town list and scope (3 vs 5) with Stephen before launch — see
+  // CONTENT_GAPS.md.
+  townPages: ['Bloomfield', 'West Hartford', 'Simsbury', 'Avon', 'Windsor'],
 } as const;
 
 export type Business = typeof business;

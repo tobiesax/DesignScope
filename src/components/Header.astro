@@ -1,37 +1,91 @@
 ---
+// Global chrome, rebuilt to match the GrowthOS design handoff's "Global
+// components" section (utility bar, nav, mobile menu) at Tobi's request.
 import Logo from './Logo.astro';
 import { business } from '../data/business';
 
+interface Props {
+  // Changes the nav's right-hand CTA to match the handoff's per-page
+  // behaviour: restoration pages push a call, commercial pushes the quote
+  // form. Everything else books a consultation.
+  navVariant?: 'default' | 'restoration' | 'commercial';
+  active?: 'remodeling' | 'restoration' | 'commercial' | 'showroom' | 'projects';
+}
+
+const { navVariant = 'default', active } = Astro.props;
+
 const navLinks = [
-  { label: 'Remodeling', href: '/remodeling/' },
-  { label: 'Restoration', href: '/restoration/' },
-  { label: 'Commercial', href: '/commercial/' },
-  { label: 'Showroom', href: '/showroom/' },
-  { label: 'Projects', href: '/projects/' },
-];
+  { id: 'remodeling', label: 'Kitchen & bath', href: '/remodeling/' },
+  { id: 'restoration', label: 'Restoration 24/7', href: '/restoration/' },
+  { id: 'commercial', label: 'Commercial', href: '/commercial/' },
+  { id: 'showroom', label: 'Showroom', href: '/showroom/' },
+  { id: 'projects', label: 'Projects', href: '/projects/' },
+] as const;
+
+const navCta =
+  navVariant === 'restoration'
+    ? {
+        label: `Call 24/7 ${business.phone.main}`,
+        shortLabel: 'Call 24/7',
+        href: `tel:${business.phone.mainTel}`,
+        class: 'bg-urgent text-paper',
+      }
+    : navVariant === 'commercial'
+      ? {
+          label: 'Request a quote',
+          shortLabel: 'Quote',
+          href: '/commercial/#quote',
+          class: 'bg-brand text-ink',
+        }
+      : {
+          label: 'Book free consultation',
+          shortLabel: 'Book',
+          href: '/book/',
+          class: 'bg-brand text-ink',
+        };
 ---
 
 <header class="sticky top-0 z-50">
-  <!-- Urgency bar: matches the approved mockup — always-visible emergency CTA -->
-  <div class="bg-brand text-ink flex flex-wrap items-center justify-between gap-2 px-4 py-2 text-xs font-semibold sm:px-7">
-    <span>Fire or water damage? We answer 24/7</span>
+  <!-- Utility bar: two halves, matching the handoff exactly. -->
+  <div class="flex flex-wrap text-[11.5px] font-semibold">
+    <a
+      href="/showroom/"
+      class="bg-paper-muted flex flex-1 basis-[220px] items-center gap-2 px-4 py-2.5 sm:px-7"
+    >
+      <span class="bg-bbb-green inline-block h-1.5 w-1.5 rounded-full"></span>
+      Showroom open Mon–Fri 9–5 · {business.showroom.streetAddress}, {business.showroom.city}
+    </a>
     <a
       href={`tel:${business.phone.mainTel}`}
-      class="font-extrabold underline-offset-2 hover:underline"
+      class="bg-urgent text-paper flex flex-1 basis-[220px] items-center justify-start gap-2 px-4 py-2.5 sm:justify-end sm:px-7"
     >
-      Call or text {business.phone.main}
+      <span class="font-medium">Water or fire damage?</span>
+      <strong>24/7 {business.phone.main}</strong>
     </a>
   </div>
 
   <!-- Main nav -->
-  <div class="bg-dark text-paper flex items-center justify-between gap-5 px-4 py-3 sm:px-7">
-    <Logo heightPx={36} />
+  <div class="bg-dark text-paper flex items-center justify-between gap-5 px-4 py-3.5 sm:px-7">
+    <a href="/" aria-label="Design Scope home">
+      <Logo heightPx={36} />
+    </a>
 
     <nav aria-label="Primary" class="hidden md:block">
-      <ul class="flex gap-6 text-sm font-semibold uppercase tracking-wide">
+      <ul class="flex items-center gap-1">
         {navLinks.map((link) => (
           <li>
-            <a href={link.href} class="hover:text-brand">
+            <a
+              href={link.href}
+              class={`block px-2.5 py-2 text-[12.5px] font-bold whitespace-nowrap ${
+                active === link.id
+                  ? link.id === 'restoration'
+                    ? 'text-paper border-urgent border-b-2'
+                    : 'text-paper border-brand border-b-2'
+                  : link.id === 'restoration'
+                    ? 'text-red-on-dark border-b-2 border-transparent hover:text-paper'
+                    : 'text-on-dark-muted border-b-2 border-transparent hover:text-paper'
+              }`}
+            >
               {link.label}
             </a>
           </li>
@@ -39,10 +93,13 @@ const navLinks = [
       </ul>
     </nav>
 
-    <div class="flex items-center gap-3">
-      <a href="/book/" class="bg-brand text-ink inline-block px-4 py-2.5 text-xs font-extrabold">
-        <span class="sm:hidden">Book</span>
-        <span class="hidden sm:inline">Book a free consultation</span>
+    <div class="flex items-center gap-2">
+      <a
+        href={navCta.href}
+        class={`${navCta.class} inline-block px-4 py-2.5 text-xs font-extrabold`}
+      >
+        <span class="sm:hidden">{navCta.shortLabel}</span>
+        <span class="hidden sm:inline">{navCta.label}</span>
       </a>
 
       <button
@@ -50,7 +107,7 @@ const navLinks = [
         type="button"
         aria-expanded="false"
         aria-controls="mobile-menu"
-        class="text-paper inline-flex h-10 w-10 items-center justify-center md:hidden"
+        class="text-paper inline-flex h-10 w-10 items-center justify-center border border-[#444444] md:hidden"
       >
         <span class="sr-only">Open menu</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-6 w-6">
@@ -70,20 +127,18 @@ const navLinks = [
     id="mobile-menu"
     aria-label="Primary"
     hidden
-    class="bg-dark text-paper flex flex-col gap-4 px-4 py-5 md:hidden"
+    class="bg-dark text-paper border-t-[#2a2a2a] flex flex-col border-t px-4 py-1 md:hidden"
   >
-    <ul class="flex flex-col gap-4 text-sm font-semibold uppercase tracking-wide">
-      {navLinks.map((link) => (
-        <li>
-          <a href={link.href} class="hover:text-brand">
-            {link.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-    <a href="/book/" class="bg-brand text-ink px-4 py-3 text-center text-xs font-extrabold">
-      Book a free consultation
-    </a>
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class={`border-[#2a2a2a] border-b py-3.5 text-base font-extrabold ${
+          link.id === 'restoration' ? 'text-red-on-dark' : 'text-paper'
+        }`}
+      >
+        {link.label}
+      </a>
+    ))}
   </nav>
 </header>
 

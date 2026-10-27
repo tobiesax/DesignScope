@@ -1,7 +1,8 @@
 ---
+// Matches the GrowthOS design handoff's "Global components → Footer"
+// exactly: 5 columns, a bottom bar, then a credentials strip.
 import Logo from './Logo.astro';
 import { business } from '../data/business';
-import { categoryHref } from '../data/home';
 
 const year = new Date().getFullYear();
 
@@ -12,100 +13,113 @@ const socialLinks = [
   { label: 'Yelp', href: business.social.yelp },
 ];
 
-// Condensed for the footer link list (matches the approved mockup) — the
-// full, specific service names live in business.services for the nav and
-// service pages. Only linked once a page exists (categoryHref); the rest
-// stay plain text rather than 404ing.
-const footerServices = [
-  { label: 'Kitchen remodeling', href: categoryHref.Kitchens },
-  { label: 'Bathroom remodeling', href: categoryHref.Bathrooms },
-  { label: 'Home renovations', href: categoryHref['Home renovations'] },
-  { label: 'Fire & water restoration', href: '/restoration/' },
-  { label: 'Commercial', href: categoryHref.Commercial },
-];
+const townLinks = business.townPages.map((name) => ({
+  name,
+  href: `/areas/${name.toLowerCase().replace(/\s+/g, '-')}/`,
+}));
 ---
 
-<footer class="bg-dark-deep text-paper px-4 py-11 sm:px-7">
-  <div class="mx-auto grid max-w-6xl grid-cols-1 gap-7 sm:[grid-template-columns:repeat(auto-fit,minmax(170px,1fr))]">
-    <div class="flex flex-col gap-3">
-      <Logo heightPx={32} />
-      <p class="text-on-dark-muted text-xs leading-relaxed">
-        Family-owned design and construction since {business.foundedYear}. Licensed and insured.
-      </p>
+<footer class="bg-dark-deep text-paper flex flex-col gap-6.5 px-4 py-10 pb-5 sm:px-7">
+  <div class="grid grid-cols-1 gap-6 sm:[grid-template-columns:repeat(auto-fit,minmax(160px,1fr))]">
+    <div class="flex flex-col gap-2.5">
+      <Logo heightPx={34} />
+      <span class="text-on-dark-muted text-xs leading-relaxed">
+        Family-owned design and construction since {business.foundedYear}.
+      </span>
     </div>
 
-    <div class="flex flex-col gap-2 text-xs">
-      <span class="text-brand mb-1 text-[9.5px] font-semibold tracking-[0.25em] uppercase">
-        Services
+    <div class="flex flex-col gap-2 text-[12.5px]">
+      <span class="text-brand mb-1 text-[9.5px] font-bold tracking-[0.25em] uppercase">
+        Remodeling
       </span>
-      {footerServices.map((service) => {
-        const Tag = service.href ? 'a' : 'span';
-        return (
-          <Tag class="block hover:text-brand" href={service.href}>
-            {service.label}
-          </Tag>
-        );
-      })}
-    </div>
-
-    <div class="flex flex-col gap-2 text-xs">
-      <span class="text-brand mb-1 text-[9.5px] font-semibold tracking-[0.25em] uppercase">
-        Company
-      </span>
-      <a href="/about/" class="block hover:text-brand">
-        About
+      <a href="/remodeling/" class="hover:text-brand">
+        Kitchen &amp; bath
       </a>
-      <a href="/projects/" class="block hover:text-brand">
+      <a href="/commercial/" class="hover:text-brand">
+        Commercial
+      </a>
+      <a href="/showroom/" class="hover:text-brand">
+        Showroom
+      </a>
+      <a href="/projects/" class="hover:text-brand">
         Projects
       </a>
-      <a href="/reviews/" class="block hover:text-brand">
-        Reviews
+      <a href="/offers/" class="hover:text-brand">
+        Offers
       </a>
-      <a href="/blog/" class="block hover:text-brand">
+      <a href="/blog/" class="hover:text-brand">
         Blog
-      </a>
-      <a href="/faqs/" class="block hover:text-brand">
-        FAQs
-      </a>
-      <a href="/contact/" class="block hover:text-brand">
-        Contact
       </a>
     </div>
 
-    <address class="flex flex-col gap-2 text-xs leading-relaxed not-italic">
-      <span class="text-brand mb-1 text-[9.5px] font-semibold tracking-[0.25em] uppercase">
-        Visit &amp; contact
+    <div class="flex flex-col gap-2 text-[12.5px]">
+      <span class="text-brand mb-1 text-[9.5px] font-bold tracking-[0.25em] uppercase">
+        Service area
       </span>
+      {townLinks.map((t) => (
+        <a href={t.href} class="hover:text-brand">
+          {t.name}
+        </a>
+      ))}
+    </div>
+
+    <div class="flex flex-col gap-2 text-[12.5px]">
+      <span class="text-red-on-dark mb-1 text-[9.5px] font-bold tracking-[0.25em] uppercase">
+        Restoration 24/7
+      </span>
+      <a href="/restoration/water-damage/" class="hover:text-brand">
+        Water damage
+      </a>
+      <a href="/restoration/fire-and-smoke-damage/" class="hover:text-brand">
+        Fire &amp; smoke
+      </a>
+      <a href={`tel:${business.phone.mainTel}`} class="font-extrabold">
+        {business.phone.main}
+      </a>
+    </div>
+
+    <address class="flex flex-col gap-2 text-[12.5px] leading-relaxed not-italic">
+      <span class="text-brand mb-1 text-[9.5px] font-bold tracking-[0.25em] uppercase">Visit</span>
       <span>
         {business.showroom.streetAddress}, {business.showroom.city}, {business.showroom.state}{' '}
         {business.showroom.postalCode}
       </span>
-      <a href={`tel:${business.phone.mainTel}`} class="font-bold hover:text-brand">
-        {business.phone.main}
-      </a>
-      <a href={`mailto:${business.email}`} class="hover:text-brand">
-        {business.email}
-      </a>
       <span class="text-on-dark-muted">
         {business.hours.weekday} · {business.hours.weekend}
       </span>
+      <a href={`mailto:${business.email}`} class="hover:text-brand">
+        {business.email}
+      </a>
     </address>
   </div>
 
-  <div class="text-on-dark-muted mx-auto mt-5 flex max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-[#2A2A2A] pt-4 text-[11px]">
+  <div class="border-[#2a2a2a] text-on-dark-muted flex flex-wrap items-center justify-between gap-3 border-t pt-3.5 text-[11px]">
     <span>
-      © {year} {business.legalName}
-      {business.hicRegistrationNumber ? ` · CT HIC reg. #${business.hicRegistrationNumber}` : ''}
+      © {year} {business.legalName} ·{' '}
+      {business.hicRegistrationNumber ? (
+        `CT HIC reg. #${business.hicRegistrationNumber}`
+      ) : (
+        <span class="text-red-on-dark font-bold">CT HIC reg. # (to add)</span>
+      )}
     </span>
-    <div class="flex gap-4">
+    <div class="flex flex-wrap gap-3.5">
       {socialLinks.map((social) => (
         <a href={social.href} class="hover:text-brand" target="_blank" rel="noopener noreferrer">
           {social.label}
         </a>
       ))}
+      <a href="/privacy/" class="hover:text-brand">
+        Privacy
+      </a>
+      <span>Accessibility</span>
     </div>
-    <a href="/privacy/" class="hover:text-brand">
-      Privacy
-    </a>
+  </div>
+
+  <div class="flex flex-wrap gap-1.5">
+    {business.credentials.map((c) => (
+      <span class="border-[#2a2a2a] text-on-dark-muted border px-2.5 py-1.5 text-[10.5px] font-bold">
+        {c.title} · {c.sub}
+      </span>
+    ))}
   </div>
 </footer>

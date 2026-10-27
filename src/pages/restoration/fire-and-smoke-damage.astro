@@ -13,7 +13,12 @@ const breadcrumb = [
 ];
 ---
 
-<Layout title={fireSmoke.title} description={fireSmoke.metaDescription}>
+<Layout
+  title={fireSmoke.title}
+  description={fireSmoke.metaDescription}
+  navVariant="restoration"
+  active="restoration"
+>
   <ServiceHero service={fireSmoke} breadcrumb={breadcrumb} urgent />
   <EmergencySteps steps={fireSmoke.rightNowSteps} />
 

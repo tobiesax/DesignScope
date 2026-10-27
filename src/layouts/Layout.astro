@@ -7,9 +7,24 @@ import { business } from '../data/business';
 interface Props {
   title: string;
   description?: string;
+  navVariant?: 'default' | 'restoration' | 'commercial';
+  active?: 'remodeling' | 'restoration' | 'commercial' | 'showroom' | 'projects';
+  // The handoff's mobile sticky action bar appears on every page except
+  // Restoration (which gets its own two-button call/callback bar inline).
+  mobileBar?: { label: string; href: string } | false;
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  navVariant = 'default',
+  active,
+  mobileBar = navVariant === 'restoration'
+    ? false
+    : navVariant === 'commercial'
+      ? { label: 'Request a quote', href: '/commercial/#quote' }
+      : { label: 'Book free consultation', href: '/book/' },
+} = Astro.props;
 const siteTitle = `${title} | ${business.legalName}`;
 ---
 
@@ -51,10 +66,23 @@ const siteTitle = `${title} | ${business.legalName}`;
     </script>
   </head>
   <body>
-    <Header />
+    <Header navVariant={navVariant} active={active} />
     <main>
       <slot />
     </main>
     <Footer />
+    {mobileBar && (
+      <div class="sticky bottom-0 z-30 grid grid-cols-[2fr_1fr] md:hidden">
+        <a href={mobileBar.href} class="bg-brand text-ink px-4 py-4 text-center text-sm font-black">
+          {mobileBar.label}
+        </a>
+        <a
+          href={`tel:${business.phone.mainTel}`}
+          class="bg-dark text-paper px-4 py-4 text-center text-sm font-extrabold"
+        >
+          Call
+        </a>
+      </div>
+    )}
   </body>
 </html>

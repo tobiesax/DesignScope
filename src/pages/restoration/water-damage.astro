@@ -13,7 +13,12 @@ const breadcrumb = [
 ];
 ---
 
-<Layout title={waterDamage.title} description={waterDamage.metaDescription}>
+<Layout
+  title={waterDamage.title}
+  description={waterDamage.metaDescription}
+  navVariant="restoration"
+  active="restoration"
+>
   <ServiceHero service={waterDamage} breadcrumb={breadcrumb} urgent />
   <EmergencySteps steps={waterDamage.rightNowSteps} />
 

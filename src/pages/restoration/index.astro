@@ -28,7 +28,12 @@ const rightNowSteps = [
 ];
 ---
 
-<Layout title={hubHero.heroHeadline} description={hubHero.heroSubcopy}>
+<Layout
+  title={hubHero.heroHeadline}
+  description={hubHero.heroSubcopy}
+  navVariant="restoration"
+  active="restoration"
+>
   <ServiceHero service={hubHero} breadcrumb={breadcrumb} urgent />
 
   <EmergencySteps steps={rightNowSteps} />

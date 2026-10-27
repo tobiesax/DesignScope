@@ -15,7 +15,12 @@ const galleryProjects = commercialProjects.map((project) => ({
 }));
 ---
 
-<Layout title={commercial.title} description={commercial.metaDescription}>
+<Layout
+  title={commercial.title}
+  description={commercial.metaDescription}
+  navVariant="commercial"
+  active="commercial"
+>
   <section class="relative min-h-[300px]">
     <Image
       src={projectImages['commercial-hero']}
