@@ -19,9 +19,9 @@ const socialLinks = [
 const footerServices = [
   { label: 'Kitchen remodeling', href: categoryHref.Kitchens },
   { label: 'Bathroom remodeling', href: categoryHref.Bathrooms },
-  { label: 'Home renovations', href: undefined },
-  { label: 'Fire & water restoration', href: undefined },
-  { label: 'Commercial', href: undefined },
+  { label: 'Home renovations', href: categoryHref['Home renovations'] },
+  { label: 'Fire & water restoration', href: '/restoration/' },
+  { label: 'Commercial', href: categoryHref.Commercial },
 ];
 ---
 
@@ -66,6 +66,9 @@ const footerServices = [
       </a>
       <a href="/faqs/" class="block hover:text-brand">
         FAQs
+      </a>
+      <a href="/contact/" class="block hover:text-brand">
+        Contact
       </a>
     </div>
 

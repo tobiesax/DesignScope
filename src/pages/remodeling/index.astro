@@ -1,11 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
-import { kitchens, bathrooms } from '../../data/services';
+import { kitchens, bathrooms, homeRenovations } from '../../data/services';
 
-// Home renovations isn't built yet (BUILD_PLAN.md Week 3) — omitted rather
-// than linking a page that doesn't exist, per CLAUDE.md's no-placeholders rule.
-const services = [kitchens, bathrooms];
+const services = [kitchens, bathrooms, homeRenovations];
 ---
 
 <Layout

@@ -1,13 +1,22 @@
 ---
 import { Image } from 'astro:assets';
-import type { ServicePage } from '../../data/services';
+import { business } from '../../data/business';
 
-interface Props {
-  service: ServicePage;
-  breadcrumb: { label: string; href?: string }[];
+interface HeroContent {
+  heroImage: ImageMetadata;
+  heroEyebrow: string;
+  heroHeadline: string;
+  heroSubcopy: string;
 }
 
-const { service, breadcrumb } = Astro.props;
+interface Props {
+  service: HeroContent;
+  breadcrumb: { label: string; href?: string }[];
+  /** Restoration pages: leads with a tel/sms CTA and the urgent accent instead of booking. */
+  urgent?: boolean;
+}
+
+const { service, breadcrumb, urgent = false } = Astro.props;
 ---
 
 <section class="relative min-h-[340px]">
@@ -41,7 +50,12 @@ const { service, breadcrumb } = Astro.props;
         </>
       ))}
     </nav>
-    <span class="text-brand text-[10px] font-semibold tracking-[0.35em] uppercase">
+    <span
+      class:list={[
+        'text-[10px] font-semibold tracking-[0.35em] uppercase',
+        urgent ? 'text-urgent' : 'text-brand',
+      ]}
+    >
       {service.heroEyebrow}
     </span>
     <h1 class="text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl">
@@ -49,12 +63,31 @@ const { service, breadcrumb } = Astro.props;
     </h1>
     <p class="text-on-dark text-base leading-relaxed">{service.heroSubcopy}</p>
     <div class="flex flex-wrap gap-2.5">
-      <a href="/book/" class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
-        Book a free consultation
-      </a>
-      <a href="/projects/" class="border-paper border px-5 py-3.5 text-sm font-bold">
-        See our projects
-      </a>
+      {urgent ? (
+        <>
+          <a
+            href={`tel:${business.phone.mainTel}`}
+            class="bg-urgent text-paper px-5 py-3.5 text-sm font-extrabold"
+          >
+            Call now: {business.phone.main}
+          </a>
+          <a
+            href={`sms:${business.phone.mainTel}`}
+            class="border-paper border px-5 py-3.5 text-sm font-bold"
+          >
+            Text us
+          </a>
+        </>
+      ) : (
+        <>
+          <a href="/book/" class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
+            Book a free consultation
+          </a>
+          <a href="/projects/" class="border-paper border px-5 py-3.5 text-sm font-bold">
+            See our projects
+          </a>
+        </>
+      )}
     </div>
   </div>
 </section>
