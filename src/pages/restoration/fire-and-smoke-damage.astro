@@ -1,0 +1,41 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ServiceHero from '../../components/service/ServiceHero.astro';
+import EmergencySteps from '../../components/service/EmergencySteps.astro';
+import ProcessSteps from '../../components/shared/ProcessSteps.astro';
+import FinalCta from '../../components/shared/FinalCta.astro';
+import { fireSmoke } from '../../data/restoration';
+
+const breadcrumb = [
+  { label: 'Home', href: '/' },
+  { label: 'Restoration', href: '/restoration/' },
+  { label: 'Fire & smoke damage' },
+];
+---
+
+<Layout title={fireSmoke.title} description={fireSmoke.metaDescription}>
+  <ServiceHero service={fireSmoke} breadcrumb={breadcrumb} urgent />
+  <EmergencySteps steps={fireSmoke.rightNowSteps} />
+
+  <section class="flex flex-col gap-5 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      What's really damaged
+    </span>
+    <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">It's more than what burned</h2>
+    <ul class="grid list-none gap-2.5 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+      {fireSmoke.risks.map((risk) => (
+        <li class="border-border-soft bg-paper-muted border px-4 py-3.5 text-sm leading-relaxed">
+          {risk}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <ProcessSteps
+    steps={fireSmoke.process}
+    eyebrow="Our process"
+    heading="From assessment to final walkthrough"
+  />
+
+  <FinalCta />
+</Layout>
