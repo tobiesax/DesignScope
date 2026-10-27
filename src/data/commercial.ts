@@ -15,3 +15,42 @@ export const commercial = {
     body: 'Fire, water or storm damage to a commercial property needs a fast, coordinated response to limit business disruption. We address structural damage, interior finishes and building systems to return your property to its pre-loss condition, and coordinate directly with your insurance provider on claims and documentation.',
   },
 };
+
+// "Who we work with" — matches the design handoff exactly.
+export const sectors = [
+  { t: 'Offices', b: 'Fit-outs, refreshes and meeting rooms.' },
+  { t: 'Retail', b: 'Store build-outs and refits around trading hours.' },
+  { t: 'Multi-family', b: 'Unit turnovers, common areas and kitchens.' },
+  { t: 'Healthcare & dental', b: 'Clinical fit-outs to code.' },
+  { t: 'Restaurants', b: 'Front and back of house, fast turnarounds.' },
+];
+
+// "Why work with us" dark band — matches the handoff exactly.
+export const commercialWhy = [
+  { t: 'One project manager', b: 'A single contact and weekly written updates.' },
+  { t: 'After-hours work', b: 'Noisy work done evenings and weekends.' },
+  { t: 'Licensed & insured', b: 'Certificates on file, permits handled.' },
+  { t: '24/7 emergency cover', b: 'Water, fire and storm response for your properties.' },
+];
+
+// Client proof — the handoff's own sample content (generic "Client logo"
+// placeholders and quotes explicitly marked "· sample"), not real clients.
+// See CONTENT_GAPS.md.
+export const clientLogoPlaceholders = 6;
+export const commercialQuotes = [
+  {
+    q: 'One project manager, weekly written updates, and they finished a week early.',
+    who: 'Facilities manager, Hartford office',
+  },
+  {
+    q: "Unit turnovers in 72 hours means our vacancies don't sit empty.",
+    who: 'Property manager, West Hartford multi-family',
+  },
+];
+
+// Case study teaser — matches the handoff exactly (the office-hartford
+// project in src/data/project-images.ts commercialProjects).
+export const commercialCaseStudy = {
+  title: 'Hartford office fit-out, 6,200 sq ft in 9 weeks',
+  body: 'Open workspace, two glass meeting rooms and a kitchenette in a converted brick building, with noisy work done after hours.',
+};

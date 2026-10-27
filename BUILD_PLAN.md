@@ -68,11 +68,15 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
       "while you wait", the "what we handle" service-detail tabs (reused on the sub-pages
       without tabs), insurance explainer, an honestly-labelled before/after section (no fake
       photo), and a working (simulated) callback form at `#callback`, plus the handoff's own
-      2-button mobile sticky bar in place of Layout's generic one.
-      Commercial/Showroom/Home renovations still need the same handoff-fidelity pass (tracked
-      as follow-up); their copy is grounded in facts fetched directly from the live site's own
-      service pages, not invented, but unreviewed by Stephen and still on mockup/no-photo
-      imagery (CONTENT_GAPS.md)
+      2-button mobile sticky bar in place of Layout's generic one. Commercial and Showroom got
+      the same pass too: Commercial adds sectors, a "why us" band, client proof (placeholder
+      logos/quotes, CONTENT_GAPS.md), a case study teaser and a working (simulated) quote
+      form at `#quote`; Showroom adds a split hero, 4 product categories, the price-match
+      band and an "on display" section with a real Google Maps embed. Home renovations still
+      needs the same handoff-fidelity pass (tracked as follow-up, since the handoff has no
+      dedicated page for it); its copy is grounded in facts fetched directly from the live
+      site's own service pages, not invented, but unreviewed by Stephen and still on
+      mockup/no-photo imagery (CONTENT_GAPS.md)
 - [x] **[repo]** About, Offers, Contact, Privacy (with texting consent and call-recording notice)
       — all shipped; About has no team photo yet (Stephen's surname and a photo are still
       unconfirmed, CONTENT_GAPS.md)

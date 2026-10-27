@@ -107,14 +107,25 @@ financing product behind it would misrepresent what's on offer.
 - [x] Supplier/membership logos — found on the live site while scraping project photos
       (~29 brand logos incl. TOTO, Hansgrohe, Wellborn Forest, Brizo, Delta, Franke, Robern,
       Schluter Systems, MSI, Fabuwood + more; membership logos for HBRA, Bloomfield Chamber,
-      KBIS). Not yet pulled into the project — the confirmed-5 list in `business.ts` and the
-      supplier marquee are unchanged for now; worth a follow-up pass
+      KBIS). Not yet pulled into the project as actual logo files — `business.ts` now also
+      has `showroomBrands`, a 20-name list from the design handoff's own BRANDS array, shown
+      as text chips on `/showroom/` ("On display") and in each product category's brand
+      line; still unconfirmed, same as the original confirmed-5 `supplierBrands` list
+- [ ] The showroom hero's "30+ brands" claim (design handoff) was dropped — we can't confirm
+      a specific count, only the unconfirmed `showroomBrands` list above. Confirm the real
+      brand count (or drop the claim entirely) with Stephen
 - [ ] Real reviews to feature (current reviews page has none — only brand logos). The home
       page's review carousel (`ReviewCarousel.astro` / `src/data/reviews.ts`) and `/reviews/`
       both need real quotes before launch — see the note near the top of this file
 - [ ] Verify or drop the "A+ BBB rating" and "Best of Houzz 2024" trust badges (re-added per
       the design handoff, see the note near the top of this file) — not in HANDOFF.md, not
       confirmed anywhere; don't ship without Stephen confirming they're real
+- [ ] `/commercial/`'s client proof section (6 "Client logo" placeholder tiles, 2 quotes
+      marked "· sample") is the design handoff's own placeholder content, same temporary
+      treatment as the reviews above — replace with real client logos (with permission) and
+      real quotes before launch. Its case study link currently points to `/projects/`
+      rather than a specific case study page, since that template doesn't exist yet
+      (tracked as a follow-up)
 - [ ] Stephen hasn't reviewed any service-page copy yet. `/remodeling/kitchens/` and
       `/remodeling/bathrooms/` headline, subcopy and intro paragraphs (`src/data/services.ts`)
       are written from confirmed business.ts facts, not invented, but are unreviewed marketing

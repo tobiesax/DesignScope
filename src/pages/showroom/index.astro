@@ -3,8 +3,54 @@ import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import { mockupImages } from '../../data/mockup-images';
 import { business } from '../../data/business';
-import BrandMarquee from '../../components/home/BrandMarquee.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
+
+// Page order matches the GrowthOS design handoff's Showroom page exactly,
+// at Tobi's request. The handoff's hero claims "30+ brands" — dropped
+// since we only have a confirmed 5 (CONTENT_GAPS.md "supplier brand
+// list"); an unverified specific count is exactly what CLAUDE.md rule 2
+// warns against inventing.
+const categories = [
+  {
+    img: mockupImages['cat-cabinetry'],
+    t: 'Cabinetry',
+    b: 'Shaker, slab and inset in dozens of finishes.',
+    brands: 'Wellborn Forest · Fabuwood · Tedd Wood',
+  },
+  {
+    img: mockupImages['cat-countertops'],
+    t: 'Countertops',
+    b: 'Quartz, granite and solid surface slabs.',
+    brands: 'MSI · Citi Quartz · Icera',
+  },
+  {
+    img: mockupImages['cat-tile'],
+    t: 'Tile & stone',
+    b: 'Floor, wall and shower tile, plus waterproofing.',
+    brands: 'MSI · Schluter Systems',
+  },
+  {
+    img: mockupImages['cat-fixtures'],
+    t: 'Plumbing & fixtures',
+    b: 'Faucets, sinks, toilets, tubs and showers.',
+    brands: 'TOTO · Hansgrohe · Brizo · Delta · Kalia',
+  },
+];
+
+const visitSteps = [
+  'Book or walk in',
+  'Meet a designer for 45 minutes',
+  'Leave with ideas and a quote within 24 hours',
+];
+
+const visitInfo = [
+  { k: 'Parking', v: 'Free parking at the front entrance' },
+  { k: 'Accessibility', v: 'Step-free entrance, all displays on one level' },
+  { k: 'Hours', v: `${business.hours.weekday} · ${business.hours.weekend}` },
+];
+
+const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${business.showroom.streetAddress} ${business.showroom.city} ${business.showroom.state}`)}`;
+const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${business.showroom.streetAddress}, ${business.showroom.city}, ${business.showroom.state} ${business.showroom.postalCode}`)}&output=embed`;
 ---
 
 <Layout
@@ -12,79 +58,126 @@ import FinalCta from '../../components/shared/FinalCta.astro';
   description="Visit the Design Scope showroom at 480 Cottage Grove Road, Bloomfield, CT: kitchen and bath displays, materials and finishes from TOTO, Hansgrohe, Wellborn, Brizo and Delta."
   active="showroom"
 >
-  <section class="relative min-h-[340px]">
-    <Image
-      src={mockupImages.showroom}
-      alt="Design Scope showroom"
-      class="absolute inset-0 h-full w-full object-cover"
-      widths={[640, 1024, 1600]}
-      sizes="100vw"
-    />
-    <div
-      class="absolute inset-0"
-      style="background:linear-gradient(90deg,rgba(15,15,15,0.88) 0%,rgba(15,15,15,0.6) 45%,rgba(15,15,15,0.1) 100%)"
-    ></div>
-    <div class="relative flex flex-col gap-4 px-4 py-12 sm:px-7 sm:py-16 max-w-xl text-paper">
-      <span class="text-brand text-[10px] font-semibold tracking-[0.35em] uppercase">
+  <section class="grid [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+    <div class="min-h-[300px]">
+      <Image src={mockupImages.showroom} alt="" class="h-full w-full object-cover" />
+    </div>
+    <div class="flex flex-col justify-center gap-4 px-4 py-10 sm:px-10 sm:py-16">
+      <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
         Showroom &amp; products
       </span>
-      <h1 class="text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl">
-        See it and touch it before you decide
+      <h1 class="text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
+        See it, touch it, then decide
       </h1>
-      <p class="text-on-dark text-base leading-relaxed">
-        Kitchen and bath displays, materials and finishes from {business.supplierBrands.join(', ')}{' '}
-        and more. Walk in any time, or book a personal consultation.
+      <p class="text-ink-soft text-[15px] leading-relaxed">
+        Full kitchen and bath displays, with brands and designers on hand. Buy products only, or
+        have us design and install.
       </p>
+      <div class="border-border-soft grid grid-cols-2 gap-3.5 border-t border-b py-4">
+        <div class="flex flex-col gap-1">
+          <span class="text-muted text-[9.5px] font-bold tracking-[0.2em] uppercase">Address</span>
+          <span class="text-[13px] leading-relaxed font-bold">
+            {business.showroom.streetAddress}
+            <br />
+            {business.showroom.city}, {business.showroom.state} {business.showroom.postalCode}
+          </span>
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-muted text-[9.5px] font-bold tracking-[0.2em] uppercase">Hours</span>
+          <span class="text-[13px] leading-relaxed font-bold">
+            {business.hours.weekday}
+            <br />
+            {business.hours.weekend}
+          </span>
+        </div>
+      </div>
       <div class="flex flex-wrap gap-2.5">
-        <a href="/book/" class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
+        <a
+          href="/book/"
+          data-open-booking
+          data-booking-preset={JSON.stringify({ where: 'At the showroom' })}
+          class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold"
+        >
           Book a showroom visit
         </a>
         <a
-          href={`tel:${business.phone.mainTel}`}
-          class="border-paper border px-5 py-3.5 text-sm font-bold"
+          href={directionsHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="border-ink border-[1.5px] px-5 py-3.5 text-sm font-bold"
         >
-          {business.phone.main}
+          Get directions
         </a>
       </div>
     </div>
   </section>
 
-  <section class="grid items-start gap-9 px-4 py-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
-    <div class="flex flex-col gap-2.5">
-      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
-        Visit
-      </span>
-      <p class="text-[14px] leading-relaxed font-semibold">
-        {business.showroom.streetAddress}
-        <br />
-        {business.showroom.city}, {business.showroom.state} {business.showroom.postalCode}
-      </p>
-      <p class="text-muted text-xs leading-relaxed">
-        {business.hours.weekday}
-        <br />
-        {business.hours.weekend}
-      </p>
-      <a
-        href={`https://maps.google.com/?q=${encodeURIComponent(`${business.showroom.streetAddress}, ${business.showroom.city}, ${business.showroom.state} ${business.showroom.postalCode}`)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="border-dark w-fit border-[1.5px] px-4 py-2.5 text-xs font-bold"
-      >
-        Get directions
-      </a>
-    </div>
-    <div class="flex flex-col gap-2.5">
-      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
-        What's in the showroom
-      </span>
-      <ul class="text-ink-soft flex flex-col gap-1.5 text-sm leading-relaxed">
-        {business.services.showroom.map((item) => (
-          <li>{item}</li>
-        ))}
-      </ul>
+  <section class="flex flex-col gap-5.5 px-4 py-13 sm:px-7">
+    <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">What you'll find</h2>
+    <div class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(230px,1fr))]">
+      {categories.map((c) => (
+        <div class="bg-paper-muted flex flex-col">
+          <Image src={c.img} alt={c.t} class="h-[190px] w-full object-cover" />
+          <div class="flex flex-1 flex-col gap-2.5 px-5.5 py-5.5">
+            <span class="text-[16px] font-black">{c.t}</span>
+            <span class="text-muted text-[12.5px] leading-relaxed">{c.b}</span>
+            <span class="border-line mt-auto border-t pt-2.5 text-[11.5px] font-bold">
+              {c.brands}
+            </span>
+          </div>
+        </div>
+      ))}
     </div>
   </section>
 
-  <BrandMarquee />
+  <section class="bg-brand grid items-center gap-6 px-4 py-11 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+    <div class="flex flex-col gap-2">
+      <span class="text-ink text-[26px] leading-tight font-black tracking-tight">
+        Found it cheaper? We'll match it.
+      </span>
+      <span class="text-ink text-[13.5px] font-medium leading-relaxed">
+        Price matching on like-for-like products with a written estimate.
+      </span>
+    </div>
+    <div class="flex flex-col gap-2.5">
+      {visitSteps.map((step, i) => (
+        <div class="flex items-center gap-3 text-[13.5px] font-bold">
+          <span class="bg-dark text-brand flex h-6.5 w-6.5 flex-shrink-0 items-center justify-center text-[11px] font-black">
+            {i + 1}
+          </span>
+          {step}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="flex flex-col gap-4.5 px-4 py-13 sm:px-7">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      On display
+    </span>
+    <div class="flex flex-wrap gap-2">
+      {business.showroomBrands.map((b) => (
+        <span class="border-line border px-4 py-3 text-[13px] font-extrabold">{b}</span>
+      ))}
+    </div>
+    <div class="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+      <iframe
+        title="Map to the Design Scope showroom"
+        src={mapEmbedSrc}
+        loading="lazy"
+        class="block w-full min-h-[280px] border-0"
+      />
+      <div class="bg-paper-muted flex flex-col gap-3.5 p-5.5">
+        <span class="text-[16px] font-black">Getting here</span>
+        {visitInfo.map((v) => (
+          <div class="flex flex-col gap-0.5">
+            <span class="text-muted text-[9.5px] font-bold tracking-[0.2em] uppercase">{v.k}</span>
+            <span class="text-[13px] font-semibold leading-relaxed">{v.v}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <FinalCta />
 </Layout>

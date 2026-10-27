@@ -1,14 +1,21 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { commercial } from '../../data/commercial';
+import {
+  commercial,
+  sectors,
+  commercialWhy,
+  clientLogoPlaceholders,
+  commercialQuotes,
+  commercialCaseStudy,
+} from '../../data/commercial';
 import { commercialProjects, projectImages } from '../../data/project-images';
-import ProcessSteps from '../../components/shared/ProcessSteps.astro';
 import ServiceGallery from '../../components/service/ServiceGallery.astro';
-import FinalCta from '../../components/shared/FinalCta.astro';
+import CommercialQuoteForm from '../../components/service/CommercialQuoteForm.astro';
+import { business } from '../../data/business';
 
-// REAL commercial photos, scraped from the live site's own /gallery page —
-// see the provenance note in src/data/project-images.ts.
+// Page order matches the GrowthOS design handoff's Commercial page
+// exactly, at Tobi's request.
 const galleryProjects = commercialProjects.map((project) => ({
   ...project,
   img: projectImages[project.img],
@@ -21,7 +28,7 @@ const galleryProjects = commercialProjects.map((project) => ({
   navVariant="commercial"
   active="commercial"
 >
-  <section class="relative min-h-[300px]">
+  <section class="relative min-h-[340px]">
     <Image
       src={projectImages['commercial-hero']}
       alt=""
@@ -31,38 +38,96 @@ const galleryProjects = commercialProjects.map((project) => ({
     />
     <div
       class="absolute inset-0"
-      style="background:linear-gradient(90deg,rgba(15,15,15,0.88) 0%,rgba(15,15,15,0.6) 45%,rgba(15,15,15,0.1) 100%)"
+      style="background:linear-gradient(90deg,rgba(14,14,14,0.9) 0%,rgba(14,14,14,0.3) 100%)"
     ></div>
-    <div class="relative flex flex-col gap-4 px-4 py-12 sm:px-7 sm:py-16 max-w-xl text-paper">
-      <span class="text-brand text-[10px] font-semibold tracking-[0.35em] uppercase">
+    <div class="relative flex max-w-[620px] flex-col gap-4 px-4 py-12 text-paper sm:px-10 sm:py-16">
+      <span class="text-brand text-[10px] font-bold tracking-[0.3em] uppercase">
         {commercial.heroEyebrow}
       </span>
-      <h1 class="text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl">
+      <h1 class="text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
         {commercial.heroHeadline}
       </h1>
-      <p class="text-on-dark text-base leading-relaxed">{commercial.heroSubcopy}</p>
-      <a href="/contact/" class="bg-brand text-ink w-fit px-5 py-3.5 text-sm font-extrabold">
-        Request a walkthrough
+      <p class="text-on-dark text-[15px] leading-relaxed">{commercial.heroSubcopy}</p>
+      <div class="flex flex-wrap gap-2.5">
+        <a href="#quote" class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
+          Request a quote
+        </a>
+        <a
+          href={`tel:${business.phone.mainTel}`}
+          class="border-[1.5px] border-paper px-5 py-3.5 text-sm font-bold"
+        >
+          {business.phone.main}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="flex flex-col gap-5.5 px-4 py-13 sm:px-7">
+    <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">Who we work with</h2>
+    <div class="grid gap-[3px] [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
+      {sectors.map((s) => (
+        <div class="bg-paper-muted flex flex-col gap-2 p-5.5">
+          <span class="text-[15.5px] font-black">{s.t}</span>
+          <span class="text-muted text-[12.5px] leading-relaxed">{s.b}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-dark text-paper grid gap-6.5 px-4 py-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+    {commercialWhy.map((w) => (
+      <div class="border-brand flex flex-col gap-2 border-t-2 pt-4">
+        <span class="text-[15px] font-extrabold">{w.t}</span>
+        <span class="text-on-dark-muted text-[12.5px] leading-relaxed">{w.b}</span>
+      </div>
+    ))}
+  </section>
+
+  <section class="border-border-soft flex flex-col gap-5 border-b px-4 py-11 sm:px-7">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      Trusted by property managers across Greater Hartford
+    </span>
+    <div class="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(130px,1fr))]">
+      {Array.from({ length: clientLogoPlaceholders }).map(() => (
+        <div class="bg-paper-muted text-muted flex h-16 items-center justify-center text-[10.5px] font-bold tracking-[0.15em] uppercase">
+          Client logo
+        </div>
+      ))}
+    </div>
+    <div class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+      {commercialQuotes.map((q) => (
+        <div class="bg-paper-muted flex flex-col gap-2.5 p-5.5">
+          <span class="text-[14.5px] leading-relaxed font-semibold">&ldquo;{q.q}&rdquo;</span>
+          <span class="text-muted text-[11.5px] font-bold">{q.who} · sample</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="grid items-center gap-7 px-4 py-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+    <a href="/projects/" class="block min-h-[280px]">
+      <Image
+        src={projectImages['commercial-hero']}
+        alt=""
+        class="h-full min-h-[280px] w-full object-cover"
+      />
+    </a>
+    <div class="flex flex-col gap-3">
+      <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+        Case study
+      </span>
+      <h3 class="text-[24px] leading-tight font-black">{commercialCaseStudy.title}</h3>
+      <p class="text-ink-soft text-sm leading-relaxed">{commercialCaseStudy.body}</p>
+      <a
+        href="/projects/"
+        class="border-brand text-ink self-start border-b-2 pb-0.5 text-[13px] font-extrabold"
+      >
+        Read the case study →
       </a>
     </div>
   </section>
 
-  <section class="grid gap-7 px-4 py-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
-    <div class="flex flex-col gap-3">
-      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
-        {commercial.renovations.heading}
-      </span>
-      <p class="text-ink-soft text-sm leading-relaxed">{commercial.renovations.body}</p>
-    </div>
-    <div class="flex flex-col gap-3">
-      <span class="text-urgent text-[10px] font-semibold tracking-[0.35em] uppercase">
-        {commercial.restorations.heading}
-      </span>
-      <p class="text-ink-soft text-sm leading-relaxed">{commercial.restorations.body}</p>
-    </div>
-  </section>
-
-  <ProcessSteps />
   <ServiceGallery subheading="Real Design Scope commercial work" projects={galleryProjects} />
-  <FinalCta />
+
+  <CommercialQuoteForm />
 </Layout>
