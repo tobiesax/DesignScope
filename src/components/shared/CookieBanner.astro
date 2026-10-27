@@ -1,0 +1,76 @@
+---
+// Cookie consent — matches the handoff's "Global components → Cookie
+// banner": bottom-left, "Accept all" / "Essentials only". The stored
+// choice (localStorage) is what future analytics (GA4/GTM, BUILD_PLAN.md
+// Week 4) must gate on before loading — see the `ds-consent` read in
+// that work when it lands.
+---
+
+<div
+  id="cookie-banner"
+  role="dialog"
+  aria-label="Cookie consent"
+  class="border-ink fixed bottom-4 left-4 z-[74] box-border flex w-[min(380px,calc(100vw-32px))] flex-col gap-3 border-[1.5px] bg-white p-4.5"
+  hidden
+>
+  <span class="text-[14px] font-black">Cookies</span>
+  <p class="text-ink-soft text-[12.5px] leading-relaxed">
+    We use cookies to understand how the site is used and to measure our ads. Accept all, or keep
+    only the essentials.
+  </p>
+  <div class="flex flex-wrap gap-2">
+    <button
+      type="button"
+      id="cookie-accept"
+      class="bg-dark text-paper px-4 py-2.5 text-[12.5px] font-extrabold"
+    >
+      Accept all
+    </button>
+    <button
+      type="button"
+      id="cookie-essential"
+      class="border-ink border-[1.5px] px-4 py-2.5 text-[12.5px] font-bold"
+    >
+      Essentials only
+    </button>
+  </div>
+</div>
+
+<script>
+  const KEY = 'ds-consent';
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('cookie-accept');
+  const essentialBtn = document.getElementById('cookie-essential');
+  const reopenBtn = document.getElementById('cookie-settings-reopen');
+
+  if (banner && acceptBtn && essentialBtn) {
+    const show = () => {
+      banner.hidden = false;
+    };
+    const hide = () => {
+      banner.hidden = true;
+    };
+    const setConsent = (value: 'all' | 'essential') => {
+      try {
+        localStorage.setItem(KEY, value);
+      } catch {
+        // Private browsing / blocked storage — consent just won't persist
+        // across visits; the banner will show again next time, which is
+        // the safe default.
+      }
+      hide();
+    };
+
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem(KEY);
+    } catch {
+      stored = null;
+    }
+    if (!stored) show();
+
+    acceptBtn.addEventListener('click', () => setConsent('all'));
+    essentialBtn.addEventListener('click', () => setConsent('essential'));
+    reopenBtn?.addEventListener('click', show);
+  }
+</script>

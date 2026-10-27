@@ -1,0 +1,178 @@
+---
+// Global chat widget — matches the handoff's "Global components → Chat
+// widget": scripted (canned replies), not a real AI — launch scope is to
+// replace it with the client's chosen live-chat/AI provider later
+// (README.md). Appears after scrolling 500px or when opened.
+//
+// Positioning is simplified from the handoff's exact centred-on-mobile
+// maths (a fixed -179px translate tuned to its 390px prototype frame) to a
+// plain right-anchored panel that works at any real viewport width.
+import { business } from '../../data/business';
+
+const quickReplies = [
+  {
+    label: 'Book a consultation',
+    reply:
+      'Great. Pick a time and a designer will meet you at the showroom, your home or on video.',
+    action: 'book',
+    urgent: false,
+  },
+  {
+    label: 'Water or fire damage',
+    reply: `Please call ${business.phone.main} now. A person answers 24/7. I'll take you to our emergency page with a callback form.`,
+    action: 'restoration',
+    urgent: true,
+  },
+  {
+    label: 'Showroom hours',
+    reply: `We're at ${business.showroom.streetAddress}, ${business.showroom.city}. Open ${business.hours.weekday}, ${business.hours.weekend}. Walk-ins welcome.`,
+    action: null,
+    urgent: false,
+  },
+  {
+    label: 'Talk to a person',
+    reply: `I'll pass this along. Call or text ${business.phone.main} and a person will help.`,
+    action: null,
+    urgent: false,
+  },
+];
+---
+
+<div
+  id="chat-widget"
+  class="fixed right-4 bottom-[82px] z-[75] flex flex-col items-end gap-2.5 sm:right-5 sm:bottom-5"
+  hidden
+>
+  <div
+    id="chat-panel"
+    role="dialog"
+    aria-label="Chat with Design Scope"
+    class="border-ink flex max-h-[470px] w-[min(330px,calc(100vw-32px))] flex-col border-[1.5px] bg-white sm:w-[340px]"
+    hidden
+  >
+    <div class="bg-dark text-paper flex items-center justify-between gap-2.5 px-4 py-3.5">
+      <div class="flex flex-col gap-0.5">
+        <span class="text-[13.5px] font-black">Design Scope virtual assistant</span>
+        <span class="flex items-center gap-1.5 text-[11px] font-bold text-[#3dbb6e]">
+          <span class="h-1.5 w-1.5 rounded-full bg-[#3dbb6e]"></span>
+          Online · replies instantly
+        </span>
+      </div>
+      <button
+        type="button"
+        id="chat-close"
+        aria-label="Close chat"
+        class="border-[#444444] px-2 py-1.5 text-xs font-bold"
+      >
+        ✕
+      </button>
+    </div>
+    <div id="chat-messages" class="flex min-h-40 flex-1 flex-col gap-2 overflow-auto p-3.5">
+      <div class="self-start bg-[#f0f0f0] px-3 py-2.5 text-[12.5px] leading-relaxed">
+        Hi, I'm Design Scope's virtual assistant. I can book a consultation, share showroom hours or
+        connect you with our team. Planning a project, or dealing with damage right now?
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-1.5 border-t border-[#eeeeee] px-3.5 py-3">
+      {quickReplies.map((q, i) => (
+        <button
+          type="button"
+          data-quick-reply={i}
+          class:list={[
+            'border-[1.5px] px-2.5 py-2 text-[11.5px] font-bold',
+            q.urgent ? 'border-urgent text-urgent' : 'border-ink text-ink',
+          ]}
+        >
+          {q.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <button
+    type="button"
+    id="chat-toggle"
+    aria-label="Open chat"
+    class="bg-dark border-brand text-paper flex items-center gap-2 border-2 px-4.5 py-3 text-[13px] font-extrabold"
+  >
+    <span class="h-2 w-2 rounded-full bg-[#3dbb6e]"></span>
+    <span id="chat-toggle-label">Chat with us</span>
+  </button>
+</div>
+
+<script define:vars={{ replies: quickReplies.map((q) => ({ reply: q.reply, action: q.action })) }}>
+  const widget = document.getElementById('chat-widget');
+  const panel = document.getElementById('chat-panel');
+  const toggle = document.getElementById('chat-toggle');
+  const toggleLabel = document.getElementById('chat-toggle-label');
+  const closeBtn = document.getElementById('chat-close');
+  const messages = document.getElementById('chat-messages');
+
+  if (widget && panel && toggle && closeBtn && messages) {
+    let opened = false;
+    let scrolled = false;
+
+    const updateVisibility = () => {
+      widget.hidden = !(opened || scrolled);
+    };
+    const onScroll = () => {
+      const v = window.scrollY > 500;
+      if (v !== scrolled) {
+        scrolled = v;
+        updateVisibility();
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const setOpen = (open) => {
+      opened = open;
+      panel.hidden = !open;
+      toggleLabel.textContent = open ? 'Close chat' : 'Chat with us';
+      toggle.setAttribute('aria-label', open ? 'Close chat' : 'Open chat');
+      updateVisibility();
+      if (open) panel.querySelector('button, input')?.focus();
+    };
+
+    toggle.addEventListener('click', () => setOpen(!opened));
+    closeBtn.addEventListener('click', () => setOpen(false));
+
+    const addMessage = (text, from) => {
+      const bubble = document.createElement('div');
+      bubble.className =
+        from === 'bot'
+          ? 'self-start bg-[#f0f0f0] px-3 py-2.5 text-[12.5px] leading-relaxed'
+          : 'self-end bg-brand text-ink px-3 py-2.5 text-[12.5px] leading-relaxed font-semibold';
+      bubble.textContent = text;
+      messages.appendChild(bubble);
+      messages.scrollTop = messages.scrollHeight;
+    };
+
+    const say = (label, reply, action) => {
+      addMessage(label, 'me');
+      const typing = document.createElement('div');
+      typing.className = 'self-start bg-[#f0f0f0] px-3 py-2.5 text-[12.5px] text-[#555555]';
+      typing.textContent = 'Typing…';
+      messages.appendChild(typing);
+      messages.scrollTop = messages.scrollHeight;
+      setTimeout(() => {
+        typing.remove();
+        addMessage(reply, 'bot');
+        if (action === 'book') {
+          setTimeout(() => document.dispatchEvent(new CustomEvent('open-booking-modal')), 700);
+        } else if (action === 'restoration') {
+          setTimeout(() => {
+            window.location.href = '/restoration/';
+          }, 1200);
+        }
+      }, 700);
+    };
+
+    document.querySelectorAll('[data-quick-reply]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const i = Number(btn.dataset.quickReply);
+        const { reply, action } = replies[i];
+        say(btn.textContent?.trim() ?? '', reply, action);
+      });
+    });
+  }
+</script>
