@@ -3,17 +3,22 @@ import Layout from '../../layouts/Layout.astro';
 import { business } from '../../data/business';
 import { towns } from '../../data/areas';
 import FinalCta from '../../components/shared/FinalCta.astro';
+
+// The design handoff has no separate "service area hub" page (just the
+// town template) — this keeps CLAUDE.md's own sitemap entry, restyled to
+// match the handoff's visual system.
+const otherTowns = business.serviceAreas.filter((t) => !towns.some((town) => town.name === t));
 ---
 
 <Layout
   title="Service Areas"
-  description="Design Scope serves Bloomfield, West Hartford, Windsor and the wider Farmington Valley, Connecticut."
+  description="Design Scope serves Bloomfield, West Hartford, Simsbury, Avon, Windsor and the wider Farmington Valley, Connecticut."
 >
-  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
-    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+  <section class="flex flex-col gap-4 px-4 py-11 sm:px-7">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
       Where we work
     </span>
-    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
+    <h1 class="text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
       Hartford County and the Farmington Valley
     </h1>
   </section>
@@ -35,7 +40,7 @@ import FinalCta from '../../components/shared/FinalCta.astro';
       Also serving
     </span>
     <div class="flex flex-wrap gap-1.5">
-      {business.serviceAreas.map((t) => (
+      {otherTowns.map((t) => (
         <span class="border-border-soft bg-paper border px-3 py-2 text-xs font-semibold">{t}</span>
       ))}
     </div>

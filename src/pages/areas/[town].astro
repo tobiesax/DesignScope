@@ -1,53 +1,140 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
 import { towns } from '../../data/areas';
-import { mockProjects } from '../../data/home';
 import { mockupImages } from '../../data/mockup-images';
-import ServiceGallery from '../../components/service/ServiceGallery.astro';
+import { caseStudies } from '../../data/case-studies';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
+// Matches the GrowthOS design handoff's Town page template exactly, at
+// Tobi's request.
 export function getStaticPaths() {
   return towns.map((town) => ({ params: { town: town.slug }, props: { town } }));
 }
 
 const { town } = Astro.props;
-const resolveImage = (img: string | ImageMetadata) =>
-  typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
+const otherTowns = towns.filter((t) => t.slug !== town.slug);
 
-// No town-tagged real project photos exist for any of the 3 confirmed town
-// pages yet (CONTENT_GAPS.md) — the gallery below is empty for all three
-// today, and ServiceGallery already hides itself when there's nothing to show.
-const localProjects = mockProjects
-  .filter((p) => p.town === town.name)
-  .map((p) => ({ ...p, img: resolveImage(p.img) }));
+// No real, town-tagged project exists for any town yet (CONTENT_GAPS.md) —
+// falls back to other case studies in the same vein as the design handoff
+// does, rather than inventing a local project.
+const sameTown = caseStudies.filter((p) => p.town === town.name);
+const localProjects = (
+  sameTown.length >= 3
+    ? sameTown
+    : sameTown.concat(caseStudies.filter((p) => p.town !== town.name && p.cat !== 'Commercial'))
+).slice(0, 3);
 ---
 
 <Layout title={`${town.name}, CT`} description={town.metaDescription}>
-  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
-    <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 text-xs">
-      <a href="/areas/" class="hover:text-brand-dark">
-        Areas
-      </a>
-      <span aria-hidden="true">/</span>
-      <span>{town.name}</span>
-    </nav>
-    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
-      {town.name}, CT
-    </span>
-    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
-      Design and construction in {town.name}
-    </h1>
-    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">{town.intro}</p>
-    <a href="/book/" class="bg-brand text-ink w-fit px-5 py-3.5 text-sm font-extrabold">
-      Book a free consultation
+  <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 px-4 py-4 text-xs sm:px-7">
+    <a href="/" class="hover:text-brand-dark font-bold">
+      Home
+    </a>
+    <span aria-hidden="true">/</span>
+    <span>Service area</span>
+    <span aria-hidden="true">/</span>
+    <span>{town.name}</span>
+  </nav>
+
+  <section class="grid [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+    <div class="flex flex-col justify-center gap-4 px-4 pt-2 pb-10 sm:px-10 sm:pb-16">
+      <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+        {town.name}, CT
+      </span>
+      <h1 class="max-w-[480px] text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
+        Kitchen and bath remodeling in {town.name}
+      </h1>
+      <p class="text-ink-soft max-w-[500px] text-[15px] leading-relaxed">{town.intro}</p>
+      <div class="flex flex-wrap gap-2.5">
+        <a
+          href="/book/"
+          data-open-booking
+          class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold"
+        >
+          Book free consultation
+        </a>
+        <a
+          href="/restoration/"
+          class="border-urgent text-urgent border-[1.5px] px-5 py-3.5 text-sm font-extrabold"
+        >
+          Emergency in {town.name}? 24/7
+        </a>
+      </div>
+      <div class="grid grid-cols-3 gap-[3px]">
+        {[
+          { v: String(sameTown.length || '—'), k: 'projects shown' },
+          { v: '4.9 ★', k: 'Google rating' },
+          { v: town.drive, k: 'to our showroom' },
+        ].map((s) => (
+          <div class="bg-paper-muted flex flex-col gap-0.5 px-3.5 py-3.5">
+            <span class="text-[18px] font-black">{s.v}</span>
+            <span class="text-muted text-[11px] font-semibold">{s.k}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="min-h-[280px]">
+      <Image src={mockupImages[town.image]} alt="" class="h-full w-full object-cover" />
+    </div>
+  </section>
+
+  <section class="flex flex-col gap-4.5 px-4 py-13 sm:px-7">
+    <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">
+      Recent projects in and around {town.name}
+    </h2>
+    <div class="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))]">
+      {localProjects.map((p) => (
+        <a
+          href={`/projects/${p.id}/`}
+          class="card-hover bg-paper-muted flex flex-col overflow-hidden"
+        >
+          <Image src={p.img} alt={p.title} class="h-[200px] w-full object-cover" />
+          <div class="flex items-baseline justify-between gap-2.5 px-4 py-3.5">
+            <span class="text-[14px] font-extrabold">{p.title}</span>
+            <span class="text-muted text-[11.5px] font-semibold whitespace-nowrap">{p.town}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="grid gap-[3px] px-4 pb-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+    <a href="/remodeling/" class="bg-paper-muted flex flex-col gap-2 p-6">
+      <span class="text-[17px] font-black">Kitchens &amp; baths</span>
+      <span class="text-muted text-[13px] leading-relaxed">
+        Designed in our showroom, built by our own crews.
+      </span>
+      <span class="border-brand text-ink self-start border-b-2 pb-0.5 text-[12.5px] font-extrabold">
+        Remodeling →
+      </span>
+    </a>
+    <a href="/restoration/" class="bg-dark text-paper flex flex-col gap-2 p-6">
+      <span class="text-[17px] font-black">Restoration 24/7</span>
+      <span class="text-on-dark-muted text-[13px] leading-relaxed">
+        Water, fire, mold and storm damage across {town.name}.
+      </span>
+      <span class="text-red-on-dark text-[12.5px] font-extrabold">Get emergency help →</span>
+    </a>
+    <a href="/showroom/" class="bg-paper-muted flex flex-col gap-2 p-6">
+      <span class="text-[17px] font-black">Showroom {town.drive}</span>
+      <span class="text-muted text-[13px] leading-relaxed">
+        480 Cottage Grove Rd, Bloomfield. Walk-ins welcome.
+      </span>
+      <span class="border-brand text-ink self-start border-b-2 pb-0.5 text-[12.5px] font-extrabold">
+        Plan your visit →
+      </span>
     </a>
   </section>
 
-  <ServiceGallery
-    heading={`${town.name} projects`}
-    subheading="Recent work in the area"
-    projects={localProjects}
-  />
+  <div class="flex flex-wrap items-center gap-1.5 px-4 pb-13 sm:px-7">
+    <span class="text-muted mr-1.5 text-xs font-bold">Other towns</span>
+    {otherTowns.map((t) => (
+      <a href={`/areas/${t.slug}/`} class="bg-[#f0f0f0] px-3 py-2 text-xs font-bold">
+        {t.name}
+      </a>
+    ))}
+  </div>
 
   <FinalCta />
 </Layout>

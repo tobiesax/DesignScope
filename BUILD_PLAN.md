@@ -96,10 +96,14 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
 
 ## Week 4: SEO, forms and the lead system starts
 
-- [x] **[repo]** 3 town pages with unique copy, local projects and a map — pulled forward into
-      the same pass as the rest of Week 3 (`/areas/`, `/areas/bloomfield/`,
-      `/areas/west-hartford/`, `/areas/windsor/`); no town-tagged real project photos exist yet,
-      so the local-projects section is empty on all three (CONTENT_GAPS.md)
+- [x] **[repo]** Town pages with unique copy and local projects, rebuilt to the design
+      handoff's template exactly (hero stats row, local projects, 3-up band) — expanded from
+      Option B's 3 to all 5 of CLAUDE.md's candidate towns to match the handoff
+      (`/areas/`, `/areas/bloomfield/`, `/areas/west-hartford/`, `/areas/simsbury/`,
+      `/areas/avon/`, `/areas/windsor/`); no town-tagged real project exists yet, so each
+      falls back to the placeholder case studies that share its town name (CONTENT_GAPS.md).
+      No map on the town template (the handoff doesn't have one there either — only Showroom
+      does)
 - [ ] **[repo]** `LocalBusiness` JSON-LD, titles and meta descriptions, sitemap, robots, canonicals
 - [ ] **[repo]** Enquiry form → `/api/lead` → CRM webhook; honeypot; thank-you state; UTM capture
 - [ ] **[repo]** GTM/GA4 events: `generate_lead`, `click_to_call`, `click_to_text`, `book_consultation`, `get_directions`

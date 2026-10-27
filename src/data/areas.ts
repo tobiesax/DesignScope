@@ -1,14 +1,26 @@
-// The 3 town pages Option B ships (HANDOFF.md section 3) — proposed list,
-// still pending Stephen's confirmation (CONTENT_GAPS.md). No town-tagged
-// real project photos exist yet for any of these three, so each page's
-// local-proof section stays empty rather than showing an unrelated town's
-// project — see src/pages/areas/[town].astro.
+// Town pages — expanded from Option B's 3 to all 5 of CLAUDE.md's own
+// candidate towns, to match the design handoff exactly (its own TOWNS
+// object covers the same 5), at Tobi's request. Confirm the final scope
+// (3 vs 5) with Stephen before launch — see CONTENT_GAPS.md and
+// BUILD_PLAN.md Week 1.
+//
+// Intro copy and drive times are the handoff's own — plausible but
+// unconfirmed (drive times are approximate from the Bloomfield showroom).
 export interface TownPage {
   slug: string;
   name: string;
   metaDescription: string;
   intro: string;
   highlight: string;
+  /** Approximate drive time from the Bloomfield showroom — unconfirmed, see CONTENT_GAPS.md. */
+  drive: string;
+  /** Key into src/data/mockup-images.ts — matches the handoff's own per-town image. */
+  image:
+    | 'ba-after'
+    | 'hero-kitchen'
+    | 'proj-renovation-simsbury'
+    | 'proj-bath-avon'
+    | 'proj-shower-windsor';
 }
 
 export const towns: TownPage[] = [
@@ -18,8 +30,10 @@ export const towns: TownPage[] = [
     metaDescription:
       'Kitchen and bath remodeling, home renovations and restoration for Bloomfield, CT homeowners, from the showroom on Cottage Grove Road.',
     intro:
-      'Bloomfield is home — our showroom sits right on Cottage Grove Road, so Bloomfield homeowners can walk in, see cabinetry and fixtures in person, and talk through a project without an appointment.',
+      'Our showroom is right here on Cottage Grove Road. Many Bloomfield homes are 1950s–70s capes and ranches, ideal for opening up kitchens and updating baths.',
     highlight: 'Walk-ins welcome at the showroom, 480 Cottage Grove Road.',
+    drive: 'in town',
+    image: 'ba-after',
   },
   {
     slug: 'west-hartford',
@@ -27,8 +41,32 @@ export const towns: TownPage[] = [
     metaDescription:
       'Kitchen and bath remodeling, home renovations and restoration for West Hartford, CT homeowners.',
     intro:
-      'We work in West Hartford homes regularly, from kitchen and bath remodels to full renovations and fire and water damage restoration. The showroom in Bloomfield is a short drive away for anyone who wants to see materials in person first.',
+      "From Elmwood colonials to Bishop's Corner capes, we design kitchens and baths that respect West Hartford's older homes and add modern living.",
     highlight: 'A short drive from the Bloomfield showroom.',
+    drive: '12 min away',
+    image: 'hero-kitchen',
+  },
+  {
+    slug: 'simsbury',
+    name: 'Simsbury',
+    metaDescription:
+      'Kitchen and bath remodeling, whole-home renovations and restoration for Simsbury, CT homeowners.',
+    intro:
+      'Larger Simsbury homes often call for whole-home updates. We plan kitchens, baths and open layouts together, with permits handled.',
+    highlight: 'Whole-home renovations are a Simsbury specialty.',
+    drive: '15 min away',
+    image: 'proj-renovation-simsbury',
+  },
+  {
+    slug: 'avon',
+    name: 'Avon',
+    metaDescription:
+      'Kitchen and bath remodeling, primary bathroom suites and restoration for Avon, CT homeowners.',
+    intro:
+      'Avon homeowners come to us most for primary bathroom suites and kitchen updates, designed in our showroom and built by our own crews.',
+    highlight: 'A favorite for primary bathroom suites.',
+    drive: '18 min away',
+    image: 'proj-bath-avon',
   },
   {
     slug: 'windsor',
@@ -36,7 +74,9 @@ export const towns: TownPage[] = [
     metaDescription:
       'Kitchen and bath remodeling, home renovations and restoration for Windsor, CT homeowners.',
     intro:
-      'Windsor homeowners get the same process as everyone else: a free design consultation, a written quote within 24 hours, and one team handling design through construction, with the showroom in neighboring Bloomfield any time you want to see products in person.',
+      'Close to our Bloomfield base, Windsor gets quick consultations, accessible bathroom upgrades and fast restoration response.',
     highlight: 'Neighboring Bloomfield, home of our showroom.',
+    drive: '10 min away',
+    image: 'proj-shower-windsor',
   },
 ];

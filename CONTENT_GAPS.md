@@ -145,9 +145,15 @@ financing product behind it would misrepresent what's on offer.
       the client), not grounded in any actual Design Scope job. Replace with Stephen's real
       15+ projects — photos, before/afters, scope, cost, products and real reviews — before
       launch; this is one of the bigger remaining content gaps
-- [ ] None of the 3 built town pages (`/areas/bloomfield/`, `/areas/west-hartford/`,
-      `/areas/windsor/`) have a real, town-tagged project to show — the local-proof gallery
-      section is empty on all three until photos are tagged with a town
+- [x] Town pages expanded from 3 to all 5 (`/areas/simsbury/`, `/areas/avon/` added) and
+      rebuilt to the design handoff's town template exactly — hero with a stats row, local
+      projects, a 3-up band (remodeling / restoration / showroom), other-town links. Confirm
+      the 3-vs-5 scope with Stephen (see "Business facts" above)
+- [ ] None of the 5 town pages have a real, town-tagged project to show. Each now falls back
+      to the handoff's placeholder case studies (`src/data/case-studies.ts`) that happen to
+      share the town's name, same honesty caveat as that file — not real local proof yet.
+      Each town page's intro copy (home styles/eras per town) and drive time from the
+      showroom are also the handoff's own, unconfirmed — verify with Stephen
 - [ ] `/areas/simsbury/` and `/areas/avon/` don't exist yet. The design handoff builds all 5
       of CLAUDE.md's candidate towns (business.ts `townPages` was expanded from 3 to 5 to
       match it), and the footer/home service-area band already link to all 5 — but only the
