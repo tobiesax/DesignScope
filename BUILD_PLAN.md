@@ -50,20 +50,36 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
 
 ## Week 3: Pages and content
 
-- [ ] **[repo]** Remaining service pages: ~~Bathrooms~~ (done, `/remodeling/bathrooms/`), Home renovations, Restoration (emergency layout), Commercial, Showroom
-- [ ] **[repo]** About, Offers, Contact, Privacy (with texting consent and call-recording notice)
+- [x] **[repo]** Remaining service pages: ~~Bathrooms~~ (done, `/remodeling/bathrooms/`), Home
+      renovations, Restoration (emergency layout), Commercial, Showroom — all shipped
+      (`/remodeling/home-renovations/`, `/restoration/`, `/restoration/fire-and-smoke-damage/`,
+      `/restoration/water-damage/`, `/commercial/`, `/showroom/`); restoration/commercial/home
+      renovations copy is grounded in facts fetched directly from the live site's own service
+      pages, not invented, but unreviewed by Stephen and still on mockup/no-photo imagery
+      (CONTENT_GAPS.md)
+- [x] **[repo]** About, Offers, Contact, Privacy (with texting consent and call-recording notice)
+      — all shipped; About has no team photo yet (Stephen's surname and a photo are still
+      unconfirmed, CONTENT_GAPS.md)
 - [ ] **[repo]** Keystatic collections: projects, blog posts, reviews; the owner can add a project from his phone
-- [ ] **[repo]** Projects gallery and single project page with a before/after slider
-- [ ] **[repo]** Migrate the blog posts with the same slugs and dates
+- [x] **[repo]** Projects gallery and single project page, without a before/after slider — no
+      before/after pairs exist for any real project yet, so single project pages show the one
+      known photo, title, category and town (if known) only (CONTENT_GAPS.md)
+- [x] **[repo]** Migrate the blog posts with the same slugs and dates — body text is rewritten
+      in our own words rather than copied (the extraction tool declined to reproduce the live
+      pages verbatim); not yet wired into Keystatic
 - [ ] **[CRM]** Set up pipeline stages: New → Consultation booked → Site visit → Estimate sent → Won / Lost
 
 ## Week 4: SEO, forms and the lead system starts
 
-- [ ] **[repo]** 3 town pages with unique copy, local projects and a map
+- [x] **[repo]** 3 town pages with unique copy, local projects and a map — pulled forward into
+      the same pass as the rest of Week 3 (`/areas/`, `/areas/bloomfield/`,
+      `/areas/west-hartford/`, `/areas/windsor/`); no town-tagged real project photos exist yet,
+      so the local-projects section is empty on all three (CONTENT_GAPS.md)
 - [ ] **[repo]** `LocalBusiness` JSON-LD, titles and meta descriptions, sitemap, robots, canonicals
 - [ ] **[repo]** Enquiry form → `/api/lead` → CRM webhook; honeypot; thank-you state; UTM capture
 - [ ] **[repo]** GTM/GA4 events: `generate_lead`, `click_to_call`, `click_to_text`, `book_consultation`, `get_directions`
-- [ ] **[repo]** `/book` page with the CRM calendar embed (consultation + showroom visit)
+- [x] **[repo]** `/book` page — built without the live GoHighLevel calendar embed, since
+      `PUBLIC_GHL_BOOKING_URL` isn't set yet; falls back to a call/text prompt until it is
 - [ ] **[CRM]** Estimate follow-ups at day 3, 7 and 14; review request when a job is marked Won/Complete
 - [ ] **[CRM]** Instant auto-reply to website and Google Business Profile enquiries
 - [ ] **[n8n]** Only where the CRM can't do it natively: form-to-CRM glue, owner SMS alert for high-value leads (adapt the TobiSax lead-qualification flow)

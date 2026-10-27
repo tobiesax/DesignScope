@@ -52,6 +52,11 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
 - [ ] Home renovations and Commercial still use the Claude-generated mockup photos
       (`mockup-temp/`) — same live-site scrape approach should work for these once there's
       time; the live site's gallery/commercial-services pages have real photos too
+- [ ] Restoration (hub, fire & smoke, water damage) has no real photos at all — not even a
+      scraped single, since the live site's fire-and-smoke-damage-restoration and
+      water-damage-restoration pages have no gallery images to scrape (confirmed by
+      fetching them directly). All three restoration pages currently reuse the one
+      approved mockup restoration image at larger size (`src/data/restoration.ts`)
 - [ ] Before-and-after pairs specifically (have singles only so far) — check if the live site
       has any, otherwise need these directly from Stephen
 - [ ] 5–10 showroom photos (exterior with signage, displays, brands)
@@ -71,6 +76,28 @@ Stephen's real photos and delete `mockup-temp/` before Week 5 QA.
       are written from confirmed business.ts facts, not invented, but are unreviewed marketing
       copy, not his words — flag for approval alongside the (now real) galleries, and ask him
       to confirm which town each photo is actually from
+- [ ] The rest of Week 3's pages (home renovations, restoration × 3, commercial, showroom,
+      about, offers, contact, privacy, book, projects index + single, reviews, areas hub + 3
+      towns, FAQs, blog index + 2 posts) are all unreviewed marketing copy too, grounded only
+      in confirmed business.ts facts and (for restoration/commercial/showroom/home renovations)
+      facts fetched directly from the live site's own service pages — never invented, but
+      never seen by Stephen either
+- [ ] Single project pages (`/projects/[id]/`) show only the title, category, town (if known)
+      and the one real photo — no scope, no narrative, no before/after pair, because that
+      data doesn't exist yet. No before/after slider has been built for individual projects;
+      the home page's slider still uses mockup photos (see "Before-and-after pairs" below)
+- [ ] None of the 3 town pages (`/areas/bloomfield/`, `/areas/west-hartford/`,
+      `/areas/windsor/`) have a real, town-tagged project to show — the local-proof gallery
+      section is empty on all three until photos are tagged with a town
+- [ ] The 2 blog posts were migrated with the same title, slug, date and author as the live
+      site, but the body text is rewritten in our own words, not copied — the extraction tool
+      used to pull the live pages declined to reproduce their text verbatim (copyright), so
+      `src/data/blog-posts.ts` covers the same structure and facts in original phrasing
+      instead. Not wired into Keystatic yet (see "Infrastructure" below)
+- [ ] `/reviews/` is now built but honestly has no reviews yet — it points to Google/Yelp
+      instead of showing anything invented. Swap in real review content once collected
+- [ ] `/book/` has no live GoHighLevel calendar embed yet (`PUBLIC_GHL_BOOKING_URL` isn't
+      set) — it falls back to a call/text prompt
 
 ## Access
 
