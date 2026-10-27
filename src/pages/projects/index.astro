@@ -1,0 +1,40 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { mockProjects } from '../../data/home';
+import { mockupImages } from '../../data/mockup-images';
+
+const resolveImage = (img: string | ImageMetadata) =>
+  typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
+---
+
+<Layout
+  title="Our Projects"
+  description="Real Design Scope kitchen and bathroom remodeling projects across Hartford County, Connecticut."
+>
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Projects
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">Real work, real homes</h1>
+  </section>
+
+  <div class="grid gap-3.5 px-4 pb-12 sm:px-7 [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]">
+    {mockProjects.map((project) => {
+      const img = resolveImage(project.img);
+      return (
+        <a href={`/projects/${project.id}/`} class="bg-paper-muted flex flex-col">
+          <Image src={img} alt={project.title} class="h-[190px] w-full object-cover" />
+          <div class="flex items-baseline justify-between gap-2.5 px-4 py-3.5">
+            <span class="text-[13.5px] font-extrabold">{project.title}</span>
+            {project.town && (
+              <span class="text-muted text-[11px] font-semibold whitespace-nowrap">
+                {project.town}
+              </span>
+            )}
+          </div>
+        </a>
+      );
+    })}
+  </div>
+</Layout>

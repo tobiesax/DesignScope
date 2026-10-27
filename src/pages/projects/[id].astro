@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { mockProjects, categoryHref } from '../../data/home';
+import { mockupImages } from '../../data/mockup-images';
+
+export function getStaticPaths() {
+  return mockProjects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const resolveImage = (img: string | ImageMetadata) =>
+  typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
+const img = resolveImage(project.img);
+const categoryLink = categoryHref[project.cat];
+---
+
+<Layout
+  title={project.title}
+  description={`${project.title}${project.town ? ` in ${project.town}, CT` : ''} — a Design Scope project.`}
+>
+  <section class="flex flex-col gap-4 px-4 py-10 sm:px-7">
+    <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 text-xs">
+      <a href="/projects/" class="hover:text-brand-dark">
+        Projects
+      </a>
+      <span aria-hidden="true">/</span>
+      <span>{project.title}</span>
+    </nav>
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      {project.cat}
+      {project.town ? ` · ${project.town}` : ''}
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">{project.title}</h1>
+  </section>
+
+  <section class="px-4 pb-10 sm:px-7">
+    <Image src={img} alt={project.title} class="max-h-[560px] w-full object-cover" />
+  </section>
+
+  <section class="flex flex-wrap gap-2.5 px-4 pb-12 sm:px-7">
+    {categoryLink && (
+      <a href={categoryLink} class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold">
+        See more {project.cat.toLowerCase()} work
+      </a>
+    )}
+    <a href="/projects/" class="border-dark border px-5 py-3.5 text-sm font-bold">
+      All projects
+    </a>
+  </section>
+</Layout>
