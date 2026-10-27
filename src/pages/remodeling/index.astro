@@ -3,7 +3,20 @@ import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import { kitchens, bathrooms, homeRenovations } from '../../data/services';
 
-const services = [kitchens, bathrooms, homeRenovations];
+// Path-picker hub between the nav's "Kitchen & bath" link and the three
+// rebuilt service pages. Not part of the design handoff (its nav goes
+// straight to one combined page), so there's no spec to match — but it's
+// the actual landing page from the main nav, so it needs real titles, not
+// raw URL slugs as a previous pass left it showing.
+const services = [
+  { ...kitchens, label: 'Kitchens', blurb: 'Custom cabinetry, countertops and layouts.' },
+  { ...bathrooms, label: 'Bathrooms', blurb: 'Walk-in showers, soaking tubs, vanities and tile.' },
+  {
+    ...homeRenovations,
+    label: 'Home renovations',
+    blurb: 'Single-room updates to whole-house renovations.',
+  },
+];
 ---
 
 <Layout
@@ -12,7 +25,7 @@ const services = [kitchens, bathrooms, homeRenovations];
   active="remodeling"
 >
   <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
-    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
       Remodeling
     </span>
     <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
@@ -24,13 +37,19 @@ const services = [kitchens, bathrooms, homeRenovations];
     </p>
   </section>
 
-  <div class="grid gap-3.5 px-4 pb-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+  <div class="grid gap-3.5 px-4 pb-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))]">
     {services.map((service) => (
-      <a href={`/remodeling/${service.slug}/`} class="bg-paper-muted flex flex-col">
+      <a
+        href={`/remodeling/${service.slug}/`}
+        class="card-hover bg-paper-muted flex flex-col overflow-hidden"
+      >
         <Image src={service.heroImage} alt="" class="h-[200px] w-full object-cover" />
         <div class="flex flex-col gap-1.5 p-5">
-          <span class="text-lg font-extrabold capitalize">{service.slug}</span>
-          <span class="text-brand-dark text-xs font-extrabold">See our {service.slug} work →</span>
+          <span class="text-lg font-extrabold">{service.label}</span>
+          <span class="text-muted text-sm leading-relaxed">{service.blurb}</span>
+          <span class="text-brand-dark mt-1 text-xs font-extrabold">
+            See our {service.label.toLowerCase()} work →
+          </span>
         </div>
       </a>
     ))}
