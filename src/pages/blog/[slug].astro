@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { blogPosts } from '../../data/blog-posts';
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const formatDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Layout title={post.title} description={post.excerpt}>
+  <article class="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-12 sm:px-7">
+    <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 text-xs">
+      <a href="/blog/" class="hover:text-brand-dark">
+        Blog
+      </a>
+      <span aria-hidden="true">/</span>
+      <span>{post.title}</span>
+    </nav>
+    <span class="text-muted text-xs font-semibold">
+      {formatDate(post.date)} · {post.author}
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">{post.title}</h1>
+
+    {post.sections.map((section) => (
+      <div class="flex flex-col gap-2.5">
+        {section.heading && <h2 class="text-lg font-extrabold">{section.heading}</h2>}
+        {section.body && <p class="text-ink-soft text-sm leading-relaxed">{section.body}</p>}
+        {section.list && (
+          <ul class="text-ink-soft flex list-disc flex-col gap-1.5 pl-5 text-sm leading-relaxed">
+            {section.list.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    ))}
+
+    <p class="text-ink-soft text-sm font-semibold leading-relaxed">{post.closing}</p>
+    <a href="/book/" class="bg-brand text-ink w-fit px-5 py-3.5 text-sm font-extrabold">
+      Book a free design consultation
+    </a>
+  </article>
+</Layout>
