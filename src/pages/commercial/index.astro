@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { mockupImages } from '../../data/mockup-images';
+import { commercial } from '../../data/commercial';
+import ProcessSteps from '../../components/shared/ProcessSteps.astro';
+import FinalCta from '../../components/shared/FinalCta.astro';
+
+// No real commercial-project photos exist yet (CONTENT_GAPS.md) — reuses
+// the same temporary mockup photo already shown for this path on the home page.
+---
+
+<Layout title={commercial.title} description={commercial.metaDescription}>
+  <section class="relative min-h-[300px]">
+    <Image
+      src={mockupImages['path-commercial']}
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover"
+      widths={[640, 1024, 1600]}
+      sizes="100vw"
+    />
+    <div
+      class="absolute inset-0"
+      style="background:linear-gradient(90deg,rgba(15,15,15,0.88) 0%,rgba(15,15,15,0.6) 45%,rgba(15,15,15,0.1) 100%)"
+    ></div>
+    <div class="relative flex flex-col gap-4 px-4 py-12 sm:px-7 sm:py-16 max-w-xl text-paper">
+      <span class="text-brand text-[10px] font-semibold tracking-[0.35em] uppercase">
+        {commercial.heroEyebrow}
+      </span>
+      <h1 class="text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl">
+        {commercial.heroHeadline}
+      </h1>
+      <p class="text-on-dark text-base leading-relaxed">{commercial.heroSubcopy}</p>
+      <a href="/contact/" class="bg-brand text-ink w-fit px-5 py-3.5 text-sm font-extrabold">
+        Request a walkthrough
+      </a>
+    </div>
+  </section>
+
+  <section class="grid gap-7 px-4 py-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+    <div class="flex flex-col gap-3">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        {commercial.renovations.heading}
+      </span>
+      <p class="text-ink-soft text-sm leading-relaxed">{commercial.renovations.body}</p>
+    </div>
+    <div class="flex flex-col gap-3">
+      <span class="text-urgent text-[10px] font-semibold tracking-[0.35em] uppercase">
+        {commercial.restorations.heading}
+      </span>
+      <p class="text-ink-soft text-sm leading-relaxed">{commercial.restorations.body}</p>
+    </div>
+  </section>
+
+  <ProcessSteps />
+  <FinalCta />
+</Layout>
