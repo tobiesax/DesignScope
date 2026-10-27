@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { business } from '../../data/business';
+---
+
+<Layout
+  title="Privacy Policy"
+  description="Design Scope LLC privacy policy, including texting consent and call-recording notices."
+>
+  <section class="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Privacy policy
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">Privacy policy</h1>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">Information we collect</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        When you contact us by phone, text, email or a form on this site, we collect the information
+        you give us — your name, phone number, email, project details and anything else you share —
+        to respond to your enquiry, schedule a consultation and follow up about your project.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">Call recording</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        Calls to {business.phone.main} may be recorded for quality and training purposes. When you
+        call, you'll hear a notice to that effect before you speak with anyone, including our
+        virtual assistant.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">Text messaging</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        By checking the texting-consent box on this site, or by texting us, you agree to receive
+        text messages from Design Scope LLC about your enquiry and appointments. Message frequency
+        varies. Message and data rates may apply. Reply STOP at any time to opt out, or HELP for
+        help. Consent to receive texts is never a condition of purchase.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">How we use your information</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        We use your contact details to respond to your enquiry, schedule and manage appointments,
+        send estimates and follow up on your project. We don't sell your information to third
+        parties.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">Contact us</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        Questions about this policy? Email{' '}
+        <a href={`mailto:${business.email}`} class="font-semibold hover:text-brand-dark">
+          {business.email}
+        </a>{' '}
+        or call{' '}
+        <a href={`tel:${business.phone.mainTel}`} class="font-semibold hover:text-brand-dark">
+          {business.phone.main}
+        </a>
+        .
+      </p>
+    </div>
+  </section>
+</Layout>

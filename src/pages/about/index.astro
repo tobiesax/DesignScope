@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { business } from '../../data/business';
+import FinalCta from '../../components/shared/FinalCta.astro';
+
+// Stephen's surname and a team photo aren't confirmed yet (CONTENT_GAPS.md) —
+// the bio below uses only confirmed business.ts facts, and the page runs
+// without a team photo rather than a placeholder.
+---
+
+<Layout
+  title="About Design Scope"
+  description={`Family-owned design and construction company serving the Farmington Valley since ${business.foundedYear}.`}
+>
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      About us
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
+      Family-owned since {business.foundedYear}
+    </h1>
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
+      Design Scope is a locally and family-owned design and construction company, serving the
+      Farmington Valley from our showroom in Bloomfield, Connecticut. We handle design, permits and
+      construction under one roof, for kitchens, baths, whole-home renovations, and fire and water
+      damage restoration.
+    </p>
+  </section>
+
+  <section class="border-border flex flex-col gap-4 border-t px-4 py-10 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Meet {business.team.stephen.firstName}
+    </span>
+    <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">{business.team.stephen.role}</h2>
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">{business.team.stephen.bio}</p>
+  </section>
+
+  <section class="border-border grid gap-7 border-t px-4 py-10 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+    <div class="flex flex-col gap-2.5">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        What we promise
+      </span>
+      <ul class="text-ink-soft flex flex-col gap-1.5 text-sm leading-relaxed">
+        {business.promises.map((p) => (
+          <li>{p}</li>
+        ))}
+      </ul>
+    </div>
+    <div class="flex flex-col gap-2.5">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        Memberships
+      </span>
+      <ul class="text-ink-soft flex flex-col gap-1.5 text-sm leading-relaxed">
+        {business.memberships.map((m) => (
+          <li>{m}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <FinalCta />
+</Layout>

@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { business } from '../../data/business';
+import FinalCta from '../../components/shared/FinalCta.astro';
+
+// A working enquiry form (POST to /api/lead) is a Week 4 task (BUILD_PLAN.md);
+// FinalCta's decorative form below already notes that. This page gives every
+// other way to reach us in the meantime.
+---
+
+<Layout
+  title="Contact Us"
+  description={`Call, text or visit Design Scope at ${business.showroom.streetAddress}, ${business.showroom.city}, ${business.showroom.state}.`}
+>
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Contact
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">Call, text or visit</h1>
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
+      We reply fast, day or night for restoration emergencies, and within 24 hours for a design
+      consultation quote.
+    </p>
+  </section>
+
+  <section class="grid gap-7 px-4 py-10 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+    <div class="flex flex-col gap-2">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        Call or text
+      </span>
+      <a
+        href={`tel:${business.phone.mainTel}`}
+        class="text-xl font-extrabold hover:text-brand-dark"
+      >
+        {business.phone.main}
+      </a>
+      <span class="text-muted text-xs">Fire or water damage? We answer 24/7.</span>
+    </div>
+    <div class="flex flex-col gap-2">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        Email
+      </span>
+      <a href={`mailto:${business.email}`} class="text-xl font-extrabold hover:text-brand-dark">
+        {business.email}
+      </a>
+    </div>
+    <div class="flex flex-col gap-2">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        Showroom
+      </span>
+      <address class="text-[15px] leading-relaxed font-semibold not-italic">
+        {business.showroom.streetAddress}
+        <br />
+        {business.showroom.city}, {business.showroom.state} {business.showroom.postalCode}
+      </address>
+      <span class="text-muted text-xs">
+        {business.hours.weekday} · {business.hours.weekend}
+      </span>
+      {business.hicRegistrationNumber && (
+        <span class="text-muted text-xs">CT HIC reg. #{business.hicRegistrationNumber}</span>
+      )}
+    </div>
+  </section>
+
+  <FinalCta />
+</Layout>

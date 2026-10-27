@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Offers from '../../components/home/Offers.astro';
+import FinalCta from '../../components/shared/FinalCta.astro';
+---
+
+<Layout
+  title="Current Offers"
+  description="Current offers from Design Scope: 10% off for new customers and a 5% military and veteran discount."
+>
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Offers
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">Current offers</h1>
+  </section>
+  <Offers />
+  <FinalCta />
+</Layout>
