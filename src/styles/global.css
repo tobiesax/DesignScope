@@ -1,6 +1,43 @@
 @import 'tailwindcss';
 
-@import '@fontsource-variable/montserrat';
+/*
+ * Montserrat, latin + latin-ext subsets only (all this site needs) — not
+ * the full @fontsource-variable/montserrat import, which pulls in ~10
+ * unicode-range subsets (Cyrillic, Vietnamese, Greek, etc.) we don't use
+ * and, more importantly, sets font-display:swap on every one of them.
+ * swap shows a fallback system font immediately, then swaps to Montserrat
+ * once it loads — on a bold 34–52px H1 (the home hero), the fallback
+ * font's different letter widths/line-height visibly reflow the layout
+ * the moment the swap happens, which is the page "jumping after load."
+ * font-display:optional uses Montserrat only if it's ready almost
+ * immediately (effectively from cache after the first visit); otherwise
+ * it keeps the fallback for the rest of that page view instead of
+ * swapping mid-visit, trading an occasional first-load fallback font for
+ * zero layout shift.
+ */
+@font-face {
+  font-family: 'Montserrat Variable';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/montserrat/files/montserrat-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Montserrat Variable';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 /*
  * Brand tokens, matched exactly to the approved GrowthOS design handoff
