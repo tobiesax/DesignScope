@@ -15,6 +15,8 @@ interface Props {
   // The handoff's mobile sticky action bar appears on every page except
   // Restoration (which gets its own two-button call/callback bar inline).
   mobileBar?: { label: string; href: string } | false;
+  /** 404 only, per the handoff's own SEO note: "noindex · HTTP 404 status". */
+  noindex?: boolean;
 }
 
 const {
@@ -27,6 +29,7 @@ const {
     : navVariant === 'commercial'
       ? { label: 'Request a quote', href: '/commercial/#quote' }
       : { label: 'Book free consultation', href: '/book/' },
+  noindex = false,
 } = Astro.props;
 const siteTitle = `${title} | ${business.legalName}`;
 ---
@@ -39,6 +42,7 @@ const siteTitle = `${title} | ${business.legalName}`;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{siteTitle}</title>
     {description && <meta name="description" content={description} />}
+    {noindex && <meta name="robots" content="noindex" />}
     <script is:inline>
       // Scroll-reveal for each page's top-level sections (global.css
       // `html.js-reveal`). Only marks the page for the CSS-driven animation
