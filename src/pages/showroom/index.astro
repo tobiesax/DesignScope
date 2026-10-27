@@ -58,7 +58,7 @@ const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${busin
   description="Visit the Design Scope showroom at 480 Cottage Grove Road, Bloomfield, CT: kitchen and bath displays, materials and finishes from TOTO, Hansgrohe, Wellborn, Brizo and Delta."
   active="showroom"
 >
-  <section class="grid [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+  <section class="grid [grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))]">
     <div class="min-h-[300px]">
       <Image src={mockupImages.showroom} alt="" class="h-full w-full object-cover" />
     </div>

@@ -15,7 +15,7 @@ const { included, ranges } = Astro.props;
 
 <section class="bg-paper-muted flex flex-col gap-5.5 px-4 py-13 sm:px-7">
   <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">What's included</h2>
-  <div class="grid gap-7 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+  <div class="grid gap-7 [grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))]">
     <div class="flex flex-col">
       {included.map((item) => (
         <div class="border-line flex items-start gap-3 border-t py-3.5 text-sm leading-relaxed">
