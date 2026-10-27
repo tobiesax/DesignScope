@@ -1,0 +1,45 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { business } from '../../data/business';
+import { towns } from '../../data/areas';
+import FinalCta from '../../components/shared/FinalCta.astro';
+---
+
+<Layout
+  title="Service Areas"
+  description="Design Scope serves Bloomfield, West Hartford, Windsor and the wider Farmington Valley, Connecticut."
+>
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Where we work
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
+      Hartford County and the Farmington Valley
+    </h1>
+  </section>
+
+  <div class="grid gap-3.5 px-4 pb-8 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))]">
+    {towns.map((town) => (
+      <a
+        href={`/areas/${town.slug}/`}
+        class="bg-paper-muted border-brand flex flex-col gap-2 border-t-[3px] p-6"
+      >
+        <span class="text-lg font-extrabold">{town.name}</span>
+        <span class="text-muted text-xs">{town.highlight}</span>
+      </a>
+    ))}
+  </div>
+
+  <section class="flex flex-col gap-3 px-4 pb-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Also serving
+    </span>
+    <div class="flex flex-wrap gap-1.5">
+      {business.serviceAreas.map((t) => (
+        <span class="border-border-soft bg-paper border px-3 py-2 text-xs font-semibold">{t}</span>
+      ))}
+    </div>
+  </section>
+
+  <FinalCta />
+</Layout>

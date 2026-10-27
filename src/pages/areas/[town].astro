@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { towns } from '../../data/areas';
+import { mockProjects } from '../../data/home';
+import { mockupImages } from '../../data/mockup-images';
+import ServiceGallery from '../../components/service/ServiceGallery.astro';
+import FinalCta from '../../components/shared/FinalCta.astro';
+
+export function getStaticPaths() {
+  return towns.map((town) => ({ params: { town: town.slug }, props: { town } }));
+}
+
+const { town } = Astro.props;
+const resolveImage = (img: string | ImageMetadata) =>
+  typeof img === 'string' ? mockupImages[img as keyof typeof mockupImages] : img;
+
+// No town-tagged real project photos exist for any of the 3 confirmed town
+// pages yet (CONTENT_GAPS.md) — the gallery below is empty for all three
+// today, and ServiceGallery already hides itself when there's nothing to show.
+const localProjects = mockProjects
+  .filter((p) => p.town === town.name)
+  .map((p) => ({ ...p, img: resolveImage(p.img) }));
+---
+
+<Layout title={`${town.name}, CT`} description={town.metaDescription}>
+  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+    <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 text-xs">
+      <a href="/areas/" class="hover:text-brand-dark">
+        Areas
+      </a>
+      <span aria-hidden="true">/</span>
+      <span>{town.name}</span>
+    </nav>
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      {town.name}, CT
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
+      Design and construction in {town.name}
+    </h1>
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">{town.intro}</p>
+    <a href="/book/" class="bg-brand text-ink w-fit px-5 py-3.5 text-sm font-extrabold">
+      Book a free consultation
+    </a>
+  </section>
+
+  <ServiceGallery
+    heading={`${town.name} projects`}
+    subheading="Recent work in the area"
+    projects={localProjects}
+  />
+
+  <FinalCta />
+</Layout>
