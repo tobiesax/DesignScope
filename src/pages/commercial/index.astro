@@ -8,6 +8,7 @@ import {
   clientLogoPlaceholders,
   commercialQuotes,
   commercialCaseStudy,
+  servicePlans,
 } from '../../data/commercial';
 import { commercialProjects, projectImages } from '../../data/project-images';
 import ServiceGallery from '../../components/service/ServiceGallery.astro';
@@ -125,6 +126,59 @@ const galleryProjects = commercialProjects.map((project) => ({
         Read the case study →
       </a>
     </div>
+  </section>
+
+  <section class="bg-dark text-paper flex flex-col gap-5.5 px-4 py-13 sm:px-7">
+    <div class="flex flex-col gap-2">
+      <span class="flex items-center gap-2.5 text-[10px] font-bold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+        Service agreements
+      </span>
+      <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">
+        Keep every property in shape
+      </h2>
+      <p class="text-on-dark-muted max-w-[640px] text-sm leading-relaxed">
+        A fixed monthly plan for planned maintenance, unit turnovers and priority emergency
+        response.
+      </p>
+    </div>
+    <div class="grid gap-2.5 [grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr))]">
+      {servicePlans.map((plan) => (
+        <div
+          class:list={[
+            'flex flex-col gap-3 p-6',
+            plan.popular ? 'bg-brand text-ink' : 'bg-[#222222] text-paper',
+          ]}
+        >
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-[17px] font-black">{plan.name}</span>
+            {plan.popular && (
+              <span class="bg-dark text-paper px-1.5 py-1 text-[9.5px] font-extrabold tracking-[0.1em] uppercase">
+                Most popular
+              </span>
+            )}
+          </div>
+          <span class="text-[26px] font-black tracking-tight">{plan.price}</span>
+          <div class="flex flex-col gap-1.5">
+            {plan.items.map((item) => (
+              <span class="text-[12.5px] leading-relaxed">· {item}</span>
+            ))}
+          </div>
+          <a
+            href="#quote"
+            class:list={[
+              'mt-auto border-[1.5px] p-3 text-center text-[12.5px] font-extrabold',
+              plan.popular ? 'border-ink' : 'border-paper',
+            ]}
+          >
+            Ask about this plan
+          </a>
+        </div>
+      ))}
+    </div>
+    <span class="text-on-dark-muted text-[11px]">
+      Plan prices are draft placeholders — final pricing is Stephen's call before this section goes
+      live.
+    </span>
   </section>
 
   <ServiceGallery subheading="Real Design Scope commercial work" projects={galleryProjects} />

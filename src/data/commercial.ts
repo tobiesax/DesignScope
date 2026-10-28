@@ -54,3 +54,35 @@ export const commercialCaseStudy = {
   title: 'Hartford office fit-out, 6,200 sq ft in 9 weeks',
   body: 'Open workspace, two glass meeting rooms and a kitchenette in a converted brick building, with noisy work done after hours.',
 };
+
+// Phase 2 in the design handoff — its own copy flags these exact prices as
+// "draft placeholders for the client to confirm," so built at Tobi's
+// request with that same framing rather than presenting them as final
+// (CLAUDE.md rule 1: numbers we don't actually have confirmed stay
+// labelled as drafts, not invented as fact). Stephen decides whether to
+// keep this section, and at what real prices, before launch.
+export const servicePlans = [
+  {
+    name: 'Essentials',
+    price: '$299/mo',
+    items: ['Quarterly property inspection', 'Priority emergency response', '10% off repairs'],
+    popular: false,
+  },
+  {
+    name: 'Property',
+    price: '$599/mo',
+    items: [
+      'Monthly walk-through',
+      'Unit turnovers within 72 hours',
+      '4-hour emergency response',
+      '15% off repairs',
+    ],
+    popular: true,
+  },
+  {
+    name: 'Portfolio',
+    price: 'Custom',
+    items: ['Multiple properties', 'Dedicated project manager', 'Monthly reporting'],
+    popular: false,
+  },
+];

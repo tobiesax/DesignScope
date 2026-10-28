@@ -157,6 +157,12 @@ tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the re
       real quotes before launch. Its case study link currently points to `/projects/`
       rather than a specific case study page, since that template doesn't exist yet
       (tracked as a follow-up)
+- [ ] `/commercial/`'s "Service agreements" section (Essentials/Property/Portfolio plans) is
+      a Phase 2 piece in the design handoff, built at Tobi's request so Stephen can decide
+      whether to keep it — its own prices ($299/mo, $599/mo, Custom) are the handoff's exact
+      draft figures, explicitly labelled "draft placeholders for the client to confirm" in
+      both the handoff and on the page itself. Not real pricing until Stephen sets it; remove
+      the section entirely if he doesn't want to offer service agreements at all
 - [ ] Stephen hasn't reviewed any service-page copy yet. `/remodeling/kitchens/` and
       `/remodeling/bathrooms/` headline, subcopy and intro paragraphs (`src/data/services.ts`)
       are written from confirmed business.ts facts, not invented, but are unreviewed marketing
