@@ -103,6 +103,14 @@ README/SCOPE, built now at Tobi's explicit request rather than left out. The est
       **failed**: it's generic stock photography (a European-style tile roof, a new-build
       tract house, a glossy staged apartment interior — none of it reads as genuine Design
       Scope work, unlike the commercial and kitchen/bathroom sets), so none of it was used.
+- [ ] Showroom virtual tour video — the design handoff's "Virtual tour" section (Phase 2)
+      describes a pre-recorded "3-minute video tour of every display" with a clickable play
+      button and a timestamp badge. No such video exists, so built the section (at Tobi's
+      request) using only the half that's real right now: a live video walkthrough with a
+      designer (already a working option in the booking modal's "where" step). The thumbnail
+      and copy were adjusted to not claim a recorded tour exists — clicking the photo/play
+      button opens the real booking flow preset to "Video call" instead of playing a video.
+      Once Stephen records an actual tour video, add it back as a true playable clip.
       Real whole-home-renovation photos still need to come directly from Stephen
 - [ ] Restoration (hub, fire & smoke, water damage) has no real photos at all — not even a
       scraped single, since the live site's fire-and-smoke-damage-restoration and

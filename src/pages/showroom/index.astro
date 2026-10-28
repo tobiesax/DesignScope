@@ -130,6 +130,46 @@ const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${busin
     </div>
   </section>
 
+  <section class="grid items-center gap-7 px-4 pb-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))]">
+    <button
+      type="button"
+      data-open-booking
+      data-booking-preset={JSON.stringify({ where: 'Video call' })}
+      aria-label="Book a live video walkthrough"
+      class="group relative block h-[300px] w-full cursor-pointer overflow-hidden text-left"
+    >
+      <Image src={mockupImages.showroom} alt="" class="h-full w-full object-cover" />
+      <span class="absolute inset-0 flex items-center justify-center bg-[rgba(14,14,14,0.45)] transition-colors group-hover:bg-[rgba(14,14,14,0.55)]">
+        <span class="bg-brand flex h-[68px] w-[68px] items-center justify-center rounded-full text-[22px] font-black">
+          ▶
+        </span>
+      </span>
+      <span class="bg-dark text-paper absolute bottom-3.5 left-3.5 px-2.5 py-1.5 text-[11px] font-bold">
+        Live video walkthrough
+      </span>
+    </button>
+    <div class="flex flex-col gap-3">
+      <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+        Virtual tour
+      </span>
+      <h2 class="max-w-[640px] text-[26px] font-black tracking-tight sm:text-[34px]">
+        Walk the showroom from your sofa
+      </h2>
+      <span class="text-muted max-w-[640px] text-sm leading-relaxed">
+        A live video walkthrough with a designer, from anywhere — see every display without driving
+        in.
+      </span>
+      <a
+        href="/book/"
+        data-open-booking
+        data-booking-preset={JSON.stringify({ where: 'Video call' })}
+        class="border-ink self-start border-[1.5px] px-5 py-3.5 text-sm font-bold"
+      >
+        Book a live video walkthrough
+      </a>
+    </div>
+  </section>
+
   <section class="bg-brand grid items-center gap-6 px-4 py-11 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
     <div class="flex flex-col gap-2">
       <span class="text-ink text-[26px] leading-tight font-black tracking-tight">
