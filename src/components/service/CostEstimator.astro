@@ -38,7 +38,7 @@ const defaultRange = `${k(defaultLo)}–${k(defaultHi)}`;
 const defaultMonthly = formatMonthly(defaultLo);
 ---
 
-<section class="flex flex-col gap-5 px-4 py-13 sm:px-7">
+<section class="grid items-center gap-7 px-4 py-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))]">
   <div class="flex flex-col gap-2">
     <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
       Cost estimator
@@ -54,7 +54,7 @@ const defaultMonthly = formatMonthly(defaultLo);
 
   <div
     id={`est-${room}`}
-    class="bg-paper-muted flex max-w-[460px] flex-col gap-4 p-6"
+    class="bg-paper-muted flex flex-col gap-4 p-6"
     data-rates={config.rates.join(',')}
   >
     <div class="flex flex-col gap-2">
