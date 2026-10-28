@@ -17,7 +17,11 @@ const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<Layout title="Blog" description="Design and construction tips from Design Scope, Bloomfield CT.">
+<Layout
+  title="Blog"
+  description="Design and construction tips from Design Scope, Bloomfield CT."
+  active="blog"
+>
   <section class="flex flex-col gap-3.5 px-4 py-11 pb-6 sm:px-7">
     <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
       Advice &amp; ideas

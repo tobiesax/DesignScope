@@ -40,7 +40,7 @@ const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<Layout title={post.title} description={post.excerpt}>
+<Layout title={post.title} description={post.excerpt} active="blog">
   <nav aria-label="Breadcrumb" class="text-muted flex gap-1.5 px-4 py-4 text-xs sm:px-7">
     <a href="/blog/" class="hover:text-brand-dark font-bold">
       Blog

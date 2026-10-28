@@ -9,7 +9,7 @@ interface Props {
   // behaviour: restoration pages push a call, commercial pushes the quote
   // form. Everything else books a consultation.
   navVariant?: 'default' | 'restoration' | 'commercial';
-  active?: 'remodeling' | 'restoration' | 'commercial' | 'showroom' | 'projects';
+  active?: 'remodeling' | 'restoration' | 'commercial' | 'showroom' | 'projects' | 'blog';
 }
 
 const { navVariant = 'default', active } = Astro.props;
@@ -20,6 +20,7 @@ const navLinks = [
   { id: 'commercial', label: 'Commercial', href: '/commercial/' },
   { id: 'showroom', label: 'Showroom', href: '/showroom/' },
   { id: 'projects', label: 'Projects', href: '/projects/' },
+  { id: 'blog', label: 'Blog', href: '/blog/' },
 ] as const;
 
 const navCta =
