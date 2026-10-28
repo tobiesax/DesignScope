@@ -40,28 +40,36 @@ const steps = [
     </h2>
   </div>
 
-  <div class="grid grid-cols-1 gap-7 sm:grid-cols-4">
+  <div class="flex flex-col gap-5 sm:grid sm:grid-cols-4 sm:gap-7">
     {steps.map((step, i) => (
-      <div class="flex min-w-0 flex-col gap-3.5">
-        <div class="flex items-center">
+      <div
+        class:list={[
+          'flex min-w-0 items-start gap-4 border-b border-[#e8e8e8] pb-5 sm:flex-col sm:gap-3.5 sm:border-b-0 sm:pb-0 last:border-b-0 last:pb-0',
+        ]}
+      >
+        <div class="flex shrink-0 items-center sm:w-full">
           <span
             class:list={[
-              'flex h-12 w-12 flex-shrink-0 items-center justify-center border-2 border-ink text-[15px] font-black',
+              'flex h-11 w-11 flex-shrink-0 items-center justify-center border-2 border-ink text-[14px] font-black sm:h-12 sm:w-12 sm:text-[15px]',
               i === 3 ? 'bg-brand text-ink' : 'bg-white text-ink',
             ]}
           >
             {step.n}
           </span>
           <span
-            class:list={['h-0.5 flex-1', i === 3 ? 'bg-transparent' : 'bg-ink hidden sm:block']}
+            class:list={['hidden h-0.5 flex-1 sm:block', i === 3 ? 'bg-transparent' : 'bg-ink']}
           ></span>
         </div>
-        <span class="bg-[#f0f0f0] self-start px-1.5 py-0.5 text-[10px] font-extrabold tracking-[0.12em] uppercase">
-          {step.when}
-        </span>
-        <div class="flex flex-col gap-1.5 pr-5">
-          <span class="text-[18px] font-black tracking-tight">{step.t}</span>
-          <span class="text-muted max-w-[240px] text-[13.5px] leading-relaxed">{step.b}</span>
+        <div class="flex flex-1 flex-col gap-1.5 pt-0.5 sm:pt-0 sm:pr-5">
+          <div class="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start sm:gap-1.5">
+            <span class="bg-[#f0f0f0] self-start px-1.5 py-0.5 text-[10px] font-extrabold tracking-[0.12em] uppercase">
+              {step.when}
+            </span>
+            <span class="text-[17px] font-black tracking-tight sm:text-[18px]">{step.t}</span>
+          </div>
+          <span class="text-muted max-w-[240px] text-[13px] leading-relaxed sm:text-[13.5px]">
+            {step.b}
+          </span>
         </div>
       </div>
     ))}
