@@ -5,10 +5,9 @@ import { blogPosts, readTime } from '../../data/blog-posts';
 import { mockupImages } from '../../data/mockup-images';
 
 // Matches the GrowthOS design handoff's Blog page: category filters, a
-// featured post, then the rest as cards. Only the 2 real migrated posts'
-// own categories are offered as filters — the handoff's own filter list
-// (All/Kitchens/Bathrooms/Restoration/Showroom) would otherwise show
-// chips that always return zero results (CLAUDE.md rule 1).
+// featured post, then the rest as cards. Categories are derived from the
+// posts that actually exist, so a chip never returns zero results
+// (CLAUDE.md rule 1).
 const categories = ['All', ...Array.from(new Set(blogPosts.map((p) => p.category)))];
 const sorted = [...blogPosts].sort((a, b) => b.date.localeCompare(a.date));
 const [featured] = sorted;

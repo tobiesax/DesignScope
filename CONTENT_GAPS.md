@@ -82,7 +82,7 @@ README/SCOPE, built now at Tobi's explicit request rather than left out. The est
       laundry nook, a home bar area) were excluded as miscategorised on the live site.
 - [ ] `/remodeling/kitchens/` and `/remodeling/bathrooms/` hero photos were swapped (at
       Tobi's request) for two images he supplied directly (`src/assets/mockup-temp/subway-
-  tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the real
+tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the real
       scraped `kitchen-hero`/`bathroom-hero` photos above (still defined in
       `project-images.ts`, just no longer referenced). Both supplied images appear to be
       AI-enhanced/upscaled versions of the _same two rooms_ as the real photos they replaced
@@ -190,11 +190,20 @@ README/SCOPE, built now at Tobi's explicit request rather than left out. The est
       match it), and the footer/home service-area band already link to all 5 — but only the
       original 3 have a page built. Confirm the 3-vs-5 town scope with Stephen (it changes
       the BUILD_PLAN.md Week 4 scope) and build the remaining 2 pages either way
-- [ ] The 2 blog posts were migrated with the same title, slug, date and author as the live
-      site, but the body text is rewritten in our own words, not copied — the extraction tool
-      used to pull the live pages declined to reproduce their text verbatim (copyright), so
-      `src/data/blog-posts.ts` covers the same structure and facts in original phrasing
-      instead. Not wired into Keystatic yet (see "Infrastructure" below)
+- [ ] The 2 original blog posts were migrated with the same title, slug, date and author as
+      the live site, but the body text is rewritten in our own words, not copied — the
+      extraction tool used to pull the live pages declined to reproduce their text verbatim
+      (copyright), so `src/data/blog-posts.ts` covers the same structure and facts in
+      original phrasing instead. Not wired into Keystatic yet (see "Infrastructure" below)
+- [ ] 5 more blog posts added at Tobi's request, to seed organic/keyword SEO traffic: the
+      design handoff's blog mockup showed these same 5 titles/categories/excerpts as example
+      cards with no article behind them ("Water damage: what to do in the first hour",
+      "Quartz vs granite", "Aging in place: 7 bathroom upgrades", "Does homeowners insurance
+      cover mold?", "Planning a spring kitchen"). Written as general, accurate homeowner
+      advice — no invented Design Scope-specific stats, equipment or certifications — but
+      they're not Stephen-authored or fact-checked against how Design Scope actually works,
+      and they reuse the same temporary mockup images as everything else in this file. Have
+      Stephen review for accuracy/voice and swap in real photos before launch
 - [ ] `/reviews/` is now built but honestly has no reviews yet — it points to Google/Yelp
       instead of showing anything invented. Swap in real review content once collected
 - [ ] `/book/` has no live GoHighLevel calendar embed yet (`PUBLIC_GHL_BOOKING_URL` isn't
