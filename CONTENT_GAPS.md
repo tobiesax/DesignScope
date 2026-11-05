@@ -92,6 +92,12 @@ tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the re
       ("Bright Blue-Gray Subway Tile Kitchen.png"), not a camera original, so treat as
       unconfirmed/enhanced rather than a straight real photo until Stephen confirms. Swap for
       his real (unenhanced) photos before launch, same as everything else in this file.
+- [ ] The gallery's first kitchen photo ("White kitchen with reflective island", `kitchen1`)
+      and first bathroom photo ("Tub and double-sink vanity", `bathroom1`) were likewise
+      swapped for enhanced versions Tobi supplied directly — same room in each case (verified
+      side by side: same light fixture/cabinetry for the kitchen, same mirror/tub/vanity for
+      the bathroom), not a fresh scrape. Same unconfirmed/enhanced caveat as the hero photos
+      above; swap for Stephen's real unenhanced originals before launch.
 - [x] Commercial (5) project photos — REAL, scraped from the live site's own `/gallery` page
       (the "commercial-services-gallery-\*" image set) at Tobi's request. Checked for
       authenticity before use: internally consistent (the same few real spaces — two break

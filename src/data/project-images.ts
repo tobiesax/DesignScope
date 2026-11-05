@@ -5,14 +5,21 @@
 // invent one — see CONTENT_GAPS.md. Two kitchen-remodeling-gallery images
 // (a laundry nook and a home bar area) were excluded as miscategorised;
 // they aren't kitchens.
+//
+// kitchen1 and bathroom1 are each swapped for an edited/enhanced version of
+// the SAME room (same fixtures, same layout, same light fixture/mirror —
+// verified side by side), supplied directly by Tobi, not a fresh scrape.
+// Same treatment as mockup-images.ts's subway-tile-kitchen/spa-bathroom:
+// unconfirmed/enhanced rather than a straight camera original until Stephen
+// confirms — see CONTENT_GAPS.md.
 import kitchenHero from '../assets/projects/kitchen/gallery-07.jpg';
-import kitchen1 from '../assets/projects/kitchen/gallery-01.jpg';
+import kitchen1 from '../assets/projects/kitchen/gallery-01.png';
 import kitchen3 from '../assets/projects/kitchen/gallery-03.jpg';
 import kitchen5 from '../assets/projects/kitchen/gallery-05.jpg';
 import kitchen6 from '../assets/projects/kitchen/gallery-06.jpg';
 
 import bathroomHero from '../assets/projects/bathroom/hero.jpg';
-import bathroom1 from '../assets/projects/bathroom/gallery-01.jpg';
+import bathroom1 from '../assets/projects/bathroom/gallery-01.png';
 import bathroom2 from '../assets/projects/bathroom/gallery-02.jpg';
 import bathroom3 from '../assets/projects/bathroom/gallery-03.jpg';
 import bathroom4 from '../assets/projects/bathroom/gallery-04.jpg';
