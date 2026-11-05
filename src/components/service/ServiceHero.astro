@@ -38,6 +38,7 @@ const {
 ---
 
 <section
+  data-dark-section={urgent || undefined}
   class:list={[
     'grid items-stretch [grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))]',
     urgent && 'bg-dark-deep text-paper',
@@ -74,9 +75,12 @@ const {
 
     {urgent ? (
       <>
+        {/* Hidden on mobile: RestorationMobileBar already shows Call 24/7 +
+            Callback there, duplicating these same two actions (CLAUDE.md
+            "Mobile first" — the sticky bar covers it instead). */}
         <a
           href={`tel:${business.phone.mainTel}`}
-          class="call-now-pulse bg-urgent text-paper flex max-w-[420px] flex-col gap-0.5 px-5.5 py-4.5"
+          class="call-now-pulse bg-urgent text-paper hidden max-w-[420px] flex-col gap-0.5 px-5.5 py-4.5 md:flex"
         >
           <span class="text-[11px] font-bold tracking-[0.15em] uppercase">
             Call now · answered 24/7
@@ -85,14 +89,17 @@ const {
         </a>
         <a
           href={`#${callbackTargetId}`}
-          class="self-start border-b-[1.5px] border-paper text-[13px] font-bold"
+          class="hidden self-start border-b-[1.5px] border-paper text-[13px] font-bold md:inline-block"
         >
           Can't talk? Request a callback in 10 minutes
         </a>
       </>
     ) : (
       <>
-        <div class="flex flex-wrap gap-2.5">
+        {/* Hidden on mobile: Layout.astro's sticky bar already shows Book
+            free consultation + Call there, duplicating the primary CTA
+            (same reasoning as the home page hero). */}
+        <div class="hidden flex-wrap gap-2.5 md:flex">
           <a
             href={primaryCta.href}
             data-open-booking

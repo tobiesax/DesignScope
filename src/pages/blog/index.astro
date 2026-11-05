@@ -54,6 +54,7 @@ const formatDate = (iso: string) =>
     <div id="blog-featured" class="px-4 pb-6 sm:px-7" data-cat={featured.category}>
       <a
         href={`/blog/${featured.slug}/`}
+        data-dark-section
         class="bg-dark text-paper grid [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
       >
         <div class="min-h-[280px]">

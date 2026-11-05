@@ -9,7 +9,10 @@ const stats = [
 ];
 ---
 
-<section class="bg-dark text-paper grid [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
+<section
+  data-dark-section
+  class="bg-dark text-paper grid [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]"
+>
   {stats.map((s, i) => (
     <div
       class:list={[
