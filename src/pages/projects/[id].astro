@@ -113,7 +113,11 @@ const cta = isRestoration
             i === 0 && 'outline-brand outline-[3px] -outline-offset-[3px]',
           ]}
         >
-          <Image src={thumb} alt="" class="h-full w-full object-cover" />
+          <Image
+            src={thumb}
+            alt={`${cp.title} photo ${i + 1}`}
+            class="h-full w-full object-cover"
+          />
         </button>
       ))}
     </div>

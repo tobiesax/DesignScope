@@ -62,7 +62,7 @@ const formatDate = (iso: string) =>
   <div class="px-4 pt-7 sm:px-7">
     <Image
       src={mockupImages[post.image]}
-      alt=""
+      alt={post.title}
       class="h-[260px] w-full object-cover sm:h-[480px]"
     />
   </div>
@@ -105,7 +105,11 @@ const formatDate = (iso: string) =>
       <div class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))]">
         {related.map((p) => (
           <a href={`/blog/${p.slug}/`} class="card-hover flex flex-col gap-2.5 overflow-hidden">
-            <Image src={mockupImages[p.image]} alt="" class="h-[180px] w-full object-cover" />
+            <Image
+              src={mockupImages[p.image]}
+              alt={p.title}
+              class="h-[180px] w-full object-cover"
+            />
             <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
               {p.category} · {readTime(p)}
             </span>

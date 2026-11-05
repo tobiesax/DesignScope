@@ -16,7 +16,7 @@ const { service: s } = Astro.props;
 
 <div class="grid [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))] bg-white">
   <div class="bg-ink-soft relative min-h-[260px]">
-    <Image src={s.image} alt="" class="h-full w-full object-cover" />
+    <Image src={s.image} alt={s.headline} class="h-full w-full object-cover" />
     <div
       class="absolute inset-x-0 bottom-0 flex flex-wrap gap-1.5 p-5"
       style="background:linear-gradient(0deg,rgba(14,14,14,0.9),rgba(14,14,14,0))"

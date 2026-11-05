@@ -108,7 +108,11 @@ const budgetValue = (budget: string) => {
             {p.before && (
               <>
                 <div class="absolute inset-y-0 left-0 w-1/2 overflow-hidden border-r-[3px] border-brand">
-                  <Image src={p.before} alt="" class="h-full w-[200%] object-cover" />
+                  <Image
+                    src={p.before}
+                    alt={`${p.title} — before`}
+                    class="h-full w-[200%] object-cover"
+                  />
                 </div>
                 <span class="bg-dark text-paper absolute right-2.5 bottom-2.5 px-2 py-1 text-[10px] font-extrabold">
                   BEFORE / AFTER

@@ -58,7 +58,11 @@ const formatDate = (iso: string) =>
         class="bg-dark text-paper grid [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
       >
         <div class="min-h-[280px]">
-          <Image src={mockupImages[featured.image]} alt="" class="h-full w-full object-cover" />
+          <Image
+            src={mockupImages[featured.image]}
+            alt={featured.title}
+            class="h-full w-full object-cover"
+          />
         </div>
         <div class="flex flex-col gap-3 justify-center p-8">
           <span class="text-brand text-[10px] font-bold tracking-[0.3em] uppercase">
@@ -84,7 +88,11 @@ const formatDate = (iso: string) =>
         hidden={post.slug === featured?.slug}
         class="card-hover flex flex-col gap-2.5 overflow-hidden"
       >
-        <Image src={mockupImages[post.image]} alt="" class="h-[180px] w-full object-cover" />
+        <Image
+          src={mockupImages[post.image]}
+          alt={post.title}
+          class="h-[180px] w-full object-cover"
+        />
         <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
           {post.category} · {readTime(post)}
         </span>
