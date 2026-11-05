@@ -1,8 +1,9 @@
 ---
 // "See it before we build it" — matches the handoff's remodel page 3D
-// design section. The handoff's "3D render" image is explicitly a
-// placeholder ("image needed") since no real 3D renders exist yet
-// (CONTENT_GAPS.md); the "finished" photo reuses the hero-kitchen stand-in.
+// design section. The "3D render" slot now shows a hand-drawn/rendered-
+// style sketch Tobi supplied (still a temporary stand-in, not an actual
+// render of a real Design Scope project — CONTENT_GAPS.md); the
+// "finished" photo reuses the hero-kitchen stand-in.
 import { Image } from 'astro:assets';
 import { mockupImages } from '../../data/mockup-images';
 ---
@@ -22,10 +23,8 @@ import { mockupImages } from '../../data/mockup-images';
   </div>
   <div class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
     <div class="flex flex-col gap-2">
-      <div class="bg-ink-soft relative flex h-[280px] items-center justify-center">
-        <span class="text-muted-dark text-[11px] font-bold tracking-[0.2em] uppercase">
-          3D render · image needed
-        </span>
+      <div class="relative h-[280px]">
+        <Image src={mockupImages['3d-render-sketch']} alt="" class="h-full w-full object-cover" />
         <span class="absolute top-3 left-3 bg-white px-2 py-1 text-[10px] font-extrabold">
           DESIGN · WEEK 2
         </span>

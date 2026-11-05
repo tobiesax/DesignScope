@@ -98,6 +98,11 @@ tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the re
       side by side: same light fixture/cabinetry for the kitchen, same mirror/tub/vanity for
       the bathroom), not a fresh scrape. Same unconfirmed/enhanced caveat as the hero photos
       above; swap for Stephen's real unenhanced originals before launch.
+- [ ] `ThreeDDesignBlock.astro`'s "3D render · image needed" slot (Kitchens/Bathrooms pages)
+      previously had no image at all, per CLAUDE.md rule 1 — now filled with a hand-drawn/
+      rendered-style sketch Tobi supplied. Still not an actual 3D render of a real Design
+      Scope project; swap for a genuine render (or a real one from the design software used
+      at the client's own 3D-design step) before launch.
 - [x] Commercial (5) project photos — REAL, scraped from the live site's own `/gallery` page
       (the "commercial-services-gallery-\*" image set) at Tobi's request. Checked for
       authenticity before use: internally consistent (the same few real spaces — two break

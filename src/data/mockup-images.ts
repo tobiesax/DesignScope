@@ -45,12 +45,17 @@ import livingRoomSunset from '../assets/mockup-temp/living-room-sunset.png';
 // restoration page hero, a blog post, a case study and
 // DryOutToRebuild.astro, none of which this request was about.
 import emergencyPanel from '../assets/mockup-temp/emergency-panel.png';
+// ThreeDDesignBlock.astro's "3D render · image needed" slot — previously
+// hidden with no image at all (CLAUDE.md rule 1: no fake content), now
+// filled with a hand-drawn/rendered-style sketch Tobi supplied.
+import threeDRenderSketch from '../assets/mockup-temp/3d-render-sketch.png';
 
 export const mockupImages = {
   'ba-after': baAfter,
   'ba-before': baBefore,
   'living-room-sunset': livingRoomSunset,
   'emergency-panel': emergencyPanel,
+  '3d-render-sketch': threeDRenderSketch,
   'cat-cabinetry': catCabinetry,
   'cat-countertops': catCountertops,
   'cat-fixtures': catFixtures,
