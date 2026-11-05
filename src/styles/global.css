@@ -177,6 +177,22 @@ button[class*='bg-dark']:not([class*='bg-dark-deep']):active {
   transform: scale(0.97);
 }
 
+/* A little rounding on real CTA buttons/links only, at Tobi's request —
+   everything else (cards, panels, badges, photos) keeps the handoff's
+   "square corners everywhere" rule from the reset above; this is a
+   scoped, deliberate exception, not a reversal of it. */
+a[class*='bg-brand'],
+button[class*='bg-brand'],
+a[class*='bg-urgent'],
+button[class*='bg-urgent'],
+a[class*='bg-dark']:not([class*='bg-dark-deep']),
+button[class*='bg-dark']:not([class*='bg-dark-deep']),
+a[class*='border-brand'],
+a[class*='border-dark'],
+a[class*='border-paper'] {
+  border-radius: 4px;
+}
+
 /* Outline CTAs have no fill to brighten, so they get a soft tint instead. */
 a[class*='border-dark']:hover,
 a[class*='border-brand']:hover {
