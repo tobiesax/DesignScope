@@ -51,9 +51,12 @@ import emergencyPanel from '../assets/mockup-temp/emergency-panel.png';
 import threeDRenderSketch from '../assets/mockup-temp/3d-render-sketch.png';
 // ThreeDDesignBlock.astro's "finished kitchen" photo — previously reused
 // `hero-kitchen`, which is also shared by the home hero, the West
-// Hartford town page, the style quiz and a case study/blog post. A
-// distinct key instead, so this swap doesn't touch any of those.
+// Hartford town page, and a case study/blog post. A distinct key
+// instead, so this swap doesn't touch any of those.
 import threeDRenderFinished from '../assets/mockup-temp/3d-render-finished.png';
+// StyleQuiz.astro's "Modern" option photo — same reasoning: was
+// `hero-kitchen` too, now its own key.
+import quizModern from '../assets/mockup-temp/quiz-modern.png';
 
 export const mockupImages = {
   'ba-after': baAfter,
@@ -62,6 +65,7 @@ export const mockupImages = {
   'emergency-panel': emergencyPanel,
   '3d-render-sketch': threeDRenderSketch,
   '3d-render-finished': threeDRenderFinished,
+  'quiz-modern': quizModern,
   'cat-cabinetry': catCabinetry,
   'cat-countertops': catCountertops,
   'cat-fixtures': catFixtures,
