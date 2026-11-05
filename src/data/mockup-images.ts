@@ -40,11 +40,17 @@ import spaBathroom from '../assets/mockup-temp/spa-bathroom.png';
 // New hero-carousel slide, supplied directly by Tobi — there was no
 // living-room/home-renovations photo in the carousel before (CONTENT_GAPS.md).
 import livingRoomSunset from '../assets/mockup-temp/living-room-sunset.png';
+// EmergencyPanel.astro's background only — a distinct key rather than
+// replacing `restoration` above, since that key is also shared by the
+// restoration page hero, a blog post, a case study and
+// DryOutToRebuild.astro, none of which this request was about.
+import emergencyPanel from '../assets/mockup-temp/emergency-panel.png';
 
 export const mockupImages = {
   'ba-after': baAfter,
   'ba-before': baBefore,
   'living-room-sunset': livingRoomSunset,
+  'emergency-panel': emergencyPanel,
   'cat-cabinetry': catCabinetry,
   'cat-countertops': catCountertops,
   'cat-fixtures': catFixtures,
