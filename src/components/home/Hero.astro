@@ -53,9 +53,13 @@ const slides = [
     </div>
   ))}
 
+  <!-- Two stacked gradients: the original bottom fade, plus a left-side
+       fade over it — the text content below sits bottom-left, so the
+       left side needs its own darkening independent of how bright that
+       slide's photo is on the right. -->
   <div
     class="pointer-events-none absolute inset-0"
-    style="background:linear-gradient(0deg,rgba(14,14,14,0.94),rgba(14,14,14,0.62) 45%,rgba(14,14,14,0.25) 75%,rgba(14,14,14,0.05) 100%)"
+    style="background:linear-gradient(90deg,rgba(14,14,14,0.85) 0%,rgba(14,14,14,0.55) 35%,rgba(14,14,14,0.15) 65%,rgba(14,14,14,0) 85%),linear-gradient(0deg,rgba(14,14,14,0.94),rgba(14,14,14,0.62) 45%,rgba(14,14,14,0.25) 75%,rgba(14,14,14,0.05) 100%)"
   ></div>
 
   <button
