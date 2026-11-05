@@ -28,7 +28,7 @@ import resFire from '../assets/mockup-temp/res-fire.png';
 import resMold from '../assets/mockup-temp/res-mold.png';
 import resStorm from '../assets/mockup-temp/res-storm.png';
 import restoration from '../assets/mockup-temp/restoration.jpg';
-import showroom from '../assets/mockup-temp/showroom.jpg';
+import showroom from '../assets/mockup-temp/showroom.png';
 // Supplied directly by Tobi (not from the design handoff) to replace the
 // Kitchens/Bathrooms hero photos. Generic, non-project-specific filenames
 // ("Bright Blue-Gray Subway Tile Kitchen", "Luxury Gray Tile Spa Bathroom")
