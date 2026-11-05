@@ -31,10 +31,17 @@
   const btn = document.getElementById('back-to-top');
   if (btn) {
     const onScroll = () => {
-      btn.hidden = window.scrollY < window.innerHeight * 0.8;
+      // On a short page (e.g. /offers/) scrollY never reaches 80% of one
+      // viewport height, so the button would never un-hide at all — also
+      // show it once there's not much page left below, which is exactly
+      // when "back to top" is most useful anyway.
+      const nearBottom =
+        window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 200;
+      btn.hidden = window.scrollY < window.innerHeight * 0.8 && !nearBottom;
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
 
     btn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
