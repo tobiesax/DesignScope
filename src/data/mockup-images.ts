@@ -6,7 +6,7 @@
 // showroom photos, and delete src/assets/mockup-temp/, before Week 5 QA —
 // see CONTENT_GAPS.md "Assets".
 import baAfter from '../assets/mockup-temp/ba-after.jpg';
-import baBefore from '../assets/mockup-temp/ba-before.jpg';
+import baBefore from '../assets/mockup-temp/ba-before.png';
 import catCabinetry from '../assets/mockup-temp/cat-cabinetry.png';
 import catCountertops from '../assets/mockup-temp/cat-countertops.png';
 import catFixtures from '../assets/mockup-temp/cat-fixtures.png';
@@ -19,7 +19,7 @@ import dsShowroom from '../assets/mockup-temp/ds-showroom.jpeg';
 import heroKitchen from '../assets/mockup-temp/hero-kitchen.png';
 import pathCommercial from '../assets/mockup-temp/path-commercial.png';
 import pathRemodeling from '../assets/mockup-temp/path-remodeling.png';
-import projBathAvon from '../assets/mockup-temp/proj-bath-avon.jpg';
+import projBathAvon from '../assets/mockup-temp/proj-bath-avon.png';
 import projGalleyBloomfield from '../assets/mockup-temp/proj-galley-bloomfield.jpg';
 import projOfficeHartford from '../assets/mockup-temp/proj-office-hartford.png';
 import projRenovationSimsbury from '../assets/mockup-temp/proj-renovation-simsbury.png';
@@ -37,10 +37,14 @@ import showroom from '../assets/mockup-temp/showroom.jpg';
 // Stephen's real photos before launch. See CONTENT_GAPS.md.
 import subwayTileKitchen from '../assets/mockup-temp/subway-tile-kitchen.png';
 import spaBathroom from '../assets/mockup-temp/spa-bathroom.png';
+// New hero-carousel slide, supplied directly by Tobi — there was no
+// living-room/home-renovations photo in the carousel before (CONTENT_GAPS.md).
+import livingRoomSunset from '../assets/mockup-temp/living-room-sunset.png';
 
 export const mockupImages = {
   'ba-after': baAfter,
   'ba-before': baBefore,
+  'living-room-sunset': livingRoomSunset,
   'cat-cabinetry': catCabinetry,
   'cat-countertops': catCountertops,
   'cat-fixtures': catFixtures,
