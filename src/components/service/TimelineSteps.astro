@@ -23,13 +23,13 @@ const { heading, subcopy, steps } = Astro.props;
         <div
           class:list={[
             'flex flex-col gap-2 px-5 py-5.5',
-            isLast ? 'bg-brand text-ink' : 'bg-dark text-paper',
+            isLast ? 'bg-brand-dark text-paper' : 'bg-dark text-paper',
           ]}
         >
           <span
             class:list={[
               'text-[11px] font-extrabold tracking-[0.15em] uppercase',
-              isLast ? 'text-ink' : 'text-red-on-dark',
+              isLast ? 'text-paper' : 'text-red-on-dark',
             ]}
           >
             {step.when}

@@ -37,13 +37,13 @@ const {
         <div
           class:list={[
             'flex flex-col gap-2.5 px-5 py-5.5',
-            isLast ? 'bg-brand text-ink' : 'bg-dark text-paper',
+            isLast ? 'bg-brand-dark text-paper' : 'bg-dark text-paper',
           ]}
         >
           <span
             class:list={[
               'text-[30px] font-black tracking-tight',
-              isLast ? 'text-ink' : 'text-brand',
+              isLast ? 'text-paper' : 'text-brand',
             ]}
           >
             {String(i + 1).padStart(2, '0')}
