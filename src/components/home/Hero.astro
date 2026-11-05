@@ -71,7 +71,11 @@ const slides = [
     <span class="text-[15px] leading-relaxed font-medium text-[#ededed]">
       Family-owned in Connecticut. See it in our showroom, get your written quote in 24 hours.
     </span>
-    <div class="flex flex-wrap gap-2">
+    <!-- Hidden on mobile: Layout.astro's sticky bottom bar already covers
+         Book free consultation + Call there (CLAUDE.md "Mobile first" —
+         the phone number and Book button stay reachable on every page,
+         just via that bar instead of a second, duplicate set of CTAs). -->
+    <div class="hidden flex-wrap gap-2 md:flex">
       <a
         href="/book/"
         data-open-booking
