@@ -3,7 +3,7 @@
 // design section. The "3D render" slot now shows a hand-drawn/rendered-
 // style sketch Tobi supplied (still a temporary stand-in, not an actual
 // render of a real Design Scope project — CONTENT_GAPS.md); the
-// "finished" photo reuses the hero-kitchen stand-in.
+// "finished" photo is its own dedicated stand-in, supplied by Tobi.
 import { Image } from 'astro:assets';
 import { mockupImages } from '../../data/mockup-images';
 ---
@@ -33,7 +33,7 @@ import { mockupImages } from '../../data/mockup-images';
     </div>
     <div class="flex flex-col gap-2">
       <div class="relative h-[280px]">
-        <Image src={mockupImages['hero-kitchen']} alt="" class="h-full w-full object-cover" />
+        <Image src={mockupImages['3d-render-finished']} alt="" class="h-full w-full object-cover" />
         <span class="bg-brand text-ink absolute top-3 left-3 px-2 py-1 text-[10px] font-extrabold">
           FINISHED · WEEK 9
         </span>

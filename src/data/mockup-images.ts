@@ -49,6 +49,11 @@ import emergencyPanel from '../assets/mockup-temp/emergency-panel.png';
 // hidden with no image at all (CLAUDE.md rule 1: no fake content), now
 // filled with a hand-drawn/rendered-style sketch Tobi supplied.
 import threeDRenderSketch from '../assets/mockup-temp/3d-render-sketch.png';
+// ThreeDDesignBlock.astro's "finished kitchen" photo — previously reused
+// `hero-kitchen`, which is also shared by the home hero, the West
+// Hartford town page, the style quiz and a case study/blog post. A
+// distinct key instead, so this swap doesn't touch any of those.
+import threeDRenderFinished from '../assets/mockup-temp/3d-render-finished.png';
 
 export const mockupImages = {
   'ba-after': baAfter,
@@ -56,6 +61,7 @@ export const mockupImages = {
   'living-room-sunset': livingRoomSunset,
   'emergency-panel': emergencyPanel,
   '3d-render-sketch': threeDRenderSketch,
+  '3d-render-finished': threeDRenderFinished,
   'cat-cabinetry': catCabinetry,
   'cat-countertops': catCountertops,
   'cat-fixtures': catFixtures,
