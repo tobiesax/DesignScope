@@ -134,6 +134,20 @@ button {
     opacity 180ms ease;
 }
 
+/* Real buttons/links filled with the bright orange (bg-brand) get white
+   text on the darker orange instead of the handoff's dark-on-bright
+   pairing — at Tobi's request ("brown on orange" look/feel). Scoped to
+   <a>/<button> only, so it leaves every decorative bg-brand badge, tag
+   and step-number (all <span>/<div>, never <a>/<button>) on the
+   original bright-orange + dark-text treatment. White-on-bright-orange
+   would only hit ~3:1 contrast, below CLAUDE.md's 4.5:1 rule — the
+   darker orange gets ~5.1:1, so this keeps both the look and the rule. */
+a[class*='bg-brand']:not([class*='bg-brand-dark']),
+button[class*='bg-brand']:not([class*='bg-brand-dark']) {
+  background-color: var(--color-brand-dark);
+  color: var(--color-paper);
+}
+
 /* Filled CTAs (bg-brand / bg-urgent / bg-dark) — targets the existing
    utility classes directly rather than introducing a Button component. */
 a[class*='bg-brand']:not([class*='bg-brand-dark']),
