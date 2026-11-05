@@ -141,7 +141,7 @@ const localBusinessLd = {
     </main>
     <Footer />
     {mobileBar && (
-      <div class="sticky bottom-0 z-30 grid grid-cols-[2fr_1fr] md:hidden">
+      <div id="mobile-sticky-bar" class="sticky bottom-0 z-30 grid grid-cols-[2fr_1fr] md:hidden">
         <a
           href={mobileBar.href}
           data-open-booking={mobileBar.href === '/book/' ? true : undefined}

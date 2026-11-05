@@ -193,6 +193,15 @@ a[class*='border-paper'] {
   border-radius: 4px;
 }
 
+/* Exception: the mobile sticky CTA bar (Layout.astro) sits flush against
+   the viewport's bottom edge, so it keeps square corners rather than the
+   4px rounding above — at Tobi's request. The id gives this enough
+   specificity to win over the attribute-selector rule regardless of
+   source order. */
+#mobile-sticky-bar a {
+  border-radius: 0;
+}
+
 /* Outline CTAs have no fill to brighten, so they get a soft tint instead. */
 a[class*='border-dark']:hover,
 a[class*='border-brand']:hover {
