@@ -54,9 +54,41 @@ const navCta =
       class="bg-paper-muted flex flex-1 basis-[220px] items-center gap-2 px-4 py-2.5 sm:px-7"
     >
       <span class="bg-bbb-green inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full"></span>
-      <span class="font-medium">Showroom open {business.hours.weekday}</span>
+      <span class="inline-flex items-center gap-1.5 font-medium">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          class="flex-shrink-0"
+        >
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7v5l3 2" />
+        </svg>
+        Showroom open {business.hours.weekday}
+      </span>
       <span aria-hidden="true">·</span>
-      <strong>
+      <strong class="inline-flex items-center gap-1.5">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          class="flex-shrink-0"
+        >
+          <path d="M12 21s7-7.58 7-12a7 7 0 1 0-14 0c0 4.42 7 12 7 12z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
         {business.showroom.streetAddress}, {business.showroom.city}
       </strong>
     </a>
