@@ -29,7 +29,7 @@ const navCta =
         label: `Call 24/7 ${business.phone.main}`,
         shortLabel: 'Call 24/7',
         href: `tel:${business.phone.mainTel}`,
-        class: 'bg-urgent text-paper',
+        class: 'bg-paper text-urgent',
       }
     : navVariant === 'commercial'
       ? {
@@ -58,7 +58,7 @@ const navCta =
     </a>
     <a
       href={`tel:${business.phone.mainTel}`}
-      class="bg-urgent text-paper flex flex-1 basis-[220px] items-center justify-start gap-2 px-4 py-2.5 sm:justify-end sm:px-7"
+      class="bg-paper text-urgent flex flex-1 basis-[220px] items-center justify-start gap-2 px-4 py-2.5 sm:justify-end sm:px-7"
     >
       <span class="font-medium">Water or fire damage?</span>
       <strong>24/7 {business.phone.main}</strong>
