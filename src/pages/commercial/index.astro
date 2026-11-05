@@ -36,6 +36,8 @@ const galleryProjects = commercialProjects.map((project) => ({
       class="absolute inset-0 h-full w-full object-cover"
       widths={[640, 1024, 1600]}
       sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
     />
     <div
       class="absolute inset-0"

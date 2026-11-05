@@ -136,7 +136,17 @@ const localBusinessLd = {
       </noscript>
     )}
     <Header navVariant={navVariant} active={active} />
-    <main>
+    <!-- pb-16 keeps the footer's own content clear of the mobile sticky
+         bar (this one, or a page's own RestorationMobileBar), which is
+         `sticky bottom-0` and stays pinned to the viewport bottom for
+         as long as there's more page below it to scroll through.
+         It does NOT fix every case of the bar covering content earlier
+         in the page — e.g. Lighthouse's touch-target audit still flags
+         /showroom/'s "Get directions" button, which sits close to the
+         viewport bottom on a small screen even without scrolling.
+         That needs a different fix (move the button, or reserve space
+         in that specific section) — not resolved yet. -->
+    <main class="pb-16 md:pb-0">
       <slot />
     </main>
     <Footer />

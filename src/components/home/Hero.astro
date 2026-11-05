@@ -39,7 +39,14 @@ const slides = [
       ]}
       data-index={i}
     >
-      <Image src={mockupImages[slide.key]} alt="" widths={[640, 1024, 1600]} sizes="100vw" />
+      <Image
+        src={mockupImages[slide.key]}
+        alt=""
+        widths={[640, 1024, 1600]}
+        sizes="100vw"
+        loading={i === 0 ? 'eager' : 'lazy'}
+        fetchpriority={i === 0 ? 'high' : 'auto'}
+      />
       {slide.tag && (
         <span
           class:list={[
