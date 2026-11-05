@@ -1,18 +1,18 @@
 ---
-// Trust badge strip, directly under the hero — matches the design
-// handoff's "Global components → Trust badges" exactly on desktop
-// (a static wrapped row). On mobile it's a continuous right-to-left
-// marquee instead, at Tobi's request — the credential list rendered
-// twice back to back so a -50% translateX loop has no visible seam,
-// paused under prefers-reduced-motion (global.css). The BBB and
+// Trust badge strip, directly under the hero — a continuous
+// right-to-left marquee on every breakpoint now (was desktop-static,
+// mobile-marquee; widened to desktop too at Tobi's request). The
+// credential list is rendered twice back to back so a -50%
+// translateX loop has no visible seam, paused under
+// prefers-reduced-motion (global.css) and on hover. The BBB and
 // Houzz badges are unconfirmed placeholders (CONTENT_GAPS.md); swap
 // for the official member artwork once Stephen confirms them.
 import { business } from '../../data/business';
 import TrustBadgeItem from './TrustBadgeItem.astro';
 ---
 
-<section class="border-border-soft border-b bg-white py-4.5 sm:px-7">
-  <div class="marquee-mask overflow-hidden sm:hidden">
+<section class="border-border-soft border-b bg-white py-4.5">
+  <div class="marquee-mask overflow-hidden">
     <div class="marquee-track flex w-max gap-2">
       {business.credentials.map((c) => (
         <TrustBadgeItem credential={c} />
@@ -21,11 +21,5 @@ import TrustBadgeItem from './TrustBadgeItem.astro';
         <TrustBadgeItem credential={c} hidden />
       ))}
     </div>
-  </div>
-
-  <div class="hidden flex-wrap justify-center gap-2 px-4 sm:flex sm:px-0">
-    {business.credentials.map((c) => (
-      <TrustBadgeItem credential={c} />
-    ))}
   </div>
 </section>
