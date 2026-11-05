@@ -51,28 +51,32 @@ const navCta =
   <div class="flex flex-wrap text-[11.5px] font-semibold">
     <a
       href="/showroom/"
-      class="bg-paper-muted flex flex-1 basis-[220px] items-center gap-2 px-4 py-2.5 sm:px-7"
+      class="bg-paper-muted flex flex-1 basis-[220px] flex-col items-start gap-1 px-4 py-2.5 sm:flex-row sm:items-center sm:gap-2 sm:px-7"
     >
-      <span class="bg-bbb-green inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full"></span>
-      <span class="inline-flex items-center gap-1.5 font-medium">
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-          class="flex-shrink-0"
-        >
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 7v5l3 2" />
-        </svg>
-        Showroom open {business.hours.weekday}
+      <span class="inline-flex items-center gap-2">
+        <span class="bg-bbb-green inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full"></span>
+        <span class="inline-flex items-center gap-1.5 font-medium">
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            class="flex-shrink-0"
+          >
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3 2" />
+          </svg>
+          Showroom open {business.hours.weekday}
+        </span>
       </span>
-      <span aria-hidden="true">·</span>
+      <span aria-hidden="true" class="hidden sm:inline">
+        ·
+      </span>
       <strong class="inline-flex items-center gap-1.5">
         <svg
           width="12"
