@@ -77,7 +77,7 @@ const navCta =
           <li>
             <a
               href={link.href}
-              class={`block px-2.5 py-2 text-[12.5px] font-bold whitespace-nowrap ${
+              class={`block px-2.5 py-2 text-[12.5px] font-bold whitespace-nowrap uppercase ${
                 active === link.id
                   ? link.id === 'restoration'
                     ? 'text-paper border-urgent border-b-2'
@@ -134,7 +134,7 @@ const navCta =
     {navLinks.map((link) => (
       <a
         href={link.href}
-        class={`border-[#2a2a2a] border-b py-3.5 text-base font-extrabold ${
+        class={`border-[#2a2a2a] border-b py-3.5 text-base font-extrabold uppercase ${
           link.id === 'restoration' ? 'text-red-on-dark' : 'text-paper'
         }`}
       >
