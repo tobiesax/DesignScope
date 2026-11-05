@@ -83,15 +83,15 @@ const slides = [
       Family-owned in Connecticut since 2016. Remodeling, restoration and commercial work, all from
       one team, with a written quote in 24 hours.
     </span>
-    <!-- Hidden on mobile: Layout.astro's sticky bottom bar already covers
-         Book free consultation + Call there (CLAUDE.md "Mobile first" —
-         the phone number and Book button stay reachable on every page,
-         just via that bar instead of a second, duplicate set of CTAs). -->
-    <div class="hidden flex-wrap gap-2 md:flex">
+    <div class="flex flex-wrap gap-2">
+      <!-- Hidden on mobile only: Layout.astro's sticky bottom bar already
+           covers Book free consultation + Call there (CLAUDE.md "Mobile
+           first"). "Explore Remodeling" has no sticky-bar equivalent, so
+           it stays visible on every screen size. -->
       <a
         href="/book/"
         data-open-booking
-        class="bg-brand text-ink px-5 py-3.5 text-[13px] font-extrabold"
+        class="bg-brand text-ink hidden px-5 py-3.5 text-[13px] font-extrabold md:inline-block"
       >
         Book free consultation
       </a>

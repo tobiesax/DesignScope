@@ -96,14 +96,16 @@ const {
       </>
     ) : (
       <>
-        {/* Hidden on mobile: Layout.astro's sticky bar already shows Book
-            free consultation + Call there, duplicating the primary CTA
-            (same reasoning as the home page hero). */}
-        <div class="hidden flex-wrap gap-2.5 md:flex">
+        <div class="flex flex-wrap gap-2.5">
+          {/* Hidden on mobile only: Layout.astro's sticky bar already
+              shows Book free consultation + Call there, duplicating the
+              primary CTA (same reasoning as the home page hero).
+              secondaryCta has no sticky-bar equivalent, so it stays
+              visible on every screen size. */}
           <a
             href={primaryCta.href}
             data-open-booking
-            class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold"
+            class="bg-brand text-ink hidden px-5 py-3.5 text-sm font-extrabold md:inline-block"
           >
             {primaryCta.label}
           </a>
