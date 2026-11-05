@@ -57,6 +57,10 @@ import threeDRenderFinished from '../assets/mockup-temp/3d-render-finished.png';
 // StyleQuiz.astro's "Modern" option photo — same reasoning: was
 // `hero-kitchen` too, now its own key.
 import quizModern from '../assets/mockup-temp/quiz-modern.png';
+// DryOutToRebuild.astro's "after" slot — previously an explicit "After
+// photo needed" placeholder box with no image at all (CLAUDE.md rule 1),
+// now a rebuilt-space stand-in Tobi supplied.
+import dryOutAfter from '../assets/mockup-temp/dry-out-after.png';
 
 export const mockupImages = {
   'ba-after': baAfter,
@@ -65,6 +69,7 @@ export const mockupImages = {
   'emergency-panel': emergencyPanel,
   '3d-render-sketch': threeDRenderSketch,
   '3d-render-finished': threeDRenderFinished,
+  'dry-out-after': dryOutAfter,
   'quiz-modern': quizModern,
   'cat-cabinetry': catCabinetry,
   'cat-countertops': catCountertops,

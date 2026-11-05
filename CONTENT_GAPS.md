@@ -131,9 +131,11 @@ tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the re
       fetching them directly). Each page now uses its own design-handoff scenario image
       (`res-fire.png`, `res-storm.png`, `res-mold.png`, `restoration.jpg`) instead of one
       generic photo reused three times, but none are real (`src/data/restoration.ts`,
-      `hubServices`). The hub's "Dry-out to rebuild" section needs a real rebuilt-space
-      photo too — it currently shows an explicit "After photo needed" placeholder rather
-      than reusing the before photo as a fake after (CLAUDE.md rule 1)
+      `hubServices`). The hub's "Dry-out to rebuild" section's "after" slot now shows a
+      rebuilt-space stand-in Tobi supplied (`dry-out-after` in `mockup-images.ts`), replacing
+      the "After photo needed" placeholder — still not a real Design Scope project, and not
+      the same room as the "before" photo (CLAUDE.md rule 1 — no fake before/after implied),
+      just a representative pair. Swap for a real rebuilt-room photo before launch
 - [ ] Restoration's "~60 min" typical-arrival stat (`RestorationStats.astro`) is the design
       handoff's own placeholder figure, not a real operational number — confirm Hartford
       County's actual typical arrival time with Stephen before launch; this is a concrete

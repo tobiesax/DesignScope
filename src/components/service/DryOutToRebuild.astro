@@ -1,11 +1,12 @@
 ---
 // "Dry-out to rebuild" — the handoff shows this as a drag-to-compare
-// slider, but its own before and after images are the same photo (its
-// "after" slot is explicitly labelled "photo needed"). Dragging a slider
-// across one photo would imply a real transformation that doesn't exist
-// (CLAUDE.md rule 1), so this shows an honest side-by-side instead: a real
-// stand-in photo for "before", and a plainly-labelled placeholder for
-// "after" until a real rebuilt-space photo exists (CONTENT_GAPS.md).
+// slider, but its own before and after images are the same photo. Dragging
+// a slider across one photo would imply a real transformation that doesn't
+// exist (CLAUDE.md rule 1), so this shows an honest side-by-side instead:
+// a stand-in "before" (drying equipment) and now a stand-in "after"
+// (rebuilt-space photo Tobi supplied, replacing the "photo needed"
+// placeholder) — still not the same real room, so not a true before/after,
+// just a representative pair (CONTENT_GAPS.md).
 import { Image } from 'astro:assets';
 import { mockupImages } from '../../data/mockup-images';
 ---
@@ -26,10 +27,12 @@ import { mockupImages } from '../../data/mockup-images';
         BEFORE
       </span>
     </div>
-    <div class="bg-ink-soft relative flex h-[260px] items-center justify-center sm:h-[320px]">
-      <span class="text-muted-dark max-w-[200px] text-center text-[11px] font-bold tracking-[0.15em] uppercase">
-        After photo needed · rebuilt space
-      </span>
+    <div class="relative h-[260px] sm:h-[320px]">
+      <Image
+        src={mockupImages['dry-out-after']}
+        alt="Rebuilt and finished living space after restoration"
+        class="h-full w-full object-cover"
+      />
       <span class="bg-brand-dark text-paper absolute top-3 right-3 px-2 py-1 text-[10px] font-extrabold">
         AFTER
       </span>
