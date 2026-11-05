@@ -1,0 +1,42 @@
+---
+import type { business } from '../../data/business';
+
+interface Props {
+  credential: (typeof business.credentials)[number];
+  hidden?: boolean;
+}
+
+const { credential: c, hidden = false } = Astro.props;
+---
+
+<div
+  class="border-border hover:border-ink box-border flex min-w-0 flex-shrink-0 items-center gap-2.5 border py-2 pr-4 pl-2"
+  aria-hidden={hidden ? 'true' : undefined}
+>
+  <span class="bg-ink relative flex h-11 w-11 flex-shrink-0 items-center justify-center">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      {c.icon.split(' M').map((segment, j) => (
+        <path d={j === 0 ? segment : `M${segment}`} />
+      ))}
+    </svg>
+    {c.mark && (
+      <span class="bg-brand-dark text-paper absolute -right-1.5 -bottom-1.5 px-1 py-0.5 text-[9px] leading-[1.1] font-black">
+        {c.mark}
+      </span>
+    )}
+  </span>
+  <div class="flex min-w-0 flex-col gap-0.5 whitespace-nowrap">
+    <span class="text-[12.5px] leading-tight font-extrabold">{c.title}</span>
+    <span class="text-muted truncate text-[10.5px]">{c.sub}</span>
+  </div>
+</div>

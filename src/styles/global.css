@@ -211,6 +211,26 @@ a[class*='border-paper']:hover {
   background-color: rgb(255 255 255 / 0.12);
 }
 
+/* Trust badge marquee (TrustBadges.astro, mobile only) — the credential
+   list is rendered twice back to back, so translating exactly -50% loops
+   seamlessly from the end of the first copy back to the start of the
+   second. prefers-reduced-motion is already handled by the universal
+   override below. */
+@keyframes trust-badge-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: trust-badge-marquee 22s linear infinite;
+}
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+
 /* Home hero slideshow — slow Ken Burns on whichever slide is active
    (Hero.astro), alternating pan direction per the handoff. Both keyframes
    must start at the image's resting transform (scale(1), no translate) —
