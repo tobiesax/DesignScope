@@ -25,7 +25,7 @@ export const business = {
   email: 'contact@designscopellc.com',
 
   hours: {
-    weekday: 'Mon–Fri 9:00 am–5:00 pm',
+    weekday: 'Monday to Friday, 9:00 am to 5:00 pm',
     weekend: 'By appointment only',
     // TODO: confirm weekend policy and same-day availability wording — see CONTENT_GAPS.md
   },
