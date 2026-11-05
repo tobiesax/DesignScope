@@ -16,7 +16,7 @@ import dsHero from '../assets/mockup-temp/ds-hero.jpeg';
 import dsKitchen from '../assets/mockup-temp/ds-kitchen.jpeg';
 import dsResidential from '../assets/mockup-temp/ds-residential.jpeg';
 import dsShowroom from '../assets/mockup-temp/ds-showroom.jpeg';
-import heroKitchen from '../assets/mockup-temp/hero-kitchen.jpg';
+import heroKitchen from '../assets/mockup-temp/hero-kitchen.png';
 import pathCommercial from '../assets/mockup-temp/path-commercial.png';
 import pathRemodeling from '../assets/mockup-temp/path-remodeling.png';
 import projBathAvon from '../assets/mockup-temp/proj-bath-avon.jpg';
