@@ -227,10 +227,16 @@ tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the re
 
 ## SEO
 
-- [ ] Re-crawl designscopellc.com and check Search Console's indexed pages against
-      `vercel.json`'s redirect list — it was drafted from HANDOFF.md section 5 only, not a
-      live crawl (BUILD_PLAN.md Week 1)
+- [x] Re-crawl designscopellc.com — fetched its actual `/sitemap.xml` (BUILD_PLAN.md Week 5)
+      and found ~126 auto-generated local-SEO pages (`/sap/kitchen-remodeling/{town}`,
+      `/sap/bathroom-remodeling-companies/{town}`) plus 2 duplicate homepage variants
+      (`/cat-landing`, `/core-page`) that HANDOFF.md section 5's original redirect map
+      (drafted from the handoff doc only, not a crawl) had completely missed. All now in
+      `vercel.json`. Still can't check this against Search Console's actual indexed-pages
+      list — no access to that account yet (CONTENT_GAPS.md "Access")
 - [ ] Baseline SEO: indexed pages, top queries (Search Console), current Lighthouse scores
+      of the _live_ site (designscopellc.com) — blocked on Search Console access, same as
+      above. The new site's own Lighthouse scores are recorded in BUILD_PLAN.md Week 5
 
 ## Infrastructure
 

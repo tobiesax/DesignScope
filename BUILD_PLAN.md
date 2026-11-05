@@ -158,7 +158,21 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
 ## Week 5: Launch the website
 
 - [ ] **[repo]** QA on real phones (iOS + Android), forms end to end, every redirect returns 301, no broken links
-- [ ] **[repo]** Lighthouse 90+ mobile; check `CONTENT_GAPS.md` is empty or every gap is hidden
+      — the parts doable from the repo are done: a static-output crawl found zero broken
+      internal links, and `vercel.json`'s redirect map grew from 30 to 156 entries after
+      fetching the live site's actual sitemap turned up ~126 auto-generated local-SEO pages
+      (`/sap/kitchen-remodeling/{town}` and `/sap/bathroom-remodeling-companies/{town}`, ~60
+      towns each) that weren't covered at all — each now 301s to its matching `/areas/{town}/`
+      page where one exists, or to `/remodeling/kitchens/`\`/bathrooms/`otherwise. Also added
+   `/cat-landing`and`/core-page`→`/` (two duplicate/unfinished homepage variants found
+      the same way). Real phone QA and a live click-through of every redirect still need a
+      person, once the site is actually deployed somewhere reachable
+- [x] **[repo]** Lighthouse 90+ mobile — ran against the production static build (not dev
+      mode) on `/`, `/remodeling/kitchens/` and `/restoration/`: Performance 95–98,
+      Accessibility 100, Best Practices 96, SEO 100 on all three, mobile emulation. The one
+      recurring flag (`image-size-responsive` — "serves images with low resolution") is the
+      known low-res logo/mockup-image gap, not a new issue (CONTENT_GAPS.md). `CONTENT_GAPS.md`
+      itself is not empty — still the big content-collection list it's always been
 - [ ] **[ops]** Final review with Stephen (about 1 hour)
 - [ ] **[ops]** DNS cut-over to Vercel; check SSL; submit the sitemap in Search Console; update the Google Business Profile website link
 - [ ] **[CRM]** Missed-call text-back live (once A2P is approved)

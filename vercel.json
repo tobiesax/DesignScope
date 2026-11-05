@@ -60,6 +60,640 @@
       "permanent": true
     },
     { "source": "/hibu-video-splash", "destination": "/", "permanent": true },
-    { "source": "/hibu-eng-menu", "destination": "/", "permanent": true }
+    { "source": "/hibu-eng-menu", "destination": "/", "permanent": true },
+    { "source": "/cat-landing", "destination": "/", "permanent": true },
+    { "source": "/core-page", "destination": "/", "permanent": true },
+
+    {
+      "source": "/sap/bathroom-remodeling-companies/agawam-ma",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/barkhamsted-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/berlin-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/bloomfield-ct",
+      "destination": "/areas/bloomfield/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/bolton-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/bristol-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/broad-brook-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/burlington-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/canton-center-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/canton-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/collinsville-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/cromwell-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/east-berlin-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/east-granby-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/east-hartford-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/east-hartland-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/east-windsor-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/ellington-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/enfield-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/farmington-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/feeding-hills-ma",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/glastonbury-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/granby-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/hartford-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/hartland-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/harwinton-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/longmeadow-ma",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/manchester-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/marlborough-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/middletown-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/milldale-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/new-britain-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/new-hartford-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/newington-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/north-canton-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/north-granby-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/plainville-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/plantsville-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/portland-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/riverton-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/rocky-hill-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/simsbury-ct",
+      "destination": "/areas/simsbury/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/somers-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/south-glastonbury-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/south-windsor-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/southington-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/southwick-ma",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/suffield-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/tariffville-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/terryville-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/tolland-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/unionville-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/vernon-rockville-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/weatogue-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/west-granby-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/west-hartford-ct",
+      "destination": "/areas/west-hartford/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/west-hartland-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/west-simsbury-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/west-suffield-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/wethersfield-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/windsor-locks-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/windsor-ct",
+      "destination": "/areas/windsor/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/bathroom-remodeling-companies/winsted-ct",
+      "destination": "/remodeling/bathrooms/",
+      "permanent": true
+    },
+
+    {
+      "source": "/sap/kitchen-remodeling/agawam-ma",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/avon-ct",
+      "destination": "/areas/avon/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/barkhamsted-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/berlin-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/bolton-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/bristol-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/broad-brook-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/burlington-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/canton-center-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/canton-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/collinsville-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/cromwell-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/east-berlin-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/east-granby-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/east-hartford-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/east-hartland-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/east-windsor-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/ellington-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/enfield-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/farmington-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/feeding-hills-ma",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/glastonbury-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/granby-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/hartford-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/hartland-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/harwinton-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/longmeadow-ma",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/manchester-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/marlborough-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/middletown-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/milldale-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/new-britain-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/new-hartford-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/newington-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/north-canton-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/north-granby-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/plainville-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/plantsville-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/portland-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/riverton-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/rocky-hill-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/simsbury-ct",
+      "destination": "/areas/simsbury/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/somers-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/south-glastonbury-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/south-windsor-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/southington-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/southwick-ma",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/suffield-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/tariffville-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/terryville-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/tolland-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/unionville-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/vernon-rockville-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/weatogue-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/west-granby-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/west-hartford-ct",
+      "destination": "/areas/west-hartford/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/west-hartland-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/west-simsbury-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/west-suffield-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/wethersfield-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/windsor-locks-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/windsor-ct",
+      "destination": "/areas/windsor/",
+      "permanent": true
+    },
+    {
+      "source": "/sap/kitchen-remodeling/winsted-ct",
+      "destination": "/remodeling/kitchens/",
+      "permanent": true
+    }
   ]
 }
