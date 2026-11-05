@@ -117,7 +117,7 @@ const navCta =
                     ? 'text-paper border-urgent border-b-2'
                     : 'text-paper border-brand border-b-2'
                   : link.id === 'restoration'
-                    ? 'text-red-on-dark border-b-2 border-transparent hover:text-paper'
+                    ? 'text-paper border-b-2 border-transparent hover:text-red-on-dark'
                     : 'text-on-dark-muted border-b-2 border-transparent hover:text-paper'
               }`}
             >
@@ -168,9 +168,10 @@ const navCta =
     {navLinks.map((link) => (
       <a
         href={link.href}
-        class={`border-[#2a2a2a] border-b py-3.5 text-base font-extrabold uppercase ${
-          link.id === 'restoration' ? 'text-red-on-dark' : 'text-paper'
-        }`}
+        class:list={[
+          'text-paper border-[#2a2a2a] border-b py-3.5 text-base font-extrabold uppercase',
+          link.id === 'restoration' && 'active:text-red-on-dark',
+        ]}
       >
         {link.label}
       </a>
