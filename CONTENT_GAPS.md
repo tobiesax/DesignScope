@@ -58,6 +58,8 @@ README/SCOPE, built now at Tobi's explicit request rather than left out. The est
 - [ ] Google Business Profile review link
 - [ ] Budget bands for the enquiry form (HANDOFF.md section 7)
 - [ ] Confirm the final 3 town pages (proposed: Bloomfield, West Hartford, Windsor)
+- [ ] EIN / Tax ID and exact legal business classification (LLC) for GoHighLevel's A2P 10DLC
+      brand registration — needed before Stephen can submit it (BUILD_PLAN.md Week 1 `[ops]`)
 
 ## Assets
 
