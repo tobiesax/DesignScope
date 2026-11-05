@@ -1,11 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { business } from '../../data/business';
+import EnquiryForm from '../../components/shared/EnquiryForm.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
-
-// A working enquiry form (POST to /api/lead) is a Week 4 task (BUILD_PLAN.md);
-// FinalCta's decorative form below already notes that. This page gives every
-// other way to reach us in the meantime.
 ---
 
 <Layout
@@ -61,6 +58,8 @@ import FinalCta from '../../components/shared/FinalCta.astro';
       )}
     </div>
   </section>
+
+  <EnquiryForm />
 
   <FinalCta />
 </Layout>

@@ -2,12 +2,14 @@
 // Callback form — matches the handoff's "Global components → Callback
 // form (Restoration)" exactly, including its "within 10 minutes"
 // commitment (unconfirmed — see CONTENT_GAPS.md, same as the "~60 min"
-// arrival stat). No CRM webhook is wired up yet (BUILD_PLAN.md Week 4,
-// GHL_INBOUND_WEBHOOK_URL), so "Call me back" simulates success like the
-// handoff's own prototype — see the booking modal for the same pattern.
-// One thing does NOT match the handoff verbatim: its confirmation claims
-// "A text confirmation is on its way" — dropped, since no SMS
-// integration exists to actually send one (CLAUDE.md rule 1).
+// arrival stat). Posts to /api/lead (BUILD_PLAN.md Week 4) as
+// project_type "Fire & smoke damage" / "Water damage" (mapped from the
+// Water/Mold/Storm buttons below — the GHL contract has no Mold/Storm
+// type, and both are water-damage scenarios). This is a callback request,
+// not a texting opt-in, so there's no SMS consent checkbox here — sms_consent
+// is sent false. One thing does NOT match the handoff verbatim: its
+// confirmation claims "A text confirmation is on its way" — dropped, since
+// no SMS integration exists to actually send one (CLAUDE.md rule 1).
 import { business } from '../../data/business';
 
 const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
@@ -64,9 +66,18 @@ const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
       role="alert"
     ></span>
     <input
+      id="cb-town"
       placeholder="Property address or town"
       aria-label="Property address or town"
       class="border-line border px-3 py-3 text-[13px]"
+    />
+    <input
+      id="cb-company"
+      name="company_website"
+      autocomplete="off"
+      tabindex="-1"
+      aria-hidden="true"
+      class="absolute h-0 w-0 opacity-0"
     />
     <div
       id="cb-fail"
@@ -104,6 +115,8 @@ const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
 </section>
 
 <script>
+  import { submitLead } from '../../lib/lead';
+
   const formBox = document.getElementById('cb-form');
   const doneBox = document.getElementById('cb-done');
   const failBox = document.getElementById('cb-fail');
@@ -111,11 +124,25 @@ const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
   const resetBtn = document.getElementById('cb-reset');
   const nameInput = document.getElementById('cb-name') as HTMLInputElement | null;
   const phoneInput = document.getElementById('cb-phone') as HTMLInputElement | null;
+  const townInput = document.getElementById('cb-town') as HTMLInputElement | null;
+  const companyInput = document.getElementById('cb-company') as HTMLInputElement | null;
   const typeButtons = document.querySelectorAll<HTMLButtonElement>('[data-cb-type]');
+  // GHL contract's project_type has no Mold/Storm — both are water-damage
+  // scenarios, so they map there rather than being dropped.
+  const PROJECT_TYPE: Record<string, string> = {
+    Water: 'Water damage',
+    'Fire / smoke': 'Fire & smoke damage',
+    Mold: 'Water damage',
+    Storm: 'Water damage',
+  };
+  const renderedAt = Date.now();
 
   if (formBox && doneBox && failBox && submitBtn && nameInput && phoneInput) {
+    let selectedType = typeButtons[0]?.dataset.cbType ?? 'Water';
+
     typeButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
+        selectedType = btn.dataset.cbType ?? selectedType;
         typeButtons.forEach((b) => {
           const active = b === btn;
           b.setAttribute('aria-pressed', String(active));
@@ -129,7 +156,7 @@ const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
       });
     });
 
-    submitBtn.addEventListener('click', () => {
+    submitBtn.addEventListener('click', async () => {
       const nameErr = document.querySelector('[data-cb-error="name"]');
       const phoneErr = document.querySelector('[data-cb-error="phone"]');
       let ok = true;
@@ -154,13 +181,25 @@ const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
       if (!ok) return;
       failBox.classList.add('hidden');
       submitBtn.textContent = 'Sending…';
-      // No CRM webhook is wired up yet — simulates submission like the
-      // handoff's own prototype (BUILD_PLAN.md Week 4).
-      setTimeout(() => {
-        submitBtn.textContent = 'Call me back';
+
+      const result = await submitLead({
+        first_name: nameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        project_type: PROJECT_TYPE[selectedType] ?? 'Water damage',
+        town: townInput?.value.trim() ?? '',
+        message: `Callback requested — ${selectedType}`,
+        sms_consent: false,
+        company_website: companyInput?.value ?? '',
+        rendered_at: renderedAt,
+      });
+
+      submitBtn.textContent = 'Call me back';
+      if (result.ok) {
         formBox.hidden = true;
         doneBox.hidden = false;
-      }, 900);
+      } else {
+        failBox.classList.remove('hidden');
+      }
     });
 
     resetBtn?.addEventListener('click', () => {

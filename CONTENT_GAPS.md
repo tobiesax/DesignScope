@@ -242,4 +242,8 @@ tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the re
       https://github.com/settings/developers under Design Scope's GitHub account, then set
       `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET` and `KEYSTATIC_SECRET`
       (a random string) in Vercel. Callback URL: `https://<production-domain>/api/keystatic/github/oauth/callback`
-- [ ] `GHL_INBOUND_WEBHOOK_URL`, `PUBLIC_GTM_ID`, `PUBLIC_GHL_BOOKING_URL` env vars (HANDOFF.md section 7)
+- [ ] `GHL_INBOUND_WEBHOOK_URL`, `PUBLIC_GTM_ID`, `PUBLIC_GHL_BOOKING_URL` env vars (HANDOFF.md
+      section 7). `/api/lead` (BUILD_PLAN.md Week 4) is built and tested against all three
+      being unset — it fails closed with a clear message rather than a fake success — so
+      lead capture and the GTM container will start working the moment these are set in
+      Vercel, no code change needed

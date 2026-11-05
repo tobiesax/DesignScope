@@ -1,9 +1,9 @@
 ---
 // Commercial quote form — matches the handoff's "Global components →
-// Commercial quote form" exactly. No CRM webhook is wired up yet
-// (BUILD_PLAN.md Week 4), so "Send request" simulates success like the
-// handoff's own prototype, same pattern as the booking modal and
-// restoration callback form.
+// Commercial quote form" exactly. Posts to /api/lead as project_type
+// "Commercial" (BUILD_PLAN.md Week 4) — the specific sector (Office/
+// Retail/etc.) goes in the message, since the GHL contract's project_type
+// enum has no per-sector breakdown.
 const types = ['Office', 'Retail', 'Multi-family', 'Healthcare', 'Restaurant'];
 ---
 
@@ -37,11 +37,16 @@ const types = ['Office', 'Retail', 'Multi-family', 'Healthcare', 'Restaurant'];
     </div>
     <div class="grid gap-2.5 sm:grid-cols-2">
       <input
+        id="cq-size"
         placeholder="Approx. size (sq ft)"
         aria-label="Approx. size (sq ft)"
         class="border-line border px-3 py-3 text-[13px]"
       />
-      <select aria-label="Start timeline" class="border-line border bg-white px-3 py-3 text-[13px]">
+      <select
+        id="cq-timeline"
+        aria-label="Start timeline"
+        class="border-line border bg-white px-3 py-3 text-[13px]"
+      >
         <option>Start: within 1 month</option>
         <option>1–3 months</option>
         <option>3+ months</option>
@@ -62,10 +67,19 @@ const types = ['Office', 'Retail', 'Multi-family', 'Healthcare', 'Restaurant'];
       />
     </div>
     <textarea
+      id="cq-message"
       placeholder="Address and a short description"
       aria-label="Address and a short description"
       class="border-line min-h-[70px] resize-y border px-3 py-3 text-[13px]"
     ></textarea>
+    <input
+      id="cq-company"
+      name="company_website"
+      autocomplete="off"
+      tabindex="-1"
+      aria-hidden="true"
+      class="absolute h-0 w-0 opacity-0"
+    />
     <button
       type="button"
       id="cq-submit"
@@ -97,15 +111,27 @@ const types = ['Office', 'Retail', 'Multi-family', 'Healthcare', 'Restaurant'];
 </section>
 
 <script>
+  import { submitLead } from '../../lib/lead';
+
   const formBox = document.getElementById('cq-form');
   const doneBox = document.getElementById('cq-done');
+  const failBox = document.getElementById('cq-fail');
   const submitBtn = document.getElementById('cq-submit');
   const resetBtn = document.getElementById('cq-reset');
+  const nameInput = document.getElementById('cq-name') as HTMLInputElement | null;
+  const contactInput = document.getElementById('cq-contact') as HTMLInputElement | null;
+  const sizeInput = document.getElementById('cq-size') as HTMLInputElement | null;
+  const timelineSelect = document.getElementById('cq-timeline') as HTMLSelectElement | null;
+  const messageInput = document.getElementById('cq-message') as HTMLTextAreaElement | null;
+  const companyInput = document.getElementById('cq-company') as HTMLInputElement | null;
   const typeButtons = document.querySelectorAll<HTMLButtonElement>('[data-cq-type]');
+  const renderedAt = Date.now();
+  let selectedType = typeButtons[0]?.dataset.cqType ?? 'Office';
 
-  if (formBox && doneBox && submitBtn) {
+  if (formBox && doneBox && failBox && submitBtn && nameInput && contactInput) {
     typeButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
+        selectedType = btn.dataset.cqType ?? selectedType;
         typeButtons.forEach((b) => {
           const active = b === btn;
           b.setAttribute('aria-pressed', String(active));
@@ -119,15 +145,37 @@ const types = ['Office', 'Retail', 'Multi-family', 'Healthcare', 'Restaurant'];
       });
     });
 
-    submitBtn.addEventListener('click', () => {
+    submitBtn.addEventListener('click', async () => {
+      const contact = contactInput.value.trim();
+      const isEmail = contact.includes('@');
+      failBox.classList.add('hidden');
       submitBtn.textContent = 'Sending…';
-      // No CRM webhook is wired up yet — simulates submission like the
-      // handoff's own prototype (BUILD_PLAN.md Week 4).
-      setTimeout(() => {
-        submitBtn.textContent = 'Send request';
+
+      const result = await submitLead({
+        first_name: nameInput.value.trim() || 'Commercial enquiry',
+        phone: isEmail ? '' : contact,
+        email: isEmail ? contact : '',
+        project_type: 'Commercial',
+        timeline: timelineSelect?.value ?? '',
+        message: [
+          `Sector: ${selectedType}`,
+          sizeInput?.value ? `Size: ${sizeInput.value} sq ft` : '',
+          messageInput?.value.trim() ?? '',
+        ]
+          .filter(Boolean)
+          .join(' · '),
+        sms_consent: false,
+        company_website: companyInput?.value ?? '',
+        rendered_at: renderedAt,
+      });
+
+      submitBtn.textContent = 'Send request';
+      if (result.ok) {
         formBox.hidden = true;
         doneBox.hidden = false;
-      }, 900);
+      } else {
+        failBox.classList.remove('hidden');
+      }
     });
 
     resetBtn?.addEventListener('click', () => {

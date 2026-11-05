@@ -1,0 +1,261 @@
+---
+// General enquiry form (CLAUDE.md "Forms and lead hand-off" / HANDOFF.md
+// section 7) — the one form on the site with the full field set,
+// including the texting-consent checkbox, since it's the only place a
+// visitor can opt in to texts rather than just requesting a call back.
+// Posts to /api/lead. Budget bands match the booking modal's own (both
+// are HANDOFF.md section 7's own "Confirm the budget bands with Stephen"
+// gap — see CONTENT_GAPS.md).
+import { business } from '../../data/business';
+
+const PROJECT_TYPES = [
+  'Kitchen',
+  'Bathroom',
+  'Home renovation',
+  'Fire & smoke damage',
+  'Water damage',
+  'Commercial',
+  'Showroom visit',
+];
+const TIMELINES = ['ASAP', '1–3 months', '3–6 months', 'Just exploring'];
+const BUDGETS = ['Under $15k', '$15k–$30k', '$30k–$60k', '$60k+', 'Not sure yet'];
+---
+
+<section id="enquiry" class="flex flex-col gap-5 px-4 py-12 sm:px-7">
+  <div class="flex flex-col gap-2">
+    <h2 class="text-2xl font-black tracking-tight sm:text-3xl">Send us the details</h2>
+    <p class="text-ink-soft max-w-2xl text-sm leading-relaxed">
+      Tell us about your project and we'll reply within one business day — sooner for restoration
+      emergencies.
+    </p>
+  </div>
+
+  <div id="enq-form" class="flex max-w-xl flex-col gap-2.5">
+    <div class="grid gap-2.5 sm:grid-cols-2">
+      <div class="flex flex-col gap-1">
+        <input
+          id="enq-name"
+          placeholder="First and last name"
+          aria-label="First and last name"
+          class="border-line border-[1.5px] px-3 py-3 text-[13px]"
+        />
+        <span
+          data-enq-error="name"
+          class="text-urgent hidden text-[11.5px] font-bold"
+          role="alert"
+        ></span>
+      </div>
+      <div class="flex flex-col gap-1">
+        <input
+          id="enq-phone"
+          type="tel"
+          placeholder="Mobile number"
+          aria-label="Mobile number"
+          class="border-line border-[1.5px] px-3 py-3 text-[13px]"
+        />
+        <span
+          data-enq-error="phone"
+          class="text-urgent hidden text-[11.5px] font-bold"
+          role="alert"
+        ></span>
+      </div>
+    </div>
+    <input
+      id="enq-email"
+      type="email"
+      placeholder="Email"
+      aria-label="Email"
+      class="border-line border px-3 py-3 text-[13px]"
+    />
+    <div class="grid gap-2.5 sm:grid-cols-2">
+      <select
+        id="enq-type"
+        aria-label="Project type"
+        class="border-line border bg-white px-3 py-3 text-[13px]"
+      >
+        <option value="">Project type</option>
+        {PROJECT_TYPES.map((t) => (
+          <option value={t}>{t}</option>
+        ))}
+      </select>
+      <select
+        id="enq-town"
+        aria-label="Town"
+        class="border-line border bg-white px-3 py-3 text-[13px]"
+      >
+        <option value="">Town</option>
+        {business.serviceAreas.map((t) => (
+          <option value={t}>{t}</option>
+        ))}
+      </select>
+    </div>
+    <div class="grid gap-2.5 sm:grid-cols-2">
+      <select
+        id="enq-timeline"
+        aria-label="Timeline"
+        class="border-line border bg-white px-3 py-3 text-[13px]"
+      >
+        <option value="">Timeline</option>
+        {TIMELINES.map((t) => (
+          <option value={t}>{t}</option>
+        ))}
+      </select>
+      <select
+        id="enq-budget"
+        aria-label="Budget range"
+        class="border-line border bg-white px-3 py-3 text-[13px]"
+      >
+        <option value="">Budget range</option>
+        {BUDGETS.map((t) => (
+          <option value={t}>{t}</option>
+        ))}
+      </select>
+    </div>
+    <textarea
+      id="enq-message"
+      placeholder="Tell us about your project"
+      aria-label="Tell us about your project"
+      class="border-line min-h-20 resize-y border px-3 py-3 text-[13px]"
+    ></textarea>
+    <label class="flex items-start gap-2 text-[12px] leading-relaxed">
+      <input id="enq-consent" type="checkbox" class="mt-0.5" />
+      <span class="text-ink-soft">
+        By checking this box, I agree to receive text messages from {business.legalName} about my
+        enquiry and appointments. Message frequency varies. Message and data rates may apply. Reply
+        STOP to opt out or HELP for help. Consent is not a condition of purchase. See our{' '}
+        <a href="/privacy/" class="underline">
+          Privacy Policy
+        </a>
+        .
+      </span>
+    </label>
+    <input
+      id="enq-company"
+      name="company_website"
+      autocomplete="off"
+      tabindex="-1"
+      aria-hidden="true"
+      class="absolute h-0 w-0 opacity-0"
+    />
+    <button
+      type="button"
+      id="enq-submit"
+      class="bg-brand text-ink px-4 py-3.5 text-center text-[13px] font-extrabold"
+    >
+      Send enquiry
+    </button>
+    <div
+      id="enq-fail"
+      class="bg-red-tint hidden px-3.5 py-3 text-[12.5px] leading-relaxed font-semibold"
+    >
+      We couldn't send that. Please call or text {business.phone.main}, or try again.
+    </div>
+  </div>
+
+  <div
+    id="enq-done"
+    class="border-bbb-green flex max-w-xl flex-col gap-2.5 border-t-4 bg-white p-6.5"
+    hidden
+  >
+    <span class="text-[18px] font-black">Thanks — we've got it</span>
+    <p class="text-ink-soft text-[13.5px] leading-relaxed">
+      We'll reply within one business day. Need us sooner? Call {business.phone.main}.
+    </p>
+    <button
+      type="button"
+      id="enq-reset"
+      class="border-ink self-start border-b-[1.5px] text-xs font-bold"
+    >
+      Send another
+    </button>
+  </div>
+</section>
+
+<script>
+  import { submitLead } from '../../lib/lead';
+
+  const formBox = document.getElementById('enq-form');
+  const doneBox = document.getElementById('enq-done');
+  const failBox = document.getElementById('enq-fail');
+  const submitBtn = document.getElementById('enq-submit');
+  const resetBtn = document.getElementById('enq-reset');
+  const nameInput = document.getElementById('enq-name') as HTMLInputElement | null;
+  const phoneInput = document.getElementById('enq-phone') as HTMLInputElement | null;
+  const emailInput = document.getElementById('enq-email') as HTMLInputElement | null;
+  const typeSelect = document.getElementById('enq-type') as HTMLSelectElement | null;
+  const townSelect = document.getElementById('enq-town') as HTMLSelectElement | null;
+  const timelineSelect = document.getElementById('enq-timeline') as HTMLSelectElement | null;
+  const budgetSelect = document.getElementById('enq-budget') as HTMLSelectElement | null;
+  const messageInput = document.getElementById('enq-message') as HTMLTextAreaElement | null;
+  const consentInput = document.getElementById('enq-consent') as HTMLInputElement | null;
+  const companyInput = document.getElementById('enq-company') as HTMLInputElement | null;
+  const renderedAt = Date.now();
+
+  if (formBox && doneBox && failBox && submitBtn && nameInput && phoneInput && typeSelect) {
+    submitBtn.addEventListener('click', async () => {
+      const nameErr = document.querySelector('[data-enq-error="name"]');
+      const phoneErr = document.querySelector('[data-enq-error="phone"]');
+      let ok = true;
+      if (!nameInput.value.trim()) {
+        nameErr?.classList.remove('hidden');
+        if (nameErr) nameErr.textContent = 'Please enter your name';
+        nameInput.classList.add('border-urgent');
+        ok = false;
+      } else {
+        nameErr?.classList.add('hidden');
+        nameInput.classList.remove('border-urgent');
+      }
+      if (phoneInput.value.replace(/\D/g, '').length < 10) {
+        phoneErr?.classList.remove('hidden');
+        if (phoneErr) phoneErr.textContent = 'Enter a 10-digit mobile number';
+        phoneInput.classList.add('border-urgent');
+        ok = false;
+      } else {
+        phoneErr?.classList.add('hidden');
+        phoneInput.classList.remove('border-urgent');
+      }
+      if (!typeSelect.value) {
+        typeSelect.classList.add('border-urgent');
+        ok = false;
+      } else {
+        typeSelect.classList.remove('border-urgent');
+      }
+      if (!ok) return;
+
+      failBox.classList.add('hidden');
+      submitBtn.textContent = 'Sending…';
+
+      const result = await submitLead({
+        first_name: nameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        email: emailInput?.value.trim() ?? '',
+        project_type: typeSelect.value,
+        town: townSelect?.value ?? '',
+        timeline: timelineSelect?.value ?? '',
+        budget: budgetSelect?.value ?? '',
+        message: messageInput?.value.trim() ?? '',
+        sms_consent: consentInput?.checked ?? false,
+        company_website: companyInput?.value ?? '',
+        rendered_at: renderedAt,
+      });
+
+      submitBtn.textContent = 'Send enquiry';
+      if (result.ok) {
+        formBox.hidden = true;
+        doneBox.hidden = false;
+      } else {
+        failBox.classList.remove('hidden');
+      }
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      nameInput.value = '';
+      phoneInput.value = '';
+      if (emailInput) emailInput.value = '';
+      if (messageInput) messageInput.value = '';
+      if (consentInput) consentInput.checked = false;
+      doneBox.hidden = true;
+      formBox.hidden = false;
+    });
+  }
+</script>

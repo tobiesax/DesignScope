@@ -117,9 +117,38 @@ Milestones: **website live at the end of week 5 ($750 due)** and **system handov
       falls back to the placeholder case studies that share its town name (CONTENT_GAPS.md).
       No map on the town template (the handoff doesn't have one there either — only Showroom
       does)
-- [ ] **[repo]** `LocalBusiness` JSON-LD, titles and meta descriptions, sitemap, robots, canonicals
-- [ ] **[repo]** Enquiry form → `/api/lead` → CRM webhook; honeypot; thank-you state; UTM capture
-- [ ] **[repo]** GTM/GA4 events: `generate_lead`, `click_to_call`, `click_to_text`, `book_consultation`, `get_directions`
+- [x] **[repo]** `LocalBusiness` JSON-LD, titles and meta descriptions, sitemap, robots, canonicals
+      — every page already had a title/description; added `astro.config.mjs` `site`
+      (`https://designscopellc.com`, the eventual production domain — doesn't affect the
+      deferred domain cut-over, BUILD_PLAN.md Week 5), a hand-written `/sitemap.xml` (not the
+      `@astrojs/sitemap` package — CLAUDE.md says ask before a new dependency, and the page
+      list is small and known), `public/robots.txt`, a canonical `<link>` and `HomeAndConstructionBusiness`
+      JSON-LD on every page (`Layout.astro`, from `business.ts`). The JSON-LD's opening hours
+      only cover Mon–Fri — weekend is "by appointment", not a structured range, so it's left
+      out rather than guessed (CLAUDE.md rule 1)
+- [x] **[repo]** Enquiry form → `/api/lead` → CRM webhook; honeypot; thank-you state; UTM capture
+      — `src/pages/api/lead.ts` validates (honeypot + a 2-second time-to-submit check) and
+      forwards the exact payload in HANDOFF.md section 7 to `GHL_INBOUND_WEBHOOK_URL`. That
+      env var isn't set yet (Stephen hasn't created the GoHighLevel account —
+      CONTENT_GAPS.md), so the endpoint correctly returns a 503 with a "call or text us
+      instead" message rather than a fake success, until it is (CLAUDE.md rule 1) — verified
+      with curl against the dev server. `src/lib/lead.ts` is the shared client helper
+      (first-touch UTM/referrer capture into `localStorage`, the actual `fetch`, firing
+      `generate_lead`). Wired into all 4 lead-collecting UI pieces: the restoration callback
+      form, the commercial quote form and the booking modal (previously all 3 simulated
+      success with a `setTimeout`, per the design handoff's own prototype) now really submit;
+      a new `EnquiryForm.astro` on `/contact/` is the one form with the full field set
+      including the texting-consent checkbox, since the other three are quick single-purpose
+      forms with no consent checkbox in the approved design — they send `sms_consent: false`
+- [x] **[repo]** GTM/GA4 events: `generate_lead`, `click_to_call`, `click_to_text`,
+      `book_consultation`, `get_directions` — GTM container added to `Layout.astro`, gated on
+      `PUBLIC_GTM_ID` (also unset, CONTENT_GAPS.md) so it's a no-op until set. `generate_lead`
+      fires from `lib/lead.ts` on a successful `/api/lead` call; `click_to_call`/`click_to_text`/
+      `get_directions` fire from one delegated click listener in `Layout.astro` covering every
+      `tel:`/`sms:`/maps link site-wide. `book_consultation` is deliberately **not** fired by
+      the booking modal's "Confirm booking" — per HANDOFF.md section 8 that event means a real
+      GoHighLevel calendar confirmation, which doesn't exist yet (`PUBLIC_GHL_BOOKING_URL`);
+      the modal's submission is tracked as an ordinary `generate_lead` instead
 - [x] **[repo]** `/book` page — built without the live GoHighLevel calendar embed, since
       `PUBLIC_GHL_BOOKING_URL` isn't set yet; falls back to a call/text prompt until it is
 - [ ] **[CRM]** Estimate follow-ups at day 3, 7 and 14; review request when a job is marked Won/Complete

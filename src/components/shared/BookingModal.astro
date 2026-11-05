@@ -4,10 +4,13 @@
 // day + time → details → confirmation. Rendered once in Layout.astro and
 // opened from any element with `data-open-booking` (progressive
 // enhancement: those stay real links to /book/, so booking still works
-// with JS off). No real calendar or CRM is wired up yet (BUILD_PLAN.md
-// Week 4, GHL_INBOUND_WEBHOOK_URL) — "Confirm booking" simulates success
-// like the handoff's own prototype does, and step 5's copy is worded so it
-// never claims a text message was actually sent (CLAUDE.md rule 1).
+// with JS off). No real calendar is wired up yet (PUBLIC_GHL_BOOKING_URL,
+// BUILD_PLAN.md Week 4) — the picked day/time is sent as a request in the
+// lead message, not a confirmed slot, and step 5's copy is worded so it
+// never claims a text message was actually sent (CLAUDE.md rule 1). Posts
+// to /api/lead as a lead (`generate_lead`), not `book_consultation` — that
+// event is reserved for a real GoHighLevel calendar confirmation
+// (HANDOFF.md section 8).
 import { business } from '../../data/business';
 
 const TYPES = ['Kitchen', 'Bathroom', 'Whole home', 'Commercial', 'Just browsing'];
@@ -210,6 +213,14 @@ const TIMES = ['9:00', '10:30', '1:00', '2:30', '4:00'];
           id="booking-summary"
           class="bg-paper-muted px-3.5 py-3 text-[12px] leading-relaxed"
         ></div>
+        <input
+          id="booking-company"
+          name="company_website"
+          autocomplete="off"
+          tabindex="-1"
+          aria-hidden="true"
+          class="absolute h-0 w-0 opacity-0"
+        />
         <div
           id="booking-fail"
           class="bg-red-tint hidden px-3.5 py-3 text-[12.5px] leading-relaxed font-semibold"
@@ -262,21 +273,39 @@ const TIMES = ['9:00', '10:30', '1:00', '2:30', '4:00'];
   </div>
 </div>
 
-<script define:vars={{ mainTel: business.phone.mainTel, mainPhone: business.phone.main }}>
+<script>
+  import { submitLead } from '../../lib/lead';
+
   const modal = document.getElementById('booking-modal');
   const dialog = document.getElementById('booking-dialog');
   if (modal && dialog) {
+    // The GHL contract's project_type enum has no "Whole home" or "Just
+    // browsing" — mapped to the closest real categories.
+    const PROJECT_TYPE = {
+      Kitchen: 'Kitchen',
+      Bathroom: 'Bathroom',
+      'Whole home': 'Home renovation',
+      Commercial: 'Commercial',
+      'Just browsing': 'Showroom visit',
+    };
+
     const steps = Array.from(dialog.querySelectorAll('[data-step]'));
     const bars = Array.from(dialog.querySelectorAll('[data-bar]'));
     const stepLabel = document.getElementById('booking-step-label');
     const backBtn = document.getElementById('booking-back');
     const nextBtn = document.getElementById('booking-next');
     const daysWrap = document.getElementById('booking-days');
+    const emailInput = document.getElementById('booking-email');
+    const townSelect = document.getElementById('booking-town');
+    const detailsInput = dialog.querySelector('[aria-label*="Anything we should know"]');
+    const companyInput = document.getElementById('booking-company');
+    const failBox = document.getElementById('booking-fail');
     const STEP_NAMES = ['Project', 'Where', 'When', 'Your details'];
 
     let step = 1;
     let sending = false;
     let triggerEl = null;
+    let renderedAt = Date.now();
     const data = { type: null, start: null, budget: null, where: null, day: null, time: null };
 
     // Build the next 5 bookable days from today, skipping Sunday — avoids
@@ -381,6 +410,7 @@ const TIMES = ['9:00', '10:30', '1:00', '2:30', '4:00'];
     const open = (preset = {}, trigger = null) => {
       step = 1;
       sending = false;
+      renderedAt = Date.now();
       Object.assign(
         data,
         { type: null, start: null, budget: null, where: null, day: null, time: null },
@@ -420,7 +450,7 @@ const TIMES = ['9:00', '10:30', '1:00', '2:30', '4:00'];
       render();
     });
 
-    nextBtn?.addEventListener('click', () => {
+    nextBtn?.addEventListener('click', async () => {
       if (step === 5) return close();
       if (!canAdvance()) return;
       if (step === 4) {
@@ -450,14 +480,35 @@ const TIMES = ['9:00', '10:30', '1:00', '2:30', '4:00'];
         }
         if (!ok) return;
         sending = true;
+        failBox?.classList.add('hidden');
         render();
-        // No CRM webhook is wired up yet (BUILD_PLAN.md Week 4) — this
-        // simulates submission exactly like the handoff's own prototype.
-        setTimeout(() => {
-          sending = false;
+
+        const result = await submitLead({
+          first_name: name.value.trim(),
+          phone: phone.value.trim(),
+          email: emailInput?.value.trim() ?? '',
+          project_type: PROJECT_TYPE[data.type] ?? 'Showroom visit',
+          town: townSelect?.value ?? '',
+          timeline: data.start ?? '',
+          budget: data.budget ?? '',
+          message: [
+            `Preferred: ${data.where ?? ''} · ${data.day ?? ''} ${data.time ?? ''}`.trim(),
+            detailsInput?.value.trim() ?? '',
+          ]
+            .filter(Boolean)
+            .join(' · '),
+          sms_consent: false,
+          company_website: companyInput?.value ?? '',
+          rendered_at: renderedAt,
+        });
+
+        sending = false;
+        if (result.ok) {
           step = 5;
-          render();
-        }, 900);
+        } else {
+          failBox?.classList.remove('hidden');
+        }
+        render();
         return;
       }
       step += 1;
