@@ -1,7 +1,11 @@
 ---
 // Back-to-top button — appears after scrolling past the first viewport,
 // stacked above the chat widget/mobile sticky bar rather than sharing
-// their corner, so it never overlaps either.
+// their corner, so it never overlaps either. Also shows over the (dark)
+// footer, since nothing excludes the page's last viewport — so its
+// border/arrow swap from ink to paper (via the script below) whenever
+// the footer is the one in view, now that the button's background is
+// transparent and would otherwise disappear against bg-dark-deep.
 ---
 
 <button
@@ -34,5 +38,20 @@
     btn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    const footer = document.querySelector('footer');
+    if (footer) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          const onDark = entries[0]?.isIntersecting ?? false;
+          btn.classList.toggle('border-ink', !onDark);
+          btn.classList.toggle('text-ink', !onDark);
+          btn.classList.toggle('border-paper', onDark);
+          btn.classList.toggle('text-paper', onDark);
+        },
+        { threshold: 0 },
+      );
+      io.observe(footer);
+    }
   }
 </script>
