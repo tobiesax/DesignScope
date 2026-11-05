@@ -13,8 +13,14 @@ import { mockupImages } from '../../data/mockup-images';
 // Bloomfield town page and the style quiz (paired with 'ba-before' as
 // a real before/after); 'proj-bath-avon' on the Avon town page and its
 // case study.
+//
+// 'ba-before' lost its 'Before' tag for the same reason: with 'ba-after'
+// gone from this carousel, there's no honest 'After' to pair it with —
+// tagging 'hero-kitchen' (a different AI-generated kitchen) as the
+// after would falsely claim it's the same remodeled room (CLAUDE.md
+// rule 2). An orphaned "Before" badge alone also just read as a bug.
 const slides = [
-  { key: 'ba-before', tag: 'Before', dark: true },
+  { key: 'ba-before', tag: '', dark: true },
   { key: 'hero-kitchen', tag: '', dark: false },
   { key: 'living-room-sunset', tag: '', dark: false },
 ] as const;
