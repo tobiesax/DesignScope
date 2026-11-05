@@ -1,13 +1,18 @@
 ---
-// Home hero — matches the handoff's slideshow background (5 slides,
-// crossfade + Ken Burns, pause/play control) and gradient/content layout.
-// TEMPORARY photos — see src/data/mockup-images.ts.
+// Home hero — matches the handoff's slideshow background (crossfade +
+// Ken Burns, pause/play control) and gradient/content layout. TEMPORARY
+// photos — see src/data/mockup-images.ts.
 import { Image } from 'astro:assets';
 import { mockupImages } from '../../data/mockup-images';
 
+// 4 slides, not the handoff's original 5 — dropped 'ba-after' here (it
+// read as a near-duplicate of 'hero-kitchen''s cinematic-gradient photo
+// right next to it in the carousel). 'ba-after' itself is untouched and
+// still used correctly elsewhere: BeforeAfter.astro's slider, the
+// kitchen-bloomfield case study, the Bloomfield town page and the style
+// quiz all still pair it with 'ba-before' as a real before/after.
 const slides = [
   { key: 'ba-before', tag: 'Before', dark: true },
-  { key: 'ba-after', tag: 'After · same kitchen', dark: false },
   { key: 'hero-kitchen', tag: '', dark: false },
   { key: 'proj-bath-avon', tag: 'Primary bath · Avon', dark: false },
   { key: 'living-room-sunset', tag: '', dark: false },
