@@ -1,11 +1,12 @@
 ---
 // Back-to-top button — appears after scrolling past the first viewport,
 // stacked above the chat widget/mobile sticky bar rather than sharing
-// their corner, so it never overlaps either. Also shows over the (dark)
-// footer, since nothing excludes the page's last viewport — so its
-// border/arrow swap from ink to paper (via the script below) whenever
-// the footer is the one in view, now that the button's background is
-// transparent and would otherwise disappear against bg-dark-deep.
+// their corner, so it never overlaps either. Its background is
+// transparent, so the border/arrow swap from ink to paper (via the
+// script below) whenever any dark section is in view — the footer
+// (bg-dark-deep, always) plus any section elsewhere on the page marked
+// data-dark-section (currently ReviewCarousel and ShowroomBlock's dark
+// half on the home page).
 ---
 
 <button
@@ -39,11 +40,16 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    const footer = document.querySelector('footer');
-    if (footer) {
+    const darkSections = document.querySelectorAll('footer, [data-dark-section]');
+    if (darkSections.length) {
+      const visible = new Set<Element>();
       const io = new IntersectionObserver(
         (entries) => {
-          const onDark = entries[0]?.isIntersecting ?? false;
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) visible.add(entry.target);
+            else visible.delete(entry.target);
+          });
+          const onDark = visible.size > 0;
           btn.classList.toggle('border-ink', !onDark);
           btn.classList.toggle('text-ink', !onDark);
           btn.classList.toggle('border-paper', onDark);
@@ -51,7 +57,7 @@
         },
         { threshold: 0 },
       );
-      io.observe(footer);
+      darkSections.forEach((el) => io.observe(el));
     }
   }
 </script>
