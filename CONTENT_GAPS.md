@@ -7,6 +7,47 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
+## 2026-11-13 copywriting lift (client review follow-up)
+
+The client reviewed the build and asked us to lift most of the copywriting from the current
+live site (designscopellc.com) to match each corresponding new-site page, using HANDOFF.md
+section 5's own old→new URL map. Done by fetching every live page directly via curl (not
+WebFetch, which enforces a ~125-character verbatim-quote limit) and stripping the HTML with a
+local script, then splicing the real text into the matching `src/data/*.ts` fields and page
+copy. Updated: home hero/why-us/FAQs/offers, Kitchens/Bathrooms/Home renovations hero+intro+
+included lists, the Showroom hero, the About intro, the Remodeling hub card blurbs, the Areas
+hub intro, both real blog posts' full body text, and `business.ts`'s brand/membership lists.
+Notes and remaining gaps from this pass:
+
+- Supplier brand list and KBIS membership are now **confirmed** (no longer a gap) — the live
+  site's own `/about` page has a structured "Brands" (~29 items) and "Associations" listing
+  that resolves both open items below. Logo files are still needed from Stephen.
+- The live site's own `/kitchen-remodeling` and `/bathroom-remodeling` FAQ sections are
+  themselves unfinished Hibu placeholder text ("Title or Question" / "Describe the item..."),
+  not real content — so `remodelFaqs` (used on both pages) is still our own grounded Q&A, not
+  a lift from those two pages specifically. The dedicated `/faqs/` page's FAQs, however, now
+  use the live `/faqs` page's real six-question set verbatim (`src/data/home.ts` `faqs`).
+- The live homepage's offer headline ("10% Off Kitchen Cabinet Costs") contradicts every
+  instance of its own body copy (which says 10% off the first project generally, not cabinets
+  specifically) on every page that repeats it. Kept the body's broader, consistent scope
+  rather than the narrower, self-contradicting headline.
+- The live `/stephen_author` page has much more elaborate copy about Stephen than
+  `business.ts` currently carries — a formal internship program and a structured local
+  high-school trade-training initiative, on top of the already-confirmed facts (25+ years,
+  Master's in Interior Design, co-founded 2016). Those two specific program claims were **not**
+  lifted into the About page: they read as generic Hibu SEO-template embellishment rather than
+  something to assert as fact sight-unseen. Confirm with Stephen whether either program
+  actually exists before adding it anywhere.
+- The live `/gallery`, `/reviews` and `/blog` index pages have almost no real body copy to
+  lift (mostly just category links and teaser cards) — left those pages as they were.
+- `/commercial/`, `/showroom/`'s category tiles, the restoration pages' risk/process lists,
+  the contact page and the town pages (`/areas/[town]/`) were already grounded in facts
+  fetched from the live site in an earlier pass and are close to its wording already — not
+  re-touched in this pass beyond what's listed above.
+- Found (not in the current sitemap, but still live) a second real blog post at
+  `/how-to-plan-and-budget-for-professional-bathroom-remodeling-services` — already planned
+  for in HANDOFF.md's redirect map; now has its real body text too.
+
 Design now follows the approved GrowthOS design handoff
 (`GrowthOS Proposal Design/design_handoff_design_scope_website/`) pixel-close — layout,
 colour tokens, copy and components — at Tobi's explicit request ("build it exactly as it is
@@ -52,9 +93,12 @@ README/SCOPE, built now at Tobi's explicit request rather than left out. The est
 - [ ] HIC registration number
 - [ ] Confirm weekend hours / appointment policy and same-day availability wording
 - [ ] Stephen's surname and a short bio for the About page
-- [ ] Exact wording of the offers (10% new customer, 5% military) — current site's headline and body text conflict
-- [ ] Full supplier brand list + logo files (have: TOTO, Hansgrohe, Wellborn, Brizo, Delta)
-- [ ] Confirm KBIS membership
+- [x] Exact wording of the offers (10% new customer, 5% military) — resolved 2026-11-13, see
+      the copywriting-lift note above
+- [x] Full supplier brand list — resolved 2026-11-13 from the live site's own `/about`
+      structured data (`business.ts` `showroomBrands`); logo files still needed from Stephen
+- [x] Confirm KBIS membership — resolved 2026-11-13, confirmed on the live site's own `/about`
+      structured data
 - [ ] Google Business Profile review link
 - [ ] Budget bands for the enquiry form (HANDOFF.md section 7)
 - [ ] Confirm the final 3 town pages (proposed: Bloomfield, West Hartford, Windsor)
@@ -211,11 +255,9 @@ tile-kitchen.png`, `spa-bathroom.png`, via `mockup-images.ts`), replacing the re
       match it), and the footer/home service-area band already link to all 5 — but only the
       original 3 have a page built. Confirm the 3-vs-5 town scope with Stephen (it changes
       the BUILD_PLAN.md Week 4 scope) and build the remaining 2 pages either way
-- [ ] The 2 original blog posts were migrated with the same title, slug, date and author as
-      the live site, but the body text is rewritten in our own words, not copied — the
-      extraction tool used to pull the live pages declined to reproduce their text verbatim
-      (copyright), so `src/data/blog-posts.ts` covers the same structure and facts in
-      original phrasing instead. Not wired into Keystatic yet (see "Infrastructure" below)
+- [x] The 2 original blog posts are migrated with the same title, slug, date, author and body
+      text as the live site — resolved 2026-11-13, see the copywriting-lift note above. Still
+      not wired into Keystatic yet (see "Infrastructure" below)
 - [ ] 5 more blog posts added at Tobi's request, to seed organic/keyword SEO traffic: the
       design handoff's blog mockup showed these same 5 titles/categories/excerpts as example
       cards with no article behind them ("Water damage: what to do in the first hour",

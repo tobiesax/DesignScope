@@ -52,6 +52,9 @@ export const remodelFaqs = [
 // Copy here is grounded in confirmed business.ts facts (promises, warranty,
 // supplier brands) — nothing invented. This is the template BUILD_PLAN.md
 // Week 2 applies to Kitchens first; Week 3 adds the remaining entries.
+// Hero headline, subcopy, intro and the "included" list are lifted from the
+// live site's own /kitchen-remodeling page (scraped 2026-11-13), not the
+// design handoff's generic version — see CONTENT_GAPS.md.
 export const kitchens: ServicePage = {
   slug: 'kitchens',
   category: 'Kitchens',
@@ -59,21 +62,23 @@ export const kitchens: ServicePage = {
   metaDescription:
     'Custom kitchen remodeling across Hartford County: free design consultation, a written quote within 24 hours, and one team handling design through construction.',
   heroImage: mockupImages['subway-tile-kitchen'],
-  // Hero copy matches the design handoff verbatim — it's static on the
-  // handoff's remodel page (doesn't change between the Kitchen/Bath tab),
-  // so Bathrooms below uses the exact same text.
-  heroEyebrow: 'Kitchen & bath remodeling',
-  heroHeadline: 'One team, from first sketch to final walkthrough',
+  heroEyebrow: 'Kitchen Remodeling',
+  heroHeadline: "Create the Kitchen You've Always Wanted",
   heroSubcopy:
-    'Design in our Bloomfield showroom, choose real materials, and get a written quote within 24 hours. Our own crews build it, and we stand behind it for six months.',
+    'Your kitchen should work beautifully for your daily needs while reflecting your personal style. We manage every detail of your project with careful attention and skilled craftsmanship.',
   intro:
-    "Whether you're opening up a galley kitchen or starting from scratch, Design Scope handles design, permits and construction under one roof. Visit our Bloomfield showroom to see cabinetry, countertops and fixtures from TOTO, Hansgrohe, Wellborn, Brizo and Delta in person, or we'll bring design options to you.",
+    "An outdated or poorly designed kitchen makes daily tasks harder and lowers your home's value. A well-planned kitchen remodel improves comfort, boosts efficiency, and provides strong returns on your investment — Design Scope builds kitchens that balance current trends with lasting appeal.",
   included: [
-    '3D design and material selection in our showroom',
-    'Cabinetry, counters, tile and fixtures supplied',
-    'Demolition, electrical, plumbing and permits',
-    'Installation by our own crews, not subcontractors',
-    'Final walkthrough and a 6-month warranty',
+    'Free design consultations',
+    'Custom cabinetry installation',
+    'Countertop replacement',
+    'Lighting upgrades',
+    'Flooring installation',
+    'Backsplash design',
+    'Appliance integration',
+    'Island construction',
+    'Storage solutions',
+    'Layout optimization',
   ],
   ranges: [
     { t: 'Refresh', b: 'Counters, backsplash, fixtures and paint', p: '$15k–$30k' },
@@ -82,6 +87,12 @@ export const kitchens: ServicePage = {
   ],
 };
 
+// Hero headline, subcopy and intro are lifted from the live site's own
+// /bathroom-remodeling page (scraped 2026-11-13). The live page has no
+// dedicated "what's included" bullet list near its hero the way the
+// kitchen page does, so `included` here is built from the services the
+// live intro paragraph names (custom vanities, walk-in showers, soaking
+// tubs, tile, lighting, fixtures), not invented.
 export const bathrooms: ServicePage = {
   slug: 'bathrooms',
   category: 'Bathrooms',
@@ -89,18 +100,19 @@ export const bathrooms: ServicePage = {
   metaDescription:
     'Bathroom remodeling across Hartford County: walk-in showers, tubs, vanities and tile. Free design consultation, a written quote within 24 hours, one team from design to construction.',
   heroImage: mockupImages['spa-bathroom'],
-  heroEyebrow: 'Kitchen & bath remodeling',
-  heroHeadline: 'One team, from first sketch to final walkthrough',
+  heroEyebrow: 'Bathroom Remodeling',
+  heroHeadline: 'Create a Bathroom That Works for Your Life',
   heroSubcopy:
-    'Design in our Bloomfield showroom, choose real materials, and get a written quote within 24 hours. Our own crews build it, and we stand behind it for six months.',
+    'Your bathroom should match your style and support your daily routine. We manage everything from initial design concepts to final construction details.',
   intro:
-    "From a full primary-bath renovation to a walk-in shower conversion, Design Scope handles design, permits and construction under one roof. Visit our Bloomfield showroom to see tile, fixtures and vanities from TOTO, Hansgrohe, Wellborn, Brizo and Delta in person, or we'll bring design options to you.",
+    "A well-designed bathroom improves your home's functionality and increases property value. Modern bathroom upgrades address outdated fixtures, limited storage, poor lighting and accessibility concerns while creating a space you'll enjoy for years.",
   included: [
-    'Layout and tile design in our showroom',
-    'Vanities, tile, glass and fixtures supplied',
-    'Plumbing, waterproofing, electrical and permits',
-    'Accessible and curbless options',
-    'Final walkthrough and a 6-month warranty',
+    'Custom vanities',
+    'Walk-in showers',
+    'Soaking tubs',
+    'Tile installation',
+    'Lighting upgrades',
+    'Modern fixtures',
   ],
   ranges: [
     { t: 'Refresh', b: 'Vanity, tile and fixtures', p: '$12k–$20k' },
@@ -111,7 +123,9 @@ export const bathrooms: ServicePage = {
 
 // No real home-renovation photos exist yet (CONTENT_GAPS.md) — this reuses
 // the same temporary mockup photo already shown for this category on the
-// home page (src/data/home.ts mockProjects).
+// home page (src/data/home.ts mockProjects). Hero headline, subcopy and
+// intro are lifted from the live site's own /home-renovations page
+// (scraped 2026-11-13).
 export const homeRenovations: ServicePage = {
   slug: 'home-renovations',
   category: 'Home renovations',
@@ -119,10 +133,10 @@ export const homeRenovations: ServicePage = {
   metaDescription:
     'Single-room updates to whole-house renovations across Hartford County. Free design consultation, a written quote within 24 hours, and no hidden fees.',
   heroImage: mockupImages['proj-renovation-simsbury'],
-  heroEyebrow: 'Remodeling · Home renovations',
-  heroHeadline: 'Home renovations, big or small, done right the first time',
+  heroEyebrow: 'Home Renovations',
+  heroHeadline: 'Give Your Living Space a Fresh New Look',
   heroSubcopy:
-    'From a single-room update to a whole-house renovation, Design Scope plans the project around how you actually live. Free design consultation, a written quote within 24 hours, no hidden fees.',
+    "Your home should reflect your style and work for your family's everyday needs. From refreshing a single room to reimagining your entire house, we have the skills to create spaces you'll enjoy for years to come.",
   intro:
-    "Every home renovation gets the same attention to detail, whether it's one room or the whole house. We work closely with you from the first conversation through the final walkthrough, with clear communication and a written plan, so there are no surprises partway through the project.",
+    "Renovating your home improves daily comfort and adds lasting value to your property. Strategic renovations create more functional living spaces, modernize outdated rooms and fixtures, improve energy efficiency, increase resale value and let you personalize your space to match your taste.",
 };

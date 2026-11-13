@@ -60,12 +60,16 @@ export const business = {
   },
 
   supplierBrands: ['TOTO', 'Hansgrohe', 'Wellborn Forest', 'Brizo', 'Delta'],
-  // TODO: confirm this is the full list and get logo files — see CONTENT_GAPS.md
+  // Full list confirmed below (showroomBrands) — lifted verbatim from the
+  // live site's own /about structured "Brands" listing. Still need logo
+  // files from Stephen — see CONTENT_GAPS.md.
 
-  // Full showroom brand marquee, per the GrowthOS design handoff's BRANDS
-  // list — a superset of supplierBrands above (still the confirmed-5 list
-  // CLAUDE.md points to). TODO: confirm this full list and get logo files,
-  // same gap as supplierBrands — see CONTENT_GAPS.md.
+  // Full showroom brand marquee — confirmed against the live site's own
+  // /about page structured data ("Brands" list, scraped 2026-11-13), not
+  // just the design handoff's BRANDS array. A few near-duplicate spellings
+  // on the live page (e.g. "Ted Wood Cabinetry" / "Tedd Wood Fine
+  // Cabinetry", "Wet Wall" / "Wetwall") are deduped to one name each here.
+  // Logo files still needed from Stephen — see CONTENT_GAPS.md.
   showroomBrands: [
     'TOTO',
     'Hansgrohe',
@@ -87,10 +91,24 @@ export const business = {
     'Panasonic',
     'Warmup',
     'Icera',
+    'Belwith Keeler',
+    'Deluxe Wood Cabinetry',
+    'Fleurco',
+    'Harrow',
+    'Hardware Resources',
+    'Hickory Hardware',
+    'Phylrich',
+    'Raphael Porcelain',
+    'Tedd Wood Fine Cabinetry',
+    'U.S. Cabinet Depot',
+    'Wet Wall',
+    'Wolf Home Products',
   ],
 
+  // Confirmed against the live site's own /about structured "Associations"
+  // listing (scraped 2026-11-13): HBRA, Bloomfield Chamber of Commerce and
+  // KBIS (Kitchen Bathroom Industry Show) are all listed there.
   memberships: ['HBRA', 'Bloomfield Chamber of Commerce', 'KBIS'],
-  // TODO: confirm KBIS membership — see CONTENT_GAPS.md
 
   // Trust-badge row (home hero strip + footer), per the design handoff's
   // "Global components → Trust badges". The BBB and Houzz badges are

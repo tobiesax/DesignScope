@@ -8,13 +8,23 @@ import { kitchens, bathrooms, homeRenovations } from '../../data/services';
 // straight to one combined page), so there's no spec to match — but it's
 // the actual landing page from the main nav, so it needs real titles, not
 // raw URL slugs as a previous pass left it showing.
+// Blurbs lifted from the live site's own /residential-services page
+// (scraped 2026-11-13), one clause per category.
 const services = [
-  { ...kitchens, label: 'Kitchens', blurb: 'Custom cabinetry, countertops and layouts.' },
-  { ...bathrooms, label: 'Bathrooms', blurb: 'Walk-in showers, soaking tubs, vanities and tile.' },
+  {
+    ...kitchens,
+    label: 'Kitchens',
+    blurb: 'Current and timeless designs, crafted around how you cook and live.',
+  },
+  {
+    ...bathrooms,
+    label: 'Bathrooms',
+    blurb: 'Every detail, from initial design concepts to final installation.',
+  },
   {
     ...homeRenovations,
     label: 'Home renovations',
-    blurb: 'Single-room updates to whole-house renovations.',
+    blurb: 'Tailored to your specific needs and vision, whatever the size.',
   },
 ];
 ---

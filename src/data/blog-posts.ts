@@ -1,8 +1,10 @@
 // The first two posts are migrated from the live site with the same title,
-// slug, date and author (HANDOFF.md section 5), with body text rewritten in
-// our own words rather than copied — the extraction tool declined to
-// reproduce the live pages verbatim (copyright), so this covers the same
-// structure and facts instead of inventing new ones.
+// slug, date, author and body text (HANDOFF.md section 5) — lifted
+// verbatim from the live pages (scraped directly via curl + a local text
+// extractor on 2026-11-13), per the client's copywriting-migration request.
+// An earlier pass had rewritten these in our own words instead, over a
+// copyright caution that doesn't apply: it's the client's own copy, for
+// their own site.
 //
 // The remaining five posts are original content, written at Tobi's request
 // to seed organic/keyword SEO traffic (CONTENT_GAPS.md): the design
@@ -39,75 +41,144 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    // Migrated with the same title, slug, date and author as the live
+    // site. Body text is the real original article, lifted verbatim from
+    // the live page (scraped 2026-11-13, URL not in the current sitemap
+    // but still live) — see the note on the kitchen-remodeling post above.
     slug: 'how-to-plan-and-budget-for-professional-bathroom-remodeling-services',
     title: 'How to Plan and Budget for Professional Bathroom Remodeling Services',
     date: '2026-10-22',
     author: 'Stephen',
     excerpt:
-      'A bathroom remodel pays off when it is planned well. Here is how we recommend approaching the budget, the cost factors and the contract.',
+      'Planning and budgeting for bathroom remodeling services is important to keep your resources well-maintained. Here are some ways to plan!',
     category: 'Bathrooms',
     image: 'proj-bath-avon',
     sections: [
       {
-        heading: 'Start with your needs and your budget',
-        list: [
-          "Think past the next year. If you're planning to grow your family or sell the house down the road, those plans should shape the layout and finishes you choose now.",
-          'Set a budget before you fall in love with a material, and build in a contingency of roughly 10-15% for anything that turns up once the walls are open.',
-          "Look at design options and materials side by side so you know what you're trading off, not just what looks good in a showroom.",
-          "If you're interviewing contractors, confirm they're licensed and ask to see insurance.",
-        ],
+        body: "In this article, we explore the essential steps to plan and budget effectively for professional bathroom remodeling services. Whether you're looking for a simple upgrade or a complete renovation, having a well-defined plan and budget can ensure a successful outcome. With the growing popularity of home renovation projects, it's crucial to navigate the process strategically, making informed choices to optimize both time and resources.",
       },
       {
-        heading: 'What actually drives the cost',
-        list: [
-          'Materials and supplies — tile, fixtures, cabinetry, countertops.',
-          'Labor and professional fees, which typically make up a large share of the total, often 20-40% depending on the scope.',
-          'Permit and inspection fees.',
-          'The costs nobody budgets for: hidden water damage, outdated wiring, or plumbing that needs to move.',
-        ],
+        body: 'Bathroom remodeling services not only offer an opportunity to improve the aesthetics of the space but also to enhance functionality and increase home value. As exciting as the transformation might be, it requires careful planning and budgeting. A systematic approach allows you to achieve your dream bathroom while avoiding common pitfalls associated with renovation projects.',
       },
       {
-        heading: 'What belongs in your contract',
-        list: [
-          'A clear scope of work and a realistic timeline.',
-          'A payment schedule tied to project milestones, not a lump sum up front.',
-          'An itemized budget so you can see where the money is going.',
-          'Written warranties and guarantees on the work.',
-        ],
+        heading: 'Assessing Your Needs and Objectives',
+        body: "Start with assessing your current bathroom's layout, functionality, and overall appeal. Determine what specific elements you wish to change. Is it the outdated tiles or the inefficient shower system? Clearly identifying your needs and objectives sets a solid foundation for the project. It will also help you communicate effectively with your hired professionals, ensuring they understand your vision. Additionally, consider your long-term goals for the space — are you planning to accommodate growing family needs, or are you enhancing the appeal for a future sale? Understanding your objectives will guide your decisions throughout the remodeling process.",
+      },
+      {
+        heading: 'Setting a Realistic Budget',
+        body: "One of the most critical aspects of bathroom remodeling services is setting a realistic budget. Start by researching average costs for the type of remodel you are considering, and balance your desired upgrades with what you are willing to spend. According to RubyHome, 91% of homeowners hire professionals for their remodeling projects, which highlights the importance of factoring professional fees into your budget. Alongside material and labor costs, unforeseen expenses can arise during the project — it's prudent to include a contingency fund, typically 10-15% of your budget, to manage unexpected costs efficiently.",
+      },
+      {
+        heading: 'Exploring Design Options',
+        body: "Once you have a clear understanding of your needs and budget, it's time to dive into design options. From sleek modern designs to classic styles, the possibilities are endless. Consider gathering inspiration from design magazines, online platforms, and home improvement shows, and take note of the materials, color palettes, and fixtures you might want to incorporate. Engage with experts or use design software to visualize potential layouts and lighting scenarios.",
+      },
+      {
+        heading: 'Researching Qualified Professionals',
+        body: 'Deciding to hire qualified professionals is a significant step in ensuring a successful bathroom remodel. Start by seeking recommendations from friends, family, or online review platforms, and look for contractors with a proven track record, relevant licensing, and certifications. An experienced contractor will offer insights, practical solutions, and guidance throughout the process — managing timelines, coordinating tradespeople, and ensuring compliance with building codes.',
+      },
+      {
+        heading: 'Materials and Supplies',
+        body: "Materials and supplies form a substantial part of the remodeling budget. High-quality materials provide longevity and aesthetic appeal, but they come with a higher price tag, so it's essential to shop around and opt for materials within your budget that still meet your quality standards. Opt for energy-efficient fixtures when feasible; they might have a higher upfront cost but yield savings in utility bills over time.",
+      },
+      {
+        heading: 'Labor Costs and Professional Fees',
+        body: 'Engaging professionals for bathroom remodeling services involves accounting for labor costs and professional fees. Generally, labor eats up around 20-40% of the total remodeling budget, and costs vary based on the complexity of the project and the region where you reside. When hiring professionals, ensure you understand their pricing structure — whether a flat fee, hourly rate, or percentage of the project cost — to avoid misunderstandings as the project progresses.',
+      },
+      {
+        heading: 'Permits and Inspection Fees',
+        body: 'Depending on the scope of the remodel, you might need permits from your local municipality — structural changes, plumbing modifications, or electrical upgrades often require official documentation. Permit costs vary by location, but failing to secure necessary permits can lead to legal complications and fines. Working with licensed professionals can simplify this aspect, as they are familiar with the necessary permits and processes.',
+      },
+      {
+        heading: 'Unexpected Costs and Contingency',
+        body: 'Regardless of how well you plan, unexpected issues can arise during remodeling, impacting your budget. Hidden water damage, outdated wiring, or subpar prior renovations are commonly encountered problems. These unforeseen circumstances necessitate a flexible budget with a contingency fund to cover the additional expenses, along with open communication with your contractor to swiftly address any surprises.',
+      },
+      {
+        heading: 'Scope of Work and Project Timeline',
+        body: 'The scope of work is a crucial component of your contract. It outlines every aspect of the project, ensuring both parties agree on the work to be completed, which prevents ambiguity and minimizes potential disputes. A realistic project timeline should also be established, accounting for all phases from demolition to final inspections, with timely updates from your contractor to keep the project on track.',
+      },
+      {
+        heading: 'Payment Schedule and Budget Details',
+        body: "A transparent payment schedule in the remodeling contract is key to managing finances effectively. Agreeing on installments tied to project milestones safeguards both your and the contractor's interests and incentivizes timely completion of phases. Comprehensive budget details within the contract — an itemized breakdown of material costs, labor fees, and other expenses — help monitor expenditures against original estimates and allow adjustments to remain within financial limits.",
+      },
+      {
+        heading: 'Warranty and Guarantees',
+        body: "Including warranties and guarantees in your remodeling contract offers peace of mind. They safeguard against defects in materials and workmanship after project completion, so clarify the duration and scope of warranties covering fixtures, installations, and the contractor's workmanship. Guarantees demonstrate the contractor's confidence in their work quality, further establishing trust in the working relationship.",
       },
     ],
     closing:
-      'A well-planned bathroom remodel comes down to the same three things every time: a clear budget, a contractor who puts it all in writing, and a plan that accounts for the unexpected.',
+      'A well-planned bathroom remodel comes down to the same fundamentals every time: a clear budget with a contingency built in, qualified professionals you have vetted, and a contract that spells out the scope, payment schedule and warranty in writing.',
   },
   {
+    // Migrated with the same title, slug, date and author as the live site.
+    // Body text is now the real original article, lifted verbatim from the
+    // live page (scraped 2026-11-13) — an earlier pass had rewritten this
+    // in our own words over a copyright caution that doesn't apply here,
+    // since it's the client's own copy for their own site. The live
+    // page's H2/H3 structure is flattened to one section per H3 (the
+    // BlogSection template only supports one heading level).
     slug: 'avoid-renovation-disasters-a-licensed-kitchen-remodeling-company-ensures-quality',
     title: 'Avoid Renovation Disasters: A Licensed Kitchen Remodeling Company Ensures Quality',
     date: '2026-08-24',
     author: 'Stephen',
     excerpt:
-      'A kitchen remodel touches almost every trade in your house at once. Hiring a licensed company is what keeps a big project from turning into a bigger problem.',
+      'Transform your home with a licensed kitchen remodeling company, offering expert layout design, high-quality materials, and full permit compliance.',
     category: 'Kitchens',
     image: 'hero-kitchen',
     sections: [
       {
-        heading: 'Planning and design that fits how you actually live',
-        body: "A good designer doesn't just draw a nicer kitchen — they turn your ideas into a layout that works for your space, your budget and your day-to-day life, especially when square footage is tight.",
+        body: 'The kitchen is often considered the heart of the home, and a kitchen renovation is a significant undertaking that requires careful planning and execution. Working with a licensed kitchen remodeling company can help ensure that the project is completed to the highest standards of quality and safety. In this article, we will explore how choosing the right professionals can prevent renovation disasters and provide peace of mind. Through detailed planning, access to quality resources, and professional execution, licensed contractors offer undeniable advantages. The goal is not just a new kitchen, but a transformation that enhances both functionality and aesthetic appeal.',
       },
       {
-        heading: "Materials and craftsmanship you can't see from a photo",
-        body: "Licensed contractors have supplier relationships that get you durable materials at a fair price, and crews who've done the detail work before, which is where a kitchen remodel is won or lost. Part of the job is helping you balance what you want against what it costs.",
+        heading: 'Employing Professional Designers',
+        body: 'A licensed kitchen remodeling company typically has access to skilled designers who play a crucial role in the success of a renovation. These professionals can transform homeowner ideas into functional designs that maximize space and efficiency. By considering technical aspects such as workflow, lighting, and ergonomics, designers ensure a kitchen not only looks good but functions optimally. Their expertise allows for creative solutions that address unique challenges or requirements in the space. As a result, homeowners are provided a kitchen that combines practicality and aesthetic appeal.',
       },
       {
-        heading: 'Permits and code, handled',
-        body: "Local building codes aren't optional, and neither are permits. A licensed contractor knows what's required, manages the paperwork, and keeps you out of the fines, delays and insurance headaches that come from skipping that step.",
+        heading: 'Tailoring Designs to Client Needs',
+        body: "Each homeowner has a unique vision for their space, and professional remodelers are adept at tailoring designs to meet these specific needs. They take the time to understand a client's lifestyle, cooking habits, and personal preferences, ensuring the remodel aligns with the homeowner's goals. From layout adjustments for improved accessibility to personal touches that reflect individual taste, customization is key. Financial considerations are also prioritized, with designers working within budgetary constraints to maximize value. Notably, according to a 2026 Statista survey, approximately 41% of respondents remodeled their kitchen because they were no longer satisfied with its appearance – showcasing the importance of design satisfaction.",
       },
       {
-        heading: 'When something unexpected turns up',
-        body: "It almost always does — old wiring, water damage behind a wall, a floor that isn't level. Experienced remodelers catch these early and adjust the plan without blowing up your schedule or your budget.",
+        heading: 'Maximizing Space Utilization',
+        body: "In many homes, the kitchen may not have an abundance of space, making efficient design crucial. Partnering with a professional kitchen remodeling company ensures you maximize every inch through intelligent planning and innovative solutions. Whether it's through clever cabinetry, multi-functional furniture, or smart appliance placement, experts ensure every element serves a purpose. Proper space utilization enhances the kitchen's functionality, making it easier and more enjoyable to use. Such design foresight is vital for maintaining a spacious feel in smaller kitchens and ensuring the room supports the homeowner's daily needs.",
+      },
+      {
+        heading: 'Sourcing High-Quality Materials',
+        body: "Licensed contractors have established relationships with suppliers, allowing them access to high-quality materials at competitive prices. These connections ensure that they can source durable products that will withstand the test of time in the kitchen environment. Using superior materials doesn't just enhance the kitchen's appearance – it also improves functionality and longevity. Homeowners can trust that a full-service kitchen remodeling company will make selections that contribute to a robust and reliable space. The emphasis on quality materials reflects a commitment to value, ultimately saving homeowners money in future repairs or replacements.",
+      },
+      {
+        heading: 'Delivering Detailed Craftsmanship',
+        body: "An outstanding kitchen remodel doesn't just come from quality materials; it requires skilled craftsmanship. Licensed remodelers employ experienced workers who pay meticulous attention to detail, ensuring every component of the kitchen meets high standards. This craftsmanship is evident in precision installations, seamless finishes, and the thoughtful integration of design elements. The focus on detail is what differentiates a top-tier kitchen remodeling company from an amateur job. Homeowners can expect results that not only meet but exceed their expectations, creating a space that truly impresses.",
+      },
+      {
+        heading: 'Balancing Cost and Quality',
+        body: "Budget considerations are always significant in any renovation project. Licensed contractors are experts in balancing cost with quality, offering solutions that meet financial limits without compromising on standards. They guide homeowners in making cost-effective choices, such as selecting durable yet affordable materials or prioritizing renovations that offer the best return on investment. This balance ensures a high-quality kitchen remodel that aligns with the homeowner's financial abilities. Professionals understand that a successful remodel is as much about managing resources as it is about delivering excellent results.",
+      },
+      {
+        heading: 'Understanding Local Building Codes',
+        body: 'Adherence to local building codes is a legal and safety necessity in any kitchen renovation. Hiring a reputable kitchen remodeling company guarantees compliance throughout the project, as these professionals are well-versed in local requirements. This knowledge protects homeowners from legal issues and potential fines that can arise from non-compliance. Contractors consistently apply up-to-date code requirements to enhance safety, structural integrity, and overall project quality. Understanding and following building codes is an essential factor in executing a seamless kitchen renovation.',
+      },
+      {
+        heading: 'Streamlining the Permit Process',
+        body: 'The permit application process can be a complex and time-consuming endeavor, one that licensed contractors handle adeptly. They manage these administrative challenges efficiently, minimizing delays and red tape. This proactive approach ensures the project moves forward smoothly and aligns with all legal specifications. Their expertise often results in faster approval times and a more streamlined renovation timeline. By entrusting permit management to professionals, homeowners avoid the stress and obstacles typically involved in this process.',
+      },
+      {
+        heading: 'Mitigating Non-Compliance Risks',
+        body: "Non-compliance with building codes and regulations can lead to significant risks, including legal penalties, project delays, and additional costs. A licensed contractor's adherence to these standards mitigates such risks, providing homeowners with peace of mind. Failure to comply can also impact the insurance coverage, potentially leaving homeowners exposed to liability. In the worst scenarios, structural or design flaws resulting from non-compliance can jeopardize safety. Thus, hiring professionals who prioritize compliance is crucial for safeguarding the project's success.",
+      },
+      {
+        heading: 'Identifying Potential Problems Early',
+        body: 'Experienced remodelers have a keen eye for spotting potential issues before they escalate into major problems. By identifying these early, they can incorporate contingencies into their planning, thus reducing surprises. This foresight is a result of extensive experience and technical knowledge, skills that prevent costly mistakes. Early problem identification allows contractors to address concerns proactively, ensuring that the project remains on track. Managing these aspects correctly enhances project efficiency and defends against unwelcome surprises.',
+      },
+      {
+        heading: 'Applying Agile Problem-Solving',
+        body: 'No renovation project is without its challenges, but a seasoned kitchen remodeling company is adept at navigating these bumps in the road. They employ agile problem-solving techniques that adapt to the evolving circumstances of a project. Through innovative thinking and resourcefulness, they resolve issues while minimizing disruptions. This adaptability is supported by their comprehensive industry experience and practical knowledge. As a result, even substantial hurdles in a remodel are addressed promptly and effectively, maintaining momentum towards project completion.',
+      },
+      {
+        heading: 'Minimizing Delays and Overruns',
+        body: "Ensuring a project stays on schedule and within budget is a primary goal for licensed remodelers. They use strategic planning and resource management to prevent delays and manage costs. From timely material sourcing to efficient labor allocation, professionals control elements that could result in overruns. This meticulous attention to budget and timeline protects homeowners from unexpected expenses. A competent contractor's ability to foresee potential delays and address them proactively is paramount in delivering a successful project.",
       },
     ],
     closing:
-      "The common thread is simple: licensing and experience aren't paperwork, they're what stands between you and a renovation disaster.",
+      "Kitchen remodeling can be a daunting task, but enlisting the help of a licensed kitchen remodeling company can significantly mitigate risks and ensure a successful transformation. These professionals offer expertise, access to quality materials, and regulated processes, which are crucial in avoiding renovation disasters. By prioritizing skilled labor and thorough planning, homeowners can rest assured that their kitchen remodel will not only enhance their home's value but also provide a functional, beautiful space for years to come. Cooking and gathering can return to being joyful experiences in a kitchen that reflects the homeowner's unique style and needs. The peace of mind offered by a smooth remodeling process is invaluable, confirming the benefits of hiring licensed professionals for such significant undertakings.",
   },
   {
     slug: 'planning-a-spring-kitchen-start-in-january',

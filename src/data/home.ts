@@ -40,13 +40,16 @@ export const paths = [
   },
 ];
 
+// Matches the live site's own "Why Choose Us" six items exactly (home,
+// residential-services, commercial-services and construction-and-building-
+// products pages all use this same six-item set).
 export const whyUs = [
   { t: 'Walk-ins welcome', b: 'Same-day appointments when available' },
   { t: 'Free design consultations', b: 'At the showroom or in your home' },
-  { t: '24-hour quotes', b: 'Honest pricing, no hidden fees' },
-  { t: 'Licensed & insured', b: 'CT HIC registered, permits handled' },
   { t: 'Locally & family owned', b: 'Serving Hartford County since 2016' },
-  { t: '6-month warranty', b: 'Every job backed by our workmanship guarantee' },
+  { t: 'Licensed & insured', b: 'CT HIC registered, permits handled' },
+  { t: 'Free, no obligation quotes', b: 'Written quote within 24 hours' },
+  { t: 'Showroom available', b: 'Visit us at 480 Cottage Grove Road, Bloomfield' },
 ];
 
 export const process = [
@@ -56,26 +59,32 @@ export const process = [
   { t: 'Walkthrough', b: 'Final walkthrough together, backed by a 6-month warranty.' },
 ];
 
+// Lifted verbatim from the live site's own /faqs page (scraped 2026-11-13) —
+// its full six-question set, not a paraphrase.
 export const faqs = [
   {
-    q: 'Is the design consultation really free?',
-    a: 'Yes. Come to the showroom or we visit your home, with no obligation.',
+    q: 'What kind of products will you use for my projects?',
+    a: 'Although individual project requirements differ, we strive to use local resources as much as possible for all of our work. Over our years of experience in the bathroom and kitchen remodeling industry, we have built solid relationships with many top-notch manufacturers and businesses, which also allows us to save you money on products.',
   },
   {
-    q: 'How fast will I get a quote?',
-    a: 'Within 24 hours of your consultation, with clear pricing and no hidden fees.',
+    q: 'What kind of crew do you utilize?',
+    a: 'Unlike some kitchen and bathroom remodeling companies, we use only the most qualified, skilled workers, all of whom are fully bonded and insured. In addition, they all meet licensing requirements.',
   },
   {
-    q: 'Do you help with insurance claims?',
-    a: 'Yes. For fire, smoke and water damage we work with your insurer and handle the paperwork.',
+    q: 'How does payment work?',
+    a: "Whether you're looking for commercial restorations, construction and building products, or bathroom and kitchen remodeling, we will create a project plan during our first meeting that details the costs of every aspect of the project. Payment will be expected at various intervals during the project, as clearly spelled out in the contract to avoid any surprises. Our financial specialists can help advise you on applying for home equity lines of credit if necessary.",
   },
   {
-    q: 'Do you handle permits?',
-    a: 'Yes, we pull and manage all required permits for your project.',
+    q: 'Why should I choose your company?',
+    a: 'We are a full-service general contracting provider that prides itself on delivering the best quality workmanship, guaranteed services, and impeccable customer service. Our team comprises only the most skilled, efficient, and diligent professionals who are friendly and knowledgeable in all matters of general contracting. We have worked extremely hard to earn our reputation and have successfully become a leading provider within our industry. One thing that allows us to stand apart from other kitchen and bathroom remodeling companies is that we have never forgotten our humble roots, and our goals have always stayed the same at Design Scope, LLC.',
   },
   {
-    q: 'Do you price match?',
-    a: 'We honor price matching on like products with a comparable written estimate.',
+    q: 'What should I expect during the project?',
+    a: 'We will work together to create a detailed contract and production schedule for your bathroom or kitchen remodeling project. Once our crew begins working on the project, we will keep you updated every step of the way.',
+  },
+  {
+    q: 'How soon can you begin working on my project?',
+    a: "Our crew is prepared to begin working on your project as soon as we both agree on the project details and sign a contract. If you're comparing kitchen and bathroom remodeling companies, contact us today to begin your project as quickly as possible.",
   },
 ];
 
