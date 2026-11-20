@@ -4,15 +4,16 @@ import { Image } from 'astro:assets';
 import {
   commercial,
   sectors,
+  whenYouNeedThis,
+  showroomForCommercial,
   commercialWhy,
-  clientLogoPlaceholders,
-  commercialQuotes,
   commercialCaseStudy,
-  servicePlans,
+  contractorPartnership,
 } from '../../data/commercial';
 import { commercialProjects, projectImages } from '../../data/project-images';
 import ServiceGallery from '../../components/service/ServiceGallery.astro';
 import CommercialQuoteForm from '../../components/service/CommercialQuoteForm.astro';
+import Offers from '../../components/home/Offers.astro';
 import { business } from '../../data/business';
 
 // Page order matches the GrowthOS design handoff's Commercial page
@@ -65,7 +66,41 @@ const galleryProjects = commercialProjects.map((project) => ({
     </div>
   </section>
 
-  <section class="flex flex-col gap-5.5 px-4 py-13 sm:px-7">
+  <section class="flex flex-col gap-3.5 px-4 py-12 sm:px-7">
+    <h2 class="text-[24px] font-black tracking-tight sm:text-[28px]">{commercial.introHeading}</h2>
+    {commercial.introBody.map((p) => (
+      <p class="text-ink-soft max-w-2xl text-[15px] leading-relaxed">{p}</p>
+    ))}
+  </section>
+
+  <section class="border-border-soft grid gap-7 border-t px-4 py-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))]">
+    <div class="flex flex-col gap-3">
+      <h3 class="text-xl font-black tracking-tight">{commercial.renovations.heading}</h3>
+      <p class="text-ink-soft text-sm leading-relaxed">{commercial.renovations.body}</p>
+      <div class="flex flex-col">
+        {commercial.renovations.services.map((item) => (
+          <div class="border-line flex items-start gap-3 border-t py-2.5 text-sm leading-relaxed">
+            <span class="bg-brand mt-1.5 h-2 w-2 flex-shrink-0 rotate-45"></span>
+            <span class="font-semibold">{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="flex flex-col gap-3">
+      <h3 class="text-xl font-black tracking-tight">{commercial.restorations.heading}</h3>
+      <p class="text-ink-soft text-sm leading-relaxed">{commercial.restorations.body}</p>
+      <div class="flex flex-col">
+        {commercial.restorations.services.map((item) => (
+          <div class="border-line flex items-start gap-3 border-t py-2.5 text-sm leading-relaxed">
+            <span class="bg-urgent mt-1.5 h-2 w-2 flex-shrink-0 rotate-45"></span>
+            <span class="font-semibold">{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="border-border-soft flex flex-col gap-5.5 border-t px-4 py-13 sm:px-7">
     <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">Who we work with</h2>
     <div class="grid gap-[3px] [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
       {sectors.map((s) => (
@@ -77,37 +112,35 @@ const galleryProjects = commercialProjects.map((project) => ({
     </div>
   </section>
 
-  <section
-    data-dark-section
-    class="bg-dark text-paper grid gap-6.5 px-4 py-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]"
-  >
-    {commercialWhy.map((w) => (
-      <div class="border-brand flex flex-col gap-2 border-t-2 pt-4">
-        <span class="text-[15px] font-extrabold">{w.t}</span>
-        <span class="text-on-dark-muted text-[12.5px] leading-relaxed">{w.b}</span>
-      </div>
-    ))}
+  <section class="bg-paper-muted flex flex-col gap-5 px-4 py-13 sm:px-7">
+    <div class="flex flex-col gap-2.5">
+      <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">{whenYouNeedThis.heading}</h2>
+      <p class="text-ink-soft max-w-2xl text-sm leading-relaxed">{whenYouNeedThis.intro}</p>
+    </div>
+    <div class="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))]">
+      {whenYouNeedThis.triggers.map((t) => (
+        <div class="flex items-start gap-2.5 bg-white px-4 py-3 text-sm leading-relaxed">
+          <span class="bg-brand mt-1.5 h-2 w-2 flex-shrink-0 rotate-45"></span>
+          <span class="font-semibold">{t}</span>
+        </div>
+      ))}
+    </div>
+    <p class="text-ink-soft max-w-2xl text-sm leading-relaxed">{whenYouNeedThis.closing}</p>
   </section>
 
-  <section class="border-border-soft flex flex-col gap-5 border-b px-4 py-11 sm:px-7">
-    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
-      Trusted by property managers across Greater Hartford
-    </span>
-    <div class="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(130px,1fr))]">
-      {Array.from({ length: clientLogoPlaceholders }).map(() => (
-        <div class="bg-paper-muted text-muted flex h-16 items-center justify-center text-[10.5px] font-bold tracking-[0.15em] uppercase">
-          Client logo
+  <section
+    data-dark-section
+    class="bg-dark text-paper flex flex-col gap-6.5 px-4 py-13 sm:px-7"
+  >
+    <div class="grid gap-6.5 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+      {commercialWhy.map((w) => (
+        <div class="border-brand flex flex-col gap-2 border-t-2 pt-4">
+          <span class="text-[15px] font-extrabold">{w.t}</span>
+          <span class="text-on-dark-muted text-[12.5px] leading-relaxed">{w.b}</span>
         </div>
       ))}
     </div>
-    <div class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
-      {commercialQuotes.map((q) => (
-        <div class="bg-paper-muted flex flex-col gap-2.5 p-5.5">
-          <span class="text-[14.5px] leading-relaxed font-semibold">&ldquo;{q.q}&rdquo;</span>
-          <span class="text-muted text-[11.5px] font-bold">{q.who} · sample</span>
-        </div>
-      ))}
-    </div>
+    <p class="text-on-dark-muted max-w-2xl text-sm leading-relaxed">{showroomForCommercial}</p>
   </section>
 
   <section class="grid items-center gap-7 px-4 py-13 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))]">
@@ -136,57 +169,45 @@ const galleryProjects = commercialProjects.map((project) => ({
   <section data-dark-section class="bg-dark text-paper flex flex-col gap-5.5 px-4 py-13 sm:px-7">
     <div class="flex flex-col gap-2">
       <span class="flex items-center gap-2.5 text-[10px] font-bold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
-        Service agreements
+        {contractorPartnership.eyebrow}
       </span>
       <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">
-        Keep every property in shape
+        {contractorPartnership.heading}
       </h2>
       <p class="text-on-dark-muted max-w-[640px] text-sm leading-relaxed">
-        A fixed monthly plan for planned maintenance, unit turnovers and priority emergency
-        response.
+        {contractorPartnership.body}
       </p>
     </div>
-    <div class="grid gap-2.5 [grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr))]">
-      {servicePlans.map((plan) => (
-        <div
-          class:list={[
-            'flex flex-col gap-3 p-6',
-            plan.popular ? 'bg-brand-dark text-paper' : 'bg-[#222222] text-paper',
-          ]}
-        >
-          <div class="flex items-center justify-between gap-2">
-            <span class="text-[17px] font-black">{plan.name}</span>
-            {plan.popular && (
-              <span class="bg-dark text-paper px-1.5 py-1 text-[9.5px] font-extrabold tracking-[0.1em] uppercase">
-                Most popular
-              </span>
-            )}
-          </div>
-          <span class="text-[26px] font-black tracking-tight">{plan.price}</span>
-          <div class="flex flex-col gap-1.5">
-            {plan.items.map((item) => (
-              <span class="text-[12.5px] leading-relaxed">· {item}</span>
-            ))}
-          </div>
-          <a
-            href="#quote"
-            class:list={[
-              'mt-auto border-[1.5px] p-3 text-center text-[12.5px] font-extrabold',
-              plan.popular ? 'border-ink' : 'border-paper',
-            ]}
-          >
-            Ask about this plan
-          </a>
+    <div class="flex flex-col">
+      {contractorPartnership.bullets.map((item) => (
+        <div class="border-paper/15 flex items-start gap-3 border-t py-2.5 text-sm leading-relaxed">
+          <span class="bg-brand mt-1.5 h-2 w-2 flex-shrink-0 rotate-45"></span>
+          <span class="font-semibold">{item}</span>
         </div>
       ))}
     </div>
-    <span class="text-on-dark-muted text-[11px]">
-      Plan prices are draft placeholders — final pricing is Stephen's call before this section goes
-      live.
-    </span>
+    <p class="text-on-dark-muted max-w-[640px] text-sm leading-relaxed">
+      {contractorPartnership.closing}
+    </p>
+    <div class="flex flex-wrap gap-2.5">
+      <a
+        href={`mailto:${business.email}?subject=${encodeURIComponent('Contractor partnership inquiry')}`}
+        class="bg-brand text-ink px-5 py-3.5 text-sm font-extrabold"
+      >
+        Email us about partnering
+      </a>
+      <a
+        href={`tel:${business.phone.mainTel}`}
+        class="border-[1.5px] border-paper px-5 py-3.5 text-sm font-bold"
+      >
+        {business.phone.main}
+      </a>
+    </div>
   </section>
 
   <ServiceGallery subheading="Real Design Scope commercial work" projects={galleryProjects} />
+
+  <Offers />
 
   <CommercialQuoteForm />
 </Layout>
