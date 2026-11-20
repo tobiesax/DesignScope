@@ -9,23 +9,17 @@ import FinalCta from '../../components/shared/FinalCta.astro';
 // trade-training initiative — see CONTENT_GAPS.md), and runs without a photo
 // rather than a placeholder.
 //
-// The intro's side panel was meant to be a real photo of the building/
-// entrance with the logo on the wall — a full crawl of the live site (home,
-// /about, /stephen_author, /gallery, /reviews, /showroom-store) turned up no
-// such photo anywhere (its showroom gallery is all interior display shots),
-// and the client doesn't want to use Stephen's own photo either. At the
-// client's choice, this is an animated logo clip Tobi supplied
-// (public/media/about-logo-animation.mp4, #111111 background baked in —
-// matches `bg-ink` exactly, so the panel is that colour rather than
-// `bg-dark`/#161616 to avoid any visible seam) instead of a photo.
-//
-// A real exterior photo did turn up later (public/hero/01-welcome.webp,
-// the showroom building with its own signage — also used as ScrollHero's
-// first slide), so at Tobi's request it's now this video's poster/starting
-// frame (public/media/about-office-poster.webp, a copy of that same file
-// under its own name so ScrollHero's unrelated intro-splash poster —
-// about-logo-animation-poster.jpg — stays untouched). The video itself is
-// unchanged: still the logo clip, still plays over it once loaded.
+// The intro's side panel redesigned 2026-11-20 at Tobi's request — it had
+// been a silent, muted ambient logo-animation loop (public/media/
+// about-logo-animation.mp4) since no real building photo existed at the
+// time, and later that same clip's poster/starting frame was swapped for
+// a real office exterior photo once one turned up. But the home page's
+// own About preview (AboutPreview.astro) had already moved on to
+// something better: a real ~30s Design Scope promo video (Stephen
+// installing cabinet crown moulding, a finished kitchen, real narration/
+// audio) with a click-to-play poster + sound, not a silent ambient loop.
+// This panel now uses that same real video and the same click-to-play
+// pattern, dropping the logo-animation/photo-poster treatment entirely.
 ---
 
 <Layout
@@ -57,16 +51,29 @@ import FinalCta from '../../components/shared/FinalCta.astro';
         permits.
       </p>
     </div>
-    <div class="bg-ink flex min-h-[340px] items-center justify-center p-6 sm:min-h-[420px]">
+    <div id="about-video-wrap" class="bg-ink relative min-h-[340px] overflow-hidden sm:min-h-[420px]">
+      <button
+        type="button"
+        id="about-video-play"
+        aria-label="Play: an introduction to Design Scope"
+        class="absolute inset-0 flex h-full w-full cursor-pointer items-center justify-center border-0 p-0"
+        style="background-image:url('/media/about-intro-video-poster.webp');background-size:cover;background-position:center;"
+      >
+        <span class="bg-ink/35 absolute inset-0"></span>
+        <span class="bg-brand text-ink relative z-[1] flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+      </button>
       <video
-        id="about-logo-video"
-        class="h-40 w-auto mix-blend-screen sm:h-56"
-        src="/media/about-logo-animation.mp4"
-        poster="/media/about-office-poster.webp"
-        muted
-        loop
+        id="about-video"
+        class="hidden h-full w-full object-cover"
+        src="/media/about-intro-video.mp4"
+        poster="/media/about-intro-video-poster.webp"
+        controls
         playsinline
-        aria-label="Design Scope logo animation"
+        preload="none"
       />
     </div>
   </section>
@@ -106,11 +113,11 @@ import FinalCta from '../../components/shared/FinalCta.astro';
 </Layout>
 
 <script>
-  // Only autoplay the logo animation when motion isn't reduced — otherwise
-  // it stays on its poster frame (same convention as Layout.astro's
-  // scroll-reveal handling).
-  const video = document.getElementById('about-logo-video') as HTMLVideoElement | null;
-  if (video && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    video.play().catch(() => {});
-  }
+  const playBtn = document.getElementById('about-video-play');
+  const video = document.getElementById('about-video') as HTMLVideoElement | null;
+  playBtn?.addEventListener('click', () => {
+    playBtn.remove();
+    video?.classList.remove('hidden');
+    video?.play().catch(() => {});
+  });
 </script>
