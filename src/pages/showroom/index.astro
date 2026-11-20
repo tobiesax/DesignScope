@@ -49,31 +49,21 @@ const categories = [
 // the Contact Us copy) is the same boilerplate repeated on every live-site
 // page and already covered elsewhere on this site (business.ts promises,
 // FinalCta), so it isn't repeated here.
+// Rewritten 2026-11-20 at Tobi's request from a bulleted list into prose,
+// "for more context" — same real items from the live pages (see comment
+// above), just woven into sentences instead of a plain list.
 const exteriorProducts = {
   heading: 'Exterior building products',
-  body: 'Materials that improve durability, curb appeal and long-term value for residential and commercial properties.',
-  items: [
-    'Siding materials in various styles and finishes',
-    'Roofing products and accessories',
-    'Windows and door systems',
-    'Trim and decorative details',
-    'Decking and railing components',
-    'Outdoor living materials',
-    'Weather-resistant barriers and insulation',
+  body: [
+    'Materials that improve durability, curb appeal and long-term value for residential and commercial properties.',
+    "We supply siding in a range of styles and finishes, roofing products and accessories, and complete window and door systems, along with trim and decorative details that finish off a building's exterior. For outdoor living spaces, we offer decking and railing components and other outdoor living materials, plus the weather-resistant barriers and insulation that protect the building itself.",
   ],
 };
 const interiorProducts = {
   heading: 'Interior construction products',
-  body: 'Durable materials and products for a single room update or a whole-home renovation.',
-  items: [
-    'Cabinetry and millwork solutions',
-    'Countertops in various materials',
-    'Flooring options for every style',
-    'Tile and backsplash selections',
-    'Fixtures and hardware',
-    'Wall treatments and finishes',
-    'Built-in storage systems',
-    'Decorative elements and trim',
+  body: [
+    'Durable materials and products for a single room update or a whole-home renovation.',
+    'Our selection spans cabinetry and millwork, countertops in a variety of materials, and flooring options for every style, along with tile and backsplash selections, fixtures and hardware, and wall treatments and finishes. We also carry built-in storage systems and decorative elements and trim to complete the space.',
   ],
 };
 
@@ -187,27 +177,15 @@ const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${busin
   <section class="border-border-soft grid gap-7 border-t px-4 py-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))]">
     <div class="flex flex-col gap-3">
       <h2 class="text-xl font-black tracking-tight">{exteriorProducts.heading}</h2>
-      <p class="text-ink-soft text-sm leading-relaxed">{exteriorProducts.body}</p>
-      <div class="flex flex-col">
-        {exteriorProducts.items.map((item) => (
-          <div class="border-line flex items-start gap-3 border-t py-2.5 text-sm leading-relaxed">
-            <span class="bg-brand mt-1.5 h-2 w-2 flex-shrink-0 rotate-45"></span>
-            <span class="font-semibold">{item}</span>
-          </div>
-        ))}
-      </div>
+      {exteriorProducts.body.map((p) => (
+        <p class="text-ink-soft text-sm leading-relaxed">{p}</p>
+      ))}
     </div>
     <div class="flex flex-col gap-3">
       <h2 class="text-xl font-black tracking-tight">{interiorProducts.heading}</h2>
-      <p class="text-ink-soft text-sm leading-relaxed">{interiorProducts.body}</p>
-      <div class="flex flex-col">
-        {interiorProducts.items.map((item) => (
-          <div class="border-line flex items-start gap-3 border-t py-2.5 text-sm leading-relaxed">
-            <span class="bg-brand mt-1.5 h-2 w-2 flex-shrink-0 rotate-45"></span>
-            <span class="font-semibold">{item}</span>
-          </div>
-        ))}
-      </div>
+      {interiorProducts.body.map((p) => (
+        <p class="text-ink-soft text-sm leading-relaxed">{p}</p>
+      ))}
     </div>
   </section>
 

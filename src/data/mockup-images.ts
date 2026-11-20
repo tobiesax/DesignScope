@@ -46,6 +46,15 @@ import livingRoomSunset from '../assets/mockup-temp/living-room-sunset.png';
 // generic filename, no confirmed Design Scope job — treated the same:
 // temporary, swap for a real photo before launch. See CONTENT_GAPS.md.
 import darkWoodKitchen from '../assets/mockup-temp/dark-wood-kitchen.png';
+// Real iPhone frame graphic Tobi supplied (2026-11-20) for VisualizerBand's
+// phone mockup, replacing the hand-built CSS bezel/Dynamic-Island/home-
+// indicator markup. Cropped from the original 1920×1080 canvas down to just
+// the phone's own bounding box (462×949px) — the "screen" is genuinely
+// transparent in the source file (confirmed via its alpha channel, not just
+// white), so content sits in a div underneath this image, inset to match
+// the frame's measured bezel thickness (~4.3-4.6% sides, ~1.9-2% top/
+// bottom), with the frame drawn on top.
+import iphoneFrame from '../assets/mockup-temp/iphone-frame.png';
 // EmergencyPanel.astro's background only — a distinct key rather than
 // replacing `restoration` above, since that key is also shared by the
 // restoration page hero, a blog post, a case study and
@@ -89,6 +98,7 @@ export const mockupImages = {
   'ba-before': baBefore,
   'living-room-sunset': livingRoomSunset,
   'dark-wood-kitchen': darkWoodKitchen,
+  'iphone-frame': iphoneFrame,
   'emergency-panel': emergencyPanel,
   '3d-render-sketch': threeDRenderSketch,
   '3d-render-finished': threeDRenderFinished,
