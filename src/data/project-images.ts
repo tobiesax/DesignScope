@@ -6,14 +6,23 @@
 // (a laundry nook and a home bar area) were excluded as miscategorised;
 // they aren't kitchens.
 //
-// kitchen1 and bathroom1 are each swapped for an edited/enhanced version of
-// the SAME room (same fixtures, same layout, same light fixture/mirror —
-// verified side by side), supplied directly by Tobi, not a fresh scrape.
-// Same treatment as mockup-images.ts's subway-tile-kitchen/spa-bathroom:
-// unconfirmed/enhanced rather than a straight camera original until Stephen
-// confirms — see CONTENT_GAPS.md.
+// bathroom1 is swapped for an edited/enhanced version of the same room
+// (same fixtures, same layout, same light fixture/mirror — verified side
+// by side), supplied directly by Tobi, not a fresh scrape. Same treatment
+// as mockup-images.ts's subway-tile-kitchen/spa-bathroom: unconfirmed/
+// enhanced rather than a straight camera original until Stephen confirms
+// — see CONTENT_GAPS.md.
 import kitchenHero from '../assets/projects/kitchen/gallery-07.jpg';
-import kitchen1 from '../assets/projects/kitchen/gallery-01.png';
+// kitchen1 replaced 2026-11-20 at Tobi's explicit request with a photo
+// from his own "Photos to Edit" batch — flagged to him first that it's
+// actually a living/dining room (a sliver of white cabinetry is visible
+// far in the background; no island at all), not the kitchen its old
+// title claimed, and that this slot also feeds the live /visualize/
+// tool's kitchen-tier example and the Kitchens gallery. Confirmed anyway
+// ("the idea is to capture different services"), so kept here, but
+// captioned for what the photo actually shows rather than repeating the
+// old "White kitchen with reflective island" claim.
+import kitchen1 from '../assets/projects/kitchen/open-living-kitchenette.png';
 import kitchen3 from '../assets/projects/kitchen/gallery-03.jpg';
 import kitchen5 from '../assets/projects/kitchen/gallery-05.jpg';
 import kitchen6 from '../assets/projects/kitchen/gallery-06.jpg';
@@ -45,7 +54,7 @@ import commercial5 from '../assets/projects/commercial/gallery-05.jpg';
 // Scraped 2026-11-17 from the live site's own `/residential-services` PAGE
 // (not its `/gallery` page's "residential-services-gallery" image set,
 // which is the different, hash-suffixed set already rejected above as
-// generic stock — roof/exterior/tract-house photos). These four are
+// generic stock — roof/exterior/tract-house photos). These three are
 // interior photos of finished basements and a living/dining space, each a
 // visibly different home — moderate, not full, confidence they're real:
 // each has a specific, non-generic personal detail (a handwritten sign on
@@ -54,10 +63,18 @@ import commercial5 from '../assets/projects/commercial/gallery-05.jpg';
 // commercial sets above there's no hash-ID or multi-angle-of-the-same-room
 // cross-check to fully confirm it. The page's own hero photo and a 3D
 // render on the same page were excluded — see CONTENT_GAPS.md.
-import homeReno1 from '../assets/projects/home-renovations/basement-media-wall.jpg';
 import homeReno2 from '../assets/projects/home-renovations/basement-fireplace.jpg';
 import homeReno3 from '../assets/projects/home-renovations/open-living-dining.jpg';
 import homeReno4 from '../assets/projects/home-renovations/basement-stairs-laundry.jpg';
+// Supplied directly by Tobi (2026-11-20, from a "Photos to Edit" batch of
+// his own files — a different source than the scraped set above), replacing
+// the earlier "basement-media-wall" scraped photo in this same slot. Shows
+// a home mid-construction (Tyvek house wrap, framing, siding and roofing
+// in progress, workers on ladders) — no branding or other detail in frame
+// to independently cross-check against a specific known Design Scope job,
+// so this is taken on Tobi's word that it's real Design Scope work, same
+// as any other photo he supplies directly rather than scrapes.
+import homeReno1 from '../assets/projects/home-renovations/exterior-construction.png';
 
 // Scraped 2026-11-17 from the live site's own `/commercial-renovations` and
 // `/commercial-restorations` pages. High confidence real: this break room
@@ -119,7 +136,7 @@ export const projectImages = {
 // Short, honest titles distilled from the live site's own alt text —
 // nothing invented. No `town` field: unknown, don't guess.
 export const kitchenProjects = [
-  { id: 'kitchen-1', title: 'White kitchen with reflective island', img: 'kitchen1' as const },
+  { id: 'kitchen-1', title: 'Open-concept living space with kitchenette', img: 'kitchen1' as const },
   { id: 'kitchen-3', title: 'Open-plan kitchen and bar seating', img: 'kitchen3' as const },
   { id: 'kitchen-5', title: 'White kitchen with stainless refrigerator', img: 'kitchen5' as const },
   { id: 'kitchen-6', title: 'White kitchen with built-in ovens', img: 'kitchen6' as const },
@@ -138,7 +155,7 @@ export const kitchenGalleryPhotos = [
   { src: projectImages['bar-kitchen-range'], alt: 'Gray kitchen range wall with dark glossy cabinetry' },
   { src: projectImages.kitchen3, alt: 'Open-plan kitchen and bar seating' },
   { src: projectImages['bar-kitchen-island'], alt: 'Kitchen island with pendant lighting and bar stools' },
-  { src: projectImages.kitchen1, alt: 'White kitchen with reflective island' },
+  { src: projectImages.kitchen1, alt: 'Open-concept living space with kitchenette' },
   { src: projectImages['bar-kitchen-wine-nook'], alt: 'Built-in wine fridge and coffee station nook' },
   { src: projectImages.kitchen5, alt: 'White kitchen with stainless refrigerator' },
 ];
@@ -154,7 +171,7 @@ export const bathroomProjects = [
 
 // No town is known for these either (same reasoning as kitchens/bathrooms above).
 export const homeRenovationProjects = [
-  { id: 'home-reno-1', title: 'Finished basement with media wall', img: 'home-reno-1' as const },
+  { id: 'home-reno-1', title: 'Home exterior, framing and siding underway', img: 'home-reno-1' as const },
   { id: 'home-reno-2', title: 'Finished basement with fireplace and built-ins', img: 'home-reno-2' as const },
   { id: 'home-reno-3', title: 'Open-concept living and dining renovation', img: 'home-reno-3' as const },
   { id: 'home-reno-4', title: 'Finished basement with laundry and half bath', img: 'home-reno-4' as const },
