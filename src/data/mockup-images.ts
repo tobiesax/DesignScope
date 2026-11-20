@@ -40,6 +40,12 @@ import spaBathroom from '../assets/mockup-temp/spa-bathroom.png';
 // New hero-carousel slide, supplied directly by Tobi — there was no
 // living-room/home-renovations photo in the carousel before (CONTENT_GAPS.md).
 import livingRoomSunset from '../assets/mockup-temp/living-room-sunset.png';
+// Another hero-carousel slide, supplied directly by Tobi (2026-11-18,
+// source filename "Cinematic Gradient Kitchen Interior.png"). Same
+// AI-generated/stock look as hero-kitchen.png and the rest of this file —
+// generic filename, no confirmed Design Scope job — treated the same:
+// temporary, swap for a real photo before launch. See CONTENT_GAPS.md.
+import darkWoodKitchen from '../assets/mockup-temp/dark-wood-kitchen.png';
 // EmergencyPanel.astro's background only — a distinct key rather than
 // replacing `restoration` above, since that key is also shared by the
 // restoration page hero, a blog post, a case study and
@@ -66,6 +72,7 @@ export const mockupImages = {
   'ba-after': baAfter,
   'ba-before': baBefore,
   'living-room-sunset': livingRoomSunset,
+  'dark-wood-kitchen': darkWoodKitchen,
   'emergency-panel': emergencyPanel,
   '3d-render-sketch': threeDRenderSketch,
   '3d-render-finished': threeDRenderFinished,

@@ -1,0 +1,308 @@
+---
+// ScrollHero — an alternative homepage hero prototype, built alongside
+// (not replacing) Hero.astro so both can be compared. Toggle: ?hero=scroll
+// / ?hero=classic query param, or PUBLIC_HERO_VARIANT=scroll env default —
+// see src/data/feature-flags.ts and src/pages/index.astro.
+//
+// Photos: public/hero/*.webp. Slides 1-3 are converted from three photos
+// Tobi picked out of a fuller live-site crawl (designscope-photos/, outside
+// this repo) — the showroom building's own exterior signage, the showroom
+// interior, and (slide 3, "Build") a photo already flagged and rejected
+// elsewhere in this project (CONTENT_GAPS.md) as generic stock
+// new-construction photography, not a Design Scope job — kept here anyway
+// since Tobi named this exact file and this is a comparison prototype, but
+// it should not ship as-is. Slide 4 ("Walkthrough") was swapped at Tobi's
+// request for a brighter, better-lit real kitchen photo already used
+// elsewhere on the site (project-images.ts `kitchen1`, same file as
+// src/assets/projects/kitchen/gallery-01.png) — note its own existing
+// caveat there: it's a Tobi-supplied enhanced/upscaled edit of a real
+// Design Scope kitchen, not a straight camera original, per CONTENT_GAPS.md.
+// See CONTENT_GAPS.md's 2026-11-17 ScrollHero note for all of this.
+//
+// Desktop: a 400vh container with a sticky full-viewport stage inside it;
+// GSAP ScrollTrigger (scrub) drives a slow zoom (scale 1 → 1.12) and
+// crossfade per photo as the visitor scrolls through. Mobile (<768px, same
+// breakpoint as the rest of the site's `md:` utilities): no scroll-jacking
+// — a plain timed crossfade instead. prefers-reduced-motion: skip the intro
+// and all animation, show photo 1 with the headline/button only (checked
+// in JS — GSAP tweens set inline styles directly and aren't touched by
+// global.css's blanket prefers-reduced-motion transition/animation-duration
+// override, unlike the rest of the site's CSS-driven motion).
+//
+// Intro: reuses the real animated logo clip from /about/ and the homepage
+// About section (public/media/about-logo-animation.mp4) rather than a new
+// asset. Capped at 1.5s on screen (the source clip is 7.4s), skippable by
+// click/key/scroll, shown once per sessionStorage.
+import { business } from '../../data/business';
+
+const slides = [
+  { file: '01-welcome.webp', label: 'Welcome', alt: 'The Design Scope showroom building' },
+  { file: '02-design.webp', label: 'Design', alt: 'Inside the Design Scope showroom' },
+  { file: '03-build.webp', label: 'Build', alt: 'A home renovation in progress' },
+  { file: '04-walkthrough.webp', label: 'Walkthrough', alt: 'A finished Design Scope kitchen' },
+] as const;
+
+const bookingPreset = JSON.stringify({ where: 'At the showroom' });
+---
+
+<section id="scroll-hero-root" class="relative bg-dark">
+  <!-- Intro: logo animation, once per session -->
+  <div id="hero-intro" class="bg-ink fixed inset-0 z-[100] flex items-center justify-center" hidden>
+    <video
+      id="hero-intro-video"
+      src="/media/about-logo-animation.mp4"
+      poster="/media/about-logo-animation-poster.jpg"
+      muted
+      playsinline
+      aria-hidden="true"
+      class="h-20 w-auto sm:h-28"
+    />
+    <span class="sr-only">Design Scope — loading</span>
+  </div>
+
+  <!-- Desktop: 400vh scroll stage -->
+  <div id="scroll-hero-desktop" class="relative hidden md:block" style="height: 400vh;">
+    <div class="sticky top-0 h-screen w-full overflow-hidden">
+      {slides.map((slide, i) => (
+        <div
+          class="scroll-hero-slide absolute inset-0"
+          data-index={i}
+          style={i === 0 ? '' : 'opacity:0'}
+        >
+          <img
+            src={`/hero/${slide.file}`}
+            alt={slide.alt}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            class="h-full w-full object-cover"
+          />
+        </div>
+      ))}
+
+      <div
+        class="pointer-events-none absolute inset-0"
+        style="background:linear-gradient(90deg,rgba(14,14,14,0.45) 0%,rgba(14,14,14,0.22) 30%,rgba(14,14,14,0) 50%),linear-gradient(0deg,rgba(14,14,14,0.7) 0%,rgba(14,14,14,0.35) 30%,rgba(14,14,14,0) 55%)"
+      ></div>
+
+      <div class="relative z-[2] flex h-full max-w-[560px] flex-col justify-end gap-4 px-7 py-10 text-paper">
+        <div class="flex items-center gap-2.5">
+          {slides.map((slide, i) => (
+            <span
+              data-progress-step={i}
+              class:list={[
+                'border-paper/50 border-b-2 pb-1 text-[11px] font-extrabold tracking-[0.2em] uppercase transition-colors',
+                i === 0 ? 'text-paper border-brand' : 'text-on-dark-muted',
+              ]}
+            >
+              {slide.label}
+            </span>
+          ))}
+        </div>
+        <h1 class="text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
+          One team, from sketch to final walkthrough.
+        </h1>
+        <div>
+          <a
+            href="/book/"
+            data-open-booking
+            data-booking-preset={bookingPreset}
+            class="bg-brand text-ink inline-flex px-5 py-3.5 text-[13px] font-extrabold"
+          >
+            Book a Showroom Visit
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile: timed crossfade, no scroll-jacking -->
+  <div
+    id="scroll-hero-mobile"
+    class="relative flex min-h-[520px] items-end overflow-hidden md:hidden"
+  >
+    {slides.map((slide, i) => (
+      <div
+        class:list={['mobile-hero-slide absolute inset-0', i === 0 && 'is-active']}
+        data-index={i}
+      >
+        <img
+          src={`/hero/${slide.file}`}
+          alt={slide.alt}
+          loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : 'auto'}
+          class="h-full w-full object-cover"
+        />
+      </div>
+    ))}
+
+    <div
+      class="pointer-events-none absolute inset-0"
+      style="background:linear-gradient(0deg,rgba(14,14,14,0.75),rgba(14,14,14,0.4) 45%,rgba(14,14,14,0.12) 75%,rgba(14,14,14,0) 100%)"
+    ></div>
+
+    <div class="relative z-[2] flex flex-col gap-3 px-4 py-8 text-paper">
+      <h1 class="text-[34px] leading-[1.02] font-black tracking-tight">
+        One team, from sketch to final walkthrough.
+      </h1>
+      <div>
+        <a
+          href="/book/"
+          data-open-booking
+          data-booking-preset={bookingPreset}
+          class="bg-brand text-ink inline-flex px-5 py-3.5 text-[13px] font-extrabold"
+        >
+          Book a Showroom Visit
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scroll-hero-slide img,
+  .mobile-hero-slide img {
+    display: block;
+  }
+  .mobile-hero-slide {
+    opacity: 0;
+    transition: opacity 1.4s ease;
+  }
+  .mobile-hero-slide.is-active {
+    opacity: 1;
+    z-index: 1;
+  }
+  /* Reduced motion: desktop stage collapses to a normal single-viewport
+     hero (no 400vh of scroll-jacked space) and shows slide 1 only. GSAP
+     is never initialised in this case (checked in the script below) —
+     this covers the structural/layout half global.css's blanket
+     prefers-reduced-motion rule can't (it only zeroes durations). */
+  @media (prefers-reduced-motion: reduce) {
+    #scroll-hero-desktop {
+      height: 100vh !important;
+    }
+    #scroll-hero-desktop > div {
+      position: static !important;
+    }
+    .scroll-hero-slide {
+      opacity: 0 !important;
+    }
+    .scroll-hero-slide[data-index='0'] {
+      opacity: 1 !important;
+    }
+    .mobile-hero-slide {
+      opacity: 0 !important;
+    }
+    .mobile-hero-slide[data-index='0'] {
+      opacity: 1 !important;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const root = document.getElementById('scroll-hero-root');
+  if (root) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const intro = document.getElementById('hero-intro');
+    const introVideo = document.getElementById('hero-intro-video') as HTMLVideoElement | null;
+    const INTRO_KEY = 'dsHeroIntroPlayed';
+
+    // --- Intro (skipped entirely under reduced motion) ---
+    const dismissIntro = () => {
+      if (!intro || intro.hidden) return;
+      intro.hidden = true;
+      document.body.style.overflow = '';
+      try {
+        sessionStorage.setItem(INTRO_KEY, '1');
+      } catch {
+        /* sessionStorage unavailable (private mode etc.) — just skip remembering */
+      }
+      introVideo?.pause();
+      window.removeEventListener('keydown', dismissIntro);
+      window.removeEventListener('wheel', dismissIntro);
+      window.removeEventListener('touchmove', dismissIntro);
+      intro?.removeEventListener('click', dismissIntro);
+    };
+
+    let showIntro = false;
+    if (!reduceMotion && intro) {
+      try {
+        showIntro = sessionStorage.getItem(INTRO_KEY) !== '1';
+      } catch {
+        showIntro = true;
+      }
+    }
+
+    if (showIntro && intro) {
+      intro.hidden = false;
+      document.body.style.overflow = 'hidden';
+      introVideo?.play().catch(() => {});
+      window.setTimeout(dismissIntro, 1500);
+      window.addEventListener('keydown', dismissIntro);
+      window.addEventListener('wheel', dismissIntro, { passive: true });
+      window.addEventListener('touchmove', dismissIntro, { passive: true });
+      intro.addEventListener('click', dismissIntro);
+    } else if (intro) {
+      intro.hidden = true;
+    }
+
+    // --- Reduced motion: static, no GSAP, no mobile timer ---
+    if (reduceMotion) {
+      // handled entirely by the CSS above
+    } else if (window.matchMedia('(min-width: 768px)').matches) {
+      // --- Desktop: GSAP ScrollTrigger scrub ---
+      gsap.registerPlugin(ScrollTrigger);
+
+      const stageWrap = document.getElementById('scroll-hero-desktop');
+      const slides = Array.from(root.querySelectorAll<HTMLElement>('.scroll-hero-slide'));
+      const progressSteps = Array.from(root.querySelectorAll<HTMLElement>('[data-progress-step]'));
+
+      if (stageWrap && slides.length) {
+        gsap.set(slides[0], { opacity: 1, scale: 1 });
+        gsap.set(slides.slice(1), { opacity: 0, scale: 1 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: stageWrap,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1,
+            onUpdate: (self) => {
+              const stepIndex = Math.min(
+                slides.length - 1,
+                Math.floor(self.progress * slides.length),
+              );
+              progressSteps.forEach((el, i) => {
+                const active = i === stepIndex;
+                el.classList.toggle('text-paper', active);
+                el.classList.toggle('border-brand', active);
+                el.classList.toggle('text-on-dark-muted', !active);
+                el.classList.toggle('border-paper/50', !active);
+              });
+            },
+          },
+        });
+
+        slides.forEach((slide, i) => {
+          tl.to(slide, { scale: 1.12, ease: 'none', duration: 1 }, i);
+          if (i < slides.length - 1) {
+            tl.to(slide, { opacity: 0, ease: 'none', duration: 0.3 }, i + 0.7);
+            tl.to(slides[i + 1], { opacity: 1, ease: 'none', duration: 0.3 }, i + 0.7);
+          }
+        });
+      }
+    } else {
+      // --- Mobile: plain timed crossfade, no scroll-jacking ---
+      const mobileSlides = Array.from(root.querySelectorAll<HTMLElement>('.mobile-hero-slide'));
+      if (mobileSlides.length > 1) {
+        let i = 0;
+        window.setInterval(() => {
+          i = (i + 1) % mobileSlides.length;
+          mobileSlides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+        }, 4000);
+      }
+    }
+  }
+</script>

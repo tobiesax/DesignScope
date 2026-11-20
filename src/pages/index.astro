@@ -1,6 +1,16 @@
 ---
+// Opted out of static prerendering so `?hero=scroll` / `?hero=classic` can
+// actually be read per visit (a fully static build has no per-request
+// query string to inspect) — see the hero-variant toggle below. Everything
+// else on this page is unaffected; this only changes the homepage from a
+// prebuilt static file to an on-demand Vercel function.
+export const prerender = false;
+
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/home/Hero.astro';
+import ScrollHero from '../components/home/ScrollHero.astro';
+import VisualizerBand from '../components/home/VisualizerBand.astro';
+import AboutPreview from '../components/home/AboutPreview.astro';
 import TrustBadges from '../components/home/TrustBadges.astro';
 import EmergencyPanel from '../components/home/EmergencyPanel.astro';
 import HowItWorks from '../components/home/HowItWorks.astro';
@@ -10,20 +20,41 @@ import ShowroomBlock from '../components/home/ShowroomBlock.astro';
 import Offers from '../components/home/Offers.astro';
 import ServiceArea from '../components/home/ServiceArea.astro';
 import ThreeUpBand from '../components/home/ThreeUpBand.astro';
+import { VISUALIZER_ENABLED, HERO_VARIANT_DEFAULT } from '../data/feature-flags';
 
-// Page order matches the GrowthOS design handoff's home page spec exactly
-// (README.md "Screens → Home"), at Tobi's request. ReviewCarousel's
-// reviews are the handoff's own sample content — see src/data/reviews.ts.
+// Page order originally matched the GrowthOS design handoff's home page
+// spec (README.md "Screens → Home") for the Hero → Trust badges →
+// Emergency panel run, at Tobi's request. ReviewCarousel's reviews are the
+// handoff's own sample content — see src/data/reviews.ts.
+//
+// AboutPreview sits right after Trust badges (moved back below it at
+// Tobi's request, having briefly sat directly below the hero instead).
+// VisualizerBand sits right before Recent work, per Tobi's follow-up
+// request (originally placed directly below the hero instead, per the AI
+// Room Visualizer plan doc's "most strategic placement", section 12).
+// EmergencyPanel (the "Fire · 24/7" band) was later moved to right after
+// VisualizerBand, at Tobi's request — it now comes after the "See your
+// kitchen remodeled in 60 seconds" free-tool band instead of before
+// HowItWorks.
+//
+// Hero variant: ?hero=scroll or ?hero=classic overrides HERO_VARIANT_DEFAULT
+// (PUBLIC_HERO_VARIANT) for this request only — see ScrollHero.astro and
+// CONTENT_GAPS.md for what it is and its one unresolved photo.
+const heroParam = Astro.url.searchParams.get('hero');
+const heroVariant =
+  heroParam === 'scroll' || heroParam === 'classic' ? heroParam : HERO_VARIANT_DEFAULT;
 ---
 
 <Layout
   title="Kitchen & Bath Remodeling, Bloomfield CT"
   description="Family-owned kitchen, bath and home remodeling and restoration contractor in Bloomfield, Connecticut. Free design consultations, 24-hour quotes."
 >
-  <Hero />
+  {heroVariant === 'scroll' ? <ScrollHero /> : <Hero />}
   <TrustBadges />
-  <EmergencyPanel />
+  <AboutPreview />
   <HowItWorks />
+  {VISUALIZER_ENABLED && <VisualizerBand variant="full" />}
+  <EmergencyPanel />
   <FeaturedProjects />
   <ReviewCarousel />
   <ShowroomBlock />

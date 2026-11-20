@@ -1,0 +1,395 @@
+---
+// AI Room Visualizer — static, clickable prototype only (no API calls, no
+// backend), per the "Design Scope — AI Room Visualizer" plan doc, section
+// 16 ("styled prototype first") and section 17 ("updated flow: snap,
+// compare three options, visit the showroom"). Behind VISUALIZER_ENABLED
+// (src/data/feature-flags.ts) so it can be switched off in one place.
+//
+// What's real vs. simulated, so this stays honest (CLAUDE.md rule 2):
+// - The uploaded photo is the visitor's own (read client-side with
+//   URL.createObjectURL, never uploaded anywhere — there's no backend).
+// - The "3 options" are real Design Scope project photos paired with the
+//   same Kitchens/Bathrooms "Typical investment" tiers already shown
+//   elsewhere on the site (src/data/services.ts) — not an AI render of
+//   the visitor's own photo. Labelled as examples, not a transformation.
+// - "Book my showroom visit" opens the real booking modal (not a second,
+//   fake scheduling UI) pre-filled with the room and "At the showroom",
+//   per the plan's "pre-fill the showroom booking with it".
+// - The plan's own "10% off your cabinet order when you visit" tie-in is
+//   flagged there as [CONFIRM with Stephen] — not shown as a new specific
+//   offer here; the existing, already-confirmed business.offers.newCustomer
+//   line is reused instead rather than inventing a new one.
+// - No "Email me this design" button (plan section 4) — it has nothing to
+//   send without a backend, so a dead button isn't shown.
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { business } from '../../data/business';
+import { kitchens, bathrooms } from '../../data/services';
+import { projectImages } from '../../data/project-images';
+import { VISUALIZER_ENABLED } from '../../data/feature-flags';
+
+const options = {
+  kitchen: [
+    { ...kitchens.ranges![0], img: projectImages.kitchen5 },
+    { ...kitchens.ranges![1], img: projectImages.kitchen1 },
+    { ...kitchens.ranges![2], img: projectImages.kitchen3 },
+  ],
+  bathroom: [
+    { ...bathrooms.ranges![0], img: projectImages.bathroom2 },
+    { ...bathrooms.ranges![1], img: projectImages.bathroom4 },
+    { ...bathrooms.ranges![2], img: projectImages.bathroom6 },
+  ],
+};
+---
+
+<Layout
+  title="Visualize Your Room"
+  description="Snap a photo of your kitchen or bathroom and see three real Design Scope looks, then book a free showroom visit."
+  mobileBar={{ label: 'Book showroom visit', href: '/book/' }}
+>
+  {!VISUALIZER_ENABLED ? (
+    <section class="flex flex-col gap-3 px-4 py-20 text-center sm:px-7">
+      <h1 class="text-2xl font-black tracking-tight">The visualizer isn't available right now</h1>
+      <p class="text-ink-soft">
+        Book a free consultation instead and we'll walk through ideas together.{' '}
+        <a href="/book/" data-open-booking class="text-brand-dark font-bold">
+          Book a consultation →
+        </a>
+      </p>
+    </section>
+  ) : (
+    <div id="viz-app" class="flex flex-col">
+      <!-- Step: upload -->
+      <section data-viz-step="upload" class="flex flex-col gap-5 px-4 py-10 sm:px-7">
+        <div class="flex flex-col gap-2.5">
+          <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+            AI Room Visualizer
+          </span>
+          <h1 class="text-[28px] font-black tracking-tight sm:text-[36px]">
+            Snap your <span data-viz-room-label>kitchen</span>
+          </h1>
+          <p class="text-ink-soft max-w-md text-sm leading-relaxed">
+            See three real Design Scope looks for your space, then come see your favourite in
+            person at the showroom.
+          </p>
+        </div>
+
+        <div class="flex gap-1.5">
+          <button
+            type="button"
+            data-field="room"
+            data-value="kitchen"
+            class="border-ink bg-orange-tint border-[1.5px] px-4 py-2.5 text-[13px] font-extrabold"
+          >
+            Kitchen
+          </button>
+          <button
+            type="button"
+            data-field="room"
+            data-value="bathroom"
+            class="border-line border-[1.5px] bg-white px-4 py-2.5 text-[13px] font-extrabold"
+          >
+            Bathroom
+          </button>
+        </div>
+
+        <div class="flex max-w-sm flex-col gap-3">
+          <div
+            id="viz-preview-frame"
+            class="border-line bg-paper-muted flex h-72 flex-col items-center justify-center gap-4 border-[1.5px] border-dashed"
+          >
+            <button
+              type="button"
+              id="viz-camera-btn"
+              aria-label="Take or upload a photo"
+              class="bg-brand text-ink flex h-16 w-16 items-center justify-center rounded-full"
+            >
+              <svg
+                width="26"
+                height="26"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 7h3l2-2.5h6L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z" />
+                <circle cx="12" cy="13" r="3.5" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="flex flex-col items-center gap-2">
+            <button
+              type="button"
+              id="viz-take-photo"
+              class="bg-brand text-ink w-full px-5 py-3.5 text-[13px] font-extrabold"
+            >
+              Take a photo
+            </button>
+            <button type="button" id="viz-upload-photo" class="text-muted text-[12.5px] underline">
+              or upload one
+            </button>
+            <button
+              type="button"
+              id="viz-clear-photo"
+              hidden
+              class="text-urgent text-[12.5px] font-semibold underline"
+            >
+              Remove photo
+            </button>
+          </div>
+          <input type="file" accept="image/*" capture="environment" id="viz-file-camera" class="sr-only" />
+          <input type="file" accept="image/*" id="viz-file-upload" class="sr-only" />
+        </div>
+
+        <button
+          type="button"
+          id="viz-to-options"
+          disabled
+          class="w-fit bg-[#e8e8e8] px-6 py-3.5 text-[13.5px] font-extrabold text-[#999999]"
+        >
+          See my 3 options →
+        </button>
+      </section>
+
+      <!-- Step: loading -->
+      <section data-viz-step="loading" hidden class="flex flex-col items-center gap-4 px-4 py-28 text-center sm:px-7">
+        <div class="border-brand h-10 w-10 animate-spin rounded-full border-[3px] border-t-transparent"></div>
+        <p class="text-sm font-bold">Finding your best options…</p>
+      </section>
+
+      <!-- Step: options -->
+      <section data-viz-step="options" hidden class="flex flex-col gap-5 px-4 py-10 sm:px-7">
+        <div class="flex flex-col gap-2">
+          <h2 class="text-[26px] font-black tracking-tight sm:text-[32px]">Your 3 options</h2>
+          <p class="text-muted max-w-md text-[12.5px] leading-relaxed">
+            Real Design Scope projects shown as examples of each tier — not a render of your own
+            photo. Pick the one closest to what you have in mind.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          {(['kitchen', 'bathroom'] as const).map((room) => (
+            <div data-viz-options-room={room} class="flex flex-col gap-4" hidden={room !== 'kitchen'}>
+              {options[room].map((tier) => (
+                <div class="border-line flex flex-col gap-3 border-[1.5px] bg-white p-3 sm:flex-row sm:items-center">
+                  <div class="h-44 w-full flex-shrink-0 overflow-hidden sm:h-28 sm:w-40">
+                    <Image src={tier.img} alt={`${tier.t} example`} class="h-full w-full object-cover" />
+                  </div>
+                  <div class="flex flex-1 flex-col gap-1">
+                    <span class="text-base font-extrabold">{tier.t}</span>
+                    <span class="text-ink-soft text-[13px] leading-relaxed">{tier.b}</span>
+                    <span class="text-muted text-[11px] font-bold tracking-[0.15em] uppercase">
+                      Typical investment {tier.p}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    data-field="tier"
+                    data-value={tier.t}
+                    data-img={tier.img.src}
+                    class="border-ink flex-shrink-0 border-[1.5px] bg-white px-4 py-2.5 text-[12.5px] font-extrabold"
+                  >
+                    I like this one
+                  </button>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <button type="button" id="viz-back-to-upload" class="text-muted w-fit text-[12.5px] underline">
+          ← Start over
+        </button>
+      </section>
+
+      <!-- Step: book -->
+      <section data-viz-step="book" hidden class="flex flex-col gap-5 px-4 py-10 sm:px-7">
+        <h2 class="text-[26px] font-black tracking-tight sm:text-[32px]">
+          See your <span data-viz-tier-label>design</span> in person
+        </h2>
+
+        <div class="h-64 max-w-md overflow-hidden sm:h-72">
+          <img id="viz-result-img" src="" alt="Your chosen option" class="h-full w-full object-cover" />
+        </div>
+
+        <div class="flex max-w-md flex-col gap-3">
+          <div class="flex items-start gap-3">
+            <span class="bg-paper-muted flex h-9 w-9 flex-shrink-0 items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 11l9-8 9 8" />
+                <path d="M5 10v10h14V10" />
+              </svg>
+            </span>
+            <span class="text-[13.5px] leading-relaxed">We'll have your finishes ready at the showroom</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="bg-paper-muted flex h-9 w-9 flex-shrink-0 items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20.6 12.3 12.7 20.2a2 2 0 0 1-2.8 0L3.3 13.6a2 2 0 0 1 0-2.8L11.2 2.9a2 2 0 0 1 1.4-.6H18a2 2 0 0 1 2 2v5.6a2 2 0 0 1-.6 1.4z" />
+                <circle cx="15" cy="7" r="1.2" />
+              </svg>
+            </span>
+            <span class="text-[13.5px] leading-relaxed">{business.offers.newCustomer} — ask when you visit</span>
+          </div>
+        </div>
+
+        <div class="flex max-w-md flex-col gap-2.5 sm:flex-row">
+          <a
+            id="viz-book-btn"
+            href="/book/"
+            data-open-booking
+            data-booking-preset="{}"
+            class="bg-brand text-ink flex-1 px-5 py-3.5 text-center text-[13.5px] font-extrabold"
+          >
+            Book my showroom visit
+          </a>
+          <a
+            href={`tel:${business.phone.mainTel}`}
+            class="border-ink border-[1.5px] px-5 py-3.5 text-center text-[13.5px] font-extrabold"
+          >
+            Call {business.phone.main}
+          </a>
+        </div>
+
+        <span class="text-muted text-[11px]">
+          AI concept for inspiration only. Final design is created with our designer.
+        </span>
+
+        <button type="button" id="viz-start-over" class="text-muted w-fit text-[12.5px] underline">
+          ← Start over
+        </button>
+      </section>
+    </div>
+  )}
+</Layout>
+
+{VISUALIZER_ENABLED && (
+  <script>
+    const app = document.getElementById('viz-app');
+    if (app) {
+      const steps = Array.from(app.querySelectorAll<HTMLElement>('[data-viz-step]'));
+      const roomLabel = app.querySelector('[data-viz-room-label]');
+      const tierLabel = app.querySelector('[data-viz-tier-label]');
+      const previewFrame = document.getElementById('viz-preview-frame');
+      const cameraBtn = document.getElementById('viz-camera-btn');
+      const toOptionsBtn = document.getElementById('viz-to-options') as HTMLButtonElement | null;
+      const clearPhotoBtn = document.getElementById('viz-clear-photo');
+      const fileCamera = document.getElementById('viz-file-camera') as HTMLInputElement | null;
+      const fileUpload = document.getElementById('viz-file-upload') as HTMLInputElement | null;
+      const resultImg = document.getElementById('viz-result-img') as HTMLImageElement | null;
+      const bookBtn = document.getElementById('viz-book-btn');
+
+      let room: 'kitchen' | 'bathroom' = 'kitchen';
+      let photoUrl: string | null = null;
+
+      const showStep = (name: string) => {
+        steps.forEach((el) => {
+          el.hidden = el.dataset.vizStep !== name;
+        });
+      };
+
+      const selectRoom = (value: 'kitchen' | 'bathroom', btn: HTMLElement) => {
+        room = value;
+        if (roomLabel) roomLabel.textContent = value;
+        app.querySelectorAll<HTMLElement>('[data-field="room"]').forEach((b) => {
+          const active = b === btn;
+          b.classList.toggle('border-ink', active);
+          b.classList.toggle('bg-orange-tint', active);
+          b.classList.toggle('border-line', !active);
+          b.classList.toggle('bg-white', !active);
+        });
+        app.querySelectorAll<HTMLElement>('[data-viz-options-room]').forEach((group) => {
+          group.hidden = group.dataset.vizOptionsRoom !== value;
+        });
+      };
+
+      app.addEventListener('click', (e) => {
+        const target = (e.target as HTMLElement).closest('[data-field="room"]');
+        if (target) selectRoom(target.getAttribute('data-value') as 'kitchen' | 'bathroom', target as HTMLElement);
+      });
+
+      const setPhoto = (file: File) => {
+        if (photoUrl) URL.revokeObjectURL(photoUrl);
+        photoUrl = URL.createObjectURL(file);
+        if (previewFrame) {
+          previewFrame.innerHTML = '';
+          previewFrame.classList.remove('border-dashed');
+          const img = document.createElement('img');
+          img.src = photoUrl;
+          img.alt = `Your ${room} photo`;
+          img.className = 'h-full w-full object-cover';
+          previewFrame.appendChild(img);
+        }
+        clearPhotoBtn?.removeAttribute('hidden');
+        toOptionsBtn?.removeAttribute('disabled');
+        toOptionsBtn?.classList.remove('bg-[#e8e8e8]', 'text-[#999999]');
+        toOptionsBtn?.classList.add('bg-brand', 'text-ink');
+      };
+
+      const clearPhoto = () => {
+        if (photoUrl) URL.revokeObjectURL(photoUrl);
+        photoUrl = null;
+        if (previewFrame) {
+          previewFrame.classList.add('border-dashed');
+          previewFrame.innerHTML = '';
+          if (cameraBtn) previewFrame.appendChild(cameraBtn);
+        }
+        clearPhotoBtn?.setAttribute('hidden', '');
+        toOptionsBtn?.setAttribute('disabled', 'true');
+        toOptionsBtn?.classList.add('bg-[#e8e8e8]', 'text-[#999999]');
+        toOptionsBtn?.classList.remove('bg-brand', 'text-ink');
+      };
+
+      document.getElementById('viz-take-photo')?.addEventListener('click', () => fileCamera?.click());
+      document.getElementById('viz-upload-photo')?.addEventListener('click', () => fileUpload?.click());
+      cameraBtn?.addEventListener('click', () => fileUpload?.click());
+      clearPhotoBtn?.addEventListener('click', clearPhoto);
+
+      [fileCamera, fileUpload].forEach((input) => {
+        input?.addEventListener('change', () => {
+          const file = input.files?.[0];
+          if (file) setPhoto(file);
+        });
+      });
+
+      toOptionsBtn?.addEventListener('click', () => {
+        if (toOptionsBtn.disabled) return;
+        showStep('loading');
+        window.setTimeout(() => showStep('options'), 1100);
+      });
+
+      app.querySelectorAll<HTMLElement>('[data-viz-step="upload"] [data-field="room"]').forEach((b) => {
+        if (b.getAttribute('data-value') === 'kitchen') selectRoom('kitchen', b);
+      });
+
+      app.addEventListener('click', (e) => {
+        const target = (e.target as HTMLElement).closest('[data-field="tier"]');
+        if (!target) return;
+        const tier = target.getAttribute('data-value') ?? '';
+        const img = target.getAttribute('data-img') ?? '';
+        if (tierLabel) tierLabel.textContent = tier;
+        if (resultImg) resultImg.src = img;
+        if (bookBtn) {
+          bookBtn.setAttribute(
+            'data-booking-preset',
+            JSON.stringify({
+              type: room === 'kitchen' ? 'Kitchen' : 'Bathroom',
+              where: 'At the showroom',
+            }),
+          );
+        }
+        showStep('book');
+      });
+
+      document.getElementById('viz-back-to-upload')?.addEventListener('click', () => showStep('upload'));
+      document.getElementById('viz-start-over')?.addEventListener('click', () => {
+        clearPhoto();
+        showStep('upload');
+      });
+    }
+  </script>
+)}

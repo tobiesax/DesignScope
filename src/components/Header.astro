@@ -1,20 +1,30 @@
 ---
 // Global chrome, rebuilt to match the GrowthOS design handoff's "Global
-// components" section (utility bar, nav, mobile menu) at Tobi's request.
+// components" section (utility bar, nav, mobile menu) at Tobi's request,
+// plus an About link added to the main nav at the client's request.
 import Logo from './Logo.astro';
 import { business } from '../data/business';
+import { VISUALIZER_ENABLED } from '../data/feature-flags';
 
 interface Props {
   // Changes the nav's right-hand CTA to match the handoff's per-page
   // behaviour: restoration pages push a call, commercial pushes the quote
   // form. Everything else books a consultation.
   navVariant?: 'default' | 'restoration' | 'commercial';
-  active?: 'remodeling' | 'restoration' | 'commercial' | 'showroom' | 'projects' | 'blog';
+  active?:
+    | 'remodeling'
+    | 'restoration'
+    | 'commercial'
+    | 'showroom'
+    | 'projects'
+    | 'blog'
+    | 'about';
 }
 
 const { navVariant = 'default', active } = Astro.props;
 
 const navLinks = [
+  { id: 'about', label: 'About', href: '/about/' },
   { id: 'remodeling', label: 'Kitchen & bath', href: '/remodeling/kitchens/' },
   { id: 'restoration', label: 'Restoration 24/7', href: '/restoration/' },
   { id: 'commercial', label: 'Commercial', href: '/commercial/' },
@@ -108,7 +118,7 @@ const navCta =
 
   <!-- Main nav -->
   <div class="bg-dark text-paper flex items-center justify-between gap-5 py-3.5 pr-4 pl-3 sm:px-7">
-    <Logo heightPx={36} />
+    <Logo heightPx={40} />
 
     <nav aria-label="Primary" class="hidden md:block">
       <ul class="flex items-center gap-1">
@@ -130,6 +140,19 @@ const navCta =
             </a>
           </li>
         ))}
+        {VISUALIZER_ENABLED && (
+          <li>
+            <a
+              href="/visualize/"
+              class="text-on-dark-muted hover:text-paper flex items-center gap-1.5 border-b-2 border-transparent px-2.5 py-2 text-[12.5px] font-bold whitespace-nowrap uppercase"
+            >
+              Visualize your room
+              <span class="bg-brand text-ink rounded-full px-1.5 py-0.5 text-[8.5px] font-black tracking-wide uppercase">
+                New
+              </span>
+            </a>
+          </li>
+        )}
       </ul>
     </nav>
 
@@ -213,6 +236,17 @@ const navCta =
         {link.label}
       </a>
     ))}
+    {VISUALIZER_ENABLED && (
+      <a
+        href="/visualize/"
+        class="text-paper border-[#2a2a2a] flex items-center gap-2 border-b py-3.5 text-base font-extrabold uppercase"
+      >
+        Visualize your room
+        <span class="bg-brand text-ink rounded-full px-1.5 py-0.5 text-[9px] font-black tracking-wide uppercase">
+          New
+        </span>
+      </a>
+    )}
   </nav>
 </header>
 

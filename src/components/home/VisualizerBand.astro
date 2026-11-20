@@ -1,0 +1,110 @@
+---
+// AI Room Visualizer promo band — plan doc sections 3 and 12 ("most
+// strategic placement"): a full band directly below the homepage hero,
+// and a lighter inline teaser on the Kitchen/Bathroom pages right after
+// Typical Investment. One component, two variants, per plan section 13
+// ("Create a reusable VisualizerBand component").
+//
+// The before/after pair are real Design Scope project photos (same ones
+// used elsewhere on the site), not an actual AI render of anything — the
+// prototype has no backend. Labelled accordingly rather than implied as
+// a transformation of a specific project.
+import { Image } from 'astro:assets';
+import { projectImages } from '../../data/project-images';
+
+interface Props {
+  variant?: 'full' | 'teaser';
+}
+
+const { variant = 'full' } = Astro.props;
+---
+
+{variant === 'full' ? (
+  <section class="border-border bg-paper-muted border-t px-4 py-12 sm:px-7">
+    <div class="grid items-center gap-8 [grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))]">
+      <div class="flex flex-col gap-3.5">
+        <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+          New · Free tool
+        </span>
+        <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">
+          See your kitchen remodeled in 60 seconds
+        </h2>
+        <p class="text-ink-soft text-sm leading-relaxed">
+          Snap a photo, pick a style, and see three real Design Scope looks for your own kitchen or
+          bathroom. Then come see it, touch it, decide — at the showroom.
+        </p>
+        <div>
+          <a
+            href="/visualize/"
+            class="bg-brand text-ink inline-flex items-center gap-1.5 px-5 py-3.5 text-[13px] font-extrabold"
+          >
+            Try it on your kitchen →
+          </a>
+        </div>
+        <span class="text-muted text-[11px]">AI concept for inspiration only.</span>
+      </div>
+
+      <div id="viz-ba-frame" class="bg-border relative h-72 overflow-hidden sm:h-80">
+        <Image
+          src={projectImages.kitchen1}
+          alt="Remodeled kitchen with white cabinets and island"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div id="viz-ba-before-wrap" class="absolute inset-0" style="clip-path: inset(0 50% 0 0)">
+          <Image
+            src={projectImages.kitchen5}
+            alt="Kitchen before a Design Scope remodel"
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <div
+          id="viz-ba-handle"
+          class="bg-brand pointer-events-none absolute top-0 bottom-0 left-1/2 w-[3px] -ml-[1px]"
+        ></div>
+        <span class="bg-dark text-paper pointer-events-none absolute top-3 left-3 px-2.5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase">
+          Before
+        </span>
+        <span class="bg-brand-dark text-paper pointer-events-none absolute top-3 right-3 px-2.5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase">
+          After
+        </span>
+        <input
+          id="viz-ba-range"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          aria-label="Drag to compare before and after"
+          class="absolute right-3 bottom-3 left-3 accent-[#ff5f00]"
+        />
+      </div>
+    </div>
+  </section>
+) : (
+  <section class="border-line bg-paper-muted flex flex-col items-start gap-3 border px-5 py-6 sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex flex-col gap-1">
+      <span class="text-brand-dark text-[10px] font-extrabold tracking-[0.25em] uppercase">
+        New · Free tool
+      </span>
+      <span class="text-[15px] font-extrabold">
+        Want to see this in your own kitchen? Try the visualizer.
+      </span>
+    </div>
+    <a href="/visualize/" class="bg-ink text-paper flex-shrink-0 px-4.5 py-3 text-[13px] font-extrabold">
+      Try it free →
+    </a>
+  </section>
+)}
+
+{variant === 'full' && (
+  <script>
+    const range = document.getElementById('viz-ba-range') as HTMLInputElement | null;
+    const wrap = document.getElementById('viz-ba-before-wrap');
+    const handle = document.getElementById('viz-ba-handle');
+
+    range?.addEventListener('input', () => {
+      const pos = Number(range.value);
+      if (wrap) wrap.style.clipPath = `inset(0 ${100 - pos}% 0 0)`;
+      if (handle) handle.style.left = `${pos}%`;
+    });
+  </script>
+)}

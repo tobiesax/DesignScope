@@ -5,7 +5,7 @@
 import { Image } from 'astro:assets';
 import { mockupImages } from '../../data/mockup-images';
 
-// 3 slides, not the handoff's original 5 — dropped 'ba-after' (read as
+// 2 slides, not the handoff's original 5 — dropped 'ba-after' (read as
 // a near-duplicate of 'hero-kitchen''s cinematic-gradient photo right
 // next to it) and 'proj-bath-avon' (at Tobi's request). Both keys are
 // untouched and still used correctly elsewhere: 'ba-after' in
@@ -14,14 +14,14 @@ import { mockupImages } from '../../data/mockup-images';
 // a real before/after); 'proj-bath-avon' on the Avon town page and its
 // case study.
 //
-// 'ba-before' lost its 'Before' tag for the same reason: with 'ba-after'
-// gone from this carousel, there's no honest 'After' to pair it with —
-// tagging 'hero-kitchen' (a different AI-generated kitchen) as the
-// after would falsely claim it's the same remodeled room (CLAUDE.md
-// rule 2). An orphaned "Before" badge alone also just read as a bug.
+// 'ba-before' (the slide that used to load first, with a 'Before' tag)
+// also dropped from this carousel at Tobi's request — it had no honest
+// 'After' to pair with here, so the badge was already gone. 'hero-kitchen'
+// is now the first/initial slide. 'ba-before' stays untouched for its
+// other real uses above.
 const slides = [
-  { key: 'ba-before', tag: '', dark: true },
   { key: 'hero-kitchen', tag: '', dark: false },
+  { key: 'dark-wood-kitchen', tag: '', dark: false },
   { key: 'living-room-sunset', tag: '', dark: false },
 ] as const;
 ---
@@ -63,10 +63,13 @@ const slides = [
   <!-- Two stacked gradients: the original bottom fade, plus a left-side
        fade over it — the text content below sits bottom-left, so the
        left side needs its own darkening independent of how bright that
-       slide's photo is on the right. -->
+       slide's photo is on the right. Lightened at Tobi's request (matches
+       ScrollHero.astro's gradient, tuned there first for the same reason:
+       the photos were barely visible under the original, much darker
+       values). -->
   <div
     class="pointer-events-none absolute inset-0"
-    style="background:linear-gradient(90deg,rgba(14,14,14,0.85) 0%,rgba(14,14,14,0.55) 35%,rgba(14,14,14,0.15) 65%,rgba(14,14,14,0) 85%),linear-gradient(0deg,rgba(14,14,14,0.94),rgba(14,14,14,0.62) 45%,rgba(14,14,14,0.25) 75%,rgba(14,14,14,0.05) 100%)"
+    style="background:linear-gradient(90deg,rgba(14,14,14,0.45) 0%,rgba(14,14,14,0.22) 30%,rgba(14,14,14,0) 50%),linear-gradient(0deg,rgba(14,14,14,0.7) 0%,rgba(14,14,14,0.35) 30%,rgba(14,14,14,0) 55%)"
   ></div>
 
   <button
