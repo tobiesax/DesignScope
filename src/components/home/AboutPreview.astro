@@ -1,0 +1,73 @@
+---
+import { business } from '../../data/business';
+
+// Panel: a real ~30s Design Scope promo video Tobi supplied (Vimeo-encoded
+// originally, per its file metadata), public/media/about-intro-video.mp4 —
+// real footage (Stephen installing cabinet crown moulding, a real finished
+// kitchen) cut with branded title/CTA cards, with its own narration/audio.
+// That's real, substantial content, so unlike the ambient logo-animation
+// loop used elsewhere (a silent, muted background clip), this plays as an
+// actual watchable video with sound on click — poster image + play button,
+// not autoplay. Poster is the video's own opening title card (extracted at
+// 1s), not a separate photo. Replaces the earlier photo-background +
+// logo-animation treatment this panel had (both still used on /about/'s
+// own panel, which is unchanged).
+---
+
+<section class="border-b border-[#e8e8e8]">
+  <div class="grid [grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))]">
+    <div class="flex flex-col gap-4 px-4 py-14 sm:px-7">
+      <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+        About us
+      </span>
+      <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">
+        Family-owned since {business.foundedYear}
+      </h2>
+      <p class="text-muted max-w-2xl text-[14.5px] leading-relaxed sm:text-base">
+        Design Scope is a locally and family-owned design and construction company proudly serving
+        the Farmington Valley since 2016. Licensed and insured, we offer an all-in-one solution that
+        blends thoughtful design with expert craftsmanship — creating spaces that are both current
+        and timeless. From our fully equipped kitchen and bathroom showroom to our free design
+        consultations, we make it easy for you to bring your vision to life. Whether your project is
+        large or small, you can expect honest pricing with no hidden fees, clear communication, and
+        quality work backed by a 6-month workmanship warranty.
+      </p>
+      <a href="/about/" class="text-brand-dark text-[13.5px] font-extrabold">Read more →</a>
+    </div>
+    <div id="home-about-video-wrap" class="bg-ink relative min-h-[260px] overflow-hidden sm:min-h-[320px]">
+      <button
+        type="button"
+        id="home-about-video-play"
+        aria-label="Play: an introduction to Design Scope"
+        class="absolute inset-0 flex h-full w-full cursor-pointer items-center justify-center border-0 p-0"
+        style={`background-image:url('/media/about-intro-video-poster.webp');background-size:cover;background-position:center;`}
+      >
+        <span class="bg-ink/35 absolute inset-0"></span>
+        <span class="bg-brand text-ink relative z-[1] flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+      </button>
+      <video
+        id="home-about-video"
+        class="hidden h-full w-full object-cover"
+        src="/media/about-intro-video.mp4"
+        poster="/media/about-intro-video-poster.webp"
+        controls
+        playsinline
+        preload="none"
+      />
+    </div>
+  </div>
+</section>
+
+<script>
+  const playBtn = document.getElementById('home-about-video-play');
+  const video = document.getElementById('home-about-video') as HTMLVideoElement | null;
+  playBtn?.addEventListener('click', () => {
+    playBtn.remove();
+    video?.classList.remove('hidden');
+    video?.play().catch(() => {});
+  });
+</script>
