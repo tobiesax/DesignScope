@@ -1,12 +1,15 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { business } from '../../data/business';
+import { sampleReviews, sampleAggregateRating } from '../../data/reviews';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
-// The current live site has no real customer reviews to migrate, and
-// CLAUDE.md rule 2 says never invent them. This page is honest about that
-// and points to our live review profiles until real quotes are collected
-// (CONTENT_GAPS.md).
+// Real reviews (src/data/reviews.ts) as of 2026-11-17 — see its own header
+// comment and CONTENT_GAPS.md for provenance. `business.googleReviewUrl` is
+// still unconfirmed (the share-link Tobi sent didn't resolve to a usable
+// URL for automated fetching, and he pasted the review content directly
+// instead) — the Google/Yelp buttons below stay in place for anyone who
+// wants to read the full set or leave their own.
 ---
 
 <Layout title="Reviews" description="Design Scope customer reviews on Google and Yelp.">
@@ -15,10 +18,13 @@ import FinalCta from '../../components/shared/FinalCta.astro';
       Reviews
     </span>
     <h1 class="text-3xl font-black tracking-tight sm:text-4xl">What homeowners say</h1>
-    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
-      We're collecting reviews from recent projects to feature here. In the meantime, you can read
-      (or leave) one on Google or Yelp.
-    </p>
+    <div class="flex items-center gap-3">
+      <span class="text-3xl font-black tracking-tight">{sampleAggregateRating.value}</span>
+      <div class="flex flex-col gap-0.5">
+        <span class="text-brand-dark tracking-[0.1em]">★★★★★</span>
+        <span class="text-muted text-xs">{sampleAggregateRating.count} Google reviews</span>
+      </div>
+    </div>
     <div class="flex flex-wrap gap-2.5">
       {business.googleReviewUrl && (
         <a
@@ -40,5 +46,18 @@ import FinalCta from '../../components/shared/FinalCta.astro';
       </a>
     </div>
   </section>
+
+  <section class="border-border grid gap-3.5 border-t px-4 py-10 sm:px-7 [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]">
+    {sampleReviews.map((review) => (
+      <div class="border-border flex flex-col gap-3 border p-5">
+        <span class="text-brand-dark text-[13px] tracking-[0.1em]">★★★★★</span>
+        <p class="text-ink-soft text-[14px] leading-relaxed">&ldquo;{review.quote}&rdquo;</p>
+        <span class="text-muted mt-auto text-[11.5px] font-bold">
+          {review.who} · {review.job}
+        </span>
+      </div>
+    ))}
+  </section>
+
   <FinalCta />
 </Layout>
