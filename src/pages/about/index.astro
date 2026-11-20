@@ -4,37 +4,71 @@ import { business } from '../../data/business';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
 // Stephen's surname and a team photo aren't confirmed yet (CONTENT_GAPS.md) —
-// the bio below uses only confirmed business.ts facts, and the page runs
-// without a team photo rather than a placeholder.
+// the bio below uses business.ts, lifted from the live site's /stephen_author
+// page minus its two unconfirmed claims (formal internship program, high-school
+// trade-training initiative — see CONTENT_GAPS.md), and runs without a photo
+// rather than a placeholder.
+//
+// The intro's side panel was meant to be a real photo of the building/
+// entrance with the logo on the wall — a full crawl of the live site (home,
+// /about, /stephen_author, /gallery, /reviews, /showroom-store) turned up no
+// such photo anywhere (its showroom gallery is all interior display shots),
+// and the client doesn't want to use Stephen's own photo either. At the
+// client's choice, this is an animated logo clip Tobi supplied
+// (public/media/about-logo-animation.mp4, #111111 background baked in —
+// matches `bg-ink` exactly, so the panel is that colour rather than
+// `bg-dark`/#161616 to avoid any visible seam) instead of a photo.
+//
+// A real exterior photo did turn up later (public/hero/01-welcome.webp,
+// the showroom building with its own signage — also used as ScrollHero's
+// first slide), so at Tobi's request it's now this video's poster/starting
+// frame (public/media/about-office-poster.webp, a copy of that same file
+// under its own name so ScrollHero's unrelated intro-splash poster —
+// about-logo-animation-poster.jpg — stays untouched). The video itself is
+// unchanged: still the logo clip, still plays over it once loaded.
 ---
 
 <Layout
   title="About Design Scope"
   description={`Family-owned design and construction company serving the Farmington Valley since ${business.foundedYear}.`}
 >
-  <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
-    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
-      About us
-    </span>
-    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
-      Family-owned since {business.foundedYear}
-    </h1>
-    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
-      Design Scope is a locally and family-owned design and construction company proudly serving
-      the Farmington Valley since 2016. Licensed and insured, we offer an all-in-one solution that
-      blends thoughtful design with expert craftsmanship — creating spaces that are both current
-      and timeless. From our fully equipped kitchen and bathroom showroom to our free design
-      consultations, we make it easy for you to bring your vision to life. Whether your project is
-      large or small, you can expect honest pricing with no hidden fees, clear communication, and
-      quality work backed by a 6-month workmanship warranty.
-    </p>
-    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
-      We're committed to making your experience simple and stress-free, offering walk-ins,
-      same-day appointments (based on availability), and weekend appointments to fit your
-      schedule. We provide free, no-obligation quotes within 24 hours, honor price matching on
-      comparable written estimates, and can even assist with insurance paperwork and required
-      permits.
-    </p>
+  <section class="grid [grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))]">
+    <div class="flex flex-col gap-4 px-4 py-12 sm:px-7">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        About us
+      </span>
+      <h1 class="text-3xl font-black tracking-tight sm:text-4xl">
+        Family-owned since {business.foundedYear}
+      </h1>
+      <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
+        Design Scope is a locally and family-owned design and construction company proudly serving
+        the Farmington Valley since 2016. Licensed and insured, we offer an all-in-one solution that
+        blends thoughtful design with expert craftsmanship — creating spaces that are both current
+        and timeless. From our fully equipped kitchen and bathroom showroom to our free design
+        consultations, we make it easy for you to bring your vision to life. Whether your project is
+        large or small, you can expect honest pricing with no hidden fees, clear communication, and
+        quality work backed by a 6-month workmanship warranty.
+      </p>
+      <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
+        We're committed to making your experience simple and stress-free, offering walk-ins,
+        same-day appointments (based on availability), and weekend appointments to fit your
+        schedule. We provide free, no-obligation quotes within 24 hours, honor price matching on
+        comparable written estimates, and can even assist with insurance paperwork and required
+        permits.
+      </p>
+    </div>
+    <div class="bg-ink flex min-h-[340px] items-center justify-center p-6 sm:min-h-[420px]">
+      <video
+        id="about-logo-video"
+        class="h-40 w-auto mix-blend-screen sm:h-56"
+        src="/media/about-logo-animation.mp4"
+        poster="/media/about-office-poster.webp"
+        muted
+        loop
+        playsinline
+        aria-label="Design Scope logo animation"
+      />
+    </div>
   </section>
 
   <section class="border-border flex flex-col gap-4 border-t px-4 py-10 sm:px-7">
@@ -70,3 +104,13 @@ import FinalCta from '../../components/shared/FinalCta.astro';
 
   <FinalCta />
 </Layout>
+
+<script>
+  // Only autoplay the logo animation when motion isn't reduced — otherwise
+  // it stays on its poster frame (same convention as Layout.astro's
+  // scroll-reveal handling).
+  const video = document.getElementById('about-logo-video') as HTMLVideoElement | null;
+  if (video && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    video.play().catch(() => {});
+  }
+</script>
