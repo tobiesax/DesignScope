@@ -13,7 +13,7 @@ const { credential: c, hidden = false } = Astro.props;
   class="group flex min-w-0 flex-shrink-0 items-center gap-4 px-6"
   aria-hidden={hidden ? 'true' : undefined}
 >
-  <span class="bg-orange-tint group-hover:bg-brand relative flex h-15 w-15 flex-shrink-0 items-center justify-center rounded-full transition-colors duration-300">
+  <span class="relative flex h-15 w-15 flex-shrink-0 items-center justify-center">
     <svg
       width="30"
       height="30"
@@ -24,7 +24,7 @@ const { credential: c, hidden = false } = Astro.props;
       stroke-linecap="round"
       stroke-linejoin="round"
       aria-hidden="true"
-      class="text-brand-dark group-hover:text-ink transition-colors duration-300"
+      class="text-ink"
     >
       {c.icon.split(' M').map((segment, j) => (
         <path d={j === 0 ? segment : `M${segment}`} />
