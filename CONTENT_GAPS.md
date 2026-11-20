@@ -7,6 +7,24 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
+## 2026-11-20 External review follow-up
+
+A reviewer Tobi had check the (then-undeployed) site flagged the homepage hero's "Walk-ins
+welcome" line as conflicting with `business.hours.weekend` ("Weekends by appointment only.").
+Removed that phrase from Hero.astro's subcopy rather than guess which days walk-ins are
+actually fine — real policy (is it weekdays-only, or something else?) needs Stephen's
+confirmation. The same "Walk-ins welcome" phrasing is still used elsewhere on the site
+(`home.ts` whyUs, `areas.ts`, ChatWidget, town pages, /about/) — left as-is for now since those
+contexts pair it with explicit weekday hours rather than stating it bare, but worth a second
+pass once the real policy is confirmed.
+
+Also broadened Privacy's "How we use your information" section from "We don't sell your
+information to third parties" to "We don't sell or share your information with third parties
+for their own marketing purposes" — the reviewer correctly noted the original only disclaimed
+selling, not sharing.
+
+- [ ] Confirm real walk-in policy (which days, if any, besides weekdays) with Stephen
+
 ## 2026-11-20 Compliance & CRM-readiness pass (A2P 10DLC + GoHighLevel)
 
 Tobi supplied a "Design Scope — Compliance & CRM-Ready Build Spec" PDF. It describes
