@@ -1,72 +1,80 @@
 ---
-// Home hero — matches the handoff's slideshow background (crossfade +
-// Ken Burns, pause/play control) and gradient/content layout. TEMPORARY
-// photos — see src/data/mockup-images.ts.
-import { Image } from 'astro:assets';
-import { mockupImages } from '../../data/mockup-images';
-
-// 2 slides, not the handoff's original 5 — dropped 'ba-after' (read as
-// a near-duplicate of 'hero-kitchen''s cinematic-gradient photo right
-// next to it) and 'proj-bath-avon' (at Tobi's request). Both keys are
-// untouched and still used correctly elsewhere: 'ba-after' in
-// BeforeAfter.astro's slider, the kitchen-bloomfield case study, the
-// Bloomfield town page and the style quiz (paired with 'ba-before' as
-// a real before/after); 'proj-bath-avon' on the Avon town page and its
-// case study.
+// Home hero — redesigned 2026-11-20 at Tobi's request, from a reference
+// (an "Aurel Estates" real-estate site screenshot: huge editorial
+// headline, single full-bleed photo, a bottom-right "featured listing"
+// card, a "scroll to discover" cue). Adapted rather than copied: that
+// reference's cold, uppercase luxury-real-estate voice doesn't fit
+// CLAUDE.md's "warm, local, plain-spoken, family business" brand tone, so
+// the headline copy and colour language stay Design Scope's own — what's
+// borrowed is the structure (bigger/bolder type, one calm photo, a small
+// rotating caption card, a scroll affordance).
 //
-// 'ba-before' (the slide that used to load first, with a 'Before' tag)
-// also dropped from this carousel at Tobi's request — it had no honest
-// 'After' to pair with here, so the badge was already gone. 'hero-kitchen'
-// is now the first/initial slide. 'ba-before' stays untouched for its
-// other real uses above.
+// This also finally retires the last 3 AI-mockup/stand-in photos from the
+// carousel (hero-kitchen, dark-wood-kitchen, living-room-sunset — all
+// mockup-images.ts) in favour of 4 REAL completed Design Scope jobs
+// (project-images.ts), one per main service line, each captioned and
+// linked to that service's own page — which is also what makes the
+// "featured work" card honest to show at all (a specific real project +
+// a real link, not an invented listing).
+import { Image } from 'astro:assets';
+import { projectImages } from '../../data/project-images';
+
 const slides = [
-  { key: 'hero-kitchen', tag: '', dark: false },
-  { key: 'dark-wood-kitchen', tag: '', dark: false },
-  { key: 'living-room-sunset', tag: '', dark: false },
+  {
+    key: 'bar-kitchen-wide',
+    alt: 'Open-concept kitchen with gray cabinetry, island and bar seating',
+    category: 'Kitchen remodeling',
+    cta: 'Explore kitchens →',
+    href: '/remodeling/kitchens/',
+  },
+  {
+    key: 'bathroom6',
+    alt: 'Freestanding tub and double vanity',
+    category: 'Bathroom remodeling',
+    cta: 'Explore bathrooms →',
+    href: '/remodeling/bathrooms/',
+  },
+  {
+    key: 'home-reno-3',
+    alt: 'Open-concept living and dining renovation',
+    category: 'Home renovations',
+    cta: 'Explore home renovations →',
+    href: '/remodeling/home-renovations/',
+  },
+  {
+    key: 'commercial1',
+    alt: 'Employee break room and seating',
+    category: 'Commercial renovations',
+    cta: 'Explore commercial →',
+    href: '/commercial/',
+  },
 ] as const;
 ---
 
 <section
   id="hero-slideshow"
-  class="relative flex min-h-[520px] items-end overflow-hidden bg-dark sm:min-h-[calc(100vh-110px)]"
+  class="relative flex min-h-[560px] items-end overflow-hidden bg-dark sm:min-h-[calc(100vh-110px)]"
 >
   {slides.map((slide, i) => (
     <div
-      class:list={[
-        'hero-slide absolute inset-0',
-        i % 2 === 0 ? 'ken-0' : 'ken-1',
-        i === 0 && 'is-active',
-      ]}
+      class:list={['hero-slide absolute inset-0', i % 2 === 0 ? 'ken-0' : 'ken-1', i === 0 && 'is-active']}
       data-index={i}
     >
       <Image
-        src={mockupImages[slide.key]}
-        alt=""
+        src={projectImages[slide.key]}
+        alt={slide.alt}
         widths={[640, 1024, 1600]}
         sizes="100vw"
         loading={i === 0 ? 'eager' : 'lazy'}
         fetchpriority={i === 0 ? 'high' : 'auto'}
       />
-      {slide.tag && (
-        <span
-          class:list={[
-            'absolute top-6 left-6 px-2.5 py-1.5 text-[10px] font-extrabold tracking-[0.2em] uppercase',
-            slide.dark ? 'bg-ink text-paper' : 'bg-brand text-ink',
-          ]}
-        >
-          {slide.tag}
-        </span>
-      )}
     </div>
   ))}
 
   <!-- Two stacked gradients: the original bottom fade, plus a left-side
        fade over it — the text content below sits bottom-left, so the
        left side needs its own darkening independent of how bright that
-       slide's photo is on the right. Lightened at Tobi's request (matches
-       ScrollHero.astro's gradient, tuned there first for the same reason:
-       the photos were barely visible under the original, much darker
-       values). -->
+       slide's photo is on the right. -->
   <div
     class="pointer-events-none absolute inset-0"
     style="background:linear-gradient(90deg,rgba(14,14,14,0.45) 0%,rgba(14,14,14,0.22) 30%,rgba(14,14,14,0) 50%),linear-gradient(0deg,rgba(14,14,14,0.7) 0%,rgba(14,14,14,0.35) 30%,rgba(14,14,14,0) 55%)"
@@ -76,20 +84,20 @@ const slides = [
     type="button"
     id="hero-pause-toggle"
     aria-label="Pause background"
-    class="absolute right-4 bottom-8 z-10 flex h-11 w-11 items-center justify-center text-sm font-black text-paper sm:right-7"
+    class="absolute bottom-8 left-4 z-10 flex h-11 w-11 items-center justify-center text-sm font-black text-paper sm:left-7"
     style="text-shadow: 0 1px 4px rgba(0,0,0,0.6);"
   >
     II
   </button>
 
-  <div class="relative z-[2] flex max-w-[520px] flex-col gap-3 px-4 py-8 text-paper sm:px-7">
+  <div class="relative z-[2] flex max-w-[620px] flex-col gap-3.5 px-4 py-8 text-paper sm:px-7">
     <span class="bg-brand-dark text-paper self-start px-2.5 py-1.5 text-[10px] font-extrabold tracking-[0.25em] uppercase">
       Design &amp; build services
     </span>
-    <h1 class="text-[34px] leading-[1.02] font-black tracking-tight sm:text-[52px]">
+    <h1 class="text-[42px] leading-[0.98] font-black tracking-tight sm:text-[64px] lg:text-[74px]">
       Come visit the showroom — from design to construction, all under one roof
     </h1>
-    <span class="text-[15px] leading-relaxed font-medium text-[#ededed]">
+    <span class="max-w-md text-[15px] leading-relaxed font-medium text-[#ededed]">
       Family-owned in Connecticut since 2016, with free design consultations and free,
       no-obligation quotes.
     </span>
@@ -113,13 +121,53 @@ const slides = [
       </a>
     </div>
   </div>
+
+  <!-- "Scroll to discover" cue — honest to show since there's a full page
+       of content (trust badges, about, etc.) directly below. Desktop only,
+       same as the featured-work card: both would crowd the much shorter
+       mobile hero. -->
+  <button
+    type="button"
+    id="hero-scroll-cue"
+    aria-label="Scroll to see more"
+    class="text-paper/70 hover:text-paper absolute bottom-7 left-1/2 z-[2] hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
+  >
+    <span class="text-[10px] font-bold tracking-[0.25em] uppercase">Scroll to discover</span>
+    <span class="bg-paper/40 h-8 w-px"></span>
+  </button>
+
+  <!-- Featured-work card — cycles with the slideshow. Each slide is a
+       real completed job (project-images.ts), so this links to a real
+       page about that real work, not an invented listing. -->
+  <div
+    id="hero-featured-card"
+    class="bg-[rgba(14,14,14,0.78)] text-paper absolute right-4 bottom-7 z-[2] hidden w-[230px] flex-col gap-1.5 p-4 backdrop-blur-sm sm:flex sm:right-7"
+  >
+    <div class="text-on-dark-muted flex items-center justify-between text-[10px] font-bold tracking-[0.15em] uppercase">
+      <span>Featured work</span>
+      <span id="hero-featured-index">01 / {String(slides.length).padStart(2, '0')}</span>
+    </div>
+    <span id="hero-featured-title" class="text-[15px] font-extrabold">{slides[0].category}</span>
+    <a
+      id="hero-featured-link"
+      href={slides[0].href}
+      class="mt-1 text-[12px] font-bold text-paper underline underline-offset-2"
+    >
+      {slides[0].cta}
+    </a>
+  </div>
 </section>
 
-<script>
+<script define:vars={{ slideData: slides.map((s) => ({ category: s.category, cta: s.cta, href: s.href })) }}>
   const root = document.getElementById('hero-slideshow');
   const toggle = document.getElementById('hero-pause-toggle');
+  const scrollCue = document.getElementById('hero-scroll-cue');
+  const featuredIndex = document.getElementById('hero-featured-index');
+  const featuredTitle = document.getElementById('hero-featured-title');
+  const featuredLink = document.getElementById('hero-featured-link');
+
   if (root && toggle) {
-    const slides = Array.from(root.querySelectorAll<HTMLElement>('.hero-slide'));
+    const slides = Array.from(root.querySelectorAll('.hero-slide'));
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let paused = reduceMotion;
     let i = 0;
@@ -129,10 +177,18 @@ const slides = [
       root.classList.toggle('is-paused', paused);
       toggle.textContent = paused ? '▶' : 'II';
       toggle.setAttribute('aria-label', paused ? 'Play background' : 'Pause background');
+
+      const data = slideData[i];
+      if (data && featuredIndex && featuredTitle && featuredLink) {
+        featuredIndex.textContent = `${String(i + 1).padStart(2, '0')} / ${String(slideData.length).padStart(2, '0')}`;
+        featuredTitle.textContent = data.category;
+        featuredLink.textContent = data.cta;
+        featuredLink.setAttribute('href', data.href);
+      }
     };
     render();
 
-    let timer: ReturnType<typeof setInterval> | null = null;
+    let timer = null;
     const start = () => {
       if (timer) return;
       timer = setInterval(() => {
@@ -153,4 +209,8 @@ const slides = [
       render();
     });
   }
+
+  scrollCue?.addEventListener('click', () => {
+    root?.nextElementSibling?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 </script>
