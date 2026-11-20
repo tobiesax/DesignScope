@@ -67,6 +67,22 @@ import quizModern from '../assets/mockup-temp/quiz-modern.png';
 // photo needed" placeholder box with no image at all (CLAUDE.md rule 1),
 // now a rebuilt-space stand-in Tobi supplied.
 import dryOutAfter from '../assets/mockup-temp/dry-out-after.png';
+// Hero-carousel slides, supplied directly by Tobi (2026-11-20) to replace
+// the previous mockup photos. Same AI-generated look as the rest of this
+// file — all 6 share the exact same staging props (one specific white
+// hydrangea arrangement in a stone vase, the same olive sprigs, the same
+// brass dome pendants) repeated identically across supposedly different
+// kitchens, bathrooms and a living room, which real photography of
+// different homes wouldn't do, and all 6 are the same 1672×941 as the
+// earlier "Cinematic Gradient Kitchen Interior" AI image (dark-wood-kitchen
+// below) — not confirmed Design Scope jobs. Treated the same: temporary,
+// swap for real photos before launch. See CONTENT_GAPS.md.
+import calacattaOakKitchen from '../assets/mockup-temp/calacatta-oak-kitchen.png';
+import waterfallIslandKitchen from '../assets/mockup-temp/waterfall-island-kitchen.png';
+import walnutCabinetry from '../assets/mockup-temp/walnut-cabinetry.png';
+import wholeHomeRenovation from '../assets/mockup-temp/whole-home-renovation.png';
+import spaBathroomOvalTub from '../assets/mockup-temp/spa-bathroom-oval-tub.png';
+import travertineBathroom from '../assets/mockup-temp/travertine-bathroom.png';
 
 export const mockupImages = {
   'ba-after': baAfter,
@@ -102,4 +118,10 @@ export const mockupImages = {
   showroom,
   'subway-tile-kitchen': subwayTileKitchen,
   'spa-bathroom': spaBathroom,
+  'calacatta-oak-kitchen': calacattaOakKitchen,
+  'waterfall-island-kitchen': waterfallIslandKitchen,
+  'walnut-cabinetry': walnutCabinetry,
+  'whole-home-renovation': wholeHomeRenovation,
+  'spa-bathroom-oval-tub': spaBathroomOvalTub,
+  'travertine-bathroom': travertineBathroom,
 } satisfies Record<string, ImageMetadata>;

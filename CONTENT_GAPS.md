@@ -7,6 +7,29 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
+## 2026-11-20 Hero redesign, round 2: 6 new AI-generated photos
+
+Tobi supplied 6 new photos for the hero carousel (plus 4 duplicate re-downloads of the same
+files, filtered out). All 6 are AI-generated, not real homes — confirmed by the exact same
+staging props (one specific white hydrangea arrangement in a stone vase, the same olive
+sprigs, the same brass dome pendants) repeating identically across supposedly different
+kitchens, bathrooms and a living room, and all 6 share the same 1672×941 resolution as the
+earlier "Cinematic Gradient Kitchen Interior" AI image (dark-wood-kitchen, already in
+mockup-images.ts). Added as `calacatta-oak-kitchen`, `waterfall-island-kitchen`,
+`walnut-cabinetry`, `whole-home-renovation`, `spa-bathroom-oval-tub`, `travertine-bathroom`.
+
+Because these replaced the brief use of 4 REAL project photos in the hero (project-images.ts),
+the caption card that cycles with the slideshow was renamed from "Featured work" to "Get
+inspired" — it no longer claims the pictured room is a specific completed Design Scope job,
+only that its category link (e.g. "Explore kitchens →") is real. Swap the slides back to
+project-images.ts's real photos once Stephen has enough real ones to cover all 3-4 categories
+well (kitchens and bathrooms already do; home renovations/commercial are thinner — see the
+"Real-photo galleries" rollout notes elsewhere in this file).
+
+Also darkened the hero's gradient overlay and added text-shadow to the headline/subcopy/
+Explore-Remodeling button — the new photos are much brighter and warmer-lit than what the
+gradient was previously tuned for, and the white text had lost contrast against them.
+
 ## 2026-11-20 External review follow-up
 
 A reviewer Tobi had check the (then-undeployed) site flagged the homepage hero's "Walk-ins

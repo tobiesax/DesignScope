@@ -1,52 +1,67 @@
 ---
 // Home hero — redesigned 2026-11-20 at Tobi's request, from a reference
 // (an "Aurel Estates" real-estate site screenshot: huge editorial
-// headline, single full-bleed photo, a bottom-right "featured listing"
-// card, a "scroll to discover" cue). Adapted rather than copied: that
-// reference's cold, uppercase luxury-real-estate voice doesn't fit
-// CLAUDE.md's "warm, local, plain-spoken, family business" brand tone, so
-// the headline copy and colour language stay Design Scope's own — what's
-// borrowed is the structure (bigger/bolder type, one calm photo, a small
-// rotating caption card, a scroll affordance).
+// headline, single full-bleed photo, a bottom-right card, a "scroll to
+// discover" cue). Adapted rather than copied: that reference's cold,
+// uppercase luxury-real-estate voice doesn't fit CLAUDE.md's "warm,
+// local, plain-spoken, family business" brand tone, so the headline copy
+// and colour language stay Design Scope's own — what's borrowed is the
+// structure (bigger/bolder type, one calm photo, a small rotating caption
+// card, a scroll affordance).
 //
-// This also finally retires the last 3 AI-mockup/stand-in photos from the
-// carousel (hero-kitchen, dark-wood-kitchen, living-room-sunset — all
-// mockup-images.ts) in favour of 4 REAL completed Design Scope jobs
-// (project-images.ts), one per main service line, each captioned and
-// linked to that service's own page — which is also what makes the
-// "featured work" card honest to show at all (a specific real project +
-// a real link, not an invented listing).
+// Carousel photos: briefly used 4 REAL completed Design Scope jobs
+// (project-images.ts), then swapped again at Tobi's request (2026-11-20)
+// for 6 new photos he supplied. Those 6 are AI-generated, not real homes
+// — see mockup-images.ts's comment on this exact batch for why (repeated
+// identical staging props across supposedly different houses). Because
+// of that, the caption card below reads "Get inspired" rather than
+// "Featured work" — it no longer claims the pictured room is a specific
+// completed Design Scope job, just that the category link is real.
 import { Image } from 'astro:assets';
-import { projectImages } from '../../data/project-images';
+import { mockupImages } from '../../data/mockup-images';
 
 const slides = [
   {
-    key: 'bar-kitchen-wide',
-    alt: 'Open-concept kitchen with gray cabinetry, island and bar seating',
+    key: 'calacatta-oak-kitchen',
+    alt: 'Kitchen with Calacatta marble island and warm oak cabinetry',
     category: 'Kitchen remodeling',
     cta: 'Explore kitchens →',
     href: '/remodeling/kitchens/',
   },
   {
-    key: 'bathroom6',
-    alt: 'Freestanding tub and double vanity',
+    key: 'spa-bathroom-oval-tub',
+    alt: 'Sunlit spa bathroom with an oval soaking tub',
     category: 'Bathroom remodeling',
     cta: 'Explore bathrooms →',
     href: '/remodeling/bathrooms/',
   },
   {
-    key: 'home-reno-3',
-    alt: 'Open-concept living and dining renovation',
+    key: 'whole-home-renovation',
+    alt: 'Living room with stone fireplace, open to a kitchen beyond',
     category: 'Home renovations',
     cta: 'Explore home renovations →',
     href: '/remodeling/home-renovations/',
   },
   {
-    key: 'commercial1',
-    alt: 'Employee break room and seating',
-    category: 'Commercial renovations',
-    cta: 'Explore commercial →',
-    href: '/commercial/',
+    key: 'waterfall-island-kitchen',
+    alt: 'Kitchen with a waterfall-edge marble island',
+    category: 'Kitchen remodeling',
+    cta: 'Explore kitchens →',
+    href: '/remodeling/kitchens/',
+  },
+  {
+    key: 'walnut-cabinetry',
+    alt: 'Built-in walnut cabinetry and shelving with bar area',
+    category: 'Home renovations',
+    cta: 'Explore home renovations →',
+    href: '/remodeling/home-renovations/',
+  },
+  {
+    key: 'travertine-bathroom',
+    alt: 'Travertine bathroom with freestanding tub and walk-in shower',
+    category: 'Bathroom remodeling',
+    cta: 'Explore bathrooms →',
+    href: '/remodeling/bathrooms/',
   },
 ] as const;
 ---
@@ -61,7 +76,7 @@ const slides = [
       data-index={i}
     >
       <Image
-        src={projectImages[slide.key]}
+        src={mockupImages[slide.key]}
         alt={slide.alt}
         widths={[640, 1024, 1600]}
         sizes="100vw"
@@ -74,10 +89,13 @@ const slides = [
   <!-- Two stacked gradients: the original bottom fade, plus a left-side
        fade over it — the text content below sits bottom-left, so the
        left side needs its own darkening independent of how bright that
-       slide's photo is on the right. -->
+       slide's photo is on the right. Darkened again (2026-11-20) after
+       swapping in much brighter, warm-lit photos — the previous values
+       were tuned for darker slides and no longer gave the white text
+       enough contrast. -->
   <div
     class="pointer-events-none absolute inset-0"
-    style="background:linear-gradient(90deg,rgba(14,14,14,0.45) 0%,rgba(14,14,14,0.22) 30%,rgba(14,14,14,0) 50%),linear-gradient(0deg,rgba(14,14,14,0.7) 0%,rgba(14,14,14,0.35) 30%,rgba(14,14,14,0) 55%)"
+    style="background:linear-gradient(90deg,rgba(10,10,10,0.75) 0%,rgba(10,10,10,0.48) 32%,rgba(10,10,10,0.08) 58%,rgba(10,10,10,0) 72%),linear-gradient(0deg,rgba(10,10,10,0.85) 0%,rgba(10,10,10,0.5) 28%,rgba(10,10,10,0.1) 55%,rgba(10,10,10,0) 75%)"
   ></div>
 
   <button
@@ -94,10 +112,16 @@ const slides = [
     <span class="bg-brand-dark text-paper self-start px-2.5 py-1.5 text-[10px] font-extrabold tracking-[0.25em] uppercase">
       Design &amp; build services
     </span>
-    <h1 class="text-[42px] leading-[0.98] font-black tracking-tight sm:text-[64px] lg:text-[74px]">
+    <h1
+      class="text-[42px] leading-[0.98] font-black tracking-tight sm:text-[64px] lg:text-[74px]"
+      style="text-shadow: 0 2px 24px rgba(0,0,0,0.55);"
+    >
       Come visit the showroom — from design to construction, all under one roof
     </h1>
-    <span class="max-w-md text-[15px] leading-relaxed font-medium text-[#ededed]">
+    <span
+      class="max-w-md text-[15px] leading-relaxed font-medium text-[#ededed]"
+      style="text-shadow: 0 1px 12px rgba(0,0,0,0.5);"
+    >
       Family-owned in Connecticut since 2016, with free design consultations and free,
       no-obligation quotes.
     </span>
@@ -115,7 +139,7 @@ const slides = [
       </a>
       <a
         href="/remodeling/"
-        class="border-[1.5px] border-paper px-5 py-3.5 text-[13px] font-extrabold text-paper"
+        class="border-[1.5px] border-paper bg-[rgba(14,14,14,0.3)] px-5 py-3.5 text-[13px] font-extrabold text-paper"
       >
         Explore Remodeling →
       </a>
@@ -136,15 +160,16 @@ const slides = [
     <span class="bg-paper/40 h-8 w-px"></span>
   </button>
 
-  <!-- Featured-work card — cycles with the slideshow. Each slide is a
-       real completed job (project-images.ts), so this links to a real
-       page about that real work, not an invented listing. -->
+  <!-- Caption card — cycles with the slideshow. Says "Get inspired," not
+       "Featured work": the photos are AI-generated mood shots, not a
+       specific completed Design Scope job, so the card doesn't claim
+       otherwise. The category link itself is real. -->
   <div
     id="hero-featured-card"
     class="bg-[rgba(14,14,14,0.78)] text-paper absolute right-4 bottom-7 z-[2] hidden w-[230px] flex-col gap-1.5 p-4 backdrop-blur-sm sm:flex sm:right-7"
   >
     <div class="text-on-dark-muted flex items-center justify-between text-[10px] font-bold tracking-[0.15em] uppercase">
-      <span>Featured work</span>
+      <span>Get inspired</span>
       <span id="hero-featured-index">01 / {String(slides.length).padStart(2, '0')}</span>
     </div>
     <span id="hero-featured-title" class="text-[15px] font-extrabold">{slides[0].category}</span>
