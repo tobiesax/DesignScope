@@ -1,0 +1,97 @@
+---
+// Terms of Use — created per the compliance/CRM-readiness spec Tobi
+// supplied (2026-11-20, Task 3), word for word. "[DATE OF PUBLISHING]" and
+// "[MAIN BUSINESS NUMBER]" are kept as literal bracketed placeholders, not
+// filled with business.ts's values — the spec's own "still to confirm"
+// list flags both as unconfirmed (the publish date obviously doesn't
+// exist yet; whether (860) 264-5275 is really Design Scope's own number,
+// versus one leased through the old host, is a separate open question —
+// see business.ts and CONTENT_GAPS.md). CLAUDE.md rule 1: don't guess.
+import Layout from '../../layouts/Layout.astro';
+import { business } from '../../data/business';
+---
+
+<Layout
+  title="Terms of Use"
+  description="Terms of Use for Design Scope LLC's website and text messaging program."
+>
+  <section class="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-12 sm:px-7">
+    <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+      Terms of use
+    </span>
+    <h1 class="text-3xl font-black tracking-tight sm:text-4xl">Terms of Use — {business.legalName}</h1>
+    <p class="text-muted text-sm font-semibold">Last updated: [DATE OF PUBLISHING]</p>
+
+    <p class="text-ink-soft text-sm leading-relaxed">
+      These terms apply to designscopellc.com and to text messages from {business.legalName},{' '}
+      {business.showroom.streetAddress}, {business.showroom.city}, {business.showroom.state}{' '}
+      {business.showroom.postalCode}.
+    </p>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">Using this website</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        The information on this site is for general information about our services. Prices, offers
+        and availability may change. A project is only agreed once you've accepted a written
+        estimate or contract from us.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">Text messaging program</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        If you opt in by ticking the consent box on our website or by texting us, {business.legalName}{' '}
+        may send you text messages about your enquiry, appointment reminders and confirmations,
+        project updates, review requests, and occasional offers.
+      </p>
+      <ul class="text-ink-soft flex flex-col gap-1.5 text-sm leading-relaxed">
+        <li>Message frequency varies.</li>
+        <li>Message and data rates may apply.</li>
+        <li>
+          Reply STOP at any time to stop receiving texts. You'll get one final message confirming
+          you've been unsubscribed.
+        </li>
+        <li>
+          Reply HELP for help, or contact us at{' '}
+          <a href={`mailto:${business.email}`} class="font-semibold hover:text-brand-dark">
+            {business.email}
+          </a>{' '}
+          or [MAIN BUSINESS NUMBER].
+        </li>
+        <li>Consent to receive texts is not a condition of any purchase.</li>
+        <li>Carriers are not liable for delayed or undelivered messages.</li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">Call recording</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        Calls to {business.legalName} may be recorded for quality and training. You'll hear a
+        notice at the start of the call.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">Privacy</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        How we handle your information is explained in our{' '}
+        <a href="/privacy/" class="font-semibold hover:text-brand-dark">
+          Privacy Policy
+        </a>
+        .
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="text-lg font-extrabold">Contact</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">
+        {business.legalName}, {business.showroom.streetAddress}, {business.showroom.city},{' '}
+        {business.showroom.state} {business.showroom.postalCode}.{' '}
+        <a href={`mailto:${business.email}`} class="font-semibold hover:text-brand-dark">
+          {business.email}
+        </a>
+        .
+      </p>
+    </div>
+  </section>
+</Layout>

@@ -13,6 +13,11 @@ export const business = {
     postalCode: '06002',
   },
 
+  // TODO: confirm ownership before launch — per the compliance/CRM-readiness
+  // spec Tobi supplied (2026-11-20), it's unconfirmed whether these two
+  // numbers are Design Scope's own or leased through Hibu (the old host).
+  // Don't remove them; just don't treat them as certainly portable until
+  // Stephen confirms.
   phone: {
     main: '(860) 264-5275',
     mainTel: '+18602645275',
@@ -24,22 +29,24 @@ export const business = {
 
   email: 'contact@designscopellc.com',
 
+  // Exact phrasing confirmed per the compliance/CRM-readiness spec Tobi
+  // supplied (2026-11-20) — used verbatim so every page reads the same way.
   hours: {
-    weekday: 'Monday to Friday, 9:00 am to 5:00 pm',
-    weekend: 'By appointment only',
-    // TODO: confirm weekend policy and same-day availability wording — see CONTENT_GAPS.md
+    weekday: 'Monday–Friday, 9:00 am–5:00 pm',
+    weekend: 'Weekends by appointment only.',
   },
 
-  // TODO: get HIC registration number from Stephen. Must appear in the footer,
-  // the contact page and in ads. Leave the field hidden in components until set.
-  hicRegistrationNumber: null as string | null,
+  // Confirmed per the compliance/CRM-readiness spec Tobi supplied
+  // (2026-11-20, listed there under "Confirmed business facts, safe to
+  // use"). Must appear in the footer, the contact page and in ads.
+  hicRegistrationNumber: 'HIC.0645972' as string | null,
 
   team: {
     stephen: {
       // TODO: get Stephen's surname — see CONTENT_GAPS.md
       firstName: 'Stephen',
       role: 'Member, Interior Design Specialist & Master Craftsman',
-      bio: "Co-founder with a Master's in Interior Design and 25+ years in the industry.",
+      bio: "Stephen brings over 25 years of design and construction experience to the Farmington Valley. Holding a Master's Degree in Interior Design, he combines architectural aesthetics, spatial planning and fine carpentry to bridge the gap between concept drawings and hands-on site execution. Since co-founding Design Scope in 2016, Stephen has led the company's growth into a full kitchen and bathroom remodeling business, including the opening of its fully equipped showroom, where clients can explore material samples, cabinetry and hardware finishes alongside the design team.",
     },
   },
 
@@ -110,6 +117,25 @@ export const business = {
   // KBIS (Kitchen Bathroom Industry Show) are all listed there.
   memberships: ['HBRA', 'Bloomfield Chamber of Commerce', 'KBIS'],
 
+  // Confirmed against the live site's own /about structured "Payment
+  // Options" listing (scraped 2026-11-16): the exact set of methods listed
+  // there, in that order.
+  paymentMethods: [
+    'Visa',
+    'MasterCard',
+    'American Express',
+    'Discover',
+    'PayPal',
+    'Apple Pay',
+    'Google Pay',
+    'Samsung Pay',
+    'Zelle',
+    'Cash',
+    'Check',
+    'Invoice',
+    'Financing',
+  ],
+
   // Trust-badge row (home hero strip + footer), per the design handoff's
   // "Global components → Trust badges". The BBB and Houzz badges are
   // UNCONFIRMED — see CONTENT_GAPS.md "Assets". Rendered now to match the
@@ -132,7 +158,7 @@ export const business = {
     {
       mark: '',
       title: 'CT licensed',
-      sub: 'HIC # (to add)',
+      sub: 'HIC.0645972',
       icon: 'M3 5.5h18v13H3z M6.5 9.5h5 M6.5 12.5h7 M6.5 15.5h4 M15.5 10.5a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0-3.5 0 M14.8 15.5c.4-1.2 1.4-1.9 2.45-1.9s2.05.7 2.45 1.9',
     },
     {
@@ -146,6 +172,20 @@ export const business = {
       title: 'Wellborn Forest',
       sub: 'Authorised dealer',
       icon: 'M3.5 3.5h17v17h-17z M12 3.5v17 M3.5 13h17 M9.5 7.5v2.5 M14.5 7.5v2.5 M9.5 15.5v2 M14.5 15.5v2',
+    },
+    {
+      // Confirmed against the live site's own /about structured
+      // "Certifications" listing (scraped 2026-11-16).
+      mark: '',
+      title: 'Warmup certified',
+      sub: 'Installer',
+      icon: 'M12 3a6 6 0 1 0 0 12a6 6 0 1 0 0-12z M9.3 9.2l1.9 1.9 3.5-3.6 M8.5 13.5 7 21l5-2.7 5 2.7-1.5-7.5',
+    },
+    {
+      mark: '',
+      title: 'Schluter certified',
+      sub: 'Installer',
+      icon: 'M12 3a6 6 0 1 0 0 12a6 6 0 1 0 0-12z M9.3 9.2l1.9 1.9 3.5-3.6 M8.5 13.5 7 21l5-2.7 5 2.7-1.5-7.5',
     },
     {
       mark: '6M',
@@ -206,3 +246,21 @@ export const business = {
 } as const;
 
 export type Business = typeof business;
+
+// Exact A2P 10DLC consent wording, word for word from the compliance/
+// CRM-readiness spec Tobi supplied (2026-11-20) — every form on the site
+// that collects a phone number shows this same text next to its consent
+// checkbox, and the exact string is also what gets recorded as proof of
+// consent on submit (src/lib/lead.ts). Don't paraphrase per-form; carriers
+// want the shown text to match what's on file.
+export const smsConsentText =
+  "I agree to receive text messages from Design Scope LLC about my enquiry, appointments, project updates and occasional offers. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase. See our Privacy Policy and Terms.";
+
+// Centralized so every form offers the same choices (previously
+// EnquiryForm.astro and BookingModal.astro each had their own inline
+// array — despite a comment claiming they matched, they didn't: one had
+// Under $15k/$15k–$30k/$30k–$60k/$60k+, the other Under $25k/$25k–$50k/
+// $50k–$100k/$100k+). Neither is confirmed real — see CONTENT_GAPS.md
+// "Confirm the budget bands with Stephen" — so this picks one (the wider,
+// BookingModal set) as canonical rather than guessing a third.
+export const budgetBands = ['Under $25k', '$25k–$50k', '$50k–$100k', '$100k+', 'Not sure yet'];

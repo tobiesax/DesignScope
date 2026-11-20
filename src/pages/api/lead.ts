@@ -24,12 +24,21 @@ interface LeadPayload {
   last_name: string;
   phone: string;
   email: string;
+  project_address: string;
   project_type: string;
   town: string;
   timeline: string;
   budget: string;
   message: string;
   sms_consent: boolean;
+  // Proof-of-consent fields (compliance/CRM-readiness spec, 2026-11-20) —
+  // the exact checkbox text shown, when consent was given (or declined),
+  // and the page it happened on. Kept even when sms_consent is false,
+  // since that's still evidence of what the visitor saw.
+  sms_consent_text: string;
+  consent_timestamp: string;
+  source_url: string;
+  source: string;
   page: string;
   utm_source: string;
   utm_medium: string;
@@ -86,12 +95,17 @@ export const POST: APIRoute = async ({ request }) => {
     last_name: str(body.last_name),
     phone,
     email: str(body.email),
+    project_address: str(body.project_address),
     project_type,
     town: str(body.town),
     timeline: str(body.timeline),
     budget: str(body.budget),
     message: str(body.message),
     sms_consent: body.sms_consent === true,
+    sms_consent_text: str(body.sms_consent_text),
+    consent_timestamp: str(body.consent_timestamp),
+    source_url: str(body.source_url),
+    source: str(body.source) || 'website',
     page: str(body.page),
     utm_source: str(body.utm_source),
     utm_medium: str(body.utm_medium),

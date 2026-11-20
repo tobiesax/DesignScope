@@ -3,7 +3,11 @@
 // Commercial quote form" exactly. Posts to /api/lead as project_type
 // "Commercial" (BUILD_PLAN.md Week 4) — the specific sector (Office/
 // Retail/etc.) goes in the message, since the GHL contract's project_type
-// enum has no per-sector breakdown.
+// enum has no per-sector breakdown. The combined "Email or phone" field can
+// hold a phone number, so it gets the same consent checkbox as every other
+// phone-collecting form (compliance/CRM-readiness spec, 2026-11-20, Task 2).
+import ConsentCheckbox from '../shared/ConsentCheckbox.astro';
+
 const types = ['Office', 'Retail', 'Multi-family', 'Healthcare', 'Restaurant'];
 ---
 
@@ -72,6 +76,7 @@ const types = ['Office', 'Retail', 'Multi-family', 'Healthcare', 'Restaurant'];
       aria-label="Address and a short description"
       class="border-line min-h-[70px] resize-y border px-3 py-3 text-[13px]"
     ></textarea>
+    <ConsentCheckbox id="cq-consent" />
     <input
       id="cq-company"
       name="company_website"
@@ -123,6 +128,7 @@ const types = ['Office', 'Retail', 'Multi-family', 'Healthcare', 'Restaurant'];
   const sizeInput = document.getElementById('cq-size') as HTMLInputElement | null;
   const timelineSelect = document.getElementById('cq-timeline') as HTMLSelectElement | null;
   const messageInput = document.getElementById('cq-message') as HTMLTextAreaElement | null;
+  const consentInput = document.getElementById('cq-consent') as HTMLInputElement | null;
   const companyInput = document.getElementById('cq-company') as HTMLInputElement | null;
   const typeButtons = document.querySelectorAll<HTMLButtonElement>('[data-cq-type]');
   const renderedAt = Date.now();
@@ -164,9 +170,10 @@ const types = ['Office', 'Retail', 'Multi-family', 'Healthcare', 'Restaurant'];
         ]
           .filter(Boolean)
           .join(' · '),
-        sms_consent: false,
+        sms_consent: isEmail ? false : (consentInput?.checked ?? false),
         company_website: companyInput?.value ?? '',
         rendered_at: renderedAt,
+        source: 'website-commercial-quote',
       });
 
       submitBtn.textContent = 'Send request';

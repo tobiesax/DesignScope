@@ -5,12 +5,15 @@
 // arrival stat). Posts to /api/lead (BUILD_PLAN.md Week 4) as
 // project_type "Fire & smoke damage" / "Water damage" (mapped from the
 // Water/Mold/Storm buttons below — the GHL contract has no Mold/Storm
-// type, and both are water-damage scenarios). This is a callback request,
-// not a texting opt-in, so there's no SMS consent checkbox here — sms_consent
-// is sent false. One thing does NOT match the handoff verbatim: its
-// confirmation claims "A text confirmation is on its way" — dropped, since
-// no SMS integration exists to actually send one (CLAUDE.md rule 1).
+// type, and both are water-damage scenarios). One thing does NOT match the
+// handoff verbatim: its confirmation claims "A text confirmation is on its
+// way" — dropped, since no SMS integration exists to actually send one
+// (CLAUDE.md rule 1). It collects a phone number, so per the compliance/
+// CRM-readiness spec (2026-11-20, Task 2) it gets the same consent
+// checkbox as every other phone-collecting form, even though the primary
+// ask here is a callback, not a texting opt-in.
 import { business } from '../../data/business';
+import ConsentCheckbox from '../shared/ConsentCheckbox.astro';
 
 const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
 ---
@@ -71,6 +74,7 @@ const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
       aria-label="Property address or town"
       class="border-line border px-3 py-3 text-[13px]"
     />
+    <ConsentCheckbox id="cb-consent" />
     <input
       id="cb-company"
       name="company_website"
@@ -125,6 +129,7 @@ const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
   const nameInput = document.getElementById('cb-name') as HTMLInputElement | null;
   const phoneInput = document.getElementById('cb-phone') as HTMLInputElement | null;
   const townInput = document.getElementById('cb-town') as HTMLInputElement | null;
+  const consentInput = document.getElementById('cb-consent') as HTMLInputElement | null;
   const companyInput = document.getElementById('cb-company') as HTMLInputElement | null;
   const typeButtons = document.querySelectorAll<HTMLButtonElement>('[data-cb-type]');
   // GHL contract's project_type has no Mold/Storm — both are water-damage
@@ -188,9 +193,10 @@ const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
         project_type: PROJECT_TYPE[selectedType] ?? 'Water damage',
         town: townInput?.value.trim() ?? '',
         message: `Callback requested — ${selectedType}`,
-        sms_consent: false,
+        sms_consent: consentInput?.checked ?? false,
         company_website: companyInput?.value ?? '',
         rendered_at: renderedAt,
+        source: 'website-callback',
       });
 
       submitBtn.textContent = 'Call me back';

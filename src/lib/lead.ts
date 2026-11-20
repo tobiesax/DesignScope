@@ -2,12 +2,14 @@
 // Commercial quote form, Booking modal, Contact page). Keeps the
 // GHL lead payload (HANDOFF.md section 7) and GTM event firing
 // (HANDOFF.md section 8) in one place instead of four copies.
+import { smsConsentText } from '../data/business';
 
 export interface LeadFields {
   first_name: string;
   last_name?: string;
   phone: string;
   email?: string;
+  project_address?: string;
   project_type: string;
   town?: string;
   timeline?: string;
@@ -18,6 +20,9 @@ export interface LeadFields {
   company_website?: string;
   /** `Date.now()` captured when the form mounted, for the time-to-submit check. */
   rendered_at: number;
+  /** Which form this came from (e.g. "website-booking") — the compliance
+   *  spec's `source` field, so a carrier/CRM can tell forms apart. */
+  source: string;
 }
 
 const STORAGE_KEY = 'ds_first_touch';
@@ -88,6 +93,13 @@ export async function submitLead(fields: LeadFields): Promise<{ ok: boolean; err
     ...readFirstTouch(),
     page: window.location.pathname,
     ...fields,
+    // Proof-of-consent capture (compliance/CRM-readiness spec, 2026-11-20):
+    // the exact text shown, when, and on what page — recorded on every
+    // submit regardless of whether the box was ticked, since that's the
+    // record a carrier would ask for if they dispute a "yes".
+    sms_consent_text: smsConsentText,
+    consent_timestamp: new Date().toISOString(),
+    source_url: window.location.href,
   };
 
   try {
