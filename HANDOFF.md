@@ -153,7 +153,9 @@ PUBLIC_GTM_ID=             # GTM-XXXXXXX
 PUBLIC_GHL_BOOKING_URL=    # GoHighLevel calendar embed URL for /book
 ```
 
-**Payload** (map each field in the GoHighLevel trigger):
+**Payload** (map each field in the GoHighLevel trigger) — updated 2026-11-20 to match
+what `/api/lead.ts` actually sends, after the A2P 10DLC compliance pass added the
+proof-of-consent fields:
 
 ```json
 {
@@ -161,12 +163,17 @@ PUBLIC_GHL_BOOKING_URL=    # GoHighLevel calendar embed URL for /book
   "last_name": "Doe",
   "phone": "+18605551234",
   "email": "jane@example.com",
+  "project_address": "12 Main St, West Hartford, CT",
   "project_type": "Kitchen | Bathroom | Home renovation | Fire & smoke damage | Water damage | Commercial | Showroom visit",
   "town": "West Hartford",
   "timeline": "ASAP | 1–3 months | 3–6 months | Just exploring",
-  "budget": "Under $15k | $15–30k | $30–60k | $60k+",
+  "budget": "Under $25k | $25k–$50k | $50k–$100k | $100k+ | Not sure yet",
   "message": "Free text",
   "sms_consent": true,
+  "sms_consent_text": "I agree to receive text messages from Design Scope LLC about my enquiry, appointments, project updates and occasional offers. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase. See our Privacy Policy and Terms.",
+  "consent_timestamp": "2026-11-20T14:22:00.000Z",
+  "source_url": "https://design-scope-chi.vercel.app/remodeling/kitchens/",
+  "source": "website-enquiry | website-booking | website-commercial-quote | website-callback",
   "page": "/remodeling/kitchens/",
   "utm_source": "",
   "utm_medium": "",
@@ -178,11 +185,20 @@ PUBLIC_GHL_BOOKING_URL=    # GoHighLevel calendar embed URL for /book
 }
 ```
 
-Confirm the budget bands with Stephen. Restoration forms set `project_type` automatically and the GoHighLevel workflow flags them **urgent**.
+`project_address` is optional (empty string if not given). `sms_consent_text`,
+`consent_timestamp` and `source_url` are sent on **every** submission, regardless of
+whether `sms_consent` is true — that's the proof-of-consent record a carrier would ask
+for, so map/store those three even on forms where consent is usually false. `budget`
+bands are still not confirmed with Stephen — the values above are a placeholder set
+(`business.ts` `budgetBands`), change them there (one place) once he confirms, and the
+workflow's own value list will need the same update. Restoration forms set
+`project_type` automatically and the GoHighLevel workflow flags them **urgent**.
 
-**Texting consent checkbox** (unticked by default; required for US texting registration):
+**Texting consent checkbox** (unticked by default; required for US texting registration)
+— same exact wording as `sms_consent_text` above, shown next to the checkbox on every
+form that collects a phone number (Enquiry, Booking modal, Commercial quote, Callback):
 
-> By checking this box, I agree to receive text messages from Design Scope LLC about my enquiry and appointments. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase. See our Privacy Policy.
+> I agree to receive text messages from Design Scope LLC about my enquiry, appointments, project updates and occasional offers. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase. See our Privacy Policy and Terms.
 
 **AI receptionist opening line** (configured in GoHighLevel, not in this repo; listed here so the Privacy page matches it):
 
