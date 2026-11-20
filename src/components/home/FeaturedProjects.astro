@@ -51,4 +51,18 @@ const featured = [byCat('Kitchens'), byCat('Bathrooms'), byCat('Home renovations
       </a>
     ))}
   </div>
+
+  <div class="bg-paper-muted flex flex-wrap items-center justify-between gap-3 px-5 py-5 sm:px-7">
+    <span class="text-[14px] font-semibold">
+      See finishes like these in person — free, no pressure.
+    </span>
+    <a
+      href="/book/"
+      data-open-booking
+      data-booking-preset={JSON.stringify({ where: 'At the showroom' })}
+      class="bg-brand text-ink flex-shrink-0 px-5 py-3 text-[13px] font-extrabold"
+    >
+      Book a showroom visit →
+    </a>
+  </div>
 </section>
