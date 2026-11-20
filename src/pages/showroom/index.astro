@@ -3,7 +3,9 @@ import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import { mockupImages } from '../../data/mockup-images';
 import { business } from '../../data/business';
+import { showroomGalleryPhotos } from '../../data/showroom-images';
 import FinalCta from '../../components/shared/FinalCta.astro';
+import PhotoGallery from '../../components/shared/PhotoGallery.astro';
 
 // Page order matches the GrowthOS design handoff's Showroom page exactly,
 // at Tobi's request. The handoff's hero claims "30+ brands" — dropped
@@ -36,6 +38,44 @@ const categories = [
     brands: 'TOTO · Hansgrohe · Brizo · Delta · Kalia',
   },
 ];
+
+// Lifted from the live site's own /exterior-building-products and
+// /interior-construction-products pages (real services offered on each,
+// not invented) — the two live sub-pages don't have a direct equivalent
+// in our sitemap, so at Tobi's request this is folded into the existing
+// /showroom/ page as its own two-column section rather than two new
+// standalone pages, the same call already made for Commercial. Everything
+// else on those two live pages (the "Why Choose Design Scope" bullets,
+// the Contact Us copy) is the same boilerplate repeated on every live-site
+// page and already covered elsewhere on this site (business.ts promises,
+// FinalCta), so it isn't repeated here.
+const exteriorProducts = {
+  heading: 'Exterior building products',
+  body: 'Materials that improve durability, curb appeal and long-term value for residential and commercial properties.',
+  items: [
+    'Siding materials in various styles and finishes',
+    'Roofing products and accessories',
+    'Windows and door systems',
+    'Trim and decorative details',
+    'Decking and railing components',
+    'Outdoor living materials',
+    'Weather-resistant barriers and insulation',
+  ],
+};
+const interiorProducts = {
+  heading: 'Interior construction products',
+  body: 'Durable materials and products for a single room update or a whole-home renovation.',
+  items: [
+    'Cabinetry and millwork solutions',
+    'Countertops in various materials',
+    'Flooring options for every style',
+    'Tile and backsplash selections',
+    'Fixtures and hardware',
+    'Wall treatments and finishes',
+    'Built-in storage systems',
+    'Decorative elements and trim',
+  ],
+};
 
 const visitSteps = [
   'Book or walk in',
@@ -118,6 +158,14 @@ const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${busin
     </div>
   </section>
 
+  <section class="border-border-soft flex flex-col gap-5.5 border-t px-4 py-13 sm:px-7">
+    <span class="flex items-center gap-2.5 text-[10px] font-extrabold tracking-[0.3em] uppercase before:block before:h-0.5 before:w-5 before:flex-shrink-0 before:bg-brand before:content-['']">
+      Inside the showroom
+    </span>
+    <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">Take a look around</h2>
+    <PhotoGallery photos={showroomGalleryPhotos} id="showroom-gallery" />
+  </section>
+
   <section class="flex flex-col gap-5.5 px-4 py-13 sm:px-7">
     <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">What you'll find</h2>
     <div class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(230px,1fr))]">
@@ -133,6 +181,33 @@ const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${busin
           </div>
         </div>
       ))}
+    </div>
+  </section>
+
+  <section class="border-border-soft grid gap-7 border-t px-4 py-12 sm:px-7 [grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))]">
+    <div class="flex flex-col gap-3">
+      <h2 class="text-xl font-black tracking-tight">{exteriorProducts.heading}</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">{exteriorProducts.body}</p>
+      <div class="flex flex-col">
+        {exteriorProducts.items.map((item) => (
+          <div class="border-line flex items-start gap-3 border-t py-2.5 text-sm leading-relaxed">
+            <span class="bg-brand mt-1.5 h-2 w-2 flex-shrink-0 rotate-45"></span>
+            <span class="font-semibold">{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="flex flex-col gap-3">
+      <h2 class="text-xl font-black tracking-tight">{interiorProducts.heading}</h2>
+      <p class="text-ink-soft text-sm leading-relaxed">{interiorProducts.body}</p>
+      <div class="flex flex-col">
+        {interiorProducts.items.map((item) => (
+          <div class="border-line flex items-start gap-3 border-t py-2.5 text-sm leading-relaxed">
+            <span class="bg-brand mt-1.5 h-2 w-2 flex-shrink-0 rotate-45"></span>
+            <span class="font-semibold">{item}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -187,7 +262,7 @@ const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(`${busin
     </div>
     <div class="flex flex-col gap-2.5">
       {visitSteps.map((step, i) => (
-        <div class="flex items-center gap-3 text-[13.5px] font-bold">
+        <div class="text-paper flex items-center gap-3 text-[13.5px] font-bold">
           <span class="bg-dark text-brand flex h-6.5 w-6.5 flex-shrink-0 items-center justify-center text-[11px] font-black">
             {i + 1}
           </span>

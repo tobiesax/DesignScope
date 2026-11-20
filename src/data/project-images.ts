@@ -42,6 +42,50 @@ import commercial3 from '../assets/projects/commercial/gallery-03.jpg';
 import commercial4 from '../assets/projects/commercial/gallery-04.jpg';
 import commercial5 from '../assets/projects/commercial/gallery-05.jpg';
 
+// Scraped 2026-11-17 from the live site's own `/residential-services` PAGE
+// (not its `/gallery` page's "residential-services-gallery" image set,
+// which is the different, hash-suffixed set already rejected above as
+// generic stock — roof/exterior/tract-house photos). These four are
+// interior photos of finished basements and a living/dining space, each a
+// visibly different home — moderate, not full, confidence they're real:
+// each has a specific, non-generic personal detail (a handwritten sign on
+// one door, a religious macrame wall hanging in another) that stock photo
+// libraries don't typically include, but unlike the kitchen/bathroom/
+// commercial sets above there's no hash-ID or multi-angle-of-the-same-room
+// cross-check to fully confirm it. The page's own hero photo and a 3D
+// render on the same page were excluded — see CONTENT_GAPS.md.
+import homeReno1 from '../assets/projects/home-renovations/basement-media-wall.jpg';
+import homeReno2 from '../assets/projects/home-renovations/basement-fireplace.jpg';
+import homeReno3 from '../assets/projects/home-renovations/open-living-dining.jpg';
+import homeReno4 from '../assets/projects/home-renovations/basement-stairs-laundry.jpg';
+
+// Scraped 2026-11-17 from the live site's own `/commercial-renovations` and
+// `/commercial-restorations` pages. High confidence real: this break room
+// photo and several others across both pages (plus a matching hero image
+// shared by both pages) show the exact same building under construction
+// and finished — same black pendant lights, same glass-walled offices,
+// same green EXIT signage, same industrial exposed ceiling — confirming
+// one real, extensively documented commercial rebuild project. Used only
+// for the restoration hub's "Dry-out to rebuild" AFTER slot (a generic
+// "finished space" photo, not tied to a specific damage type) — see
+// CONTENT_GAPS.md for why it isn't used for the fire/water/mold/storm
+// category tabs themselves.
+import restorationRebuild1 from '../assets/projects/restoration/rebuilt-office-breakroom.jpg';
+
+// Scraped 2026-11-18 from the live site's own `/gallery` page, "Kitchen
+// Designs" category ("kitchen-designs-gallery-*"), for the Kitchens page's
+// full PhotoGallery section. High confidence real: these four, plus
+// `kitchen1` and `kitchen3` above, are all the SAME real open-concept
+// kitchen/bar remodel — confirmed by matching details across shots (the
+// same gray glossy cabinetry, black bar stools, "COFFEE TIME" shelf sign,
+// wine fridge, Roomba) — just a different live-site page than where
+// kitchen1/kitchen3 were originally scraped from, giving far more angles
+// of one well-documented real project. Not six different kitchens.
+import barKitchenRange from '../assets/projects/kitchen/bar-kitchen-range.jpg';
+import barKitchenWineNook from '../assets/projects/kitchen/bar-kitchen-wine-nook.jpg';
+import barKitchenWide from '../assets/projects/kitchen/bar-kitchen-wide.jpg';
+import barKitchenIsland from '../assets/projects/kitchen/bar-kitchen-island.jpg';
+
 export const projectImages = {
   'kitchen-hero': kitchenHero,
   kitchen1,
@@ -61,6 +105,15 @@ export const projectImages = {
   commercial3,
   commercial4,
   commercial5,
+  'home-reno-1': homeReno1,
+  'home-reno-2': homeReno2,
+  'home-reno-3': homeReno3,
+  'home-reno-4': homeReno4,
+  'restoration-rebuild-1': restorationRebuild1,
+  'bar-kitchen-range': barKitchenRange,
+  'bar-kitchen-wine-nook': barKitchenWineNook,
+  'bar-kitchen-wide': barKitchenWide,
+  'bar-kitchen-island': barKitchenIsland,
 } satisfies Record<string, ImageMetadata>;
 
 // Short, honest titles distilled from the live site's own alt text —
@@ -72,6 +125,24 @@ export const kitchenProjects = [
   { id: 'kitchen-6', title: 'White kitchen with built-in ovens', img: 'kitchen6' as const },
 ];
 
+// Full gallery for /remodeling/kitchens/'s PhotoGallery section (and
+// /projects/) — a curated, honest mix across the 3 distinct real kitchens
+// we have photos of (not 9 different projects): the open-concept bar
+// kitchen (5 angles), and two separate white-kitchen projects (1 photo
+// each, kitchen5/kitchen-hero — note kitchen5 still has the fridge's
+// protective plastic film on, i.e. very freshly installed).
+export const kitchenGalleryPhotos = [
+  { src: projectImages.kitchen6, alt: 'White kitchen with built-in ovens and yellow dining area beyond' },
+  { src: projectImages['bar-kitchen-wide'], alt: 'Open-concept kitchen with gray cabinetry, island and bar seating' },
+  { src: projectImages['kitchen-hero'], alt: 'White kitchen with blue subway tile backsplash' },
+  { src: projectImages['bar-kitchen-range'], alt: 'Gray kitchen range wall with dark glossy cabinetry' },
+  { src: projectImages.kitchen3, alt: 'Open-plan kitchen and bar seating' },
+  { src: projectImages['bar-kitchen-island'], alt: 'Kitchen island with pendant lighting and bar stools' },
+  { src: projectImages.kitchen1, alt: 'White kitchen with reflective island' },
+  { src: projectImages['bar-kitchen-wine-nook'], alt: 'Built-in wine fridge and coffee station nook' },
+  { src: projectImages.kitchen5, alt: 'White kitchen with stainless refrigerator' },
+];
+
 export const bathroomProjects = [
   { id: 'bathroom-1', title: 'Tub and double-sink vanity', img: 'bathroom1' as const },
   { id: 'bathroom-2', title: 'Vessel-sink vanity with backlit mirror', img: 'bathroom2' as const },
@@ -79,6 +150,14 @@ export const bathroomProjects = [
   { id: 'bathroom-4', title: 'Glass shower with built-in bench', img: 'bathroom4' as const },
   { id: 'bathroom-5', title: 'Glass shower with dark tile walls', img: 'bathroom5' as const },
   { id: 'bathroom-6', title: 'Freestanding tub and double vanity', img: 'bathroom6' as const },
+];
+
+// No town is known for these either (same reasoning as kitchens/bathrooms above).
+export const homeRenovationProjects = [
+  { id: 'home-reno-1', title: 'Finished basement with media wall', img: 'home-reno-1' as const },
+  { id: 'home-reno-2', title: 'Finished basement with fireplace and built-ins', img: 'home-reno-2' as const },
+  { id: 'home-reno-3', title: 'Open-concept living and dining renovation', img: 'home-reno-3' as const },
+  { id: 'home-reno-4', title: 'Finished basement with laundry and half bath', img: 'home-reno-4' as const },
 ];
 
 // No town is known for these either (same reasoning as kitchens/bathrooms above).

@@ -1,0 +1,134 @@
+---
+// Reusable grid-with-lightbox gallery, built for the service pages' real
+// project photos (at Tobi's request: "a beautiful gallery... that feeds
+// into our projects page"). Click a thumbnail, it opens full-size in an
+// overlay with prev/next and a close button — keyboard (←/→/Esc) and
+// click-outside-to-close both work. One gallery per page assumes a unique
+// `id` isn't needed in practice so far, but it's still namespaced in case
+// that changes.
+import { Image } from 'astro:assets';
+
+interface Photo {
+  src: ImageMetadata;
+  alt: string;
+}
+
+interface Props {
+  photos: Photo[];
+  id?: string;
+}
+
+const { photos, id = 'gallery' } = Astro.props;
+---
+
+<div id={`${id}-grid`} class="grid gap-3 [grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]">
+  {photos.map((photo, i) => (
+    <button
+      type="button"
+      data-gallery-open={i}
+      aria-label={`View photo ${i + 1} of ${photos.length}: ${photo.alt}`}
+      class="card-hover block aspect-[4/3] overflow-hidden border-0 p-0"
+    >
+      <Image src={photo.src} alt={photo.alt} width={900} loading="lazy" class="h-full w-full object-cover" />
+    </button>
+  ))}
+</div>
+
+<div
+  id={`${id}-lightbox`}
+  hidden
+  class="fixed inset-0 z-[95] flex flex-col items-center justify-center bg-[rgba(10,10,10,0.94)] p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Photo viewer"
+>
+  <button
+    type="button"
+    data-gallery-close
+    aria-label="Close"
+    class="text-paper absolute top-4 right-4 flex h-11 w-11 items-center justify-center border border-[#444444] text-xl"
+  >
+    ×
+  </button>
+  <button
+    type="button"
+    data-gallery-prev
+    aria-label="Previous photo"
+    class="text-paper absolute top-1/2 left-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center text-2xl sm:left-6"
+  >
+    ←
+  </button>
+  <button
+    type="button"
+    data-gallery-next
+    aria-label="Next photo"
+    class="text-paper absolute top-1/2 right-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center text-2xl sm:right-6"
+  >
+    →
+  </button>
+  <img id={`${id}-lightbox-img`} src="" alt="" class="h-[85vh] w-[90vw] object-contain" />
+  <span id={`${id}-lightbox-counter`} class="text-on-dark-muted mt-3 text-xs font-bold"></span>
+</div>
+
+<script define:vars={{ id }}>
+  const grid = document.getElementById(`${id}-grid`);
+  const lightbox = document.getElementById(`${id}-lightbox`);
+  const lightboxImg = document.getElementById(`${id}-lightbox-img`);
+  const counter = document.getElementById(`${id}-lightbox-counter`);
+  const closeBtn = lightbox?.querySelector('[data-gallery-close]');
+  const prevBtn = lightbox?.querySelector('[data-gallery-prev]');
+  const nextBtn = lightbox?.querySelector('[data-gallery-next]');
+
+  if (grid && lightbox && lightboxImg && counter) {
+    const thumbs = Array.from(grid.querySelectorAll('[data-gallery-open]'));
+    const photos = thumbs.map((btn) => {
+      const img = btn.querySelector('img');
+      return { src: img?.currentSrc || img?.src || '', alt: img?.alt || '' };
+    });
+    let index = 0;
+    let triggerEl = null;
+
+    const render = () => {
+      const photo = photos[index];
+      lightboxImg.src = photo.src;
+      lightboxImg.alt = photo.alt;
+      counter.textContent = `${index + 1} / ${photos.length}`;
+    };
+
+    const open = (i, trigger) => {
+      index = i;
+      triggerEl = trigger;
+      render();
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      closeBtn?.focus();
+    };
+
+    const close = () => {
+      lightbox.hidden = true;
+      document.body.style.overflow = '';
+      triggerEl?.focus();
+    };
+
+    const step = (delta) => {
+      index = (index + delta + photos.length) % photos.length;
+      render();
+    };
+
+    thumbs.forEach((btn, i) => {
+      btn.addEventListener('click', () => open(i, btn));
+    });
+    closeBtn?.addEventListener('click', close);
+    prevBtn?.addEventListener('click', () => step(-1));
+    nextBtn?.addEventListener('click', () => step(1));
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+  }
+</script>

@@ -2,14 +2,29 @@
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import { caseStudies, categoryAccent } from '../../data/case-studies';
+import { kitchenGalleryPhotos } from '../../data/project-images';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
 // Matches the GrowthOS design handoff's Projects gallery exactly: search,
 // sort, category and town filters, with a before/after preview on cards
-// that have one. All 15 case studies are the handoff's own placeholder
-// content — see src/data/case-studies.ts and CONTENT_GAPS.md.
+// that have one. Started as all 15 of the handoff's own placeholder case
+// studies (CONTENT_GAPS.md) — Kitchens is now real photos instead (Tobi's
+// request, 2026-11-18: real galleries per service page, feeding in here
+// too), rolling out to the other 4 categories next. Real-photo cards open
+// a lightbox (no town/budget/brief exists for them to show on a detail
+// page) instead of linking to /projects/[id]/ like the still-placeholder
+// categories do — see the real/fake branch in the card markup below.
+const placeholderStudies = caseStudies.filter((p) => p.cat !== 'Kitchens');
+const realKitchenCards = kitchenGalleryPhotos.map((photo, i) => ({
+  id: `real-kitchen-${i}`,
+  title: photo.alt,
+  cat: 'Kitchens' as const,
+  img: photo.src,
+  isReal: true as const,
+}));
+
 const categories = ['All', 'Kitchens', 'Bathrooms', 'Whole home', 'Restoration', 'Commercial'];
-const towns = ['All', ...Array.from(new Set(caseStudies.map((p) => p.town))).sort()];
+const towns = ['All', ...Array.from(new Set(placeholderStudies.map((p) => p.town))).sort()];
 
 const budgetValue = (budget: string) => {
   const m = budget.match(/\d+/);
@@ -93,53 +108,77 @@ const budgetValue = (budget: string) => {
       id="pj-grid"
       class="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]"
     >
-      {caseStudies.map((p) => (
-        <a
-          href={`/projects/${p.id}/`}
-          data-pj-card
-          data-cat={p.cat}
-          data-town={p.town}
-          data-search={`${p.title} ${p.town} ${p.cat} ${p.scope} ${p.products.join(' ')}`.toLowerCase()}
-          data-budget={budgetValue(p.budget) ?? ''}
-          class="card-hover flex flex-col gap-3 overflow-hidden"
-        >
-          <div class="relative h-[220px]">
-            <Image src={p.img} alt={p.title} class="h-full w-full object-cover" />
-            {p.before && (
-              <>
-                <div class="absolute inset-y-0 left-0 w-1/2 overflow-hidden border-r-[3px] border-brand">
-                  <Image
-                    src={p.before}
-                    alt={`${p.title} — before`}
-                    class="h-full w-[200%] object-cover"
-                  />
-                </div>
-                <span class="bg-dark text-paper absolute right-2.5 bottom-2.5 px-2 py-1 text-[10px] font-extrabold">
-                  BEFORE / AFTER
-                </span>
-              </>
-            )}
-            <span
-              class:list={[
-                'absolute top-2.5 left-2.5 px-2 py-1 text-[10px] font-extrabold',
-                categoryAccent[p.cat] === 'urgent'
-                  ? 'bg-urgent text-paper'
-                  : categoryAccent[p.cat] === 'dark'
-                    ? 'bg-dark text-paper'
-                    : 'bg-brand-dark text-paper',
-              ]}
-            >
-              {p.cat}
-            </span>
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="text-[15px] font-extrabold">{p.title}</span>
-            <span class="text-muted text-xs font-semibold">
-              {p.town} · {p.time} · {p.budget}
-            </span>
-          </div>
-        </a>
-      ))}
+      {[...realKitchenCards, ...placeholderStudies].map((p, idx) =>
+        'isReal' in p ? (
+          <button
+            type="button"
+            data-pj-card
+            data-cat={p.cat}
+            data-town=""
+            data-search={`${p.title} ${p.cat}`.toLowerCase()}
+            data-budget=""
+            data-gallery-open={idx}
+            class="card-hover flex flex-col gap-3 overflow-hidden border-0 bg-transparent p-0 text-left"
+          >
+            <div class="relative h-[220px]">
+              <Image src={p.img} alt={p.title} class="h-full w-full object-cover" />
+              <span class="bg-brand-dark text-paper absolute top-2.5 left-2.5 px-2 py-1 text-[10px] font-extrabold">
+                {p.cat}
+              </span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="text-[15px] font-extrabold">{p.title}</span>
+              <span class="text-muted text-xs font-semibold">Real Design Scope project</span>
+            </div>
+          </button>
+        ) : (
+          <a
+            href={`/projects/${p.id}/`}
+            data-pj-card
+            data-cat={p.cat}
+            data-town={p.town}
+            data-search={`${p.title} ${p.town} ${p.cat} ${p.scope} ${p.products.join(' ')}`.toLowerCase()}
+            data-budget={budgetValue(p.budget) ?? ''}
+            class="card-hover flex flex-col gap-3 overflow-hidden"
+          >
+            <div class="relative h-[220px]">
+              <Image src={p.img} alt={p.title} class="h-full w-full object-cover" />
+              {p.before && (
+                <>
+                  <div class="absolute inset-y-0 left-0 w-1/2 overflow-hidden border-r-[3px] border-brand">
+                    <Image
+                      src={p.before}
+                      alt={`${p.title} — before`}
+                      class="h-full w-[200%] object-cover"
+                    />
+                  </div>
+                  <span class="bg-dark text-paper absolute right-2.5 bottom-2.5 px-2 py-1 text-[10px] font-extrabold">
+                    BEFORE / AFTER
+                  </span>
+                </>
+              )}
+              <span
+                class:list={[
+                  'absolute top-2.5 left-2.5 px-2 py-1 text-[10px] font-extrabold',
+                  categoryAccent[p.cat] === 'urgent'
+                    ? 'bg-urgent text-paper'
+                    : categoryAccent[p.cat] === 'dark'
+                      ? 'bg-dark text-paper'
+                      : 'bg-brand-dark text-paper',
+                ]}
+              >
+                {p.cat}
+              </span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="text-[15px] font-extrabold">{p.title}</span>
+              <span class="text-muted text-xs font-semibold">
+                {p.town} · {p.time} · {p.budget}
+              </span>
+            </div>
+          </a>
+        ),
+      )}
     </div>
     <div id="pj-empty" class="flex-col items-start gap-3 py-10" hidden>
       <span class="text-[18px] font-black">No projects match</span>
@@ -153,6 +192,44 @@ const budgetValue = (budget: string) => {
       </button>
     </div>
   </section>
+
+  <!-- Lightbox for real-photo cards (no detail page to link to yet) —
+       same pattern as shared/PhotoGallery.astro, scoped to kitchenGalleryPhotos. -->
+  <div
+    id="pj-lightbox"
+    hidden
+    class="fixed inset-0 z-[95] flex flex-col items-center justify-center bg-[rgba(10,10,10,0.94)] p-4"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Photo viewer"
+  >
+    <button
+      type="button"
+      id="pj-lightbox-close"
+      aria-label="Close"
+      class="text-paper absolute top-4 right-4 flex h-11 w-11 items-center justify-center border border-[#444444] text-xl"
+    >
+      ×
+    </button>
+    <button
+      type="button"
+      id="pj-lightbox-prev"
+      aria-label="Previous photo"
+      class="text-paper absolute top-1/2 left-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center text-2xl sm:left-6"
+    >
+      ←
+    </button>
+    <button
+      type="button"
+      id="pj-lightbox-next"
+      aria-label="Next photo"
+      class="text-paper absolute top-1/2 right-2 flex h-12 w-12 -translate-y-1/2 items-center justify-center text-2xl sm:right-6"
+    >
+      →
+    </button>
+    <img id="pj-lightbox-img" src="" alt="" class="max-h-[85vh] max-w-[90vw] object-contain" />
+    <span id="pj-lightbox-counter" class="text-on-dark-muted mt-3 text-xs font-bold"></span>
+  </div>
 
   <FinalCta />
 </Layout>
@@ -168,8 +245,9 @@ const budgetValue = (budget: string) => {
   const townButtons = document.querySelectorAll<HTMLButtonElement>('#pj-towns [data-pj-town]');
 
   if (search && sort && count && grid && empty) {
-    const cards = Array.from(grid.querySelectorAll<HTMLAnchorElement>('[data-pj-card]'));
-    let cat = 'All';
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('[data-pj-card]'));
+    const catFromUrl = new URLSearchParams(location.search).get('cat');
+    let cat = catFromUrl && catFromUrl !== 'All' ? catFromUrl : 'All';
     let town = 'All';
 
     const apply = () => {
@@ -245,6 +323,72 @@ const budgetValue = (budget: string) => {
       apply();
     });
 
+    if (cat !== 'All') {
+      catButtons.forEach((b) => {
+        const active = b.dataset.pjCat === cat;
+        b.setAttribute('aria-pressed', String(active));
+        b.classList.toggle('bg-ink', active);
+        b.classList.toggle('text-paper', active);
+        b.classList.toggle('bg-white', !active);
+        b.classList.toggle('text-ink', !active);
+      });
+    }
+
     apply();
+  }
+
+  // Lightbox for real-photo cards (no /projects/[id]/ page to link to yet)
+  const lightbox = document.getElementById('pj-lightbox');
+  const lightboxImg = document.getElementById('pj-lightbox-img') as HTMLImageElement | null;
+  const counter = document.getElementById('pj-lightbox-counter');
+  const closeBtn = document.getElementById('pj-lightbox-close');
+  const prevBtn = document.getElementById('pj-lightbox-prev');
+  const nextBtn = document.getElementById('pj-lightbox-next');
+  const galleryButtons = Array.from(document.querySelectorAll<HTMLElement>('[data-gallery-open]'));
+
+  if (lightbox && lightboxImg && counter && galleryButtons.length) {
+    const photos = galleryButtons.map((btn) => {
+      const img = btn.querySelector('img');
+      return { src: img?.currentSrc || img?.src || '', alt: img?.alt || '' };
+    });
+    let index = 0;
+    let triggerEl: HTMLElement | null = null;
+
+    const render = () => {
+      lightboxImg.src = photos[index].src;
+      lightboxImg.alt = photos[index].alt;
+      counter.textContent = `${index + 1} / ${photos.length}`;
+    };
+    const open = (i: number, trigger: HTMLElement) => {
+      index = i;
+      triggerEl = trigger;
+      render();
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      closeBtn?.focus();
+    };
+    const close = () => {
+      lightbox.hidden = true;
+      document.body.style.overflow = '';
+      triggerEl?.focus();
+    };
+    const step = (delta: number) => {
+      index = (index + delta + photos.length) % photos.length;
+      render();
+    };
+
+    galleryButtons.forEach((btn, i) => btn.addEventListener('click', () => open(i, btn)));
+    closeBtn?.addEventListener('click', close);
+    prevBtn?.addEventListener('click', () => step(-1));
+    nextBtn?.addEventListener('click', () => step(1));
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
   }
 </script>

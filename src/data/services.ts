@@ -1,4 +1,5 @@
 import { mockupImages } from './mockup-images';
+import { projectImages } from './project-images';
 
 export interface ServicePage {
   slug: string;
@@ -121,18 +122,17 @@ export const bathrooms: ServicePage = {
   ],
 };
 
-// No real home-renovation photos exist yet (CONTENT_GAPS.md) — this reuses
-// the same temporary mockup photo already shown for this category on the
-// home page (src/data/home.ts mockProjects). Hero headline, subcopy and
-// intro are lifted from the live site's own /home-renovations page
-// (scraped 2026-11-13).
+// Hero photo is now a real (moderate-confidence — see project-images.ts)
+// home-renovation photo scraped 2026-11-17, replacing the mockup. Hero
+// headline, subcopy and intro are lifted from the live site's own
+// /home-renovations page (scraped 2026-11-13).
 export const homeRenovations: ServicePage = {
   slug: 'home-renovations',
   category: 'Home renovations',
   title: 'Home Renovations in Bloomfield, CT',
   metaDescription:
     'Single-room updates to whole-house renovations across Hartford County. Free design consultation, a written quote within 24 hours, and no hidden fees.',
-  heroImage: mockupImages['proj-renovation-simsbury'],
+  heroImage: projectImages['home-reno-3'],
   heroEyebrow: 'Home Renovations',
   heroHeadline: 'Give Your Living Space a Fresh New Look',
   heroSubcopy:

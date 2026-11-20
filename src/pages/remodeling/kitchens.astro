@@ -2,31 +2,40 @@
 import Layout from '../../layouts/Layout.astro';
 import ServiceHero from '../../components/service/ServiceHero.astro';
 import IncludedInvestment from '../../components/service/IncludedInvestment.astro';
+import VisualizerBand from '../../components/home/VisualizerBand.astro';
 import CostEstimator from '../../components/service/CostEstimator.astro';
 import ProcessSteps from '../../components/shared/ProcessSteps.astro';
 import StyleQuiz from '../../components/service/StyleQuiz.astro';
 import ThreeDDesignBlock from '../../components/service/ThreeDDesignBlock.astro';
-import ServiceGallery from '../../components/service/ServiceGallery.astro';
+import PhotoGallery from '../../components/shared/PhotoGallery.astro';
 import ReviewCarousel from '../../components/home/ReviewCarousel.astro';
 import FaqAccordion from '../../components/shared/FaqAccordion.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
 import { kitchens, remodelProcess, remodelFaqs } from '../../data/services';
-import { kitchenProjects, projectImages } from '../../data/project-images';
+import { kitchenGalleryPhotos } from '../../data/project-images';
+import { VISUALIZER_ENABLED } from '../../data/feature-flags';
 
 // Page order matches the GrowthOS design handoff's "Kitchen & bath" remodel
 // page exactly (the Kitchens tab's content), at Tobi's request — including
 // the Phase 2 cost estimator and style quiz, built in now rather than left
 // out, per Tobi's explicit follow-up request.
-const galleryProjects = kitchenProjects.map((project) => ({
-  ...project,
-  img: projectImages[project.img],
-}));
+//
+// The old 4-photo "Recent work" ServiceGallery teaser is replaced with a
+// full PhotoGallery (shared/PhotoGallery.astro) — Tobi's request for an
+// actual gallery per page, "like what the current [live] website" has,
+// feeding the same real photos into /projects/ too (see that page).
 ---
 
 <Layout title={kitchens.title} description={kitchens.metaDescription} active="remodeling">
   <ServiceHero service={kitchens} />
 
   <IncludedInvestment included={kitchens.included ?? []} ranges={kitchens.ranges ?? []} />
+
+  {VISUALIZER_ENABLED && (
+    <div class="px-4 py-6 sm:px-7">
+      <VisualizerBand variant="teaser" />
+    </div>
+  )}
 
   <CostEstimator room="kitchen" />
 
@@ -41,12 +50,21 @@ const galleryProjects = kitchenProjects.map((project) => ({
 
   <ThreeDDesignBlock />
 
-  <ServiceGallery
-    heading="Recent work"
-    subheading="Recent kitchens"
-    projects={galleryProjects}
-    limit={4}
-  />
+  <section class="bg-paper-muted flex flex-col gap-5 px-4 py-12 sm:px-7">
+    <div class="flex flex-col gap-2.5">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        Gallery
+      </span>
+      <h2 class="text-2xl font-black tracking-tight sm:text-[28px]">Recent kitchens</h2>
+    </div>
+    <PhotoGallery id="kitchen-gallery" photos={kitchenGalleryPhotos} />
+    <a
+      href="/projects/?cat=Kitchens"
+      class="border-dark self-center border-[1.5px] px-5 py-3 text-xs font-extrabold"
+    >
+      View all projects
+    </a>
+  </section>
 
   <ReviewCarousel />
 

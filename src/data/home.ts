@@ -6,6 +6,7 @@ import {
   kitchenProjects,
   bathroomProjects,
   commercialProjects,
+  homeRenovationProjects,
   projectImages,
 } from './project-images';
 
@@ -88,16 +89,15 @@ export const faqs = [
   },
 ];
 
-// Kitchens, Bathrooms and Commercial are real photos scraped from the live
-// site (src/data/project-images.ts) — no town is known per photo, so `town`
-// is omitted rather than invented (the mockup's "Hartford" for the old
-// Commercial placeholder was invented too; dropped along with the photo).
-// Home renovations is still a temporary mockup photo (CONTENT_GAPS.md) —
-// the live site's own "residential-services" gallery turned out to be
-// generic stock photography, not real Design Scope work, so it wasn't used.
-// The Simsbury project is recategorised from the mockup's "Restoration" to
-// "Home renovations" — a whole-home renovation isn't fire/water damage
-// work, and no real restoration project photos exist to populate that filter.
+// Kitchens, Bathrooms, Commercial and (as of 2026-11-17) Home renovations
+// are real photos scraped from the live site (src/data/project-images.ts) —
+// no town is known per photo, so `town` is omitted rather than invented
+// (the mockup's "Hartford"/"Simsbury" for the old Commercial/Home
+// renovations placeholders were invented too; dropped along with those
+// photos). Home renovations' real photos are moderate- rather than
+// full-confidence (see project-images.ts) — the live site's own
+// `/gallery` "residential-services-gallery" set is a different, separate
+// image set that remains rejected as generic stock.
 export const mockProjects: {
   id: string;
   title: string;
@@ -108,13 +108,7 @@ export const mockProjects: {
   ...kitchenProjects.map((p) => ({ ...p, cat: 'Kitchens', img: projectImages[p.img] })),
   ...bathroomProjects.map((p) => ({ ...p, cat: 'Bathrooms', img: projectImages[p.img] })),
   ...commercialProjects.map((p) => ({ ...p, cat: 'Commercial', img: projectImages[p.img] })),
-  {
-    id: 'proj-3',
-    title: 'Whole-home renovation',
-    town: 'Simsbury',
-    cat: 'Home renovations',
-    img: 'proj-renovation-simsbury',
-  },
+  ...homeRenovationProjects.map((p) => ({ ...p, cat: 'Home renovations', img: projectImages[p.img] })),
 ];
 
 export const projectFilters = ['All', 'Kitchens', 'Bathrooms', 'Home renovations', 'Commercial'];

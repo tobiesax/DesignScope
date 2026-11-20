@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import ServiceHero from '../../components/service/ServiceHero.astro';
 import IncludedInvestment from '../../components/service/IncludedInvestment.astro';
+import VisualizerBand from '../../components/home/VisualizerBand.astro';
 import CostEstimator from '../../components/service/CostEstimator.astro';
 import ProcessSteps from '../../components/shared/ProcessSteps.astro';
 import StyleQuiz from '../../components/service/StyleQuiz.astro';
@@ -13,6 +14,7 @@ import FaqAccordion from '../../components/shared/FaqAccordion.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
 import { bathrooms, remodelProcess, remodelFaqs } from '../../data/services';
 import { bathroomProjects, projectImages } from '../../data/project-images';
+import { VISUALIZER_ENABLED } from '../../data/feature-flags';
 
 // Page order matches the GrowthOS design handoff's "Kitchen & bath" remodel
 // page exactly (the Bathrooms tab's content, plus the handoff's aging-in-
@@ -29,6 +31,12 @@ const galleryProjects = bathroomProjects.map((project) => ({
   <ServiceHero service={bathrooms} />
 
   <IncludedInvestment included={bathrooms.included ?? []} ranges={bathrooms.ranges ?? []} />
+
+  {VISUALIZER_ENABLED && (
+    <div class="px-4 py-6 sm:px-7">
+      <VisualizerBand variant="teaser" />
+    </div>
+  )}
 
   <CostEstimator room="bath" />
 

@@ -3,18 +3,23 @@
 // slider, but its own before and after images are the same photo. Dragging
 // a slider across one photo would imply a real transformation that doesn't
 // exist (CLAUDE.md rule 1), so this shows an honest side-by-side instead:
-// a stand-in "before" (drying equipment) and now a stand-in "after"
-// (rebuilt-space photo Tobi supplied, replacing the "photo needed"
-// placeholder) — still not the same real room, so not a true before/after,
-// just a representative pair (CONTENT_GAPS.md).
+// a stand-in "before" (drying equipment — no real residential damage photo
+// exists, CONTENT_GAPS.md) and, as of 2026-11-17, a real "after" photo of
+// an actual Design Scope commercial rebuild (project-images.ts
+// 'restoration-rebuild-1', replacing the earlier Tobi-supplied stand-in).
+// Still not the same room as the before photo, and the before photo is
+// residential while this is commercial, so it's still a representative
+// pair rather than a true before/after of one job — but the after half is
+// now genuine Design Scope work rather than an arbitrary stand-in.
 import { Image } from 'astro:assets';
 import { mockupImages } from '../../data/mockup-images';
+import { projectImages } from '../../data/project-images';
 ---
 
 <section class="flex flex-col gap-4 px-4 py-13 sm:px-7">
   <div class="flex flex-wrap items-baseline justify-between gap-3">
     <h2 class="text-[26px] font-black tracking-tight sm:text-[34px]">Dry-out to rebuild</h2>
-    <span class="text-muted text-xs">A real restoration, before and after</span>
+    <span class="text-muted text-xs">Representative before and after — not the same job</span>
   </div>
   <div class="grid gap-2 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
     <div class="relative h-[260px] sm:h-[320px]">
@@ -29,8 +34,8 @@ import { mockupImages } from '../../data/mockup-images';
     </div>
     <div class="relative h-[260px] sm:h-[320px]">
       <Image
-        src={mockupImages['dry-out-after']}
-        alt="Rebuilt and finished living space after restoration"
+        src={projectImages['restoration-rebuild-1']}
+        alt="Rebuilt and finished office space after a Design Scope commercial renovation"
         class="h-full w-full object-cover"
       />
       <span class="bg-brand-dark text-paper absolute top-3 right-3 px-2 py-1 text-[10px] font-extrabold">
