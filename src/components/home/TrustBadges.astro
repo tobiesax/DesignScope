@@ -7,13 +7,18 @@
 // prefers-reduced-motion (global.css) and on hover. The BBB and
 // Houzz badges are unconfirmed placeholders (CONTENT_GAPS.md); swap
 // for the official member artwork once Stephen confirms them.
+//
+// Restyled 2026-11-20 at Tobi's request: dropped each badge's bordered
+// rectangle for a cleaner, more editorial look — a bigger icon in a soft
+// tinted circle (brand-colored on hover), bigger text, generous spacing
+// between items instead of boxes. See TrustBadgeItem.astro.
 import { business } from '../../data/business';
 import TrustBadgeItem from './TrustBadgeItem.astro';
 ---
 
-<section class="border-border-soft border-b bg-white py-4.5">
+<section class="border-border-soft border-b bg-white py-7">
   <div class="marquee-mask overflow-hidden">
-    <div class="marquee-track flex w-max gap-2">
+    <div class="marquee-track flex w-max items-center">
       {business.credentials.map((c) => (
         <TrustBadgeItem credential={c} />
       ))}
