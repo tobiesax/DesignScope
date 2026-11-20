@@ -5,10 +5,18 @@
 // Typical Investment. One component, two variants, per plan section 13
 // ("Create a reusable VisualizerBand component").
 //
-// The before/after pair are real Design Scope project photos (same ones
-// used elsewhere on the site), not an actual AI render of anything — the
-// prototype has no backend. Labelled accordingly rather than implied as
-// a transformation of a specific project.
+// The "full" variant's visual is a phone-frame mockup of the real
+// /visualize/ tool's own flow (at Tobi's request, replacing an earlier
+// generic before/after slider that didn't actually depict the tool) —
+// a crossfade loop between its camera-capture step and its "3 options"
+// results step. Same three kitchen photos /visualize/ itself shows
+// (project-images.ts kitchen5/kitchen1/kitchen3), not invented thumbnails,
+// and the same camera icon used on that page's own capture button, so
+// this is an honest miniature of the real screens, not a mockup of
+// something that doesn't exist. Pure CSS crossfade (no JS) — the
+// prefers-reduced-motion override in global.css collapses it to a single
+// static frame (the options screen, the more informative of the two)
+// rather than an endless loop.
 import { Image } from 'astro:assets';
 import { projectImages } from '../../data/project-images';
 
@@ -44,38 +52,64 @@ const { variant = 'full' } = Astro.props;
         <span class="text-muted text-[11px]">AI concept for inspiration only.</span>
       </div>
 
-      <div id="viz-ba-frame" class="bg-border relative h-72 overflow-hidden sm:h-80">
-        <Image
-          src={projectImages.kitchen1}
-          alt="Remodeled kitchen with white cabinets and island"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div id="viz-ba-before-wrap" class="absolute inset-0" style="clip-path: inset(0 50% 0 0)">
-          <Image
-            src={projectImages.kitchen5}
-            alt="Kitchen before a Design Scope remodel"
-            class="h-full w-full object-cover"
-          />
-        </div>
+      <div class="flex justify-center">
         <div
-          id="viz-ba-handle"
-          class="bg-brand pointer-events-none absolute top-0 bottom-0 left-1/2 w-[3px] -ml-[1px]"
-        ></div>
-        <span class="bg-dark text-paper pointer-events-none absolute top-3 left-3 px-2.5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase">
-          Before
-        </span>
-        <span class="bg-brand-dark text-paper pointer-events-none absolute top-3 right-3 px-2.5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase">
-          After
-        </span>
-        <input
-          id="viz-ba-range"
-          type="range"
-          min="0"
-          max="100"
-          value="50"
-          aria-label="Drag to compare before and after"
-          class="absolute right-3 bottom-3 left-3 accent-[#ff5f00]"
-        />
+          class="border-ink bg-ink relative h-[400px] w-[208px] rounded-[2rem] border-[6px] p-1.5 shadow-lg sm:h-[440px] sm:w-[228px]"
+          aria-hidden="true"
+        >
+          <div class="relative h-full w-full overflow-hidden rounded-[1.4rem] bg-white">
+            <div class="bg-ink absolute top-0 left-1/2 z-10 h-4 w-20 -translate-x-1/2 rounded-b-xl"></div>
+
+            <!-- Screen 1: the real tool's capture step -->
+            <div class="viz-phone-screen bg-paper-muted absolute inset-0 flex flex-col items-center justify-center gap-3 px-4 text-center">
+              <span class="text-muted text-[9.5px] font-extrabold tracking-[0.2em] uppercase">
+                Snap your kitchen
+              </span>
+              <span class="bg-brand text-ink flex h-14 w-14 items-center justify-center rounded-full">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 7h3l2-2.5h6L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z" />
+                  <circle cx="12" cy="13" r="3.5" />
+                </svg>
+              </span>
+              <span class="text-[11px] font-bold">Take a photo</span>
+            </div>
+
+            <!-- Screen 2: the real tool's "3 options" results step -->
+            <div class="viz-phone-screen-2 absolute inset-0 flex flex-col gap-1.5 bg-white p-3 pt-6">
+              <span class="text-muted px-0.5 text-[9px] font-extrabold tracking-[0.15em] uppercase">
+                Your 3 options
+              </span>
+              <div class="flex flex-1 flex-col gap-1.5">
+                <Image
+                  src={projectImages.kitchen5}
+                  alt="Design Scope kitchen example 1"
+                  class="h-full w-full flex-1 rounded-sm object-cover"
+                />
+                <Image
+                  src={projectImages.kitchen1}
+                  alt="Design Scope kitchen example 2"
+                  class="h-full w-full flex-1 rounded-sm object-cover"
+                />
+                <Image
+                  src={projectImages.kitchen3}
+                  alt="Design Scope kitchen example 3"
+                  class="h-full w-full flex-1 rounded-sm object-cover"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="bg-paper/60 absolute bottom-1.5 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -96,15 +130,38 @@ const { variant = 'full' } = Astro.props;
 )}
 
 {variant === 'full' && (
-  <script>
-    const range = document.getElementById('viz-ba-range') as HTMLInputElement | null;
-    const wrap = document.getElementById('viz-ba-before-wrap');
-    const handle = document.getElementById('viz-ba-handle');
-
-    range?.addEventListener('input', () => {
-      const pos = Number(range.value);
-      if (wrap) wrap.style.clipPath = `inset(0 ${100 - pos}% 0 0)`;
-      if (handle) handle.style.left = `${pos}%`;
-    });
-  </script>
+  <style>
+    /* Loops: capture screen visible 0–45%, crossfades out 45–55%, options
+       screen takes over 55–100% (then wraps). prefers-reduced-motion's
+       blanket override (global.css) forces iteration-count:1, so a
+       reduced-motion visitor's animation plays once and stops on each
+       keyframe's final value — screen 1 ends hidden, screen 2 ends shown,
+       landing on a single static "3 options" frame rather than looping. */
+    .viz-phone-screen {
+      animation: viz-phone-fade-1 7s ease-in-out infinite;
+    }
+    .viz-phone-screen-2 {
+      animation: viz-phone-fade-2 7s ease-in-out infinite;
+    }
+    @keyframes viz-phone-fade-1 {
+      0%,
+      45% {
+        opacity: 1;
+      }
+      55%,
+      100% {
+        opacity: 0;
+      }
+    }
+    @keyframes viz-phone-fade-2 {
+      0%,
+      45% {
+        opacity: 0;
+      }
+      55%,
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
 )}
