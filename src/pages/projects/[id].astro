@@ -1,16 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { caseStudies, categoryAccent } from '../../data/case-studies';
+import { getAllProjects, categoryAccent } from '../../lib/content';
 
 // Matches the GrowthOS design handoff's Case study template exactly, at
-// Tobi's request. All content is the handoff's own placeholder data — see
-// src/data/case-studies.ts and CONTENT_GAPS.md.
-export function getStaticPaths() {
-  return caseStudies.map((project) => ({ params: { id: project.id }, props: { project } }));
+// Tobi's request. Content is owner-editable via the Keystatic admin UI
+// (/keystatic) — see keystatic.config.ts and CONTENT_GAPS.md.
+export async function getStaticPaths() {
+  const caseStudies = await getAllProjects();
+  return caseStudies.map((project) => ({ params: { id: project.id }, props: { project, caseStudies } }));
 }
 
-const { project: cp } = Astro.props;
+const { project: cp, caseStudies } = Astro.props;
 const index = caseStudies.findIndex((p) => p.id === cp.id);
 const next = caseStudies[(index + 1) % caseStudies.length];
 

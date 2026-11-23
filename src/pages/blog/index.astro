@@ -1,13 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { blogPosts, readTime } from '../../data/blog-posts';
-import { mockupImages } from '../../data/mockup-images';
+import { getAllBlogPosts, readTime } from '../../lib/content';
 
 // Matches the GrowthOS design handoff's Blog page: category filters, a
-// featured post, then the rest as cards. Categories are derived from the
-// posts that actually exist, so a chip never returns zero results
-// (CLAUDE.md rule 1).
+// featured post, then the rest as cards. Posts are owner-editable via the
+// Keystatic admin UI (/keystatic). Categories are derived from the posts
+// that actually exist, so a chip never returns zero results (CLAUDE.md
+// rule 1).
+const blogPosts = await getAllBlogPosts();
 const categories = ['All', ...Array.from(new Set(blogPosts.map((p) => p.category)))];
 const sorted = [...blogPosts].sort((a, b) => b.date.localeCompare(a.date));
 const [featured] = sorted;
@@ -59,7 +60,7 @@ const formatDate = (iso: string) =>
       >
         <div class="min-h-[280px]">
           <Image
-            src={mockupImages[featured.image]}
+            src={featured.image}
             alt={featured.title}
             class="h-full w-full object-cover"
           />
@@ -89,7 +90,7 @@ const formatDate = (iso: string) =>
         class="card-hover flex flex-col gap-2.5 overflow-hidden"
       >
         <Image
-          src={mockupImages[post.image]}
+          src={post.image}
           alt={post.title}
           class="h-[180px] w-full object-cover"
         />

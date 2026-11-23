@@ -1,19 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { caseStudies, categoryAccent } from '../../data/case-studies';
+import { getAllProjects, categoryAccent } from '../../lib/content';
 import { kitchenGalleryPhotos } from '../../data/project-images';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
 // Matches the GrowthOS design handoff's Projects gallery exactly: search,
 // sort, category and town filters, with a before/after preview on cards
-// that have one. Started as all 15 of the handoff's own placeholder case
-// studies (CONTENT_GAPS.md) — Kitchens is now real photos instead (Tobi's
-// request, 2026-11-18: real galleries per service page, feeding in here
-// too), rolling out to the other 4 categories next. Real-photo cards open
-// a lightbox (no town/budget/brief exists for them to show on a detail
+// that have one. Case studies are owner-editable via the Keystatic admin
+// UI (/keystatic) — Kitchens is real photos instead (Tobi's request,
+// 2026-11-18: real galleries per service page, feeding in here too),
+// rolling out to the other 4 categories next. Real-photo cards open a
+// lightbox (no town/budget/brief exists for them to show on a detail
 // page) instead of linking to /projects/[id]/ like the still-placeholder
 // categories do — see the real/fake branch in the card markup below.
+const caseStudies = await getAllProjects();
 const placeholderStudies = caseStudies.filter((p) => p.cat !== 'Kitchens');
 const realKitchenCards = kitchenGalleryPhotos.map((photo, i) => ({
   id: `real-kitchen-${i}`,

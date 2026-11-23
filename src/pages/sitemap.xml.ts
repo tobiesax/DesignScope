@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { towns } from '../data/areas';
-import { blogPosts } from '../data/blog-posts';
-import { caseStudies } from '../data/case-studies';
+import { getAllBlogPosts, getAllProjects } from '../lib/content';
 
 // Hand-written rather than @astrojs/sitemap (CLAUDE.md: ask before adding a
 // dependency) — the page list is small and known, so a static route is
@@ -29,13 +28,14 @@ const staticPaths = [
   '/privacy/',
 ];
 
-const dynamicPaths = [
-  ...towns.map((t) => `/areas/${t.slug}/`),
-  ...blogPosts.map((p) => `/blog/${p.slug}/`),
-  ...caseStudies.map((p) => `/projects/${p.id}/`),
-];
+export const GET: APIRoute = async ({ site }) => {
+  const [blogPosts, caseStudies] = await Promise.all([getAllBlogPosts(), getAllProjects()]);
+  const dynamicPaths = [
+    ...towns.map((t) => `/areas/${t.slug}/`),
+    ...blogPosts.map((p) => `/blog/${p.slug}/`),
+    ...caseStudies.map((p) => `/projects/${p.id}/`),
+  ];
 
-export const GET: APIRoute = ({ site }) => {
   const base = site?.toString().replace(/\/$/, '') ?? 'https://designscopellc.com';
   const urls = [...staticPaths, ...dynamicPaths]
     .map((path) => `  <url><loc>${base}${path}</loc></url>`)

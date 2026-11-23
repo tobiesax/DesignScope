@@ -1,17 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { blogPosts, readTime } from '../../data/blog-posts';
-import { mockupImages } from '../../data/mockup-images';
+import { getAllBlogPosts, readTime } from '../../lib/content';
 
 // Matches the GrowthOS design handoff's Article template: a contextual CTA
 // (restoration posts push a call, everything else pushes booking) and a
-// "keep reading" related-posts row.
-export function getStaticPaths() {
-  return blogPosts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+// "keep reading" related-posts row. Posts are owner-editable via the
+// Keystatic admin UI (/keystatic).
+export async function getStaticPaths() {
+  const blogPosts = await getAllBlogPosts();
+  return blogPosts.map((post) => ({ params: { slug: post.slug }, props: { post, blogPosts } }));
 }
 
-const { post } = Astro.props;
+const { post, blogPosts } = Astro.props;
 const isRestoration = post.category === 'Restoration';
 const cta = isRestoration
   ? {
@@ -61,7 +62,7 @@ const formatDate = (iso: string) =>
 
   <div class="px-4 pt-7 sm:px-7">
     <Image
-      src={mockupImages[post.image]}
+      src={post.image}
       alt={post.title}
       class="h-[260px] w-full object-cover sm:h-[480px]"
     />
@@ -106,7 +107,7 @@ const formatDate = (iso: string) =>
         {related.map((p) => (
           <a href={`/blog/${p.slug}/`} class="card-hover flex flex-col gap-2.5 overflow-hidden">
             <Image
-              src={mockupImages[p.image]}
+              src={p.image}
               alt={p.title}
               class="h-[180px] w-full object-cover"
             />

@@ -4,7 +4,10 @@
 // dots + prev/next). Built with CSS scroll-snap + a small vanilla script
 // instead of the handoff's React track, so it still works with Astro's
 // zero-JS-by-default model and needs no new dependency.
-import { sampleReviews, sampleAggregateRating } from '../../data/reviews';
+import { getAllReviews, getReviewsSettings } from '../../lib/content';
+
+const sampleReviews = await getAllReviews();
+const sampleAggregateRating = await getReviewsSettings();
 ---
 
 <section data-dark-section class="bg-dark text-paper flex flex-col gap-5 px-4 py-14 sm:px-7">

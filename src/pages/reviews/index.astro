@@ -1,15 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { business } from '../../data/business';
-import { sampleReviews, sampleAggregateRating } from '../../data/reviews';
+import { getAllReviews, getReviewsSettings } from '../../lib/content';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
-// Real reviews (src/data/reviews.ts) as of 2026-11-17 — see its own header
-// comment and CONTENT_GAPS.md for provenance. `business.googleReviewUrl` is
-// still unconfirmed (the share-link Tobi sent didn't resolve to a usable
-// URL for automated fetching, and he pasted the review content directly
-// instead) — the Google/Yelp buttons below stay in place for anyone who
-// wants to read the full set or leave their own.
+// Real reviews, owner-editable via the Keystatic admin UI (/keystatic) —
+// see CONTENT_GAPS.md for provenance. `business.googleReviewUrl` is still
+// unconfirmed (the share-link Tobi sent didn't resolve to a usable URL for
+// automated fetching, and he pasted the review content directly instead)
+// — the Google/Yelp buttons below stay in place for anyone who wants to
+// read the full set or leave their own.
+const sampleReviews = await getAllReviews();
+const sampleAggregateRating = await getReviewsSettings();
 ---
 
 <Layout title="Reviews" description="Design Scope customer reviews on Google and Yelp.">

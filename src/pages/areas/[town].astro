@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import { towns } from '../../data/areas';
 import { mockupImages } from '../../data/mockup-images';
-import { caseStudies } from '../../data/case-studies';
+import { getAllProjects } from '../../lib/content';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
 // Matches the GrowthOS design handoff's Town page template exactly, at
@@ -14,6 +14,7 @@ export function getStaticPaths() {
 
 const { town } = Astro.props;
 const otherTowns = towns.filter((t) => t.slug !== town.slug);
+const caseStudies = await getAllProjects();
 
 // No real, town-tagged project exists for any town yet (CONTENT_GAPS.md) —
 // falls back to other case studies in the same vein as the design handoff
