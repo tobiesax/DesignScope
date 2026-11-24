@@ -22,10 +22,10 @@ Added `src/components/service/CrossSellService.astro`, a reciprocal "also remode
 consultation, 24h quote, one team — applied to the other room) now shown near the bottom of
 both `kitchens.astro` and `bathrooms.astro`, each linking to the other.
 
-**Not changed:** the nav link itself still goes straight to `/remodeling/kitchens/`, not the
-`/remodeling/` hub — that's a bigger navigation-architecture call (BUILD_PLAN's original
-decision) than "add a missing section," so left alone pending Tobi/Stephen's call on whether
-"Kitchen & bath" should route to the hub instead.
+**Update (same day):** Tobi confirmed the nav should route to the hub — `Header.astro`'s
+"Kitchen & bath" link now goes to `/remodeling/` instead of straight to `/remodeling/kitchens/`.
+Active-state highlighting is keyed off `link.id`, not `href`, so this didn't need any other
+change.
 
 ## 2026-11-24 SEO/GEO copy pass — service pages + town pages expanded
 
