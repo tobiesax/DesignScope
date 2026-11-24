@@ -63,10 +63,16 @@ export const business = {
     'Help with permit and insurance paperwork',
   ],
 
+  // Resolved 2026-11-13 (CONTENT_GAPS.md): the live site's own homepage
+  // headline ("10% Off Kitchen Cabinet Costs") contradicted every instance
+  // of its own body copy, which states 10% off the first project
+  // generally, not cabinets specifically. Kept the broader, consistent
+  // body wording below rather than the narrower, self-contradicting
+  // headline — this comment used to say the terms were still TODO, which
+  // was stale; that call was already made.
   offers: {
     newCustomer: '10% off for new customers',
     military: '5% military discount',
-    // TODO: confirm exact terms — the current site's headline and body text conflict. See CONTENT_GAPS.md.
   },
 
   supplierBrands: ['TOTO', 'Hansgrohe', 'Wellborn Forest', 'Brizo', 'Delta'],

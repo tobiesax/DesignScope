@@ -50,12 +50,22 @@ const townLinks = business.townPages.map((name) => ({
       <a href="/blog/" class="hover:text-brand">
         Blog
       </a>
+      <!-- /faqs/ and /contact/ exist (both in sitemap.xml.ts) but had no
+           link anywhere on the site before 2026-11-24 — only reachable by
+           typing the URL directly. Added here since this column already
+           doubles as the general site-map list, not just services. -->
+      <a href="/faqs/" class="hover:text-brand">
+        FAQs
+      </a>
+      <a href="/contact/" class="hover:text-brand">
+        Contact
+      </a>
     </div>
 
     <div class="flex flex-col gap-2 text-[12.5px]">
-      <span class="text-brand mb-1 text-[9.5px] font-bold tracking-[0.25em] uppercase">
+      <a href="/areas/" class="text-brand mb-1 text-[9.5px] font-bold tracking-[0.25em] uppercase">
         Service area
-      </span>
+      </a>
       {townLinks.map((t) => (
         <a href={t.href} class="hover:text-brand">
           {t.name}

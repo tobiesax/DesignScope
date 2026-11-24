@@ -7,6 +7,35 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
+## 2026-11-24 QA pass while waiting on the GoDaddy DNS change
+
+Used the downtime productively — a few things worth recording:
+
+**Redirect map verified complete.** Fetched the live site's real `sitemap.xml` (154 URLs: 26
+core pages + 126 Hibu-generated `/sap/...` service-area pages) and diffed every one against
+`vercel.json`. All 154 are covered, all 301 permanent, and the `/sap/` pages for towns without
+their own dedicated page correctly fall back to the matching service page
+(`/remodeling/kitchens/` or `/remodeling/bathrooms/`) rather than 404ing or going to the
+homepage. Nothing to fix — BUILD_PLAN.md's "every redirect returns 301" item is solid.
+
+**Alt-text audit: clean.** Scripted check of every `<Image>`/`<img>` across `src/` — zero
+missing `alt` attributes.
+
+**Found and fixed 3 orphan pages.** `/contact/`, `/faqs/` and `/areas/` (the town-pages hub)
+all existed and were listed in `sitemap.xml.ts`, but nothing on the site actually linked to any
+of them — no nav item, no footer link, nothing in any page body. They were only reachable by
+typing the URL directly, which is bad for both SEO (search engines deprioritize internally
+unlinked pages) and for visitors. Added all three to `Footer.astro` (FAQs/Contact next to
+Projects/Offers/Blog; made the "Service area" column label itself link to `/areas/`, on top of
+the individual town links already there). Verified afterward by diffing every built route
+against the full source tree — nothing else is orphaned.
+
+**Cleaned up one stale TODO.** `business.ts`'s `offers` object still had a `// TODO: confirm
+exact terms` comment, but this was actually already resolved on 2026-11-13 (documented further
+down this same file) — the live homepage's headline contradicted its own body copy, and the
+broader body wording was deliberately kept. Removed the stale TODO and pointed the comment at
+what was actually decided, so it stops looking like an open question it isn't.
+
 ## 2026-11-24 Kitchens/bathrooms cross-sell — nav dead-ends at Kitchens only
 
 Client feedback: the "kitchen and bath" experience focuses on kitchens and has little/no
