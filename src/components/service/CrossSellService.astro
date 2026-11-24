@@ -1,0 +1,43 @@
+---
+// Cross-sell band between the two remodel service pages. Added 2026-11-24:
+// the main nav's "Kitchen & bath" link (Header.astro) only ever goes to
+// /remodeling/kitchens/, and neither kitchens.astro nor bathrooms.astro
+// mentioned the other service anywhere in the page body — a visitor
+// landing on either page (from that nav link, or from search) had no
+// visible path to the other one. This band gives each page a real,
+// reciprocal link to the other, using that page's own confirmed hero
+// image/headline/blurb rather than new copy.
+import { Image } from 'astro:assets';
+import type { ServicePage } from '../../data/services';
+
+interface Props {
+  other: ServicePage;
+  /** Short, specific reason to look at the other service too — not a generic "see more." */
+  blurb: string;
+}
+
+const { other, blurb } = Astro.props;
+---
+
+<section class="border-border border-t px-4 py-12 sm:px-7">
+  <a
+    href={`/remodeling/${other.slug}/`}
+    class="card-hover bg-paper-muted flex flex-col overflow-hidden sm:flex-row"
+  >
+    <Image
+      src={other.heroImage}
+      alt={other.heroHeadline}
+      class="h-[200px] w-full object-cover sm:h-auto sm:w-[280px] sm:flex-shrink-0"
+    />
+    <div class="flex flex-col justify-center gap-2 p-6">
+      <span class="text-brand-dark text-[10px] font-semibold tracking-[0.35em] uppercase">
+        Also remodeling?
+      </span>
+      <span class="text-xl font-black tracking-tight">{other.category}, too</span>
+      <p class="text-muted max-w-md text-sm leading-relaxed">{blurb}</p>
+      <span class="text-brand-dark mt-1 text-xs font-extrabold">
+        Explore {other.category.toLowerCase()} remodeling →
+      </span>
+    </div>
+  </a>
+</section>

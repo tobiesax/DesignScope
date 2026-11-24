@@ -11,8 +11,9 @@ import ThreeDDesignBlock from '../../components/service/ThreeDDesignBlock.astro'
 import ServiceGallery from '../../components/service/ServiceGallery.astro';
 import ReviewCarousel from '../../components/home/ReviewCarousel.astro';
 import FaqAccordion from '../../components/shared/FaqAccordion.astro';
+import CrossSellService from '../../components/service/CrossSellService.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
-import { bathrooms, remodelProcess, remodelFaqs } from '../../data/services';
+import { bathrooms, kitchens, remodelProcess, remodelFaqs } from '../../data/services';
 import { bathroomProjects, projectImages } from '../../data/project-images';
 import { VISUALIZER_ENABLED } from '../../data/feature-flags';
 
@@ -74,6 +75,11 @@ const galleryProjects = bathroomProjects.map((project) => ({
       <FaqAccordion faqs={remodelFaqs} title="Questions homeowners ask" />
     </div>
   </section>
+
+  <CrossSellService
+    other={kitchens}
+    blurb="Cabinetry, countertops, islands and layout changes — the same free design consultation, 24-hour written quote and one-team process as your bathroom."
+  />
 
   <FinalCta />
 </Layout>

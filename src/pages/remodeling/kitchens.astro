@@ -10,8 +10,9 @@ import ThreeDDesignBlock from '../../components/service/ThreeDDesignBlock.astro'
 import PhotoGallery from '../../components/shared/PhotoGallery.astro';
 import ReviewCarousel from '../../components/home/ReviewCarousel.astro';
 import FaqAccordion from '../../components/shared/FaqAccordion.astro';
+import CrossSellService from '../../components/service/CrossSellService.astro';
 import FinalCta from '../../components/shared/FinalCta.astro';
-import { kitchens, remodelProcess, remodelFaqs } from '../../data/services';
+import { kitchens, bathrooms, remodelProcess, remodelFaqs } from '../../data/services';
 import { kitchenGalleryPhotos } from '../../data/project-images';
 import { VISUALIZER_ENABLED } from '../../data/feature-flags';
 
@@ -80,6 +81,11 @@ import { VISUALIZER_ENABLED } from '../../data/feature-flags';
       <FaqAccordion faqs={remodelFaqs} title="Questions homeowners ask" />
     </div>
   </section>
+
+  <CrossSellService
+    other={bathrooms}
+    blurb="Walk-in showers, soaking tubs, vanities and tile — the same free design consultation, 24-hour written quote and one-team process as your kitchen."
+  />
 
   <FinalCta />
 </Layout>

@@ -7,6 +7,26 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
+## 2026-11-24 Kitchens/bathrooms cross-sell — nav dead-ends at Kitchens only
+
+Client feedback: the "kitchen and bath" experience focuses on kitchens and has little/no
+presence for bathrooms. Root cause: `Header.astro`'s main nav item is literally labeled
+"Kitchen & bath" but its `href` only ever goes to `/remodeling/kitchens/` — there's no
+dropdown, and neither `kitchens.astro` nor `bathrooms.astro` mentioned the other service
+anywhere in the page body. A visitor following that nav link had no visible path to
+Bathrooms content at all short of noticing the thin `/remodeling/` hub page, which the nav
+skips entirely.
+
+Added `src/components/service/CrossSellService.astro`, a reciprocal "also remodeling?" band
+(real hero image + headline + a blurb grounded in the same confirmed promises — free
+consultation, 24h quote, one team — applied to the other room) now shown near the bottom of
+both `kitchens.astro` and `bathrooms.astro`, each linking to the other.
+
+**Not changed:** the nav link itself still goes straight to `/remodeling/kitchens/`, not the
+`/remodeling/` hub — that's a bigger navigation-architecture call (BUILD_PLAN's original
+decision) than "add a missing section," so left alone pending Tobi/Stephen's call on whether
+"Kitchen & bath" should route to the hub instead.
+
 ## 2026-11-24 SEO/GEO copy pass — service pages + town pages expanded
 
 Client feedback: most page copy reads as too brief/summarized, and asked for richer context on
