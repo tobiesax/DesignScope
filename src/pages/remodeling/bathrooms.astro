@@ -30,6 +30,13 @@ const galleryProjects = bathroomProjects.map((project) => ({
 <Layout title={bathrooms.title} description={bathrooms.metaDescription} active="remodeling">
   <ServiceHero service={bathrooms} />
 
+  <!-- bathrooms.intro was defined in data/services.ts but never rendered
+       anywhere on this page until 2026-11-24 — added to match
+       home-renovations.astro's own hero->intro pattern. -->
+  <section class="px-4 py-10 sm:px-7">
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">{bathrooms.intro}</p>
+  </section>
+
   <IncludedInvestment included={bathrooms.included ?? []} ranges={bathrooms.ranges ?? []} />
 
   {VISUALIZER_ENABLED && (

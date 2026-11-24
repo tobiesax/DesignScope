@@ -29,6 +29,13 @@ import { VISUALIZER_ENABLED } from '../../data/feature-flags';
 <Layout title={kitchens.title} description={kitchens.metaDescription} active="remodeling">
   <ServiceHero service={kitchens} />
 
+  <!-- kitchens.intro was defined in data/services.ts but never rendered
+       anywhere on this page until 2026-11-24 — added to match
+       home-renovations.astro's own hero->intro pattern. -->
+  <section class="px-4 py-10 sm:px-7">
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">{kitchens.intro}</p>
+  </section>
+
   <IncludedInvestment included={kitchens.included ?? []} ranges={kitchens.ranges ?? []} />
 
   {VISUALIZER_ENABLED && (
