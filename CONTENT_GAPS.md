@@ -7,6 +7,29 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
+## 2026-11-24 SEO/GEO copy pass — service pages + town pages expanded
+
+Client feedback: most page copy reads as too brief/summarized, and asked for richer context on
+Design Scope's actual differentiators (SEO + "GEO" — AI answer engines like Google AI Overviews,
+ChatGPT, Perplexity — reward specific, verifiable facts over generic adjectives, the opposite of
+what thin copy gives them). Expanded `src/data/services.ts` (kitchens/bathrooms/home-renovations
+`intro`) and `src/data/areas.ts` (all 5 towns' `intro`/`highlight`) using only facts already
+confirmed elsewhere in the project — named showroom brands relevant to each room type, the free
+45-minute consult, 24-hour written quote, price matching, 6-month warranty, "our own crews, not
+subcontractors," HBRA/KBIS membership, Warmup/Schluter installer certifications, and Stephen's
+bio (25 years, Master's in Interior Design) — nothing new invented. Full reasoning is in each
+file's own comments.
+
+Also found and fixed two real accuracy bugs while in there: `ServiceHero.astro`'s default trust
+row and `[town].astro`'s stats grid both hardcoded "4.9" as the Google rating, which never
+matched `reviews-settings/index.yaml`'s actual confirmed 4.8. The town page version is now wired
+to `getReviewsSettings()` directly instead of a second hardcoded string, so it can't drift again.
+Also started actually rendering `areas.ts`'s `highlight` field on `[town].astro` — it was defined
+per town but never once displayed on the page before today.
+
+Still open: town `drive` times and the 3-vs-5-town scope itself remain unconfirmed with Stephen
+(flagged in `areas.ts` since before this pass) — not something this copy expansion resolved.
+
 ## 2026-11-24 Main business number resolved — now (860) 794-8739 everywhere
 
 Closes the open question flagged in `business.ts` and `terms/index.astro` since the compliance

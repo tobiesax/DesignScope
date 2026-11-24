@@ -31,7 +31,9 @@ const {
   urgent = false,
   primaryCta = { label: 'Book free design consultation', href: '/book/' },
   secondaryCta = { label: 'See our projects', href: '/projects/' },
-  trustRow = ['★ 4.9 Google rating', '24-hour quotes', 'Price matching'],
+  // 4.8 matches reviews-settings/index.yaml's confirmed aggregate (fixed
+  // 2026-11-24 — this previously said 4.9, which didn't match).
+  trustRow = ['★ 4.8 Google rating', '24-hour quotes', 'Price matching'],
   callbackTargetId = 'callback',
   liveChipLabel = 'Crews on call 24/7',
 } = Astro.props;

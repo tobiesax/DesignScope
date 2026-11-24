@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import { towns } from '../../data/areas';
 import { mockupImages } from '../../data/mockup-images';
-import { getAllProjects } from '../../lib/content';
+import { getAllProjects, getReviewsSettings } from '../../lib/content';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
 // Matches the GrowthOS design handoff's Town page template exactly, at
@@ -19,6 +19,9 @@ const caseStudies = await getAllProjects();
 // No real, town-tagged project exists for any town yet (CONTENT_GAPS.md) —
 // falls back to other case studies in the same vein as the design handoff
 // does, rather than inventing a local project.
+// Fixed 2026-11-24 — this grid used to hardcode "4.9 ★", which didn't
+// match reviews-settings/index.yaml's confirmed 4.8 aggregate.
+const rating = await getReviewsSettings();
 const sameTown = caseStudies.filter((p) => p.town === town.name);
 const localProjects = (
   sameTown.length >= 3
@@ -47,6 +50,9 @@ const localProjects = (
         Kitchen and bath remodeling in {town.name}
       </h1>
       <p class="text-ink-soft max-w-[500px] text-[15px] leading-relaxed">{town.intro}</p>
+      <p class="text-brand-dark max-w-[500px] text-[13px] font-bold leading-relaxed">
+        {town.highlight}
+      </p>
       <div class="flex flex-wrap gap-2.5">
         <a
           href="/book/"
@@ -65,7 +71,7 @@ const localProjects = (
       <div class="grid grid-cols-3 gap-[3px]">
         {[
           { v: String(sameTown.length || '—'), k: 'projects shown' },
-          { v: '4.9 ★', k: 'Google rating' },
+          { v: `${rating.value} ★`, k: 'Google rating' },
           { v: town.drive, k: 'to our showroom' },
         ].map((s) => (
           <div class="bg-paper-muted flex flex-col gap-0.5 px-3.5 py-3.5">
