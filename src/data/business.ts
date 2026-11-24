@@ -13,19 +13,22 @@ export const business = {
     postalCode: '06002',
   },
 
-  // TODO: confirm ownership before launch — per the compliance/CRM-readiness
-  // spec Tobi supplied (2026-11-20), it's unconfirmed whether these two
-  // numbers are Design Scope's own or leased through Hibu (the old host).
-  // Don't remove them; just don't treat them as certainly portable until
-  // Stephen confirms.
+  // Resolved 2026-11-24 — client confirmed by reply to the "beating the
+  // deadline" doc: (860) 794-8739 is the one line Design Scope actually has
+  // ("we only have the 8607948739 line"). (860) 264-5275 is Hibu's own
+  // tracking number, not Design Scope's — Stephen is trying to negotiate
+  // keeping it from Hibu before the 2026-12-03 contract end, but it may not
+  // survive, so it's kept here for reference only and no longer used as the
+  // site's primary number. (860) 773-0801 was dropped entirely — there is
+  // no separate texting-offers line, just the one number above.
   phone: {
-    main: '(860) 264-5275',
-    mainTel: '+18602645275',
-    alternate: '(860) 794-8739',
-    alternateTel: '+18607948739',
-    textOffers: '(860) 773-0801',
-    textOffersTel: '+18607730801',
+    main: '(860) 794-8739',
+    mainTel: '+18607948739',
   },
+
+  // Hibu's tracking number — not displayed on the site; see the comment on
+  // `phone` above. Remove this once Stephen confirms whether he kept it.
+  legacyHibuTrackingNumber: '(860) 264-5275',
 
   email: 'contact@designscopellc.com',
 
@@ -202,8 +205,19 @@ export const business = {
     yelp: 'https://yelp.com/biz/design-scope-bloomfield',
   },
 
-  // TODO: get the Google Business Profile review link — see CONTENT_GAPS.md
-  googleReviewUrl: null as string | null,
+  // Google Search knowledge-panel link for the business's reviews, sent by the client
+  // 2026-11-24 — see CONTENT_GAPS.md for the caveat that this can't be verified by an
+  // automated fetch (it's a JS-only Google Search URL), but works fine for a real visitor.
+  googleReviewUrl:
+    'https://www.google.com/search?q=Design+Scope,+LLC.&stick=H4sIAAAAAAAA_-NgU1I1qLCwTDUzNTVOtbRMtDBMMTC2AgqlppqkGZgkmRgBWcnJBotYhVxSizPT8xSCk_MLUnUUfHyc9QBEorE1PgAAAA&hl=en' as string | null,
+
+  // Google's own "Write a review" deep link (the `#lrd=<feature id>,3` fragment is what
+  // Google's knowledge-panel "Write a review" button itself generates). The feature id
+  // (0x89e6553e99a81d03:0x8ee4f04b428eecc0) was recovered by gunzip-decoding the `stick`
+  // param of the googleReviewUrl link above — it's the same business, just the compose
+  // action instead of the reviews list. Same automated-fetch caveat as googleReviewUrl.
+  googleWriteReviewUrl:
+    'https://www.google.com/search?q=Design+Scope,+LLC.&lrd=0x89e6553e99a81d03:0x8ee4f04b428eecc0,3#lrd=0x89e6553e99a81d03:0x8ee4f04b428eecc0,3' as string | null,
 
   services: {
     residential: [

@@ -5,11 +5,8 @@ import { getAllReviews, getReviewsSettings } from '../../lib/content';
 import FinalCta from '../../components/shared/FinalCta.astro';
 
 // Real reviews, owner-editable via the Keystatic admin UI (/keystatic) —
-// see CONTENT_GAPS.md for provenance. `business.googleReviewUrl` is still
-// unconfirmed (the share-link Tobi sent didn't resolve to a usable URL for
-// automated fetching, and he pasted the review content directly instead)
-// — the Google/Yelp buttons below stay in place for anyone who wants to
-// read the full set or leave their own.
+// see CONTENT_GAPS.md for provenance. `business.googleReviewUrl` is now set
+// from the Google knowledge-panel link the client sent 2026-11-24.
 const sampleReviews = await getAllReviews();
 const sampleAggregateRating = await getReviewsSettings();
 ---
@@ -46,6 +43,16 @@ const sampleAggregateRating = await getReviewsSettings();
       >
         Read us on Yelp
       </a>
+      {business.googleWriteReviewUrl && (
+        <a
+          href={business.googleWriteReviewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="border-dark border px-5 py-3.5 text-sm font-bold"
+        >
+          Write a review
+        </a>
+      )}
     </div>
   </section>
 

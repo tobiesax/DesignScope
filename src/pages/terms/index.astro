@@ -1,12 +1,9 @@
 ---
 // Terms of Use — created per the compliance/CRM-readiness spec Tobi
-// supplied (2026-11-20, Task 3), word for word. "[DATE OF PUBLISHING]" and
-// "[MAIN BUSINESS NUMBER]" are kept as literal bracketed placeholders, not
-// filled with business.ts's values — the spec's own "still to confirm"
-// list flags both as unconfirmed (the publish date obviously doesn't
-// exist yet; whether (860) 264-5275 is really Design Scope's own number,
-// versus one leased through the old host, is a separate open question —
-// see business.ts and CONTENT_GAPS.md). CLAUDE.md rule 1: don't guess.
+// supplied (2026-11-20, Task 3), word for word. "[DATE OF PUBLISHING]" stays
+// a literal bracketed placeholder — it obviously doesn't exist yet. The
+// main business number is now confirmed ((860) 794-8739, per the client's
+// 2026-11-24 reply — see business.ts), so that placeholder is filled in.
 import Layout from '../../layouts/Layout.astro';
 import { business } from '../../data/business';
 ---
@@ -56,7 +53,7 @@ import { business } from '../../data/business';
           <a href={`mailto:${business.email}`} class="font-semibold hover:text-brand-dark">
             {business.email}
           </a>{' '}
-          or [MAIN BUSINESS NUMBER].
+          or {business.phone.main}.
         </li>
         <li>Consent to receive texts is not a condition of any purchase.</li>
         <li>Carriers are not liable for delayed or undelivered messages.</li>

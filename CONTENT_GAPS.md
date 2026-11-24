@@ -7,6 +7,66 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
+## 2026-11-24 Main business number resolved — now (860) 794-8739 everywhere
+
+Closes the open question flagged in `business.ts` and `terms/index.astro` since the compliance
+spec: whether (860) 264-5275 was really Design Scope's own number or one leased through Hibu.
+The client's reply to the "beating the deadline" doc answered it directly: "we only have the
+8607948739 line" (264-5275 is Hibu's own tracking number, forwarded to 794-8739; Stephen is
+trying to negotiate keeping it before the 2026-12-03 Hibu contract end, but it may not survive).
+(860) 773-0801, the separate "text-offers" line, doesn't exist either — there's just the one
+number.
+
+Changed `business.ts`'s `phone` to just `{ main, mainTel }` = (860) 794-8739 / +18607948739 —
+every page that renders a phone number or `tel:`/`sms:` link (header, footer, every CTA, the
+JSON-LD `telephone`, the privacy page's call-recording notice) now shows this number, confirmed
+by grepping the full build output for the old numbers (zero matches). Filled in
+`terms/index.astro`'s literal `[MAIN BUSINESS NUMBER]` placeholder with it too — that was left
+blank specifically because this fact was unconfirmed; it's resolved now. `Offers.astro`'s "Text
+START to ___ for future offers" line now points at the same number instead of the dropped
+773-0801. Kept 264-5275 in `business.ts` as `legacyHibuTrackingNumber` (unused, reference only)
+in case Stephen does keep it — remove once he confirms either way.
+
+This is also the number that should go on the actual A2P 10DLC registration.
+
+## 2026-11-24 Full Hibu review set copied over
+
+The client's reply to the "beating the deadline" doc gave explicit access/go-ahead to copy
+all the Hibu-hosted reviews before that site goes dark (Hibu termination effective 2026-12-03).
+
+**Source found:** the live site's `/reviews` page renders via a Hibu/Duda custom widget
+(`#indexReviewsWidget`, widget id `d385cfdb03c4469293fd1fa0407c10d7`) that is JS-rendered —
+plain HTML fetch returns only empty "Button" placeholders. Tracing the widget's loader
+(`https://widget.hibu.us/static/js/index.js`) found the underlying public API it calls:
+
+```
+https://hibu.us/api/public/v2/merchants/{merchantId}/reviews.json?limit=&page=&filter=&thirdParty=&randomize=&skipPagination=&currentLocationReviewsOnly=
+```
+
+Design Scope's merchant id is `79194` (from the widget's `data-merchant` attribute). Calling
+it directly with `thirdParty=true&skipPagination=true` returned the full set: **20 reviews**,
+aggregated from Google Business Profile (19) and Facebook (1), each with id, rating, full
+comment text, timestamp, platform, and any owner response. Saved verbatim as
+`content-archive/hibu-reviews-raw-2026-11-24.json` for permanent archival — this is the
+authoritative backup if the review history is needed again after Hibu is gone, independent of
+what ends up curated on-site.
+
+**Added to the CMS:** 6 of the 20 were already in `src/content/reviews/` from the earlier
+2026-11-17 pass (dash-legacy, kyra-the-creative, michael-rosen, phyllis-holland-brown,
+queen-e, tim-siu). Added the other 14 as new entries in the same style (trimmed to 1-2
+quotable sentences, a short inferred project-type `job` tag, two obvious one-off typos
+silently corrected — "expressesed"→"expressed", "kirchen"→"kitchen" — otherwise verbatim):
+andria-powell, izabella-lopes, sau-janya, omotayo-quadri, dare-akomolede, bruce-beckius,
+deluxewood-cabinetry (a cabinetry supplier/trade partner, not a homeowner), anthony-befera,
+suzette-befera, olajide-bello, anthony-jackson (trade customer), daby-amieyeofori,
+kathy-richardson, melisa-pinkney. All 20 now render in the review carousel and `/reviews/`.
+
+**Not touched:** `reviews-settings` (`ratingValue: "4.8"`, `ratingCount: 21`) — that's one
+higher than the 20 reviews-with-text returned here, probably because Google's own aggregate
+includes star-only ratings with no written review, which this API doesn't surface. Left as-is
+since it was previously confirmed rather than guess a new figure; worth reconfirming the exact
+current rating/count from the Google Business Profile directly once Hibu is off it.
+
 ## 2026-11-20 Hero redesign, round 2: 6 new AI-generated photos
 
 Tobi supplied 6 new photos for the hero carousel (plus 4 duplicate re-downloads of the same
