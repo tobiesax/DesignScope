@@ -7,6 +7,27 @@ empty (or every remaining gap explicitly accepted by Stephen) before launch — 
 
 Source: `HANDOFF.md` section 10, plus anything found while building.
 
+## 2026-11-25 10% offer is cabinet-costs-only — reverses the 2026-11-13 call
+
+The client confirmed directly, while filing A2P 10DLC registration, that the 10% new-customer
+discount only applies to kitchen cabinet costs — not the first project generally. This is the
+opposite of the judgment call made 2026-11-13 (see below): at the time, the live site's own
+homepage headline ("10% Off Kitchen Cabinet Costs") contradicted its own body copy (which said
+10% off broadly), and the broader body wording was kept as the more internally-consistent
+reading. It turns out the headline/cabinet-specific version was actually the correct one all
+along — also matching the original GrowthOS design handoff's "10% off your cabinet order when
+you visit" tie-in, which `visualize/index.astro` had deliberately left unconfirmed rather than
+guess (see that file's own comment).
+
+Updated `business.ts` (`offers.newCustomer`), `Offers.astro` (both the heading and body text),
+and `offers/index.astro`'s meta description to say "10% off kitchen cabinet costs" instead of
+"10% off for new customers" / "their first project." `visualize/index.astro` needed no copy
+change — it already reused `business.offers.newCustomer` rather than inventing its own wording,
+so it picked up the correction automatically; only its explanatory comment was updated.
+
+This also caught the A2P campaign registration's promotional sample message before it was
+submitted — it would otherwise have cited the wrong, now-superseded offer wording.
+
 ## 2026-11-24 QA pass while waiting on the GoDaddy DNS change
 
 Used the downtime productively — a few things worth recording:

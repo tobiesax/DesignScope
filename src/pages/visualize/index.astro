@@ -15,10 +15,12 @@
 // - "Book my showroom visit" opens the real booking modal (not a second,
 //   fake scheduling UI) pre-filled with the room and "At the showroom",
 //   per the plan's "pre-fill the showroom booking with it".
-// - The plan's own "10% off your cabinet order when you visit" tie-in is
-//   flagged there as [CONFIRM with Stephen] — not shown as a new specific
-//   offer here; the existing, already-confirmed business.offers.newCustomer
-//   line is reused instead rather than inventing a new one.
+// - The plan's own "10% off your cabinet order when you visit" tie-in was
+//   flagged as [CONFIRM with Stephen] — confirmed by the client 2026-11-25
+//   (business.ts's offers.newCustomer now says "cabinet costs" specifically,
+//   reversing an earlier, incorrect 2026-11-13 call). That line is reused
+//   below as-is, and reads even better here now that it's confirmed — this
+//   page's own context is specifically about kitchen/cabinet options.
 // - No "Email me this design" button (plan section 4) — it has nothing to
 //   send without a backend, so a dead button isn't shown.
 import Layout from '../../layouts/Layout.astro';

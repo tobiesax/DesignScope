@@ -63,15 +63,19 @@ export const business = {
     'Help with permit and insurance paperwork',
   ],
 
-  // Resolved 2026-11-13 (CONTENT_GAPS.md): the live site's own homepage
-  // headline ("10% Off Kitchen Cabinet Costs") contradicted every instance
-  // of its own body copy, which states 10% off the first project
-  // generally, not cabinets specifically. Kept the broader, consistent
-  // body wording below rather than the narrower, self-contradicting
-  // headline — this comment used to say the terms were still TODO, which
-  // was stale; that call was already made.
+  // Corrected 2026-11-25 — the client confirmed directly that the 10%
+  // discount is cabinet-costs-only, reversing the 2026-11-13 call recorded
+  // below (and matching both the live site's original homepage headline
+  // and the GrowthOS design handoff's own "10% off your cabinet order when
+  // you visit" tie-in, which had been left out pending this exact
+  // confirmation — see visualize/index.astro). The 2026-11-13 reasoning
+  // that's now superseded: the live site's homepage headline ("10% Off
+  // Kitchen Cabinet Costs") contradicted every instance of its own body
+  // copy, which stated 10% off the first project generally — the broader
+  // body wording was kept at the time as the more internally-consistent
+  // reading, but the client has now settled which one was actually right.
   offers: {
-    newCustomer: '10% off for new customers',
+    newCustomer: '10% off kitchen cabinet costs for new customers',
     military: '5% military discount',
   },
 
