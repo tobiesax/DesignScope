@@ -517,7 +517,9 @@ Cash, Check, Invoice, Financing) as `business.paymentMethods`, shown as a chip r
 
 - [ ] HIC registration number
 - [ ] Confirm weekend hours / appointment policy and same-day availability wording
-- [ ] Stephen's surname and a short bio for the About page
+- [x] Stephen's surname — resolved 2026-11-25, confirmed as "Elegbede" via the GHL A2P 10DLC
+      application's authorized-representative field; added to `business.ts` `team.stephen.lastName`
+      and now shown on the About page. Bio itself was already written.
 - [x] Exact wording of the offers (10% new customer, 5% military) — resolved 2026-11-13, see
       the copywriting-lift note above
 - [x] Full supplier brand list — resolved 2026-11-13 from the live site's own `/about`

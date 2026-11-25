@@ -46,8 +46,10 @@ export const business = {
 
   team: {
     stephen: {
-      // TODO: get Stephen's surname — see CONTENT_GAPS.md
+      // Confirmed 2026-11-25 via the GHL A2P 10DLC application's authorized
+      // representative field.
       firstName: 'Stephen',
+      lastName: 'Elegbede',
       role: 'Member, Interior Design Specialist & Master Craftsman',
       bio: "Stephen brings over 25 years of design and construction experience to the Farmington Valley. Holding a Master's Degree in Interior Design, he combines architectural aesthetics, spatial planning and fine carpentry to bridge the gap between concept drawings and hands-on site execution. Since co-founding Design Scope in 2016, Stephen has led the company's growth into a full kitchen and bathroom remodeling business, including the opening of its fully equipped showroom, where clients can explore material samples, cabinetry and hardware finishes alongside the design team.",
     },
