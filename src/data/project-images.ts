@@ -179,7 +179,8 @@ export const homeRenovationProjects = [
 
 // No town is known for these either (same reasoning as kitchens/bathrooms above).
 export const commercialProjects = [
-  { id: 'commercial-1', title: 'Employee break room and seating', img: 'commercial1' as const },
+  // 'commercial-1' (gallery-01) is now the commercial page's hero photo —
+  // left out here so it isn't shown twice on the same page.
   { id: 'commercial-2', title: 'Break room with vending and fridge', img: 'commercial2' as const },
   { id: 'commercial-3', title: 'Office kitchenette, red cabinetry', img: 'commercial3' as const },
   { id: 'commercial-4', title: 'Office kitchenette, tile backsplash', img: 'commercial4' as const },

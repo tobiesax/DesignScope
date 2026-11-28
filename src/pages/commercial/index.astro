@@ -31,8 +31,15 @@ const galleryProjects = commercialProjects.map((project) => ({
   active="commercial"
 >
   <section class="relative min-h-[340px]">
+    <!-- Swapped 2026-11-28 at Tobi's request ("find something better in
+         archive") — the old hero.jpg conference-room photo has visible
+         wall glare/texture and a smaller, less impressive space. This is
+         the real "Employee break room and seating" gallery photo, a
+         wider, better-lit shot that makes a stronger first impression;
+         removed from the gallery grid below (ServiceGallery) so it's not
+         shown twice on the same page. -->
     <Image
-      src={projectImages['commercial-hero']}
+      src={projectImages['commercial1']}
       alt=""
       class="absolute inset-0 h-full w-full object-cover"
       widths={[640, 1024, 1600]}
