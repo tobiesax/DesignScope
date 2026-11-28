@@ -88,14 +88,26 @@ const townLinks = business.townPages.map((name) => ({
       </a>
     </div>
 
-    <address class="flex flex-col gap-2 text-[12.5px] leading-relaxed not-italic">
+    <!-- Mobile: centered (Tobi's request, 2026-11-28), matching the other
+         "center this" mobile requests elsewhere on the site. Desktop keeps
+         the left-aligned column, matching the rest of the footer grid, and
+         combines the address and hours into one flowing line instead of
+         two stacked ones (also Tobi's request). -->
+    <address class="flex flex-col items-center gap-2 text-center text-[12.5px] leading-relaxed not-italic sm:items-start sm:text-left">
       <span class="text-brand mb-1 text-[9.5px] font-bold tracking-[0.25em] uppercase">Visit</span>
-      <span>
+      <span class="sm:hidden">
         {business.showroom.streetAddress}, {business.showroom.city}, {business.showroom.state}{' '}
         {business.showroom.postalCode}
       </span>
-      <span class="text-on-dark-muted">
+      <span class="text-on-dark-muted sm:hidden">
         {business.hours.weekday} · {business.hours.weekend}
+      </span>
+      <span class="hidden sm:inline">
+        {business.showroom.streetAddress}, {business.showroom.city}, {business.showroom.state}{' '}
+        {business.showroom.postalCode}{' '}
+        <span class="text-on-dark-muted">
+          · {business.hours.weekday} · {business.hours.weekend}
+        </span>
       </span>
       <a href={`mailto:${business.email}`} class="hover:text-brand">
         {business.email}
