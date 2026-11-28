@@ -65,7 +65,7 @@ const steps = [
 
     {steps.map((step, i) => (
       <div
-        class="relative flex min-w-0 items-start gap-2.5 text-left sm:flex-col sm:items-center sm:gap-3.5 sm:text-center"
+        class="relative flex min-w-0 items-start justify-center gap-2.5 text-left sm:flex-col sm:items-center sm:gap-3.5 sm:text-center"
       >
         <div class="flex shrink-0 items-center justify-center">
           <!-- Mobile: no box, just a big number (Tobi's request,
@@ -79,7 +79,7 @@ const steps = [
             {step.n}
           </span>
         </div>
-        <div class="flex flex-1 flex-col items-start gap-1 sm:items-center sm:gap-1.5">
+        <div class="flex max-w-[240px] flex-col items-start gap-1 sm:max-w-none sm:flex-1 sm:items-center sm:gap-1.5">
           <div class="flex flex-col items-start gap-1 sm:items-center sm:gap-1.5">
             <span class="bg-[#f0f0f0] px-1.5 py-0.5 text-[9.5px] font-extrabold tracking-[0.12em] uppercase sm:text-[10px]">
               {step.when}
