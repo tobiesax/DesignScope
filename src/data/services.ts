@@ -73,9 +73,9 @@ export const kitchens: ServicePage = {
   heroEyebrow: 'Kitchen Remodeling',
   heroHeadline: "Create the Kitchen You've Always Wanted",
   heroSubcopy:
-    'Your kitchen should work beautifully for your daily needs while reflecting your personal style. We manage every detail of your project — design, permits and construction — with careful attention and skilled craftsmanship.',
+    'Your kitchen should work beautifully for your daily needs while reflecting your personal style. We manage every detail of your project, design, permits and construction, with careful attention and skilled craftsmanship.',
   intro:
-    "An outdated or poorly designed kitchen makes daily tasks harder and lowers your home's value. A well-planned kitchen remodel improves comfort, boosts efficiency, and provides strong returns on your investment — Design Scope builds kitchens that balance current trends with lasting appeal. Every project starts with a free 45-minute design consultation at our Bloomfield showroom, where you can handle cabinetry, countertop and hardware samples from brands like Wellborn Forest, Fabuwood, MSI and Top Knobs in person rather than choosing from a screen. You'll have a written, itemized quote within 24 hours, our own crews — not subcontractors — do the core work, and every kitchen is backed by a 6-month workmanship warranty in writing. As members of HBRA and KBIS, we also handle the building permit paperwork so you don't have to chase it yourself.",
+    "An outdated or poorly designed kitchen makes daily tasks harder and lowers your home's value. A well-planned kitchen remodel improves comfort, boosts efficiency, and provides strong returns on your investment, Design Scope builds kitchens that balance current trends with lasting appeal. Every project starts with a free 45-minute design consultation at our Bloomfield showroom, where you can handle cabinetry, countertop and hardware samples from brands like Wellborn Forest, Fabuwood, MSI and Top Knobs in person rather than choosing from a screen. You'll have a written, itemized quote within 24 hours, our own crews, not subcontractors, do the core work, and every kitchen is backed by a 6-month workmanship warranty in writing. As members of HBRA and KBIS, we also handle the building permit paperwork so you don't have to chase it yourself.",
   included: [
     'Free design consultations',
     'Custom cabinetry installation',
@@ -119,7 +119,7 @@ export const bathrooms: ServicePage = {
   heroSubcopy:
     'Your bathroom should match your style and support your daily routine. We manage everything from initial design concepts to final construction details, with our own crews on site throughout.',
   intro:
-    "A well-designed bathroom improves your home's functionality and increases property value. Modern bathroom upgrades address outdated fixtures, limited storage, poor lighting and accessibility concerns while creating a space you'll enjoy for years. In our Bloomfield showroom you can see and touch the fixtures and tile before you commit — TOTO and Hansgrohe plumbing fixtures, Native Trails vanities, Fleurco shower enclosures — and our crew includes Warmup-certified installers for radiant floor heat and Schluter-certified installers for tile and waterproofing, the two details that separate a bathroom that lasts from one that doesn't. Every bathroom remodel starts with a free 45-minute design consultation, comes with a written quote within 24 hours, and carries the same 6-month workmanship warranty as every project we build.",
+    "A well-designed bathroom improves your home's functionality and increases property value. Modern bathroom upgrades address outdated fixtures, limited storage, poor lighting and accessibility concerns while creating a space you'll enjoy for years. In our Bloomfield showroom you can see and touch the fixtures and tile before you commit, TOTO and Hansgrohe plumbing fixtures, Native Trails vanities, Fleurco shower enclosures, and our crew includes Warmup-certified installers for radiant floor heat and Schluter-certified installers for tile and waterproofing, the two details that separate a bathroom that lasts from one that doesn't. Every bathroom remodel starts with a free 45-minute design consultation, comes with a written quote within 24 hours, and carries the same 6-month workmanship warranty as every project we build.",
   included: [
     'Custom vanities',
     'Walk-in showers',
@@ -150,12 +150,12 @@ export const homeRenovations: ServicePage = {
   category: 'Home renovations',
   title: 'Home Renovations in Bloomfield, CT',
   metaDescription:
-    'Whole-home renovations for Bloomfield, Simsbury and Hartford County, CT — from a single-room refresh to a full layout change. Free consultation, 24-hour written quote.',
+    'Whole-home renovations for Bloomfield, Simsbury and Hartford County, CT, from a single-room refresh to a full layout change. Free consultation, 24-hour written quote.',
   heroImage: projectImages['home-reno-3'],
   heroEyebrow: 'Home Renovations',
   heroHeadline: 'Give Your Living Space a Fresh New Look',
   heroSubcopy:
     "Your home should reflect your style and work for your family's everyday needs. From refreshing a single room to reimagining your entire house, we have the skills to create spaces you'll enjoy for years to come.",
   intro:
-    "Renovating your home improves daily comfort and adds lasting value to your property. Strategic renovations create more functional living spaces, modernize outdated rooms and fixtures, improve energy efficiency, increase resale value and let you personalize your space to match your taste. Design Scope is led by Stephen, who holds a Master's Degree in Interior Design and brings over 25 years of design and construction experience to the Farmington Valley — the same designer who meets you at the showroom plans the layout and is on site as it's built. Whether it's one room or the whole house, you get a free design consultation, a written quote within 24 hours with price matching on competing written estimates, and one team handling every trade, so you're never coordinating between separate contractors yourself.",
+    "Renovating your home improves daily comfort and adds lasting value to your property. Strategic renovations create more functional living spaces, modernize outdated rooms and fixtures, improve energy efficiency, increase resale value and let you personalize your space to match your taste. Design Scope is led by Stephen, who holds a Master's Degree in Interior Design and brings over 25 years of design and construction experience to the Farmington Valley, the same designer who meets you at the showroom plans the layout and is on site as it's built. Whether it's one room or the whole house, you get a free design consultation, a written quote within 24 hours with price matching on competing written estimates, and one team handling every trade, so you're never coordinating between separate contractors yourself.",
 };

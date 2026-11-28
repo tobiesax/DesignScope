@@ -13,7 +13,7 @@ export const commercial = {
   // permit/insurance help), nothing invented.
   introHeading: 'Design and construction, handled start to finish',
   introBody: [
-    "Design Scope, LLC. delivers integrated design and construction services for businesses and property owners across the Farmington Valley. Family-owned since 2016, our licensed and insured team manages every phase of your commercial project — from initial concept through final build — so renovations and restorations stay on schedule with minimal disruption to your operations. No job is too big or too small, and every project gets the same level of care, precision and attention to detail.",
+    "Design Scope, LLC. delivers integrated design and construction services for businesses and property owners across the Farmington Valley. Family-owned since 2016, our licensed and insured team manages every phase of your commercial project, from initial concept through final build, so renovations and restorations stay on schedule with minimal disruption to your operations. No job is too big or too small, and every project gets the same level of care, precision and attention to detail.",
     "We offer free design consultations, 24-hour quotes with no obligation, and honest pricing with no hidden fees. We honor price matching on comparable written estimates and can assist with permits and insurance paperwork to keep your project moving. Contact us today to schedule a consultation and take the first step toward transforming your space.",
   ],
   // Lifted from the live site's own /commercial-renovations and
@@ -113,7 +113,7 @@ export const commercialCaseStudy = {
 export const contractorPartnership = {
   eyebrow: 'For contractors',
   heading: 'Partner with Design Scope',
-  body: "We're a family-owned design and construction company always open to connecting with reliable independent contractors and trade specialists across the Farmington Valley — carpentry, electrical, plumbing, flooring, tile and more — for collaboration on commercial and residential projects.",
+  body: "We're a family-owned design and construction company always open to connecting with reliable independent contractors and trade specialists across the Farmington Valley, carpentry, electrical, plumbing, flooring, tile and more, for collaboration on commercial and residential projects.",
   bullets: [
     'Licensed and insured in your trade',
     'Available for commercial and residential work',

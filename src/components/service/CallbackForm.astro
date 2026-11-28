@@ -192,7 +192,7 @@ const types = ['Water', 'Fire / smoke', 'Mold', 'Storm'];
         phone: phoneInput.value.trim(),
         project_type: PROJECT_TYPE[selectedType] ?? 'Water damage',
         town: townInput?.value.trim() ?? '',
-        message: `Callback requested — ${selectedType}`,
+        message: `Callback requested, ${selectedType}`,
         sms_consent: consentInput?.checked ?? false,
         company_website: companyInput?.value ?? '',
         rendered_at: renderedAt,

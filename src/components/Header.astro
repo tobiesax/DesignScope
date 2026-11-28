@@ -12,6 +12,7 @@ interface Props {
   // form. Everything else books a consultation.
   navVariant?: 'default' | 'restoration' | 'commercial';
   active?:
+    | 'home'
     | 'remodeling'
     | 'restoration'
     | 'commercial'
@@ -24,6 +25,10 @@ interface Props {
 const { navVariant = 'default', active } = Astro.props;
 
 const navLinks = [
+  // The logo already links to "/" (standard web convention), but Stephen
+  // specifically asked for an explicit Home link in the nav too — not
+  // every visitor reads the logo as a home button.
+  { id: 'home', label: 'Home', href: '/' },
   { id: 'about', label: 'About', href: '/about/' },
   // Was '/remodeling/kitchens/' — dead-ended every visitor straight into
   // Kitchens with no path to Bathrooms (see CONTENT_GAPS.md 2026-11-24).
