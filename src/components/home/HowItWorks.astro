@@ -68,10 +68,12 @@ const steps = [
         class="relative flex min-w-0 items-start gap-2.5 text-left sm:flex-col sm:items-center sm:gap-3.5 sm:text-center"
       >
         <div class="flex shrink-0 items-center justify-center">
+          <!-- Mobile: no box, just a big number (Tobi's request,
+               2026-11-28). Desktop keeps the bordered badge. -->
           <span
             class:list={[
-              'flex h-9 w-9 flex-shrink-0 items-center justify-center border-2 border-ink text-[12.5px] font-black sm:h-12 sm:w-12 sm:text-[15px]',
-              i === 3 ? 'bg-brand-dark text-paper' : 'bg-white text-ink',
+              'flex items-center justify-center text-[32px] leading-none font-black sm:h-12 sm:w-12 sm:flex-shrink-0 sm:border-2 sm:border-ink sm:text-[15px] sm:leading-normal',
+              i === 3 ? 'text-brand-dark sm:bg-brand-dark sm:text-paper' : 'text-ink sm:bg-white',
             ]}
           >
             {step.n}
