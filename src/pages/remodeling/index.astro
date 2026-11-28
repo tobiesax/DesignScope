@@ -1,7 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
-import { kitchens, bathrooms, homeRenovations } from '../../data/services';
+import ProcessSteps from '../../components/shared/ProcessSteps.astro';
+import FaqAccordion from '../../components/shared/FaqAccordion.astro';
+import { kitchens, bathrooms, homeRenovations, remodelProcess, remodelFaqs } from '../../data/services';
+import { business } from '../../data/business';
 
 // Path-picker hub between the nav's "Kitchen & bath" link and the three
 // rebuilt service pages. Not part of the design handoff (its nav goes
@@ -10,6 +13,9 @@ import { kitchens, bathrooms, homeRenovations } from '../../data/services';
 // raw URL slugs as a previous pass left it showing.
 // Blurbs lifted from the live site's own /residential-services page
 // (scraped 2026-11-13), one clause per category.
+const joinWithAnd = (items: readonly string[]) =>
+  items.length <= 1 ? (items[0] ?? '') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+
 const services = [
   {
     ...kitchens,
@@ -31,7 +37,7 @@ const services = [
 
 <Layout
   title="Remodeling in Bloomfield, CT"
-  description="Kitchen and bathroom remodeling across Hartford County, Connecticut. Free design consultation, a written quote within 24 hours."
+  description="Kitchen, bathroom and whole-home remodeling in Bloomfield, West Hartford, Simsbury, Avon and Windsor, CT. Free design consultation, 24-hour written quote, 6-month warranty."
   active="remodeling"
 >
   <section class="flex flex-col gap-4 px-4 py-12 sm:px-7">
@@ -44,6 +50,24 @@ const services = [
     <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
       Free design consultation, a written quote within 24 hours, and one team handling design
       through construction. Pick a room to see our process and recent work.
+    </p>
+    <!-- Expanded 2026-11-28 at Tobi's request ("page looks lean, not
+         information rich") for SEO/GEO depth — grounded only in facts
+         already confirmed in business.ts: the service-area towns,
+         HBRA/KBIS membership, the showroom, price matching, "our own
+         crews" and the 6-month warranty. Nothing new invented. -->
+    <p class="text-ink-soft max-w-2xl text-base leading-relaxed">
+      Design Scope has been planning and building kitchens, bathrooms and whole-home renovations
+      for Farmington Valley homeowners since {business.foundedYear}, serving{' '}
+      {joinWithAnd(business.townPages)} across Hartford County. Every project starts the same way,
+      a free 45-minute design consultation at our Bloomfield showroom, in your home or by video,
+      where you can handle real cabinetry, countertop and tile samples from brands like{' '}
+      {joinWithAnd(business.supplierBrands)} instead of choosing from a screen. You'll have a
+      written, itemized quote within 24 hours, backed by price matching on competing written
+      estimates, and the same team that designs your project builds it, our own crews, not a
+      rotating list of subcontractors. As members of {joinWithAnd(business.memberships)}, we also
+      handle the building permit paperwork, and every finished room carries a {business.warranty}{' '}
+      in writing.
     </p>
   </section>
 
@@ -64,4 +88,12 @@ const services = [
       </a>
     ))}
   </div>
+
+  <ProcessSteps steps={remodelProcess} eyebrow={false} heading="How it works" background="paper-muted" />
+
+  <section class="px-4 py-12 sm:px-7">
+    <div class="mx-auto max-w-2xl">
+      <FaqAccordion faqs={remodelFaqs} title="Questions homeowners ask" />
+    </div>
+  </section>
 </Layout>
