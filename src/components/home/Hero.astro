@@ -98,16 +98,6 @@ const slides = [
     style="background:linear-gradient(90deg,rgba(10,10,10,0.75) 0%,rgba(10,10,10,0.48) 32%,rgba(10,10,10,0.08) 58%,rgba(10,10,10,0) 72%),linear-gradient(0deg,rgba(10,10,10,0.85) 0%,rgba(10,10,10,0.5) 28%,rgba(10,10,10,0.1) 55%,rgba(10,10,10,0) 75%)"
   ></div>
 
-  <button
-    type="button"
-    id="hero-pause-toggle"
-    aria-label="Pause background"
-    class="absolute bottom-8 left-4 z-10 flex h-11 w-11 items-center justify-center text-sm font-black text-paper sm:left-7"
-    style="text-shadow: 0 1px 4px rgba(0,0,0,0.6);"
-  >
-    II
-  </button>
-
   <div class="relative z-[2] flex max-w-[620px] flex-col gap-3.5 px-4 py-8 text-paper sm:px-7">
     <span class="bg-brand-dark text-paper self-start px-2.5 py-1.5 text-[10px] font-extrabold tracking-[0.25em] uppercase">
       Design &amp; build services
@@ -185,23 +175,19 @@ const slides = [
 
 <script define:vars={{ slideData: slides.map((s) => ({ category: s.category, cta: s.cta, href: s.href })) }}>
   const root = document.getElementById('hero-slideshow');
-  const toggle = document.getElementById('hero-pause-toggle');
   const scrollCue = document.getElementById('hero-scroll-cue');
   const featuredIndex = document.getElementById('hero-featured-index');
   const featuredTitle = document.getElementById('hero-featured-title');
   const featuredLink = document.getElementById('hero-featured-link');
 
-  if (root && toggle) {
+  if (root) {
     const slides = Array.from(root.querySelectorAll('.hero-slide'));
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let paused = reduceMotion;
+    let offscreen = false;
     let i = 0;
 
     const render = () => {
       slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
-      root.classList.toggle('is-paused', paused);
-      toggle.textContent = paused ? '▶' : 'II';
-      toggle.setAttribute('aria-label', paused ? 'Play background' : 'Pause background');
 
       const data = slideData[i];
       if (data && featuredIndex && featuredTitle && featuredLink) {
@@ -215,7 +201,7 @@ const slides = [
 
     let timer = null;
     const start = () => {
-      if (timer) return;
+      if (timer || reduceMotion || offscreen) return;
       timer = setInterval(() => {
         i = (i + 1) % slides.length;
         render();
@@ -225,28 +211,19 @@ const slides = [
       if (timer) clearInterval(timer);
       timer = null;
     };
-    if (!paused) start();
+    start();
 
-    toggle.addEventListener('click', () => {
-      paused = !paused;
-      if (paused) stop();
-      else start();
-      render();
-    });
-
-    // Also stop the slide-rotation timer (and with it, the Ken Burns
+    // Stop the slide-rotation timer (and with it, the Ken Burns
     // pan/crossfade) once the hero has scrolled out of view — no reason
     // to keep that compositing work running while the visitor is reading
     // further down the page. Resumes automatically when it scrolls back
-    // into view, unless the visitor had manually paused it themselves.
+    // into view.
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            if (!paused) start();
-          } else {
-            stop();
-          }
+          offscreen = !entry.isIntersecting;
+          if (offscreen) stop();
+          else start();
         },
         { threshold: 0 },
       );

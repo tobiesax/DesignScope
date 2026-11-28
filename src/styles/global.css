@@ -284,9 +284,6 @@ a[class*='border-paper']:hover {
 .hero-slide.ken-1.is-active img {
   animation: hero-ken-1 7.5s ease-out forwards;
 }
-#hero-slideshow.is-paused .hero-slide img {
-  animation-play-state: paused;
-}
 
 /* Restoration pages' "Call now" CTA (ServiceHero.astro, urgent variant) —
    an ambient pulse to draw the eye on an emergency page. */
