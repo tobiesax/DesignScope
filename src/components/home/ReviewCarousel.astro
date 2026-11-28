@@ -36,7 +36,7 @@ const sampleAggregateRating = await getReviewsSettings();
   >
     <div
       id="review-track"
-      class="flex gap-2.5 overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      class="relative flex gap-2.5 overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       style="scroll-snap-type: x mandatory;"
     >
       {sampleReviews.map((review, i) => (
@@ -155,10 +155,28 @@ const sampleAggregateRating = await getReviewsSettings();
     track.addEventListener('mouseleave', () => (paused = false));
     track.addEventListener('touchstart', () => (paused = true), { passive: true });
 
+    // This auto-advance timer was running every 6s from page load
+    // regardless of whether the carousel was ever scrolled into view —
+    // the same always-on-animation issue found and fixed on the hero
+    // slideshow and the trust-badge marquee (2026-11-28): a continuously
+    // smooth-scrolling, scroll-snapped track is real compositing work,
+    // and doing it forever off-screen was a likely contributor to the
+    // scroll-time rendering glitches reported on mobile. Now paused
+    // whenever the carousel isn't visible, same as those two.
+    let offscreen = true;
+    if ('IntersectionObserver' in window) {
+      const visibilityIo = new IntersectionObserver(([entry]) => (offscreen = !entry.isIntersecting), {
+        threshold: 0,
+      });
+      visibilityIo.observe(track);
+    } else {
+      offscreen = false;
+    }
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduceMotion) {
       setInterval(() => {
-        if (paused || document.hidden) return;
+        if (paused || offscreen || document.hidden) return;
         const next = currentIndex() + 1 >= cards.length ? 0 : currentIndex() + 1;
         scrollToCard(next);
       }, 6000);
