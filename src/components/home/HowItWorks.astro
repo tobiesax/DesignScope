@@ -5,10 +5,16 @@
 // Tobi's request when centering every step, then brought back redesigned
 // (2026-11-18) so centering and the connector coexist: a single line laid
 // behind the badges rather than one per-card segment, positioned to pass
-// through each badge's exact center instead of starting from its edge —
+// through each badge's exact center instead of starting from its edge,
 // horizontal on desktop (sm:grid-cols-4, each column an equal 25% so a
-// straight line from the 12.5% mark to the 87.5% mark hits all 4 centers),
-// a short vertical segment between each pair of stacked cards on mobile.
+// straight line from the 12.5% mark to the 87.5% mark hits all 4 centers).
+//
+// Mobile (2026-11-28, at Tobi's request: the old one-column stack of 4
+// centered, text-heavy cards with a connector line between each ran very
+// tall on a phone). Now a compact 2x2 grid, each step a left-aligned
+// number-plus-text row instead of a centered block — same information,
+// a fraction of the height. The connector line stays desktop-only; a
+// straight line doesn't make sense across a 2-column wrap.
 const steps = [
   {
     n: '01',
@@ -47,49 +53,42 @@ const steps = [
     </h2>
   </div>
 
-  <div class="relative flex flex-col sm:grid sm:grid-cols-4 sm:gap-7">
+  <div class="relative grid grid-cols-2 gap-x-5 gap-y-6 sm:flex sm:flex-col sm:grid sm:grid-cols-4 sm:gap-7">
     <!-- Connector: a single line behind the badges, not one per card —
          that's what lets it pass through each badge's centre instead of
-         starting from an edge. Desktop only (mobile gets its own short
-         vertical segments between cards, below). -->
+         starting from an edge. Desktop only — mobile is a 2-column grid,
+         not a single stack, so a straight connector line doesn't apply. -->
     <div
       class="bg-ink pointer-events-none absolute top-6 right-[12.5%] left-[12.5%] hidden h-0.5 sm:block"
       aria-hidden="true"
     ></div>
 
     {steps.map((step, i) => (
-      <Fragment>
-        <div
-          class:list={[
-            'relative flex min-w-0 flex-col items-center gap-3.5 pb-5 text-center sm:pb-0',
-          ]}
-        >
-          <div class="flex shrink-0 items-center justify-center">
-            <span
-              class:list={[
-                'flex h-11 w-11 flex-shrink-0 items-center justify-center border-2 border-ink text-[14px] font-black sm:h-12 sm:w-12 sm:text-[15px]',
-                i === 3 ? 'bg-brand-dark text-paper' : 'bg-white text-ink',
-              ]}
-            >
-              {step.n}
-            </span>
-          </div>
-          <div class="flex flex-1 flex-col items-center gap-1.5">
-            <div class="flex flex-col items-center gap-1.5">
-              <span class="bg-[#f0f0f0] px-1.5 py-0.5 text-[10px] font-extrabold tracking-[0.12em] uppercase">
-                {step.when}
-              </span>
-              <span class="text-[17px] font-black tracking-tight sm:text-[18px]">{step.t}</span>
-            </div>
-            <span class="text-muted mx-auto block max-w-[240px] text-[13px] leading-relaxed sm:text-[13.5px]">
-              {step.b}
-            </span>
-          </div>
+      <div
+        class="relative flex min-w-0 items-start gap-2.5 text-left sm:flex-col sm:items-center sm:gap-3.5 sm:text-center"
+      >
+        <div class="flex shrink-0 items-center justify-center">
+          <span
+            class:list={[
+              'flex h-9 w-9 flex-shrink-0 items-center justify-center border-2 border-ink text-[12.5px] font-black sm:h-12 sm:w-12 sm:text-[15px]',
+              i === 3 ? 'bg-brand-dark text-paper' : 'bg-white text-ink',
+            ]}
+          >
+            {step.n}
+          </span>
         </div>
-        {i < steps.length - 1 && (
-          <div class="bg-ink mx-auto h-5 w-0.5 sm:hidden" aria-hidden="true"></div>
-        )}
-      </Fragment>
+        <div class="flex flex-1 flex-col items-start gap-1 sm:items-center sm:gap-1.5">
+          <div class="flex flex-col items-start gap-1 sm:items-center sm:gap-1.5">
+            <span class="bg-[#f0f0f0] px-1.5 py-0.5 text-[9.5px] font-extrabold tracking-[0.12em] uppercase sm:text-[10px]">
+              {step.when}
+            </span>
+            <span class="text-[14.5px] font-black tracking-tight sm:text-[18px]">{step.t}</span>
+          </div>
+          <span class="text-muted block max-w-[240px] text-[12px] leading-snug sm:mx-auto sm:text-[13.5px] sm:leading-relaxed">
+            {step.b}
+          </span>
+        </div>
+      </div>
     ))}
   </div>
 
