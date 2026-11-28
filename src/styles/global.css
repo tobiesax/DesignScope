@@ -98,9 +98,11 @@
 /* Belt-and-suspenders against any future stray wide element (an
    unconstrained image, a marquee track, a fixed-width card row) pushing
    the whole page into horizontal scroll on mobile — nothing on the site
-   is meant to be wider than the viewport. */
-html,
-body {
+   is meant to be wider than the viewport. `html` only, never `body`:
+   setting this on `body` too turns it into its own scroll container,
+   which silently breaks `position: sticky` on its direct children (it
+   did exactly that to the mobile sticky CTA bar in Layout.astro). */
+html {
   overflow-x: hidden;
 }
 
