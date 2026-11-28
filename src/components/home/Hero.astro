@@ -139,12 +139,17 @@ const slides = [
   <!-- "Scroll to discover" cue — honest to show since there's a full page
        of content (trust badges, about, etc.) directly below. Desktop only,
        same as the featured-work card: both would crowd the much shorter
-       mobile hero. -->
+       mobile hero — was `sm:flex` (640px), which doesn't actually mean
+       "desktop" and let this sit low enough to overlap the "Explore
+       Remodeling" button on narrower-but-still-`sm` screens; `lg:flex`
+       (1024px) matches the comment's actual intent, and the lower
+       `bottom` gives it a bit more clearance from the button row above
+       it even at that width. -->
   <button
     type="button"
     id="hero-scroll-cue"
     aria-label="Scroll to see more"
-    class="text-paper/70 hover:text-paper absolute bottom-7 left-1/2 z-[2] hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
+    class="text-paper/70 hover:text-paper absolute bottom-4 left-1/2 z-[2] hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
   >
     <span class="text-[10px] font-bold tracking-[0.25em] uppercase">Scroll to discover</span>
     <span class="bg-paper/40 h-8 w-px"></span>
@@ -156,7 +161,7 @@ const slides = [
        otherwise. The category link itself is real. -->
   <div
     id="hero-featured-card"
-    class="bg-[rgba(14,14,14,0.78)] text-paper absolute right-4 bottom-7 z-[2] hidden w-[230px] flex-col gap-1.5 p-4 backdrop-blur-sm sm:flex sm:right-7"
+    class="bg-[rgba(14,14,14,0.78)] text-paper absolute right-4 bottom-7 z-[2] hidden w-[230px] flex-col gap-1.5 p-4 backdrop-blur-sm lg:flex lg:right-7"
   >
     <div class="text-on-dark-muted flex items-center justify-between text-[10px] font-bold tracking-[0.15em] uppercase">
       <span>Get inspired</span>
