@@ -233,6 +233,25 @@ const slides = [
       else start();
       render();
     });
+
+    // Also stop the slide-rotation timer (and with it, the Ken Burns
+    // pan/crossfade) once the hero has scrolled out of view — no reason
+    // to keep that compositing work running while the visitor is reading
+    // further down the page. Resumes automatically when it scrolls back
+    // into view, unless the visitor had manually paused it themselves.
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            if (!paused) start();
+          } else {
+            stop();
+          }
+        },
+        { threshold: 0 },
+      );
+      io.observe(root);
+    }
   }
 
   scrollCue?.addEventListener('click', () => {

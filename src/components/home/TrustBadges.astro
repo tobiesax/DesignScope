@@ -18,7 +18,7 @@ import TrustBadgeItem from './TrustBadgeItem.astro';
 ---
 
 <section class="border-border-soft border-b bg-white py-7">
-  <div class="marquee-mask overflow-hidden">
+  <div id="trust-marquee-mask" class="marquee-mask overflow-hidden">
     <div class="marquee-track flex w-max items-center">
       {business.credentials.map((c) => (
         <TrustBadgeItem credential={c} />
@@ -29,3 +29,21 @@ import TrustBadgeItem from './TrustBadgeItem.astro';
     </div>
   </div>
 </section>
+
+<script>
+  // This marquee animates forever by default (40s infinite loop,
+  // global.css) — harmless on its own, but it's one more continuously
+  // composited layer fighting for GPU time while a visitor scrolls past
+  // other animated sections (hero Ken Burns, scroll-reveal), which on a
+  // loaded-down phone can show up as scroll-time rendering glitches.
+  // Pausing it the moment it's off-screen keeps it from costing anything
+  // once the visitor has scrolled past it.
+  const mask = document.getElementById('trust-marquee-mask');
+  if (mask && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      ([entry]) => mask.classList.toggle('is-offscreen', !entry.isIntersecting),
+      { threshold: 0 },
+    );
+    io.observe(mask);
+  }
+</script>

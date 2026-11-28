@@ -95,6 +95,15 @@
   --font-sans: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Belt-and-suspenders against any future stray wide element (an
+   unconstrained image, a marquee track, a fixed-width card row) pushing
+   the whole page into horizontal scroll on mobile — nothing on the site
+   is meant to be wider than the viewport. */
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   @apply bg-paper text-ink-soft font-sans;
 }
@@ -227,7 +236,8 @@ a[class*='border-paper']:hover {
 .marquee-track {
   animation: trust-badge-marquee 40s linear infinite;
 }
-.marquee-mask:hover .marquee-track {
+.marquee-mask:hover .marquee-track,
+.marquee-mask.is-offscreen .marquee-track {
   animation-play-state: paused;
 }
 
