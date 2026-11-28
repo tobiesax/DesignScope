@@ -134,7 +134,12 @@ const townLinks = business.townPages.map((name) => ({
     </div>
   </div>
 
-  <div class="flex flex-wrap gap-1.5">
+  <!-- Hidden on mobile at Tobi's request (2026-11-28): 8 wrapped credential
+       chips made an already-long footer noticeably longer on a phone.
+       Desktop keeps them — there's room, and the credentials still carry
+       elsewhere on mobile (the home page trust-badge marquee, individual
+       service pages). -->
+  <div class="hidden flex-wrap gap-1.5 sm:flex">
     {business.credentials.map((c) => (
       <span class="border-[#2a2a2a] text-on-dark-muted border px-2.5 py-1.5 text-[10.5px] font-bold">
         {c.title} · {c.sub}
